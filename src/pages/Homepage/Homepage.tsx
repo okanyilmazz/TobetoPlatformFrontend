@@ -1,8 +1,22 @@
-import React from 'react'
-import { Button, Card, Image } from 'semantic-ui-react'
+import React, { useState } from 'react'
+import { Tabs, Tab, Container, Button } from 'react-bootstrap';
+import { Card, Image } from 'semantic-ui-react'
 import './Homepage.css'
+import { SocialMediaIcon } from '../../components/SocialMediaIcon/SocialMediaIcon';
 
 export default function Homepage() {
+
+    const [buttonContainerStyle, setButtonContainerStyle] = useState({
+        backgroundColor: 'white ',
+        color: 'black'
+    });
+
+    function handleContainerStyle() {
+        setButtonContainerStyle({
+            backgroundColor: '#181717',
+            color: 'black'
+        });
+    }
 
 
     return (
@@ -51,6 +65,43 @@ export default function Homepage() {
             </div>
             <div className='gradient-line mt-5'>
             </div>
+            <div className="">
+                <div className="container tabButton ">
+                    <p className='title text-white' style={{ fontSize: '41px', lineHeight: '110%' }}>Hangi Konuda <br /> Kendini<br /> Geliştirmek İstersin?</p>
+                    <div className="row">
+                        <div className="col-md-5">
+                            <Button className='button-container'
+                                style={{ width: '450px', height: '200px', ...buttonContainerStyle }}>
+
+                                <h1 style={{ fontFamily: 'Poppins-Bold' }} >
+                                    Teknik ve Profesyonel<br />Eğitimler
+                                </h1>
+                                <p style={{ opacity: '0.5', fontSize: '17px' }}>
+                                    Kapsamlı beceri setlerinden, gelişmek istediğin konuyu seç, kariyerinde bir adım öne
+                                    geç.
+                                </p>
+                            </Button>
+                            <Button onClick={handleContainerStyle} className='button-container2'
+                                style={{ width: '450px', height: '200px', }}>
+                                <h1 className=''>
+                                    Yeni bir meslek
+                                </h1>
+                                <p style={{ opacity: '0.5', paddingLeft: '5px', fontSize: '17px' }}>
+                                    İhtiyaç duyduğun kapsamlı beceri setlerinden oluşan eğitim yolculuğunu seç, yazılım veya
+                                    profesyonel iş alanlarında tercih ettiğin yeni mesleğine doğru ilk adımını at.
+                                </p>
+                            </Button>
+                        </div>
+                        <div className="col-md-1">
+                            {/* Boşluk */}
+                        </div>
+                        <div className="col-md-6">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+
     )
 }

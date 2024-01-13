@@ -227,3 +227,52 @@
         opacity: 1;
     }
 }
+
+/* Improve Yourself */
+
+.tabButton {
+    display: flex;
+    flex-direction: column;
+    grid-column-start: 12;
+    padding: 20px;
+}
+
+.tabButton .title {
+    font-family: 'Poppins-Bold';
+}
+
+
+
+.button-container,
+.button-container2 {
+    margin-bottom: 10px;
+    border-radius: 15px;
+    color: red;
+    transition: background-color 0.3s, color 0.3s;
+    border: none;
+    border-radius: 15px !important;
+    border-color: #181717 !important;
+    text-align: left !important;
+    padding: 25px 35px !important;
+}
+
+.col-md-5 .button-container:active,
+.col-md-5 .button-container:focus,
+.col-md-5 .button-container2 {
+    background-color: #181717 !important;
+    color: white;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.col-md-5 .button-container2:focus,
+.col-md-5 .button-container2:active,
+.col-md-5 .button-container:focus {
+    background-color: white !important;
+    color: #181717;
+}
+
+.col-md-5 .button-container2:active .col-md-5 .button-container {
+    color: white !important;
+}
+
+/* Improve Yourself */

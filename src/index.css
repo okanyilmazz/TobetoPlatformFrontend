@@ -32,3 +32,13 @@ code {
 .bg-front-white {
   background-color: #fff !important;
 }
+
+.btn-rainbow:before,
+.btn-rainbow:after {
+  content: "";
+  position: absolute;
+  border-radius: 50px;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}

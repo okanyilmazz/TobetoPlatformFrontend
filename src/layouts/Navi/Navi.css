@@ -1,18 +1,17 @@
+/* HEADER */
 .btn {
-
     background: #00b078 !important;
     border: 3px solid #00b078 !important;
     border-radius: 2em !important;
-    padding: .3em 2.5em !important;
-    font-size: 16px !important;
-    font-weight: 600 !important;
+    padding: .5em 2.5em !important;
+    font-size: 15px !important;
     color: #1e0f41 !important;
-    font-weight: bold !important;
-    font-weight: 750 !important;
+    font-weight: 700 !important;
     margin-right: 12px;
+    font-family: 'Poppins-Regular' !important;
 }
 
-.home-container {
+.header {
     background-color: #1e0f41;
     height: 72px;
     display: flex;
@@ -32,18 +31,83 @@
     align-items: center;
     width: 76%;
     margin: 0 auto;
-
 }
 
 .home span {
     color: rgb(0, 176, 120);
-
-
 }
 
 p {
     font-size: 24px;
     color: white;
     font-weight: bold;
-    padding-top: 12px;
 }
+
+/* ENDREGION */
+
+/*NAVBAR*/
+#backgroundStyle {
+    background-color: #181717;
+}
+
+#navbarStyle {
+    width: 96%;
+    margin: auto;
+    height: 82px;
+}
+
+#containerStyle {
+    height: 82px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-column-gap: 20px;
+    align-items: center;
+    grid-template-rows: 82px;
+}
+
+
+#homeMessagesStyle {
+    display: flex;
+    justify-content: space-between;
+}
+
+.ui.secondary.menu .item {
+    color: #fff;
+    font-family: 'Poppins-Regular';
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.ui.secondary.menu .item:hover,
+.ui.secondary.menu .item:focus,
+.ui.secondary.menu .item:active {
+    color: #93f !important;
+    cursor: pointer;
+}
+
+.ui.dropdown>.text:hover {
+    color: #93f
+}
+
+.ui.dropdown>.dropdown.icon {
+    display: none;
+}
+
+.ui.secondary.menu .item .menu {
+    background-color: #93f !important;
+}
+
+.ui.secondary.menu .dropdown.item .menu {
+    margin-top: 0 !important;
+}
+
+.ui.menu .ui.dropdown.item .menu .item:not(.filtered) {
+    display: block;
+    color: white !important;
+}
+
+.tobeto-icon img {
+    width: 150px;
+}
+
+/* ENDREGION */

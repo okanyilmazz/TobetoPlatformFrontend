@@ -1,0 +1,44 @@
+.card-container {
+    background: #fff;
+    border-radius: 9px;
+    border-bottom: 2px solid #93f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 180px;
+    margin: 20px;
+    margin-bottom: 0;
+    width: 88%;
+}
+
+.training-content{
+    background-color: #2f2f22;
+    border-radius: 15px;
+    height: 630px;
+}
+
+.training-content .training-card-group {
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+}
+.card-body {
+    color: black;
+    line-height: 27px;
+    font-weight: 900;
+    font-size: 30px !important;
+    text-align: center;
+    font-family:'Poppins-Bold';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-height: 100px;
+    overflow: hidden;
+    max-width: -webkit-fill-available;
+    text-overflow: ellipsis;
+  }
+.card-body span{
+    max-width: -webkit-fill-available;
+}
+

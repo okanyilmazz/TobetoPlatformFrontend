@@ -1,0 +1,49 @@
+.btn {
+
+    background: #00b078 !important;
+    border: 3px solid #00b078 !important;
+    border-radius: 2em !important;
+    padding: .3em 2.5em !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #1e0f41 !important;
+    font-weight: bold !important;
+    font-weight: 750 !important;
+    margin-right: 12px;
+}
+
+.home-container {
+    background-color: #1e0f41;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.my-custom-image {
+    width: 110px;
+    height: 55px;
+    margin-left: 48px;
+}
+
+.home {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 76%;
+    margin: 0 auto;
+
+}
+
+.home span {
+    color: rgb(0, 176, 120);
+
+
+}
+
+p {
+    font-size: 24px;
+    color: white;
+    font-weight: bold;
+    padding-top: 12px;
+}

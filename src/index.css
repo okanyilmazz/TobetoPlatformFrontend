@@ -5,9 +5,30 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: 'Poppins-Regular', sans-serif !important;
+
+
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@font-face {
+  font-family: 'Poppins-Regular';
+  src: url('/public/assets/fonts/Poppins-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'Poppins-Bold';
+  src: url('/public/assets/fonts/Poppins-Bold.ttf');
+}
+
+.bg-front-dark {
+  background-color: #181717 !important;
+}
+
+.bg-front-white {
+  background-color: #fff !important;
 }

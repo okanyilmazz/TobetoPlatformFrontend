@@ -1,12 +1,11 @@
 import './App.css';
-import Navi from './layouts/Navi';
-import Dashboard from './layouts/Dashboard';
+import Navi from './layouts/Navi/Navi';
 
 function App() {
   return (
     <div className="App">
       <Navi />
-      <Dashboard />
+
     </div>
   );
 }

@@ -1,5 +1,5 @@
 /* HEADER */
-.btn {
+.home .btn {
     background: #00b078 !important;
     border: 3px solid #00b078 !important;
     border-radius: 2em !important;
@@ -37,7 +37,7 @@
     color: rgb(0, 176, 120);
 }
 
-p {
+.home p {
     font-size: 24px;
     color: white;
     font-weight: bold;

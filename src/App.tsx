@@ -1,5 +1,6 @@
 import './App.css';
 import Dashboard from './layouts/Dashboard';
+import Footer from './layouts/Footer/Footer';
 import Navi from './layouts/Navi/Navi';
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
     <div className="App">
       <Navi />
       <Dashboard />
+      <Footer/>
     </div>
   );
 }

@@ -6,9 +6,9 @@ import SignedOut from '../SignedOut/SingedOut';
 export default function Navi() {
     const navigate = useNavigate();
     return (
-        <div>
+        <div className='header'>
             {/* Header */}
-            <div className='header' >
+            <div className='header-banner' >
 
                 <div className='home container'>
                     <div className='img'   >

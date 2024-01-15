@@ -12,9 +12,9 @@ export default function Homepage() {
     });
     const [buttonClicked, setButtonClicked] = useState(null);
 
-    const handleButtonClick = (buttonName:any) => {
+    const handleButtonClick = (buttonName: any) => {
         setButtonClicked(buttonName);
-      };
+    };
 
     function handleContainerStyle() {
         handleButtonClick("occupation");
@@ -104,6 +104,51 @@ export default function Homepage() {
                         <div className="col-md-5">
                             <TrainingCard check={buttonClicked} />
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div className="container">
+                <div className="ca">
+                    <div className="d-flex" style={{ gap: '2em' }}>
+                        <div>
+                            <img
+                                src="https://tobeto.s3.cloud.ngn.com.tr/calogo_d676092a98.png?updated_at=2022-12-28T12:36:58.291Z"
+                                style={{ maxWidth: '172px', height: 'auto' }}
+                                alt="Codecademy Logo"
+                            />
+                        </div>
+                        <div>
+                            <h1>
+                                Dünyanın en büyük kodlama eğitimi
+                                platformu içerikleri şimdi Tobeto deneyimi
+                                ile!
+                            </h1>
+                        </div>
+                    </div>
+                    <p>
+                        Codecademy’nin tüm kaynaklarına Tobeto aboneliğinin sağlayacağı
+                        avantajlar, alanında uzman eğitmenlerle canlı dersler ve mentörlerin desteği
+                        ile erişebilir, yeni kariyerine başlayabilirsin!
+                    </p>
+                </div>
+            </div>
+            <div>
+                <div className='content-text'>
+                    <div className="tab-vector3">
+                        <Image src="https://tobeto.s3.cloud.ngn.com.tr/dot_white_1e7b4378ec.svg?updated_at=2022-09-20T12:52:57.424Z" alt="" width="120" height="120" />
+                    </div>
+                    <p>
+                        Tobeto Platform'da ücretsiz olarak; sahip olduğun yetkinlikleri değerlendirir,
+                        <br />
+                        ilgi ve bilgi seviyene göre yüzlerce eğitim içeriğine ulaşırsın. Bunları nasıl tamamlayacağını
+                        <br />
+                        hızına, bütçene ve zamanına göre kendin belirlersin.
+                        <br />
+                        <br />
+                        Hemen ücretsiz üye ol, platforma katıl!
+                    </p>
+                    <div className="tab-vector2">
+                        <Image src="https://tobeto.s3.cloud.ngn.com.tr/04_b3b68891d7.svg?updated_at=2022-07-05T11:08:56.797Z" alt="" width="60" height="60" />
                     </div>
                 </div>
             </div>

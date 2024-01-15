@@ -11,9 +11,9 @@ export default function Homepage() {
     });
     const [buttonClicked, setButtonClicked] = useState(null);
 
-    const handleButtonClick = (buttonName:any) => {
+    const handleButtonClick = (buttonName: any) => {
         setButtonClicked(buttonName);
-      };
+    };
 
     function handleContainerStyle() {
         handleButtonClick("occupation");
@@ -104,6 +104,31 @@ export default function Homepage() {
                             <TrainingCard check={buttonClicked} />
                         </div>
                     </div>
+                </div>
+            </div>
+            <div className="container">
+                <div className="ca">
+                    <div className="d-flex" style={{ gap: '2em' }}>
+                        <div>
+                            <img
+                                src="https://tobeto.s3.cloud.ngn.com.tr/calogo_d676092a98.png?updated_at=2022-12-28T12:36:58.291Z"
+                                style={{ maxWidth: '172px', height: 'auto' }}
+                                alt="Codecademy Logo"
+                            />
+                        </div>
+                        <div>
+                            <h1>
+                                Dünyanın en büyük kodlama eğitimi
+                                platformu içerikleri şimdi Tobeto deneyimi
+                                ile!
+                            </h1>
+                        </div>
+                    </div>
+                    <p>
+                        Codecademy’nin tüm kaynaklarına Tobeto aboneliğinin sağlayacağı
+                        avantajlar, alanında uzman eğitmenlerle canlı dersler ve mentörlerin desteği
+                        ile erişebilir, yeni kariyerine başlayabilirsin!
+                    </p>
                 </div>
             </div>
         </div>

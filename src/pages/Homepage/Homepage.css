@@ -276,3 +276,33 @@
 }
 
 /* Improve Yourself */
+/*CodeAcademy area*/
+.ca {
+    border-radius: 12px;
+    border: 2px solid #93f;
+    padding: 2em 9em 2em 12em;
+    margin: 0 auto;
+    align-items: center;
+    background-color: #181717;
+    
+}
+
+
+
+.ca h1{
+    font-family: 'Poppins-Bold';
+    margin-top: -2px; 
+    font-size: 2.2em;
+    font-weight: 700;
+    color: #fff;
+    max-width: 700px;
+}
+.ca p {
+
+    font-size: 1.7em;
+    font-weight: 400;
+    color: #fff;
+    margin-top: 1.5em;
+    max-width: 900px;
+}
+/*CodeAcademy area*/

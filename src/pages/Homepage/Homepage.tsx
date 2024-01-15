@@ -3,6 +3,7 @@ import { Tabs, Tab, Container, Button } from 'react-bootstrap';
 import { Card, Image } from 'semantic-ui-react'
 import './Homepage.css'
 import TrainingCard from '../../components/TrainingCard/TrainingCard';
+import { SocialMediaIcon } from '../../components/SocialMediaIcon/SocialMediaIcon';
 
 export default function Homepage() {
     const [buttonContainerStyle, setButtonContainerStyle] = useState({
@@ -149,6 +150,20 @@ export default function Homepage() {
                     <div className="tab-vector2">
                         <Image src="https://tobeto.s3.cloud.ngn.com.tr/04_b3b68891d7.svg?updated_at=2022-07-05T11:08:56.797Z" alt="" width="60" height="60" />
                     </div>
+                </div>
+            </div>
+            <div className='container svgContainer'>
+                <div className='row  fw-bold'>
+
+                    <p>
+                        Tobeto , 20. yy''ın “headhunting” yaklaşımını “headfarming” olarak değiştirmeyi <br /> hedefler!
+                    </p>
+
+                    <p>
+                        Headfarming: Genç yetenekleri, sürekli öğrenme hevesi içinde olan profesyonelleri, 360 <br />
+                        derece eğitmek,değerlendirmek, yönlendirmek ve desteklemektir.
+                    </p>
+
                 </div>
             </div>
         </div>

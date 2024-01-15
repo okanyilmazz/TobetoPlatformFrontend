@@ -32,3 +32,25 @@ code {
 .bg-front-white {
   background-color: #fff !important;
 }
+
+.btn-rainbow:before,
+.btn-rainbow:after {
+  content: "";
+  position: absolute;
+  border-radius: 50px;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.word1,
+.word2 {
+  position: absolute;
+  opacity: 100;
+  color: #fff;
+  font-style: italic !important;
+  background-color: #a24ff5;
+  padding: 0 8px 0 0;
+  margin-left: 8px;
+  border-radius: 6px;
+}

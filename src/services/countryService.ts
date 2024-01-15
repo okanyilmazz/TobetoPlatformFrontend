@@ -4,6 +4,6 @@ import { Paginate } from "../models/paginate";
 
 export default class CountryService {
     getAll(): Promise<AxiosResponse<Paginate<Country>>> {
-        return axios.get<Paginate<Country>>("http://localhost:5257/api/Countries/GetList?PageIndex=0&PageSize=90");
+        return axios.get<Paginate<Country>>("http://localhost:50628/api/Countries/GetList?PageIndex=0&PageSize=6");
     }
 }

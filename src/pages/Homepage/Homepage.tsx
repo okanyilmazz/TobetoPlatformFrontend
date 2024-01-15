@@ -2,22 +2,27 @@ import React, { useState } from 'react'
 import { Tabs, Tab, Container, Button } from 'react-bootstrap';
 import { Card, Image } from 'semantic-ui-react'
 import './Homepage.css'
+import TrainingCard from '../../components/TrainingCard/TrainingCard';
 import { SocialMediaIcon } from '../../components/SocialMediaIcon/SocialMediaIcon';
 
 export default function Homepage() {
-
     const [buttonContainerStyle, setButtonContainerStyle] = useState({
         backgroundColor: 'white ',
         color: 'black'
     });
+    const [buttonClicked, setButtonClicked] = useState(null);
+
+    const handleButtonClick = (buttonName:any) => {
+        setButtonClicked(buttonName);
+      };
 
     function handleContainerStyle() {
+        handleButtonClick("occupation");
         setButtonContainerStyle({
             backgroundColor: '#181717',
             color: 'black'
         });
     }
-
 
     return (
         <div className='homepage bg-front-dark'>
@@ -71,7 +76,8 @@ export default function Homepage() {
                     <div className="row">
                         <div className="col-md-5">
                             <Button className='button-container'
-                                style={{ width: '450px', height: '200px', ...buttonContainerStyle }}>
+                                style={{ width: '450px', height: '200px', ...buttonContainerStyle }}
+                                onClick={() => handleButtonClick('programmingLanguage')}>
 
                                 <h1 style={{ fontFamily: 'Poppins-Bold' }} >
                                     Teknik ve Profesyonel<br />Eğitimler
@@ -92,10 +98,11 @@ export default function Homepage() {
                                 </p>
                             </Button>
                         </div>
-                        <div className="col-md-1">
+                        <div className="col-md-2">
                             {/* Boşluk */}
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-5">
+                            <TrainingCard check={buttonClicked} />
                         </div>
                     </div>
                 </div>

@@ -131,6 +131,26 @@ export default function Homepage() {
                     </p>
                 </div>
             </div>
+            <div>
+                <div className='content-text'>
+                    <div className="tab-vector3">
+                        <Image src="https://tobeto.s3.cloud.ngn.com.tr/dot_white_1e7b4378ec.svg?updated_at=2022-09-20T12:52:57.424Z" alt="" width="120" height="120" />
+                    </div>
+                    <p>
+                        Tobeto Platform'da ücretsiz olarak; sahip olduğun yetkinlikleri değerlendirir,
+                        <br />
+                        ilgi ve bilgi seviyene göre yüzlerce eğitim içeriğine ulaşırsın. Bunları nasıl tamamlayacağını
+                        <br />
+                        hızına, bütçene ve zamanına göre kendin belirlersin.
+                        <br />
+                        <br />
+                        Hemen ücretsiz üye ol, platforma katıl!
+                    </p>
+                    <div className="tab-vector2">
+                        <Image src="https://tobeto.s3.cloud.ngn.com.tr/04_b3b68891d7.svg?updated_at=2022-07-05T11:08:56.797Z" alt="" width="60" height="60" />
+                    </div>
+                </div>
+            </div>
         </div>
 
 

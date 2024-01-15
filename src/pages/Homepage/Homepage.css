@@ -306,3 +306,36 @@
     max-width: 900px;
 }
 /*CodeAcademy area*/
+
+/*Advertisement area*/
+.content-text 
+{
+    margin-top: 50px;
+    position: relative;
+    background: linear-gradient(179.79deg,#93f .18%,#7d19e1 77.21%);
+    height: 288px;
+}
+
+.content-text p
+{
+    color: #fff;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 25px;
+    text-align: center;
+    padding-top: 5%;
+    font-family: 'Poppins-Regular';
+}
+.tab-vector2
+{
+    position: absolute;
+    right: 15%;
+    bottom: 21%;
+}
+.tab-vector3
+{
+    position: absolute;
+    left: 12%;
+    top: 10%;
+}
+/*Advertisement area*/

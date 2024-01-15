@@ -6,9 +6,9 @@ import SignedOut from '../SignedOut/SingedOut';
 export default function Navi() {
     const navigate = useNavigate();
     return (
-        <div>
+        <div className='header'>
             {/* Header */}
-            <div className='header' >
+            <div className='header-banner' >
 
                 <div className='home container'>
                     <div className='img'   >
@@ -36,7 +36,7 @@ export default function Navi() {
                         </div>
 
                         <div id="homeMessagesStyle">
-                            <MenuItem name='Biz Kimiz?' />
+                            <MenuItem as={Link} to="/aboutus" name='Biz Kimiz?' />
                             <Dropdown simple item text='Neler Sunuyoruz?'>
                                 <DropdownMenu>
                                     <DropdownItem>Bireyler İçin</DropdownItem>

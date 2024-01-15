@@ -152,6 +152,20 @@ export default function Homepage() {
                     </div>
                 </div>
             </div>
+            <div className='container svgContainer'>
+                <div className='row  fw-bold'>
+
+                    <p>
+                        Tobeto , 20. yy''ın “headhunting” yaklaşımını “headfarming” olarak değiştirmeyi <br /> hedefler!
+                    </p>
+
+                    <p>
+                        Headfarming: Genç yetenekleri, sürekli öğrenme hevesi içinde olan profesyonelleri, 360 <br />
+                        derece eğitmek,değerlendirmek, yönlendirmek ve desteklemektir.
+                    </p>
+
+                </div>
+            </div>
         </div>
 
 

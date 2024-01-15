@@ -428,3 +428,23 @@
 }
 
 /*Accordion Area*/
+
+/*Partners Area*/
+
+.tobeto-partners {
+    margin-top: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tobeto-partners img {
+    display: flex;
+    width: 150px;
+    align-items: center;
+}
+.partners-enocta {
+    width: 80px !important ; 
+}
+
+/*Partners Area*/

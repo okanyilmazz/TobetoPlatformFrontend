@@ -250,7 +250,38 @@ export default function Homepage() {
                     </Accordion.Item>
                 </Accordion>
             </div>
+            <div className='container'>
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="tobeto-partners">
+                            <a href="https://www.enocta.com/">
+                                <img className='partners-enocta' src="https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fenocta.9d43f28e.png&w=96&q=75" alt="Enocta" />
+                            </a>
 
+                            <a href="https://www.codecademy.com/">
+                                <img src="https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcodecademy.1a1f5478.png&w=1080&q=75" alt="Codeacademy" />
+                            </a>
+
+                            <a href="https://perculus.com/tr">
+                                <img src="https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fperculus.8d1bf42c.png&w=256&q=75" alt="Perculus" />
+                            </a>
+
+                            <a href="https://www.advancity.com.tr/">
+                                <img src="https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fkampus365.801c721d.png&w=256&q=75" alt="Kampüs365" />
+                            </a>
+
+                            <a href="https://www.talent-interview.com/tr/">
+                                <img src="https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fhuawei.0004b5e6.png&w=256&q=75" alt="Huawei" />
+                            </a>
+
+                            <a href="https://www.talent-interview.com/tr/">
+                                <img src="https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Ftalent-interview_logo_disi.dfda1758.png&w=1080&q=75" alt="Talen Interview" />
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

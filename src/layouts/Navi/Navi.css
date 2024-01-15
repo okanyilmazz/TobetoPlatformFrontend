@@ -1,5 +1,12 @@
 /* HEADER */
-.btn {
+.header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+}
+
+.home .btn {
     background: #00b078 !important;
     border: 3px solid #00b078 !important;
     border-radius: 2em !important;
@@ -11,7 +18,7 @@
     font-family: 'Poppins-Regular' !important;
 }
 
-.header {
+.header-banner {
     background-color: #1e0f41;
     height: 72px;
     display: flex;
@@ -21,7 +28,7 @@
 
 .my-custom-image {
     width: 110px;
-    height: 55px;
+    height: 100px;
     margin-left: 48px;
 }
 
@@ -37,7 +44,7 @@
     color: rgb(0, 176, 120);
 }
 
-p {
+.home p {
     font-size: 24px;
     color: white;
     font-weight: bold;

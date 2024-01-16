@@ -63,6 +63,7 @@
     gap: 12px;
     list-style: none;
     font-size: 22px;
+
 }
 
 .list-item li::before {
@@ -74,4 +75,33 @@
     background-position: 50%;
     width: 52px;
     height: 24px;
+}
+
+.Cards1 {
+    max-width: 80% !important;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+
+}
+
+.Cards2 {
+    padding-right: 43px !important;
+    display: grid;
+    grid-template-columns: 190px 190px 190px;
+    margin-top: 72px !important;
+    justify-content: center;
+    font-size: 16px;
+
+}
+
+
+.Cards3 {
+    display: flex;
+    margin-top: 36px !important;
+    justify-content: center;
+    font-size: 16px;
+    padding: 0px 0px 50px 0px !important;
 }

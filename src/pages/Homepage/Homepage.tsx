@@ -3,7 +3,8 @@ import { Button, Accordion } from 'react-bootstrap';
 import { Card, Image } from 'semantic-ui-react'
 import './Homepage.css'
 import TrainingCard from '../../components/TrainingCard/TrainingCard';
-
+import { SocialMediaIcon } from '../../components/SocialMediaIcon/SocialMediaIcon';
+import AboutUsTeamMember from '../../components/TeamCard/TeamCard';
 
 export default function Homepage() {
     const [buttonContainerStyle, setButtonContainerStyle] = useState({
@@ -163,6 +164,10 @@ export default function Homepage() {
                 </div>
             </div>
 
+                    <p>
+                        Headfarming: Genç yetenekleri, sürekli öğrenme hevesi içinde olan profesyonelleri, 360 <br />
+                        derece eğitmek,değerlendirmek, yönlendirmek ve desteklemektir.
+                    </p>
             <div className='container acc'>
                 <Accordion defaultActiveKey="0" className='acc-bg'>
                     <Accordion.Item eventKey="0" >

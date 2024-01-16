@@ -1,4 +1,3 @@
-import React from "react";
 import { MDBFooter, MDBContainer, MDBCol, MDBRow } from "mdb-react-ui-kit";
 import { Link } from "react-router-dom";
 import './Footer.css';
@@ -163,13 +162,13 @@ const Footer = () => {
             <div className="mt-2 ps-2 pe-4 ">
               <p>© 2022 Tobeto | Her Hakkı Saklıdır</p>
             </div>
-            <div> <SocialMediaIcon/> </div>
+            <div> <SocialMediaIcon /> </div>
           </div>
         </MDBCol>
       </MDBContainer>
 
     </MDBFooter>
-    
+
   );
 };
 

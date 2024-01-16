@@ -2,7 +2,10 @@ import { useState } from 'react'
 import { Button, Accordion } from 'react-bootstrap';
 import { Card, Image } from 'semantic-ui-react'
 import './Homepage.css'
-import TrainingCard from '../../components/TrainingCard/TrainingCard';
+import TrainingCard from '../../components/TrainingCard/TrainingCard'
+import IstanbulKodluyorCard from '../../components/IstanbulKodluyorCard/IstanbulKodluyorCard';
+
+
 
 
 export default function Homepage() {
@@ -26,7 +29,6 @@ export default function Homepage() {
 
     return (
         <div className='homepage'>
-
             <div className='card-group col-md-6 container'>
                 <Card className='col-md-6 col-sm-12 tobeto-card'>
                     <Card.Content>
@@ -46,27 +48,13 @@ export default function Homepage() {
                     </Card.Content>
                 </Card>
 
-                <Card className='col-md-6 col-sm-12 ik-card'>
-                    <Card.Content>
-                        <div className='content-top'>
-                            <div className='content-left'>
-                                <div className='text-ik'>
-                                    <span>Aradığın
-                                        <span style={{ color: 'rgb(0, 176, 120)', marginRight: '0', marginLeft: '5px' }}>"</span>iş<span style={{ color: 'rgb(0, 176, 120)', marginLeft: '0', marginRight: '5px', }}>"</span>
-                                        Burada!</span>
-                                    <div id='circle'></div>
-                                </div>
-                            </div>
-                            <div className='content-right'>
-                                <Image src="https://tobeto.com/_next/static/media/ik-logo-light.ace655db.svg" size='small' />
-                            </div>
-                        </div>
-
-                        <div className='content-bottom'>
-                            <Button>Başvur</Button>
-                        </div>
-                    </Card.Content>
-                </Card>
+                <div className='col-md-6 col-sm-12'>
+                    <IstanbulKodluyorCard title={
+                        <span>Aradığın
+                            <span style={{ color: 'rgb(0, 176, 120)', marginRight: '0', marginLeft: '5px' }}>"</span>iş<span style={{ color: 'rgb(0, 176, 120)', marginLeft: '0', marginRight: '5px', }}>"</span>
+                            Burada!</span>
+                    } />
+                </div>
 
             </div>
 
@@ -136,7 +124,7 @@ export default function Homepage() {
                 </div>
             </div>
 
-            <div className='container-fluid'>
+            <div className='container-fluid advertisement'>
                 <div className='content-text '>
                     <div className="tab-vector3">
                         <Image src="https://tobeto.s3.cloud.ngn.com.tr/dot_white_1e7b4378ec.svg?updated_at=2022-09-20T12:52:57.424Z" alt="" width="120" height="120" />
@@ -159,6 +147,125 @@ export default function Homepage() {
                         <p>Tobeto , 20. yy''ın “headhunting” yaklaşımını “headfarming” olarak değiştirmeyi hedefler!</p>
                         <p>Headfarming: Genç yetenekleri, sürekli öğrenme hevesi içinde olan profesyonelleri, 360
                             derece eğitmek,değerlendirmek, yönlendirmek ve desteklemektir.</p>
+                    </div>
+                </div>
+            </div>
+            <div className='container acc'>
+                <Accordion defaultActiveKey="0" className='acc-bg'>
+                    <Accordion.Item eventKey="0" >
+                        <Accordion.Header>Tobeto "Yazılımda Başarı" Testi & Huawei Talent Interview</Accordion.Header>
+                        <Accordion.Body>
+                            <div className='content'>
+                                <div>
+                                    <span>
+                                        Tobeto"da kendini sürekli değerlendirerek, öğrenim yolculuğunu kişiselleştirebilir ve işe hazırlık sürecine yön verebilirsin. <br />
+                                        - Ücretsiz sunduğumuz  Tobeto "Yazılımda Başarı" Testi ile teknik bilgi ve yetkinliklerini kolaylıkla ölç. <br />
+                                        - Aldığın mesleki eğitimlerin sonunda uluslararası geçerliliğe sahip Huawei Talent Interview teknik bilgi sınavları ile öğrendiğine emin ol, rozetini al. <br />
+                                    </span>
+                                </div>
+                                <div>
+                                    <Image src="https://tobeto.com/a1.png" ></Image>
+                                </div>
+                            </div>
+
+                        </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="1">
+                        <Accordion.Header>Tobeto Kişisel Gelişim Envanteri</Accordion.Header>
+                        <Accordion.Body>
+                            <div className='content'>
+                                <div>
+                                    <span> Yeni bir meslek. Daha yüksek ücret. Uzaktan çalışma. Hedeflediğin ne olursa olsun, hepsine uygun bir yol mutlaka var. Bir sonraki hamleni planlamaya başlamadan önce üyelerimize ücretsiz sunduğumuz Tobeto Kişisel Gelişim Envanteri'mizi yap, kendin için en uygun kariyer alanlarını keşfet.</span>
+                                </div>
+                                <div>
+                                    <Image src="https://tobeto.com/a2.png" ></Image>
+                                </div>
+                            </div>
+                        </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="2">
+                        <Accordion.Header>Codeacademy & Tobeto</Accordion.Header>
+                        <Accordion.Body>
+                            <div className='content'>
+                                <div>
+                                    <span>Codecademy; 50 milyondan fazla üyesinin yeni teknolojik beceriler konusunda meraklanması, projelere imza atması, kariyerini geliştirmesine yardımcı olan bir online kodlama eğitimi platformudur. Tobeto'nun, gerçek zamanlı, kendi hızında, etkileşimli öğrenme ortamıyla öğrenmek daha kolay! Üstelik, Türkçe derslerimiz ve öğrenmeni destekleyici kaynaklarımız bu süreci kolaylaştırmak ve hızlandırmak için senin yanında!</span>
+                                </div>
+                                <div>
+                                    <Image src="https://tobeto.com/calogo.png" ></Image>
+                                </div>
+                            </div>
+                        </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="3">
+                        <Accordion.Header>Bilgiyi Beceriye Çevirme</Accordion.Header>
+                        <Accordion.Body>
+                            <div className='content'>
+                                <div>
+                                    <span> Canlı dersler, becerilerini derinleştirebileceğin uygulamalar, gerçek senaryoları deneyimleyebileceğin projeler ve mentör desteği ile becerilerini geliştir, süreci kendin yönet. </span>
+                                </div>
+                                <div>
+                                    <Image src="https://tobeto.com/a5.png" ></Image>
+                                </div>
+                            </div>
+                        </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="4">
+                        <Accordion.Header>Doğru İş İle Eşleşme</Accordion.Header>
+                        <Accordion.Body>
+                            <div className='content'>
+                                <div>
+                                    <span>Uzmanlığın için yeni becerileri kazanmak (reskill) veya yeni bir role başlamak (upskill) için gelişim yolculuğunu tamamla, profilini güncelle, teknoloji odaklı iş fırsatlarıyla eşleş. </span>
+                                </div>
+                                <div>
+                                    <Image src="https://tobeto.com/a6.png" ></Image>
+                                </div>
+                            </div>
+                        </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="5">
+                        <Accordion.Header>Hayat Boyu öğrenme</Accordion.Header>
+                        <Accordion.Body>
+                            <div className='content'>
+                                <div>
+                                    <span> Sürekli öğrenme ve sürdürebilir gelişim için Tobeto topluluğuna dahil ol.</span>
+                                </div>
+                                <div>
+                                    <Image src="https://tobeto.com/a4.png" ></Image>
+                                </div>
+                            </div>
+                        </Accordion.Body>
+                    </Accordion.Item>
+                </Accordion>
+            </div>
+
+            <div className='container mb-5'>
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="tobeto-partners">
+                            <a href="https://www.enocta.com/">
+                                <img className='partners-enocta' src="https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fenocta.9d43f28e.png&w=96&q=75" alt="Enocta" />
+                            </a>
+
+                            <a href="https://www.codecademy.com/">
+                                <img src="https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcodecademy.1a1f5478.png&w=1080&q=75" alt="Codeacademy" />
+                            </a>
+
+                            <a href="https://perculus.com/tr">
+                                <img src="https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fperculus.8d1bf42c.png&w=256&q=75" alt="Perculus" />
+                            </a>
+
+                            <a href="https://www.advancity.com.tr/">
+                                <img src="https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fkampus365.801c721d.png&w=256&q=75" alt="Kampüs365" />
+                            </a>
+
+                            <a href="https://www.talent-interview.com/tr/">
+                                <img src="https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fhuawei.0004b5e6.png&w=256&q=75" alt="Huawei" />
+                            </a>
+
+                            <a href="https://www.talent-interview.com/tr/">
+                                <img src="https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Ftalent-interview_logo_disi.dfda1758.png&w=1080&q=75" alt="Talen Interview" />
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -36,11 +36,11 @@ export default function Navi() {
                         </div>
 
                         <div id="homeMessagesStyle">
-                            <MenuItem as={Link} to="/aboutus" name='Biz Kimiz?' />
+                            <MenuItem as={Link} to="/about" name='Biz Kimiz?' />
                             <Dropdown simple item text='Neler Sunuyoruz?'>
                                 <DropdownMenu>
                                     <DropdownItem>Bireyler İçin</DropdownItem>
-                                    <DropdownItem>Kurumlar İçin</DropdownItem>
+                                    <DropdownItem as={Link} to="/for-institutions">Kurumlar İçin</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
 

@@ -3,6 +3,7 @@
     display: grid;
     grid-template-rows: auto auto;
     grid-template-columns: 100%;
+    margin-top: 12rem !important;
 }
 
 .card-group {
@@ -281,7 +282,6 @@
     border-radius: 12px;
     border: 2px solid #93f;
     padding: 2em 9em 2em 12em;
-    margin: 0 auto;
     align-items: center;
     background-color: #181717;
 
@@ -343,15 +343,108 @@
 
 /* svgContainer */
 
-.svgContainer {
+.headfarming-area {
     background: url(/public/assets/animations/headfarmingAnimation.svg) no-repeat;
     background-position-y: 50%;
     background-size: contain;
     color: white;
     text-align: center;
-    font-size: 22.5px;
+    font-size: 20px;
     padding: 35px;
     margin-top: 50px;
 }
 
 /* svgContainer */
+
+/*Accordion Area*/
+.acc {
+    padding: 0;
+    margin-top: 72px;
+}
+
+.acc-bg {
+    padding-top: 2.5rem !important;
+    padding-bottom: 2.5rem !important;
+    background: #2f2f2f !important;
+    border-radius: 25px;
+}
+
+.accordion .accordion-item,
+.accordion .accordion-header,
+.accordion .accordion-button {
+    background: #2f2f2f !important;
+    box-shadow: none !important;
+
+}
+
+.accordion .accordion-button:after {
+    background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+}
+
+.accordion .accordion-item {
+    border: 0;
+    padding-left: 32px;
+    padding-right: 32px;
+    margin-bottom: 20px;
+}
+
+.accordion-body {
+    border-bottom: 2px solid #272727 !important;
+}
+
+.accordion-button {
+    border-bottom: 2px solid #272727 !important;
+}
+
+.accordion-button:not(.collapsed) {
+    color: #9933FF !important;
+}
+
+.accordion .accordion-button {
+    color: #9933FF;
+    font-size: 20px;
+    font-family: 'Poppins-Bold';
+    padding: 20px;
+}
+
+
+.accordion-body .content {
+    display: grid;
+    grid-template-columns: 71% 25%;
+    padding-right: 20px;
+    column-gap: 6%;
+}
+
+.accordion-body span {
+    font-size: 17px;
+    font-family: 'Poppins-Regular';
+    color: #fff;
+    max-width: 90%;
+    line-height: 28px;
+}
+
+.accordion-body img {
+    border-radius: 20px;
+}
+
+/*Accordion Area*/
+
+/*Partners Area*/
+
+.tobeto-partners {
+    margin-top: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.tobeto-partners img {
+    display: flex;
+    width: 150px;
+    align-items: center;
+}
+.partners-enocta {
+    width: 80px !important ; 
+}
+
+/*Partners Area*/

@@ -1,0 +1,43 @@
+.calendarCommon {
+    color: white !important;
+}
+
+.fc-day {
+    background-color: white;
+}
+
+.fc-daygrid-day {
+    background-color: white;
+}
+
+.fc .fc-toolbar.fc-header-toolbar {
+    margin-bottom: 1.5em;
+}
+.fc .fc-toolbar {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.fc, .fc *, .fc ::after, .fc ::before {
+    box-sizing: border-box;
+}
+
+.fc .fc-daygrid-day-top {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.fc .fc-col-header-cell-cushion, .fc .fc-toolbar-title {
+    color: #828282 !important;
+    font-weight: 400 !important;
+}
+
+.fc .fc-col-header-cell-cushion {
+    display: inline-block;
+    padding: 2px 4px;
+    
+}
+.fc-col-header-cell-cushion {
+    text-decoration: none !important;
+}

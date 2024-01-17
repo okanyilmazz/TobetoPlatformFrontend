@@ -36,11 +36,11 @@ export default function Navi() {
                         </div>
 
                         <div id="homeMessagesStyle">
-                            <MenuItem as={Link} to="/about" name='Biz Kimiz?' />
+                            <MenuItem as={Link} to="/hakkimizda" name='Biz Kimiz?' />
                             <Dropdown simple item text='Neler Sunuyoruz?'>
                                 <DropdownMenu>
-                                    <DropdownItem>Bireyler İçin</DropdownItem>
-                                    <DropdownItem as={Link} to="/for-institutions">Kurumlar İçin</DropdownItem>
+                                    <DropdownItem as={Link} to="/bireyler-icin">Bireyler İçin</DropdownItem>
+                                    <DropdownItem as={Link} to="/kurumlar-icin">Kurumlar İçin</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
 
@@ -50,7 +50,7 @@ export default function Navi() {
                                 <DropdownMenu>
                                     <DropdownItem>Blog</DropdownItem>
                                     <DropdownItem>Basında Biz</DropdownItem>
-                                    <DropdownItem>Takvim</DropdownItem>
+                                    <DropdownItem as={Link} to="/takvim-anasayfa">Takvim</DropdownItem>
                                     <DropdownItem>İstanbul Kodluyor</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>

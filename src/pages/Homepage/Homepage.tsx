@@ -2,9 +2,12 @@ import { useState } from 'react'
 import { Button, Accordion } from 'react-bootstrap';
 import { Card, Image } from 'semantic-ui-react'
 import './Homepage.css'
-import TrainingCard from '../../components/TrainingCard/TrainingCard';
+import TrainingCard from '../../components/TrainingCard/TrainingCard'
 import { SocialMediaIcon } from '../../components/SocialMediaIcon/SocialMediaIcon';
 import AboutUsTeamMember from '../../components/TeamCard/TeamCard';
+import IstanbulKodluyorCard from '../../components/IstanbulKodluyorCard/IstanbulKodluyorCard';
+// import IstanbulKodluyorCard from '../../components/IstanbulKodluyorCard/IstanbulKodluyorCard';
+
 
 export default function Homepage() {
     const [buttonContainerStyle, setButtonContainerStyle] = useState({
@@ -27,7 +30,6 @@ export default function Homepage() {
 
     return (
         <div className='homepage'>
-
             <div className='card-group col-md-6 container'>
                 <Card className='col-md-6 col-sm-12 tobeto-card'>
                     <Card.Content>
@@ -47,27 +49,13 @@ export default function Homepage() {
                     </Card.Content>
                 </Card>
 
-                <Card className='col-md-6 col-sm-12 ik-card'>
-                    <Card.Content>
-                        <div className='content-top'>
-                            <div className='content-left'>
-                                <div className='text-ik'>
-                                    <span>Aradığın
-                                        <span style={{ color: 'rgb(0, 176, 120)', marginRight: '0', marginLeft: '5px' }}>"</span>iş<span style={{ color: 'rgb(0, 176, 120)', marginLeft: '0', marginRight: '5px', }}>"</span>
-                                        Burada!</span>
-                                    <div id='circle'></div>
-                                </div>
-                            </div>
-                            <div className='content-right'>
-                                <Image src="https://tobeto.com/_next/static/media/ik-logo-light.ace655db.svg" size='small' />
-                            </div>
-                        </div>
-
-                        <div className='content-bottom'>
-                            <Button>Başvur</Button>
-                        </div>
-                    </Card.Content>
-                </Card>
+                <div className='col-md-6 col-sm-12'>
+                    <IstanbulKodluyorCard title={
+                        <span>Aradığın
+                            <span style={{ color: 'rgb(0, 176, 120)', marginRight: '0', marginLeft: '5px' }}>"</span>iş<span style={{ color: 'rgb(0, 176, 120)', marginLeft: '0', marginRight: '5px', }}>"</span>
+                            Burada!</span>
+                    } />
+                </div>
 
             </div>
 
@@ -137,7 +125,7 @@ export default function Homepage() {
                 </div>
             </div>
 
-            <div className='container-fluid'>
+            <div className='container-fluid advertisement'>
                 <div className='content-text '>
                     <div className="tab-vector3">
                         <Image src="https://tobeto.s3.cloud.ngn.com.tr/dot_white_1e7b4378ec.svg?updated_at=2022-09-20T12:52:57.424Z" alt="" width="120" height="120" />
@@ -163,11 +151,6 @@ export default function Homepage() {
                     </div>
                 </div>
             </div>
-
-                    <p>
-                        Headfarming: Genç yetenekleri, sürekli öğrenme hevesi içinde olan profesyonelleri, 360 <br />
-                        derece eğitmek,değerlendirmek, yönlendirmek ve desteklemektir.
-                    </p>
             <div className='container acc'>
                 <Accordion defaultActiveKey="0" className='acc-bg'>
                     <Accordion.Item eventKey="0" >
@@ -255,7 +238,8 @@ export default function Homepage() {
                     </Accordion.Item>
                 </Accordion>
             </div>
-            <div className='container'>
+
+            <div className='container mb-5'>
                 <div className="row">
                     <div className="col-md-12">
                         <div className="tobeto-partners">
@@ -282,7 +266,6 @@ export default function Homepage() {
                             <a href="https://www.talent-interview.com/tr/">
                                 <img src="https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Ftalent-interview_logo_disi.dfda1758.png&w=1080&q=75" alt="Talen Interview" />
                             </a>
-
                         </div>
                     </div>
                 </div>

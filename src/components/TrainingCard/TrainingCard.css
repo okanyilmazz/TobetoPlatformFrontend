@@ -12,24 +12,25 @@
     width: 88%;
 }
 
-.training-content{
+.training-content {
     background-color: #2f2f22;
     border-radius: 15px;
     height: 630px;
 }
 
 .training-content .training-card-group {
-    display:grid;
+    display: grid;
     grid-template-columns: 1fr 1fr;
     justify-items: center;
 }
-.card-body {
+
+.training-card-group .card-body {
     color: black;
     line-height: 27px;
     font-weight: 900;
     font-size: 30px !important;
     text-align: center;
-    font-family:'Poppins-Bold';
+    font-family: 'Poppins-Bold';
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,8 +38,8 @@
     overflow: hidden;
     max-width: -webkit-fill-available;
     text-overflow: ellipsis;
-  }
-.card-body span{
-    max-width: -webkit-fill-available;
 }
 
+.training-card-group .card-body span {
+    max-width: -webkit-fill-available;
+}

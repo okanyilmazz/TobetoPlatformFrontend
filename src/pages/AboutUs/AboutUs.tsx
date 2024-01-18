@@ -9,6 +9,7 @@ import { SocialMediaIcon } from '../../components/SocialMediaIcon/SocialMediaIco
 function AboutUs() {
     return (
         <div className=' bg-front-dark about-content'  >
+
             <Container >
                 <Row className='aboutUs'>
                     <Col md={2}>
@@ -58,7 +59,7 @@ function AboutUs() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
 
             <div className='tobeto-slogan'>
                 <span>Tobeto ile işe hazırlan, işe yerleş, işinde geliş, yüksel!</span>

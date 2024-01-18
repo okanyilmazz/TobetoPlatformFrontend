@@ -43,6 +43,12 @@ code {
   z-index: -1;
 }
 
+.ui.button:hover {
+color: inherit !important;
+background-color: inherit !important;
+border-color: inherit !important;
+
+}
 .word1,
 .word2 {
   position: absolute;

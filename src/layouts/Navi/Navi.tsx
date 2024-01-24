@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Dropdown, DropdownItem, DropdownMenu, Image, Menu, MenuItem, Button } from 'semantic-ui-react';
 import './Navi.css';
 import SignedOut from '../SignedOut/SingedOut';
+import { Image, Dropdown, DropdownItem, DropdownMenu, Menu, MenuItem, Button } from 'semantic-ui-react';
 
 export default function Navi() {
     const navigate = useNavigate();
@@ -14,7 +14,6 @@ export default function Navi() {
                     <div className='img'   >
                         <Image className='my-custom-image' src="https://tobeto.com/_next/static/media/ik-logo-light.ace655db.svg"></Image>
                     </div>
-
                     <div >
                         <p>Aradığın <span >"</span>İş<span >"</span> Burada!</p>
                     </div>
@@ -43,7 +42,6 @@ export default function Navi() {
                                     <DropdownItem as={Link} to="/kurumlar-icin">Kurumlar İçin</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
-
                             <MenuItem name='Catalog' />
                             <MenuItem name='Codeacademy' />
                             <Dropdown simple item text="Tobeto'da Bu Ay">

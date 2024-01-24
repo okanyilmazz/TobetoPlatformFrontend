@@ -83,6 +83,7 @@
     gap: 12px;
     list-style: none;
     font-size: 22px;
+
 }
 
 .list-item li::before {
@@ -141,7 +142,6 @@
 /* Line */
 
 /* Office */
-
 .tobeto-office {
     background-color: #36184f;
     text-align: center;
@@ -162,7 +162,6 @@
 /* Office */
 
 /* Social Media */
-
 .follow-us {
     font-family: 'Poppins-Bold';
     font-size: 24px;

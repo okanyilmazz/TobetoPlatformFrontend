@@ -16,9 +16,7 @@ export default function TrainingCard(props: any) {
     programmingLanguageService.getAll().then(result => {
       setProgrammingLanguages(result.data)
     })
-  }, []);
 
-  useEffect(() => {
     countryService.getAll().then(result => {
       setCountries(result.data)
     })

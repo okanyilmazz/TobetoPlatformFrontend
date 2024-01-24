@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Card } from 'react-bootstrap'
 import './TrainingCard.css'
 import { Paginate } from '../../models/paginate';
-import ProgrammingLanguageService from '../../services/programmingLanguageService';
-import CountryService from '../../services/countryService';
 import { GetListCountryResponse } from '../../models/responses/country/getListCountryResponse';
 import GetListProgrammingLanguageResponse from '../../models/responses/programmingLanguage/getListProgrammingLanguageResponse';
+import countryService from '../../services/countryService';
+import programmingLanguageService from '../../services/programmingLanguageService';
 
 
 export default function TrainingCard(props: any) {
@@ -13,14 +13,12 @@ export default function TrainingCard(props: any) {
   const [countries, setCountries] = useState<Paginate<GetListCountryResponse>>();
 
   useEffect(() => {
-    let programmingLanguageService = new ProgrammingLanguageService()
     programmingLanguageService.getAll().then(result => {
       setProgrammingLanguages(result.data)
     })
   }, []);
 
   useEffect(() => {
-    let countryService = new CountryService()
     countryService.getAll().then(result => {
       setCountries(result.data)
     })

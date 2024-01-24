@@ -1,12 +1,24 @@
-import { Paginate } from "../models/paginate";
+import { BaseService } from "../core/services/baseService";
 import GetListAnnouncementProjectResponse from "../models/responses/announcementProject/getListAnnouncementProjectResponse";
-import axios, { AxiosResponse } from "axios";
+import GetAnnouncementProjectResponse from "../models/responses/announcementProject/getAnnouncementProjectResponse";
+import AddAnnouncementProjectRequest from "../models/requests/announcementProject/addAnnouncementProjectRequest";
+import AddedAnnouncementProjectResponse from "../models/responses/announcementProject/addedAnnouncementProjectResponse";
+import UpdateAnnouncementProjectRequest from "../models/requests/announcementProject/updateAnnouncementProjectRequest";
+import UpdatedAnnouncementProjectResponse from "../models/responses/announcementProject/updatedAnnouncementProjectResponse";
+import { Paginate } from "../models/paginate";
 
-class AnnouncementProjectService {
-    getAll(): Promise<AxiosResponse<Paginate<GetListAnnouncementProjectResponse>>> {
-        return axios.get<Paginate<GetListAnnouncementProjectResponse>>("http://localhost:50628/api/AnnouncementProjects/GetList?PageIndex=0&PageSize=6");
+class AnnouncementProjectService extends BaseService<
+    Paginate<GetListAnnouncementProjectResponse>,
+    GetAnnouncementProjectResponse,
+    AddAnnouncementProjectRequest,
+    AddedAnnouncementProjectResponse,
+    UpdateAnnouncementProjectRequest,
+    UpdatedAnnouncementProjectResponse
+> {
+    constructor() {
+        super()
+        this.apiUrl = "AnnouncementProjects/GetList?PageIndex=0&PageSize=4"
     }
 }
 
-
-export default new AnnouncementProjectService()
+export default new AnnouncementProjectService();

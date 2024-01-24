@@ -4,8 +4,44 @@ import ApplicationCard from '../../components/ApplicationCard/ApplicationCard'
 import EducationCard from '../../components/EducationCard/EducationCard'
 import SurveyCard from '../../components/SurveyCard/SurveyCard'
 import AnnouncementCard from '../../components/AnnouncementCard/AnnouncementCard'
+import { useEffect, useState } from 'react'
+import { Paginate } from '../../models/paginate'
+import { GetListEducationProgramResponse } from '../../models/responses/educationProgram/getListEducationProgramResponse'
+import GetListAnnouncementProjectResponse from '../../models/responses/announcementProject/getListAnnouncementProjectResponse'
+import educationProgramService from '../../services/educationProgramService'
+import announcementProjectService from '../../services/announcementProjectService'
+import ShowMoreButton from '../../components/ShowMoreButton/ShowMoreButton'
 
 export default function PlatformPage() {
+    const [educationPrograms, setEducationPrograms] = useState<Paginate<GetListEducationProgramResponse>>();
+    const [announcementProjects, setAnnouncementProjects] = useState<Paginate<GetListAnnouncementProjectResponse>>();
+
+    useEffect(() => {
+        educationProgramService.getAll().then(result => {
+            setEducationPrograms(result.data);
+        })
+        announcementProjectService.getAll().then(result => {
+            setAnnouncementProjects(result.data);
+        })
+    }, [])
+
+    function formatCustomDate(inputDate: Date) {
+        const months = [
+            "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+            "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"
+        ];
+
+        const date = new Date(inputDate);
+        const day = date.getDate();
+        const monthIndex = date.getMonth();
+        const year = date.getFullYear();
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+
+        const formattedDate = `${day} ${months[monthIndex]} ${year} ${hours}:${minutes}`;
+        return formattedDate;
+    }
+
     return (
         <div className='platform bg-front-white'>
             <div className="platform-content bg-front-white">
@@ -42,16 +78,38 @@ export default function PlatformPage() {
                             >
                                 <Tab eventKey="applications" title="Başvurularım">
                                     <div className='tab-application-content'>
-                                        <ApplicationCard />
+                                        <ApplicationCard
+                                            projectName={"İstanbul Kodluyor"}
+                                            applicationStage1={"İstanbul Kodluyor Başvuru Formu onaylandı."}
+                                            applicationStage2={"İstanbul Kodluyor Belge Yükleme Formu onaylandı."}
+                                        />
                                     </div>
                                 </Tab>
                                 <Tab eventKey="educations" title="Eğitimlerim">
-                                    <div className='tab-application-content'>
-                                        <EducationCard />
+                                    <div className='tab-education-content'>
+                                        {
+                                            educationPrograms?.items.map((educationProgram) => (
+                                                <EducationCard
+                                                    title={educationProgram.name}
+                                                    date={formatCustomDate(educationProgram.startDate)} />
+                                            ))
+                                        }
                                     </div>
+                                    <ShowMoreButton />
                                 </Tab>
-                                <Tab eventKey="contacts" title="Duyuru ve Haberlerim">
-                                    <AnnouncementCard />
+                                <Tab eventKey="announcements" title="Duyuru ve Haberlerim">
+                                    <div className='tab-announcement-content'>
+                                        {
+                                            announcementProjects?.items.map((announcementProject) => (
+                                                <AnnouncementCard
+                                                    projectName={announcementProject.project.name}
+                                                    announcementName={announcementProject.announcement.title}
+                                                    announcementDate={formatCustomDate(announcementProject.announcement.announcementDate)}
+                                                />
+                                            ))
+                                        }
+                                    </div>
+                                    <ShowMoreButton />
                                 </Tab>
                                 <Tab eventKey="surveys" title="Anketlerim">
                                     <div className='tab-application-content'>

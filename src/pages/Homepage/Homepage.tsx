@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Button, Accordion } from 'react-bootstrap';
-import { Card, Image } from 'semantic-ui-react'
 import './Homepage.css'
 import TrainingCard from '../../components/TrainingCard/TrainingCard'
-import IstanbulKodluyorCard from '../../components/IstanbulKodluyorCard/IstanbulKodluyorCard';
+import IstanbulCard from '../../components/IstanbulCard/IstanbulCard';
+import { Card, Image } from 'semantic-ui-react';
 
 
 
@@ -49,9 +49,9 @@ export default function Homepage() {
                 </Card>
 
                 <div className='col-md-6 col-sm-12'>
-                    <IstanbulKodluyorCard title={
+                    <IstanbulCard title={
                         <span>Aradığın
-                            <span style={{ color: 'rgb(0, 176, 120)', marginRight: '0', marginLeft: '5px' }}>"</span>iş<span style={{ color: 'rgb(0, 176, 120)', marginLeft: '0', marginRight: '5px', }}>"</span>
+                            <span className='quote' id='left-quote'>"</span>iş<span className='quote' id='right-quote'>"</span>
                             Burada!</span>
                     } />
                 </div>
@@ -269,95 +269,6 @@ export default function Homepage() {
                     </div>
                 </div>
             </div>
-
-            <div className='container acc'>
-                <Accordion defaultActiveKey="0" className='acc-bg'>
-                    <Accordion.Item eventKey="0" >
-                        <Accordion.Header>Tobeto "Yazılımda Başarı" Testi & Huawei Talent Interview</Accordion.Header>
-                        <Accordion.Body>
-                            <div className='content'>
-                                <div>
-                                    <span>
-                                        Tobeto"da kendini sürekli değerlendirerek, öğrenim yolculuğunu kişiselleştirebilir ve işe hazırlık sürecine yön verebilirsin. <br />
-                                        - Ücretsiz sunduğumuz  Tobeto "Yazılımda Başarı" Testi ile teknik bilgi ve yetkinliklerini kolaylıkla ölç. <br />
-                                        - Aldığın mesleki eğitimlerin sonunda uluslararası geçerliliğe sahip Huawei Talent Interview teknik bilgi sınavları ile öğrendiğine emin ol, rozetini al. <br />
-                                    </span>
-                                </div>
-                                <div>
-                                    <Image src="https://tobeto.com/a1.png" ></Image>
-                                </div>
-                            </div>
-
-                        </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="1">
-                        <Accordion.Header>Tobeto Kişisel Gelişim Envanteri</Accordion.Header>
-                        <Accordion.Body>
-                            <div className='content'>
-                                <div>
-                                    <span> Yeni bir meslek. Daha yüksek ücret. Uzaktan çalışma. Hedeflediğin ne olursa olsun, hepsine uygun bir yol mutlaka var. Bir sonraki hamleni planlamaya başlamadan önce üyelerimize ücretsiz sunduğumuz Tobeto Kişisel Gelişim Envanteri'mizi yap, kendin için en uygun kariyer alanlarını keşfet.</span>
-                                </div>
-                                <div>
-                                    <Image src="https://tobeto.com/a2.png" ></Image>
-                                </div>
-                            </div>
-                        </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="2">
-                        <Accordion.Header>Codeacademy & Tobeto</Accordion.Header>
-                        <Accordion.Body>
-                            <div className='content'>
-                                <div>
-                                    <span>Codecademy; 50 milyondan fazla üyesinin yeni teknolojik beceriler konusunda meraklanması, projelere imza atması, kariyerini geliştirmesine yardımcı olan bir online kodlama eğitimi platformudur. Tobeto'nun, gerçek zamanlı, kendi hızında, etkileşimli öğrenme ortamıyla öğrenmek daha kolay! Üstelik, Türkçe derslerimiz ve öğrenmeni destekleyici kaynaklarımız bu süreci kolaylaştırmak ve hızlandırmak için senin yanında!</span>
-                                </div>
-                                <div>
-                                    <Image src="https://tobeto.com/calogo.png" ></Image>
-                                </div>
-                            </div>
-                        </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="3">
-                        <Accordion.Header>Bilgiyi Beceriye Çevirme</Accordion.Header>
-                        <Accordion.Body>
-                            <div className='content'>
-                                <div>
-                                    <span> Canlı dersler, becerilerini derinleştirebileceğin uygulamalar, gerçek senaryoları deneyimleyebileceğin projeler ve mentör desteği ile becerilerini geliştir, süreci kendin yönet. </span>
-                                </div>
-                                <div>
-                                    <Image src="https://tobeto.com/a5.png" ></Image>
-                                </div>
-                            </div>
-                        </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="4">
-                        <Accordion.Header>Doğru İş İle Eşleşme</Accordion.Header>
-                        <Accordion.Body>
-                            <div className='content'>
-                                <div>
-                                    <span>Uzmanlığın için yeni becerileri kazanmak (reskill) veya yeni bir role başlamak (upskill) için gelişim yolculuğunu tamamla, profilini güncelle, teknoloji odaklı iş fırsatlarıyla eşleş. </span>
-                                </div>
-                                <div>
-                                    <Image src="https://tobeto.com/a6.png" ></Image>
-                                </div>
-                            </div>
-                        </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="5">
-                        <Accordion.Header>Hayat Boyu öğrenme</Accordion.Header>
-                        <Accordion.Body>
-                            <div className='content'>
-                                <div>
-                                    <span> Sürekli öğrenme ve sürdürebilir gelişim için Tobeto topluluğuna dahil ol.</span>
-                                </div>
-                                <div>
-                                    <Image src="https://tobeto.com/a4.png" ></Image>
-                                </div>
-                            </div>
-                        </Accordion.Body>
-                    </Accordion.Item>
-                </Accordion>
-            </div>
-
         </div>
     )
 }

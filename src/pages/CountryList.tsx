@@ -1,15 +1,14 @@
 import { useState, useEffect } from "react";
-import CountryService from "../services/countryService";
 import { Paginate } from "../models/paginate";
 import { Table } from "semantic-ui-react";
 import { GetListCountryResponse } from "../models/responses/country/getListCountryResponse";
+import countryService from "../services/countryService";
 
 export default function CountryList() {
 
     const [countries, setCountries] = useState<Paginate<GetListCountryResponse>>();
 
     useEffect(() => {
-        let countryService = new CountryService()
         countryService.getAll().then(result => {
             setCountries(result.data)
         })

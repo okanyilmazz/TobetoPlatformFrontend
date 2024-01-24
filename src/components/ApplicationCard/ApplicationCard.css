@@ -10,6 +10,7 @@
     min-height: 124px;
     height: 100%;
     width: fit-content;
+    border-radius: 8px;
 }
 
 .application-card .application-card-content {

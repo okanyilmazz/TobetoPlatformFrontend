@@ -1,5 +1,4 @@
 .announcement-card-content {
-    padding: 2rem;
     justify-content: space-between;
     padding-bottom: 0;
 }
@@ -44,6 +43,10 @@
     font-size: 12px;
     font-family: 'Poppins-Medium';
 
+}
+
+.announcement-card-content .content .announcement-footer span {
+    display: flex;
 }
 
 .announcement-card-content .content .announcement-footer span:first-child::before {

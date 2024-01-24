@@ -93,10 +93,23 @@
     padding: 1rem;
 }
 
-.tab-application-content {
-    margin-top: 2.5rem;
+.tab-application-content,
+.tab-announcement-content,
+.tab-education-content {
+    margin-top: 3rem;
 }
 
+.tab-application-content {
+    padding-left: 14px;
+    margin-bottom: 1rem;
+}
+
+.tab-education-content,
+.tab-announcement-content {
+    display: flex;
+    justify-content: space-around;
+
+}
 
 .platform-tab-menu .tab-menu {
     border: 0 !important;

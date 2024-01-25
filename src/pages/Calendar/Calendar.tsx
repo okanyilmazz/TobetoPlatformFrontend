@@ -26,10 +26,10 @@ const Calendar = (props: Props) => {
   }, [events]);
 
   return (
-    <div  className="container mt-5">
-      <div  className='calendarCommon'>
+    <div className="container mt-5">
+      <div className='calendarCommon'>
         <div style={{ margin: '200px' }} className="card p-5">
-          <FullCalendar 
+          <FullCalendar
             locales={[trLocale]}
             locale="tr"
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
@@ -44,10 +44,10 @@ const Calendar = (props: Props) => {
             selectMirror={true}
             weekends={true}
             events={events}
-            select={(arg) => handleDateSelect(arg)} // tarihlerden herhangi birisi seçildiğinde tetiklenir.
+            select={(arg: any) => handleDateSelect(arg)} // tarihlerden herhangi birisi seçildiğinde tetiklenir.
             eventContent={renderEventContent} // tarihlerin gösterileceği fonksiyon, aslında bir component
-            eventClick={(arg) => console.log(arg)} // tarihin içindeki eventlere tıklandığında tetiklenir
-            eventsSet={(arg) => console.log(arg)} // ay,hafta,gün gibi seçimlerde tetiklenir.
+            eventClick={(arg: any) => console.log(arg)} // tarihin içindeki eventlere tıklandığında tetiklenir
+            eventsSet={(arg: any) => console.log(arg)} // ay,hafta,gün gibi seçimlerde tetiklenir.
           />
         </div>
       </div>

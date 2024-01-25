@@ -21,6 +21,11 @@ code {
 }
 
 @font-face {
+  font-family: 'Poppins-Medium';
+  src: url('/public/assets/fonts/Poppins-Medium.ttf');
+}
+
+@font-face {
   font-family: 'Poppins-Bold';
   src: url('/public/assets/fonts/Poppins-Bold.ttf');
 }
@@ -41,6 +46,10 @@ code {
   top: 0;
   left: 0;
   z-index: -1;
+}
+
+.btn-rainbow:hover {
+  background-color: inherit !important;
 }
 
 .ui.button:hover {

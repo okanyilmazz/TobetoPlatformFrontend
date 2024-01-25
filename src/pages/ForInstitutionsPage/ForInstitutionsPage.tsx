@@ -183,7 +183,8 @@ export default function ForInstitutionsPage() {
                         {
                             alignSelf: 'center'
                         }
-                    } />
+                    }
+                />
             </div>
         </div>
     )

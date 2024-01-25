@@ -3,23 +3,31 @@
     color: white;
     margin-top: 200px;
 }
-
+.forIndividuals-component a{
+    color: white !important;
+}
+.forIndividuals-component .for-individuals-content h1{
+font-size: 4rem;
+color: #fff!important;
+height: 53px;
+}
 .ApplyCardSpecial{
     align-items: center;
 }
 
-.ik-cards{
+/* .ik-cards{
     height: 300px;
     width: 300px;
     padding-left: 10rem;
     padding-right: 10rem;
     
-}
-.vector{ 
+} */
+.for-individuals-content .position-relative .vector{ 
     position: absolute;
     top: -24px;
     right: 120px;
 }
+
 .mw-5xl .text-white-big {
 --bs-text-opacity: 1;
 color: rgba(var(--bs-white-rgb),var(--bs-text-opacity))!important;
@@ -29,6 +37,7 @@ font-family: 'Poppins-Regular';
 text-align: center;
 font-weight: bold;
 line-height: 1.2;
+
 }
 .text-center .mx-auto{
     margin-top: 90px;
@@ -69,15 +78,12 @@ line-height: 1.2;
     color: #7d19e1 !important;
 }
 
-.my-8{
+.mx-auto .my-8{
     margin-top: 2rem;
     margin-bottom: 2rem;
     font-size: 18px;
 }
-.btn-rainbow{
-    color: #fff;
 
-}
 .btn-rainbow:hover {
     color: inherit !important;
     background-color: inherit !important;
@@ -95,14 +101,14 @@ line-height: 1.2;
    
 }
 
-.mt-20{
+.for-individuals-content .mx-auto .mt-20 {
     
     margin-top: 5rem;
     margin: 0 auto;
     background: linear-gradient(180deg,#93f,#953dac 27.08%,#181717);
     
 }
-.vector7{
+.want-to-start .vector-loading{
     top: -30px;
     right: -36px;
     position:absolute;
@@ -123,7 +129,7 @@ line-height: 1.2;
     font-size: 36px;
     margin-top: 30px;
 }
-.web-pack {
+.want-to-start {
     background: linear-gradient(180deg,#1b1b1b,#181717 67.74%);
 }
 .mx-auto {
@@ -132,23 +138,26 @@ line-height: 1.2;
     margin-right: auto!important;
     margin-left: auto!important;
 }
-.pack-box { 
-    text-align: center;
-    font-size: 14px;
-    font-weight: 300;
-} 
+
 .justify-content-center {
     justify-content: center!important;
     margin-top: 2em;
 }
-.tab-link {
+.want-to-start .tab-link {
     font-weight: 400;
     font-size: 16px;
     line-height: 26px;
-    
 }
-.tab-link:hover {
-    text-decoration-color: #7d19e1;
+.want-to-start h4{
+    font-size: 40px;
+    font-weight: 600px;
+}
+.view-all {
+    font-size: 15px; 
+    padding: 20px;
+}
+.want-to-start .tab-link:hover {
+    text-decoration-color: #7d19e1 !important;
   }
   
 /*  For-Individuals Second Part */
@@ -162,16 +171,7 @@ line-height: 1.2;
     justify-content: center !important;
 }
 
-.pack-box a {
-    color: #e0e0e0 !important;
-    text-decoration: none !important;
-}
-
-a {
-    color: #e0e0e0 !important;
-}
-
-.pack-box {
+ .col-4 .pack-box {
     border: 1px solid #4f4f4f;
     border-radius: 15px;
     text-align: center;
@@ -181,21 +181,21 @@ a {
     width: 100%;
     height: 100%;
     padding: 15px 0;
-    margin-bottom: 5px;
+    margin-bottom: 16px;
     height: 95px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.vector2 {
+.vector-dots {
     top: 10px;
     right: 0;
     z-index: 1;
 }
 
 .vector,
-.vector2 {
+.vector-dots {
     position: absolute;
 }
 
@@ -217,40 +217,40 @@ a {
     width: 12px;
 }
 
-.mt-5 {
+.digital-job {
     margin-top: 8rem !important;
 }
 
-.web-pack,
-.web-pack-light {
+.want-to-start,
+.want-to-start-light {
     padding: 80px;
     position: relative;
     border-radius: 25px;
 }
 
-.web-pack {
+.want-to-start {
     background: linear-gradient(180deg, #1b1b1b, #181717 67.74%);
 }
 
-.vector2 {
+.vector-dots {
     top: 20px;
     right: 0;
     z-index: 1;
 }
 
 .vector,
-.vector2 {
+.vector-dots {
     position: absolute;
 }
 
-.vector4 {
+.want-to-manager .vector-star {
     position: absolute;
     top: -45px;
     right: 20px;
 }
 
 .vector6,
-.vector7 {
+.vector-loading {
     position: absolute;
 }
 
@@ -259,13 +259,13 @@ a {
     margin-left: 10px;
 }
 
-.vector8 {
+.vector-dots-purple {
     position: absolute;
     top: 0px;
     right: 30px;
 }
 
-.tag {
+.spec {
     display: flex;
     align-items: center;
     gap: 1rem 0;
@@ -280,7 +280,7 @@ a {
     cursor: pointer
 }
 
-.tag-list {
+.spec-list {
     width: 100%;
     display: flex;
     flex-shrink: 0;
@@ -291,7 +291,7 @@ a {
     overflow: hidden
 }
 
-.tag-list .inner {
+.spec-list .inner {
     display: flex;
     width: fit-content;
     height: 60px;
@@ -303,7 +303,7 @@ a {
     padding: 8px;
 }
 
-.tag-list .inner2 {
+.spec-list .inner2 {
     display: flex;
     width: fit-content;
     height: 40px;
@@ -314,7 +314,7 @@ a {
     animation-duration: 25s;
 }
 
-.tag span {
+.spec span {
     font-size: 1.2rem;
     color: #7d19e1
 }

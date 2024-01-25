@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import { Button, Accordion } from 'react-bootstrap';
-import { Card, Image } from 'semantic-ui-react'
 import './Homepage.css'
 import TrainingCard from '../../components/TrainingCard/TrainingCard'
-import { SocialMediaIcon } from '../../components/SocialMediaIcon/SocialMediaIcon';
-import AboutUsTeamMember from '../../components/TeamCard/TeamCard';
-import IstanbulKodluyorCard from '../../components/IstanbulKodluyorCard/IstanbulKodluyorCard';
-// import IstanbulKodluyorCard from '../../components/IstanbulKodluyorCard/IstanbulKodluyorCard';
+import IstanbulCard from '../../components/IstanbulCard/IstanbulCard';
+import { Card, Image } from 'semantic-ui-react';
+
+
 
 
 export default function Homepage() {
@@ -50,9 +49,9 @@ export default function Homepage() {
                 </Card>
 
                 <div className='col-md-6 col-sm-12'>
-                    <IstanbulKodluyorCard title={
+                    <IstanbulCard title={
                         <span>Aradığın
-                            <span style={{ color: 'rgb(0, 176, 120)', marginRight: '0', marginLeft: '5px' }}>"</span>iş<span style={{ color: 'rgb(0, 176, 120)', marginLeft: '0', marginRight: '5px', }}>"</span>
+                            <span className='quote' id='left-quote'>"</span>iş<span className='quote' id='right-quote'>"</span>
                             Burada!</span>
                     } />
                 </div>

@@ -1,20 +1,17 @@
-import React from 'react'
-import { Image, Card } from 'react-bootstrap'
+import { Card } from 'react-bootstrap'
 import { Button } from 'semantic-ui-react'
 import './ForInstitutionsPage.css'
-import IstanbulKodluyorCard from '../../components/IstanbulKodluyorCard/IstanbulKodluyorCard'
+import IstanbulCard from '../../components/IstanbulCard/IstanbulCard'
 
 export default function ForInstitutionsPage() {
     return (
-        <div className="container for-institutions">
+        <div className="container for-institutions bg-front-dark">
             <div className="row col-md-12 col-12 content-text">
                 <span>Tobeto; yetenekleri yakalar, değerlendirir, geliştirir, <br />
                     destekler, eğitir, istihdam eder, ekosisteme dahil eder.
                 </span>
             </div>
-
             <div className="row talent-stage">
-
                 <div className="col-md-6 col-12 talent">
                     <Card>
                         <Card.Body>
@@ -28,7 +25,7 @@ export default function ForInstitutionsPage() {
                     <div className="col-md-4 col-12 stage1">
                         <Card>
                             <Card.Body>
-                                <div className="stage-hover" style={{ display: 'none' }}>
+                                <div className="stage-hover">
                                     <span>Değerlendirilmiş ve yetişmiş geniş yetenek havuzuna erişim olanağı ve ölçme, değerlendirme, seçme ve raporlama hizmeti.</span>
                                     <div className="stage-open">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#ffffff" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg>
@@ -47,7 +44,7 @@ export default function ForInstitutionsPage() {
                     <div className="col-md-4 col-12 stage2">
                         <Card>
                             <Card.Body className="card-body">
-                                <div className="stage-hover" style={{ display: 'none' }}>
+                                <div className="stage-hover">
                                     <span>Codecademy içerikleri, alanında uzman eğitmenler ile canlı dersler, mentör desteği, proje ve uygulamalar ile kuruma özel bootcamp projeleri için uçtan uca destek ve stratejik ortaklık.</span>
                                     <div className="stage-open">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#ffffff" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg>
@@ -66,7 +63,7 @@ export default function ForInstitutionsPage() {
                     <div className="col-md-4 col-12 stage3">
                         <Card>
                             <Card.Body className="card-body">
-                                <div className="stage-hover" style={{ display: 'none' }}>
+                                <div className="stage-hover">
                                     <span>Esnek, uzaktan, tam zamanlı iş gücü için doğru ve hızlı işe alım.</span>
                                     <div className="stage-open">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#ffffff" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg>
@@ -99,7 +96,7 @@ export default function ForInstitutionsPage() {
                     <div className="col-md-4 col-12 stage1">
                         <Card>
                             <Card.Body className="card-body">
-                                <div className="stage-hover" style={{ display: 'none' }}>
+                                <div className="stage-hover" >
                                     <span>Uzmanlaşmak için yeni beceriler kazanmak (reskill) veya yeni bir role başlamak (upskill) isteyen adaylar için, teknik ve yetkinlik ölçme araçları.
                                     </span>
                                     <div className="stage-open">
@@ -119,7 +116,7 @@ export default function ForInstitutionsPage() {
                     <div className="col-md-4 col-12 stage2">
                         <Card>
                             <Card.Body className="card-body">
-                                <div className="stage-hover" style={{ display: 'none' }}>
+                                <div className="stage-hover">
                                     <span>Yeni uzmanlık becerileri ve yeni bir rol için gerekli yetkinlik kazınımı ihtiyaçlarına bağlı olarak açılan eğitimlere katılım ve kuruma özel sınıf açma olanakları.</span><div className="stage-open"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#ffffff" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg>
                                     </div>
                                 </div>
@@ -136,7 +133,7 @@ export default function ForInstitutionsPage() {
                     <div className="col-md-4 col-12 stage3">
                         <Card>
                             <Card.Body>
-                                <div className="stage-hover" style={{ display: 'none' }}>
+                                <div className="stage-hover">
                                     <span>Kurumsal hedefler doğrultusunda mevcut yetenek gücünün gelişimi ve konumlandırılmasına destek.</span>
                                     <div className="stage-open">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#ffffff" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg>
@@ -155,7 +152,7 @@ export default function ForInstitutionsPage() {
                 </div>
             </div>
 
-            <div className="row col-md-12 col-12 contact-us">
+            <div className="row  contact-us">
                 <div>
                     <span>Kurumlara özel eğitim paketleri ve bootcamp programları için bizimle iletişime geçin.</span>
                 </div>
@@ -165,24 +162,11 @@ export default function ForInstitutionsPage() {
             </div>
 
             <div className="offset-md-2 row col-md-8 col-8 ik-cards">
-                <IstanbulKodluyorCard
+                <IstanbulCard
                     title={
                         <span>Aradığın
-                            <span style={{ color: 'rgb(0, 176, 120)', marginRight: '0', marginLeft: '5px' }}>"</span>İşe Hazır Aday<span style={{ color: 'rgb(0, 176, 120)', marginLeft: '0', marginRight: '5px', }}>"</span>
+                            <span id='left-quote' className='quote'>"</span>İşe Hazır Aday<span id='right-quoute' className='quote'>" </span>
                             Burada!</span>
-                    }
-                    buttonStyle={
-                        {
-                            background: '#00b078',
-                            fontSize: '14px',
-                            padding: '10px 40px',
-                            marginTop: '20px'
-                        }
-                    }
-                    contentStyle={
-                        {
-                            alignSelf: 'center'
-                        }
                     } />
             </div>
         </div>

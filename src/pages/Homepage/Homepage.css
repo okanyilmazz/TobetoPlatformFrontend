@@ -21,12 +21,6 @@
     border-radius: 10px !important;
 }
 
-.ik-card {
-    background-image: url('../../../public/assets/images/ik-card.png') !important;
-    background-size: cover !important;
-    border-radius: 15px !important;
-
-}
 
 .ui.card {
     height: 17rem;
@@ -41,20 +35,6 @@
     grid-template-rows: 100%;
     align-items: center;
 
-}
-
-.ik-card .content {
-    display: grid;
-    grid-template-rows: 60% 40%;
-
-}
-
-.ik-card .content-top {
-    display: grid;
-    grid-template-columns: 68% auto;
-    align-items: end;
-    column-gap: 5%;
-    margin-bottom: 15px;
 }
 
 .tobeto-card .content-left {
@@ -138,52 +118,6 @@
     font-size: 16px;
     align-self: center;
     text-align: end;
-}
-
-.ik-card .content {
-    padding-left: 0 !important;
-}
-
-.ik-card .content-bottom {
-    justify-self: center;
-    margin-top: 1rem;
-}
-
-.ik-card .content-bottom Button {
-    background-color: #0fcdfa;
-    color: #1d1141;
-    border: 0;
-    border-radius: 50px;
-    line-height: 18px;
-    min-width: 100px;
-    font-family: 'Poppins-Bold';
-    font-size: 10px;
-    padding: 5px;
-}
-
-.ik-card::before {
-    content: "";
-    position: absolute;
-    top: 5%;
-    left: 3%;
-    width: 25px;
-    height: 25px;
-    background: url(../../../public/assets/images/doth1.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-}
-
-.ik-card::after {
-
-    position: absolute;
-    bottom: 3%;
-    right: 3%;
-    width: 40px !important;
-    height: 40px !important;
-    background: url(../../../public/assets/images/doth2.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    visibility: visible !important;
 }
 
 .gradient-line {
@@ -310,14 +244,14 @@
 /*CodeAcademy area*/
 
 /*Advertisement area*/
-.content-text {
+.advertisement .content-text {
     margin-top: 50px;
     position: relative;
     background: linear-gradient(179.79deg, #93f .18%, #7d19e1 77.21%);
     height: 288px;
 }
 
-.content-text p {
+.advertisement .content-text p {
     color: #fff;
     font-weight: 600;
     font-size: 18px;
@@ -327,13 +261,13 @@
     font-family: 'Poppins-Regular';
 }
 
-.tab-vector2 {
+.advertisement .tab-vector2 {
     position: absolute;
     right: 15%;
     bottom: 21%;
 }
 
-.tab-vector3 {
+.advertisement .tab-vector3 {
     position: absolute;
     left: 12%;
     top: 10%;
@@ -443,8 +377,9 @@
     width: 150px;
     align-items: center;
 }
+
 .partners-enocta {
-    width: 80px !important ; 
+    width: 80px !important;
 }
 
 /*Partners Area*/

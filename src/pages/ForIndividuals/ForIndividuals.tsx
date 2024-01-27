@@ -1,7 +1,7 @@
 import React from "react";
 import ApplyCard from "../../components/ApplyCard/ApplyCard";
 import "../ForIndividuals/ForIndividuals.css";
-import IstanbulKodluyorCard from "../../components/IstanbulKodluyorCard/IstanbulKodluyorCard";
+import IstanbulCard from "../../components/IstanbulCard/IstanbulCard";
 import { Link } from "react-router-dom";
 
 export const ForIndividuals = () => {
@@ -9,7 +9,7 @@ export const ForIndividuals = () => {
     <div className="container forIndividuals-component">
       <div className="row">
         <div className="offset-md-2 row col-md-8 col-8 ik-cards">
-          <IstanbulKodluyorCard
+          <IstanbulCard
             title={
               <span>
                 Aradığın

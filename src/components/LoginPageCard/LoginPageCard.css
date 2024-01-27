@@ -12,9 +12,6 @@
     justify-content: center;
     flex-direction: column;  
 }
-.bg-front-white{
-    border-radius: 16px;
-}
 
 .login-container .login-form {
     display: flex;
@@ -30,22 +27,24 @@
     width: 100%;
     font-size: 14px;
     font-weight: bold;
+    border-color: #93f;
 }
 
 .login-container button:hover {
     background-color:#822bd9;  
 }
 
-.login-form .form-control:focus{
+.login-form .field input:focus{
     border-color: #c9f !important;
-    box-shadow: 0 0 0 0.25rem rgba(153, 51, 255, .25) !important;
+    box-shadow: 0 0 0 0.25rem rgba(153,51,255,.25);
+    outline: 0;
 }
-.transparent-button{
+.login-form .transparent-button{
     font-weight: 400 !important;
     font-size: 14px !important;
-    margin-top: 8px;
+    margin-top: 8px; 
     background-color: white !important;
-    color: #565452;
+    color: #565452 !important;
     border: transparent !important;
 
 }
@@ -53,8 +52,16 @@
     text-align: center;
     margin-top: 36px;
 }
-.login-form .form-control{
-    line-height: 2.5;
+.login-form .field input{
+    width: 100%;
+    border: solid #e7e5e4;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    border-radius: 5px;
+    padding: 1rem 1.5rem;
+    font-family: 'Poppins-Regular';
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 1.25;
 }
 .login-form .register{
     color: black;
@@ -77,19 +84,19 @@
         background-position: 0% 50%;
     }
 }
-.bg-front-white {
+.login-page-card {
     position: sticky;
     background: #fff;
     color: #282828
 }
-.bg-front-white:after,
-.bg-front-white:before {
+.login-page-card:after,
+.login-page-card:before {
     content: "";
     position: absolute;
     z-index: -1;
     border-radius: 1em
 }
-.bg-front-white:after {
+.login-page-card:after {
     bottom: 2px;
     top: 2px;
     left: 1px;
@@ -101,7 +108,7 @@
 }
 
 
-.bg-front-white::before{
+.login-page-card::before{
     content: '';
     animation: rainbow-border 4s linear infinite;
     background: linear-gradient(135deg, #1e0f41, #0fcdfa, #87ff87, #1e0f41, #0fcdfa, #87ff87);
@@ -110,5 +117,9 @@
     top: 0;
     left: 0;
     background-size: 100% 200%;
-}
+} 
 
+::placeholder {
+    color: #00000072;
+    font-size: 1.1rem;
+  }

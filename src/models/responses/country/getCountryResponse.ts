@@ -1,6 +1,7 @@
 import { Identifier } from "typescript";
 
-export interface ProgrammingLanguage {
+export interface GetCountryResponse {
     id: Identifier;
     name: string
 }
+

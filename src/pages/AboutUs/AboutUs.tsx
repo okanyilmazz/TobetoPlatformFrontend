@@ -8,16 +8,19 @@ import { SocialMediaIcon } from '../../components/SocialMediaIcon/SocialMediaIco
 
 function AboutUs() {
     return (
-        <div className=' bg-front-dark about-content'  >
 
+        <div className=' bg-front-dark about-content d-flex'  >
             <Container >
                 <Row className='aboutUs'>
                     <Col md={2}>
                         <Image className='about-icon' src="https://tobeto.com/_next/static/media/tbtLogo.3fb5d7fd.svg" thumbnail />
                     </Col>
                     <Col md={4}>
-                        <p> Tobeto,<br /> "headhunting" yaklaşımını<br />
-                            <span className='headfarming'>"headfarming" </span>olarak <br /> değiştirmeyi <br />hedefleyen, eğitim ve gelişim odaklı <br />dijitalbir platformdur
+                        <p>
+                            Tobeto,<br />
+                            "headhunting" yaklaşımını<br />
+                            <span className='headfarming'>"headfarming" </span>olarak <br />değiştirmeyi <br />
+                            hedefleyen, eğitim ve gelişim odaklı <br />dijitalbir platformdur
                         </p>
                     </Col>
                     <Col md={6}>
@@ -35,7 +38,6 @@ function AboutUs() {
                     </Col>
                 </Row>
             </Container>
-
             <div className='text-white'>
                 <div className='aboutUs-container'>
                     <div className='container' >
@@ -63,10 +65,8 @@ function AboutUs() {
 
             <div className='tobeto-slogan'>
                 <span>Tobeto ile işe hazırlan, işe yerleş, işinde geliş, yüksel!</span>
-
             </div>
-
-            <div className='gradient-line2 mt-5 ' />
+            <div className='gradient-line2 mt-4' />
 
             <div className='container'>
                 <h1 className='title-card'>Ekibimiz</h1>
@@ -91,8 +91,7 @@ function AboutUs() {
                     <AboutUsTeamMember name={'Mehmet Gürsoy'} title1={'Ledd'} title2={'Kurucu'} linkedinUrl={'https://www.linkedin.com/in/mehmetgursoy/'} imageSrc={'https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fmehmet-gursoy.7a0af94d.png&w=2048&q=75'} />
                     <AboutUsTeamMember name={'Alpaslan Gürsoy'} title1={'Lidya Ventures'} title2={'Yönetim Kurulu Üyesi'} linkedinUrl={'https://linkedin.com/in/alpaslan-gursoy-97463a90/'} imageSrc={'https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Falparslan.ad11a534.png&w=2048&q=75'} />
                 </div>
-            </div>
-
+            </div >
 
             <div className='gradient-line2' />
 
@@ -111,6 +110,7 @@ function AboutUs() {
         </div>
     )
 }
+
 
 export default AboutUs
 

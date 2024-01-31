@@ -299,16 +299,12 @@ export const ForIndividuals = () => {
             <div className="container">
               <div className="row fw-bold">
                 <a className="btn mx-auto btn-rainbow py-4 rainbow-text">
-                  Uzmanlaşmak istediğin alanı seç, Tobeto platformda öğrenmeye
-                  başla!
+                  Uzmanlaşmak istediğin alanı seç, Tobeto platformda öğrenmeye başla!
                 </a>
               </div>
             </div>
             <div>
-              <div
-                style={{ marginTop: "20px" }}
-                className="gradient-line2"
-              ></div>
+              <div style={{ marginTop: '20px' }} className="gradient-line2"></div>
             </div>
 
             <div className="want-to-start">

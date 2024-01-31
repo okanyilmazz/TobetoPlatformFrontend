@@ -1,13 +1,8 @@
 import { Formik } from 'formik';
-import React from 'react'
 import { Button, Form } from 'react-bootstrap'
 import TobetoTextInput from '../../utilities/customFormControls/TobetoTextInput';
 import "./LoginPageCard.css"
-import * as Yup from "yup";
-import LoginRequest from '../../models/requests/auth/loginRequest';
 import authService from '../../services/authService';
-
-
 
 export default function LoginPageCard() {
     const initialValues = { email: "", password: "" }
@@ -21,7 +16,7 @@ export default function LoginPageCard() {
     };
     return (
 
-        <div className="container login-page-card bg-front-white ">
+        <div className="container login-page-card bg-front-white">
             <div className="row">
                 <div className="col-md-6 login-content">
                     <div className="login-container">

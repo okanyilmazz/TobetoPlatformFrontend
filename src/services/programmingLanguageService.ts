@@ -1,9 +1,24 @@
-import axios, { AxiosResponse } from "axios";
-import { ProgrammingLanguage } from "../models/programmingLanguage";
 import { Paginate } from "../models/paginate";
+import { BaseService } from "../core/services/baseService";
+import GetListProgrammingLanguageResponse from "../models/responses/programmingLanguage/getListProgrammingLanguageResponse";
+import GetProgrammingLanguageByIdResponse from "../models/responses/programmingLanguage/getProgrammingLanguageByIdResponse";
+import AddProgrammingLanguageRequest from "../models/requests/programmingLanguage/addProgrammingLanguageRequest";
+import UpdateProgrammingLanguageRequest from "../models/requests/programmingLanguage/updateProgrammingLanguageRequest";
+import AddedProgrammingLanguageResponse from "../models/responses/programmingLanguage/addedProgrammingLanguageResponse";
+import UpdatedProgrammingLanguageResponse from "../models/responses/programmingLanguage/updatedProgrammingLanguageResponse";
 
-export default class ProgrammingLanguageService {
-    getAll(): Promise<AxiosResponse<Paginate<ProgrammingLanguage>>> {
-        return axios.get<Paginate<ProgrammingLanguage>>("http://localhost:50628/api/ProgrammingLanguages/GetList?PageIndex=0&PageSize=6");
+class ProgrammingLanguageService extends BaseService<
+    Paginate<GetListProgrammingLanguageResponse>,
+    GetProgrammingLanguageByIdResponse,
+    AddProgrammingLanguageRequest,
+    AddedProgrammingLanguageResponse,
+    UpdateProgrammingLanguageRequest,
+    UpdatedProgrammingLanguageResponse
+>{
+    constructor() {
+        super();
+        this.apiUrl = "ProgrammingLanguages/GetList?PageIndex=0&PageSize=4";
     }
 }
+
+export default new ProgrammingLanguageService();

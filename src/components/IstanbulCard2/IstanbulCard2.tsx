@@ -14,7 +14,6 @@ export default function IstanbulCard2(props: any) {
             <Button className="Apply-button" onClick={() => navigate("https://tobeto.com/istanbul-kodluyor")}>
                 Başvur
             </Button>
-            );
         </div>
     )
 }

@@ -7,7 +7,7 @@ export default function SignedOut() {
         <div className='sign'>
             <Button as={Link}to = "/giris" primary id="buttonStyle">Giriş Yap</Button> 
             
-            <Button className='register btn-rainbow'>Ücretsiz Üye Ol</Button>
+            <Button  as={Link} to="/kayit-ol" className='register btn-rainbow'>Ücretsiz Üye Ol</Button>
         </div>
     )
 }

@@ -1,0 +1,32 @@
+.witp-content {
+  margin-top: 14rem !important;
+  margin-bottom: 25rem;
+  margin-left: 10rem;
+  /* height: 800px; */
+  display: flex;
+  justify-content: space-between; /* Öğeleri container içinde eşit aralıklarla yerleştirir */
+}
+
+.card-catalog {
+  position: absolute;
+  bottom: 0;
+  color: white;
+  width: "100%";
+  height: 120px;
+  /* border-radius: 20px; */
+}
+
+.title-card {
+  font-size: 55px !important;
+  font-family: "Poppins-Regular";
+  margin-top: 25px;
+  margin-bottom: 25px !important;
+  margin-left: 6.7em;
+  color: white;
+  margin-bottom: 0.5rem;
+  font-family: Poppins, ui-sans-serif, system-ui, -apple-system,
+    BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol,
+    Noto Color Emoji;
+  line-height: 1.2;
+}

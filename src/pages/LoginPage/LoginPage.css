@@ -1,0 +1,77 @@
+.login-page-content{
+    margin-top: 12rem !important;
+}
+
+.Container-login {
+    display: flex;
+    justify-content: space-between;
+    height: 50vh;
+    margin-top: 10px;
+    
+  
+}
+
+
+.login-page-icon {
+    display: flex;
+    flex-direction: row; 
+    gap: 1em;
+}
+
+.content {
+  background-color: white;
+    padding-top: 5rem!important;
+    padding-bottom: 5rem!important;
+}
+
+
+.login-ik-container .tobeto-icon {
+    width: 200px;
+    margin-top: 57px;
+}
+
+.row.content-center{
+    padding-top: 124px;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.login-page-ik .login-ik-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    margin-bottom: 24px; 
+}
+
+
+.greenLine2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  
+}
+
+.greenLine2::after{
+    content: " ";
+    display: block;
+    border-bottom: 2.5px solid #00b078!important;
+    margin: 2em auto 4em;
+    width: 200px;
+
+}
+
+.login-page-ik .job{
+    font-size: 1.8em;
+    font-weight: 700;
+    font-family: Poppins,sans-serif!important;
+    text-align: center; 
+    margin: 14px auto;
+ 
+}
+
+

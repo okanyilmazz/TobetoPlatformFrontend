@@ -42,7 +42,7 @@ export default function Navi() {
                                     <DropdownItem as={Link} to="/kurumlar-icin">Kurumlar İçin</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
-                            <MenuItem name='Catalog' />
+                            <MenuItem as={Link} to="/katalog" >Katalog</MenuItem>
                             <MenuItem name='Codeacademy' />
                             <Dropdown simple item text="Tobeto'da Bu Ay">
                                 <DropdownMenu>

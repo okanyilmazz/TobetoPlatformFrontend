@@ -6,6 +6,7 @@ import PlatformPage from '../../pages/PlatformPage/PlatformPage'
 import ApplicationCard from '../../components/ApplicationCard/ApplicationCard'
 import { ForIndividuals } from '../../pages/ForIndividuals/ForIndividuals';
 import Calendar from '../../pages/Calendar/Calendar';
+import Profile from '../../pages/Profile/Profile';
 
 type Props = {}
 
@@ -19,6 +20,7 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/takvim-anasayfa" Component={Calendar} />
             <Route path="/platform" Component={PlatformPage} />
             <Route path="/basvuru" Component={ApplicationCard} />
+            <Route path="/profilim" Component={Profile} />
         </Routes>
     )
 }

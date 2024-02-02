@@ -8,6 +8,10 @@
   background-color: #181717;
 }
 
+.fontFooter > hr {
+  color:White;
+}
+
 .fontFooter ul li {
   margin-bottom: 20px; 
 }

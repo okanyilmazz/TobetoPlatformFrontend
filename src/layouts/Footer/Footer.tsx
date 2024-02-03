@@ -6,7 +6,7 @@ import { SocialMediaIcon } from "../../components/SocialMediaIcon/SocialMediaIco
 const Footer = () => {
   return (
     <MDBFooter className="fontFooter">
-      <hr style={{ color: "white" }} />
+      <hr/>
       <MDBContainer className="p-4">
         <MDBRow>
           <MDBCol lg="3" md="6" className="mb-4 mb-md-0">
@@ -156,8 +156,8 @@ const Footer = () => {
       <MDBContainer className="p-4 ">
         <MDBCol lg="12" md="3" className="custom-class text-white">
           <div className="d-flex justify-content-around">
-            <div className="pe-5">
-              <a href="https://tobeto.com/"><img style={{ width: "200px" }} src="../../Assets/Logos/TobetoLogo.png" alt="Tobeto" /></a>
+            <div>
+              <a href="https://tobeto.com/"><img style={{width:'200px'}} src="../../Assets/Logos/TobetoLogo.png" alt="Tobeto" /></a>
             </div>
             <div className="mt-2 ps-2 pe-4 ">
               <p>© 2022 Tobeto | Her Hakkı Saklıdır</p>

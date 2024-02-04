@@ -1,3 +1,4 @@
+import { ToastContainer } from 'react-toastify';
 import './App.css';
 import { OverlayLoader } from './components/OverlayLoader/OverlayLoader';
 import RouteDefinitions from './components/Routes/RouteDefinitions';
@@ -10,6 +11,7 @@ function App() {
   return (
     <div className="App">
       <>
+        <ToastContainer />
         <Navi />
         <OverlayLoader />
         <RouteDefinitions />

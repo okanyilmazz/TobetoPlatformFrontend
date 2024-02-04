@@ -7,6 +7,10 @@ import ApplicationCard from '../../components/ApplicationCard/ApplicationCard'
 import { ForIndividuals } from '../../pages/ForIndividuals/ForIndividuals';
 import Calendar from '../../pages/Calendar/Calendar';
 import Profile from '../../pages/Profile/Profile';
+import SignUp from '../../pages/SignUp/SignUp';
+import SignedOut from '../../layouts/SignedOut/SingedOut';
+import LoginPage from '../../pages/LoginPage/LoginPage';
+
 
 type Props = {}
 
@@ -21,6 +25,8 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/platform" Component={PlatformPage} />
             <Route path="/basvuru" Component={ApplicationCard} />
             <Route path="/profilim" Component={Profile} />
+            <Route path="/giris" Component={LoginPage} />
+            <Route path="/kayit-ol" Component={SignUp} />
         </Routes>
     )
 }

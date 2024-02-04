@@ -1,3 +1,67 @@
-.profile-card{
-    margin-top: 12rem !important;    
+/* İşte başarı modeli */
+.profile-card {
+    margin-top: 150px;
 }
+
+.dropdown-profile ::after{
+    display: none !important;
+}
+
+.dropdown-menu {
+    --bs-dropdown-link-active-bg: none !important;
+}
+
+.cv-edit-icon {
+    content: url(https://tobeto.com/edit2.svg);
+    padding-top: 7px;
+    padding-right: 7px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.dropdown-profile {
+    background-color: white;
+    border-radius: 10px;
+}
+
+.dropdown-menu.show {
+    border: 1px solid rgb(153, 50, 255);
+}
+
+.dropdown-menu-profile-p {
+    font-size: 15px;
+}
+
+.dropdown-menu-profile {
+    justify-content: space-around !important ;
+    font-size: 15px;
+    font-weight: bold;
+    opacity: 0.9;
+}
+
+
+.profile-card-work-success {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+}
+
+.profile-profile-link {
+    font-size: 17px;
+}
+
+.tobeto-input-profile {
+    position: relative;
+    align-items: center;
+    border-radius: 8px !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-image: initial !important;
+}
+
+.input-copy {
+    padding-left: 5px;
+    padding-top: 0px;
+}
+
+/* İşte başarı modeli */

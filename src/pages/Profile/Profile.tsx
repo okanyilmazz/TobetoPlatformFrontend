@@ -22,7 +22,7 @@ export default function Profile() {
               <Dropdown.Toggle id="dropdown-basic" variant='light' className="cv-share-icon">
                 <img src="https://tobeto.com/share.svg" alt="ShareIcon" />
               </Dropdown.Toggle>
-              <Dropdown.Menu>
+              <Dropdown.Menu className="profileCustom-dropdown-menu customProfile-dropdown-menu">
                 <Dropdown.Item>
                   <div className='d-flex justify-content-between dropdown-menu-profile '>
                     <p>Profilimi paylaş</p>

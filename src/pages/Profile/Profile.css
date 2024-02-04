@@ -3,12 +3,8 @@
     margin-top: 150px;
 }
 
-.dropdown-profile ::after{
+.dropdown-profile ::after {
     display: none !important;
-}
-
-.dropdown-menu {
-    --bs-dropdown-link-active-bg: none !important;
 }
 
 .cv-edit-icon {
@@ -24,8 +20,13 @@
     border-radius: 10px;
 }
 
-.dropdown-menu.show {
+.customProfile-dropdown-menu.show {
     border: 1px solid rgb(153, 50, 255);
+}
+
+.profileCustom-dropdown-menu {
+    --bs-dropdown-link-active-bg: none !important; 
+    /* Tek dropdowna etki eder. */
 }
 
 .dropdown-menu-profile-p {
@@ -33,7 +34,7 @@
 }
 
 .dropdown-menu-profile {
-    justify-content: space-around !important ;
+    justify-content: space-around !important;
     font-size: 15px;
     font-weight: bold;
     opacity: 0.9;

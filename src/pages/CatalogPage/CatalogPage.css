@@ -7,7 +7,11 @@
     min-height: 300px;
     padding: 3.5em;
     margin-bottom: 24px;
-    margin-top: 160px;
+
+}
+
+.catalog {
+    margin-top: 12rem;
 }
 
 .catalog-search {
@@ -63,7 +67,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
-    height: 100vh;
+    height: 100%;
 }
 
 .catalog-page-content img {
@@ -72,4 +76,66 @@
 
 .catalog-page-content p {
     color: white;
+}
+
+.catalog-page-content .pagination-area .pagination {
+    justify-content: center;
+}
+
+.catalog-page-content .pagination-area .page-item {
+    background-color: #09050f !important;
+    border-radius: 10px !important;
+    display: flex;
+    align-items: center;
+
+
+    width: 32px;
+    justify-content: center;
+}
+
+.catalog-page-content .pagination-area .page-item .page-link {
+    color: #282828;
+    margin-left: 6px;
+    margin-right: 6px;
+    border-radius: 8px !important;
+    min-width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff !important;
+    border: 1px solid #00000011;
+    font-weight: 600;
+}
+
+.catalog-page-content .pagination-area .pagination {
+    gap: 5px;
+}
+
+
+.catalog-page-content .pagination-area .pagination-prev-next .page-link {
+    border: none;
+    background-color: #09050f !important;
+    color: #fff;
+}
+
+
+.pagination-area .page-item.active {
+    background-color: transparent !important;
+    color: #fff;
+}
+
+.pagination-area .page-item.active .page-link {
+    background-color: #4c4141 !important;
+    border: none;
+    color: #fff;
+}
+
+.pagination-area .pagination-prev-next span {
+    font-size: 20px;
+}
+
+.catalog-page-content .no-result-message {
+    color: rgb(148, 148, 148);
 }

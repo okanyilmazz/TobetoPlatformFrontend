@@ -2,23 +2,23 @@ import { useEffect, useState } from 'react'
 import { Card } from 'react-bootstrap'
 import './TrainingCard.css'
 import { Paginate } from '../../models/paginate';
-import { GetListCountryResponse } from '../../models/responses/country/getListCountryResponse';
-import GetListProgrammingLanguageResponse from '../../models/responses/programmingLanguage/getListProgrammingLanguageResponse';
-import countryService from '../../services/countryService';
-import programmingLanguageService from '../../services/programmingLanguageService';
+import subjectService from '../../services/subjectService';
+import occupationService from '../../services/occupationService';
+import GetListSubjectResponse from '../../models/responses/subject/getListSubjectResponse';
+import GetListOccupationResponse from '../../models/responses/occupation/getListOccupationResponse';
 
 
 export default function TrainingCard(props: any) {
-  const [programmingLanguages, setProgrammingLanguages] = useState<Paginate<GetListProgrammingLanguageResponse>>();
-  const [countries, setCountries] = useState<Paginate<GetListCountryResponse>>();
+  const [subjects, setSubjects] = useState<Paginate<GetListSubjectResponse>>();
+  const [occupations, setOccupations] = useState<Paginate<GetListOccupationResponse>>();
 
   useEffect(() => {
-    programmingLanguageService.getAll().then(result => {
-      setProgrammingLanguages(result.data)
+    subjectService.customGetAll(0, 6).then(result => {
+      setSubjects(result.data)
     })
 
-    countryService.getAll().then(result => {
-      setCountries(result.data)
+    occupationService.customGetAll(0, 6).then(result => {
+      setOccupations(result.data)
     })
   }, []);
 
@@ -29,20 +29,18 @@ export default function TrainingCard(props: any) {
       <div className='training-card-group'>
         {
           props.check === "occupation" ? (
-            countries?.items.map((country) => (
+            occupations?.items.map((occupation) => (
               <Card className="card-container">
                 <Card.Body className="card-body">
-                  <span>{country.name}</span>
-                  {/* <Card.Text className="card-title h5">{programmingLanguage.name}</Card.Text> */}
+                  <span>{occupation.name}</span>
                 </Card.Body>
               </Card>
             ))
           ) : (
-            programmingLanguages?.items.map((programmingLanguage) => (
+            subjects?.items.map((subject) => (
               <Card className="card-container">
                 <Card.Body className="card-body">
-                  <span>{programmingLanguage.name}</span>
-                  {/* <Card.Text className="card-title h5">{programmingLanguage.name}</Card.Text> */}
+                  <span>{subject.name}</span>
                 </Card.Body>
               </Card>
             ))

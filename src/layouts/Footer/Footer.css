@@ -1,11 +1,11 @@
 .fontFooter {
   font-family: 'Poppins', sans-serif;
   font-style: normal;
-  font-weight: 400; 
-  color: black; 
+  font-weight: 400;
+  color: black;
   font-display: swap;
-  padding: 50px 0; 
   background-color: #181717;
+  margin-top: 6rem;
 }
 
 .fontFooter > hr {
@@ -13,12 +13,12 @@
 }
 
 .fontFooter ul li {
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .fontFooter a {
-  color: white; 
-  text-decoration: none; 
+  color: white;
+  text-decoration: none;
 }
 
 .custom-class {

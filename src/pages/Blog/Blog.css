@@ -1,24 +1,22 @@
-.witp-content {
-  margin-top: 14rem !important;
-  margin-bottom: 25rem;
-  margin-left: 12rem;
-  /* height: 800px; */
+.blog-page {
+  margin-top: 11rem;
+  align-items: center;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 }
 
+.blog-page .title-card {
+  color: #fff;
+  font-size: 48px;
+  font-family: 'Poppins-Bold';
+  text-align: center;
+  margin: 0;
+  margin-top: 2rem;
+}
 
-.title-card {
-  font-size: 55px !important;
-  font-family: "Poppins-Regular";
-  margin-top: 25px;
-  margin-bottom: 25px !important;
-  margin-left: 6.7em;
-  color: white;
-  margin-bottom: 0.5rem;
-  font-family: Poppins, ui-sans-serif, system-ui, -apple-system,
-    BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans,
-    sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol,
-    Noto Color Emoji;
-  line-height: 1.2;
+.blog-page-card {
+  margin-top: 6rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 20px;
 }

@@ -5,6 +5,7 @@ export default interface EducationProgramFilterRequest {
     educationProgramLevelId: Identifier;
     subjectId: Identifier;
     programmingLanguageId: Identifier;
+    educationProgramDevelopmentId: Identifier;
     accountId: Identifier;
     completeStatus: number;
     specialForMe: boolean;

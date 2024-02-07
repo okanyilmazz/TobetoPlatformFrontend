@@ -5,9 +5,6 @@ import TrainingCard from '../../components/TrainingCard/TrainingCard'
 import IstanbulCard from '../../components/IstanbulCard/IstanbulCard';
 import { Card, Image } from 'semantic-ui-react';
 
-
-
-
 export default function Homepage() {
     const [buttonContainerStyle, setButtonContainerStyle] = useState({
         backgroundColor: 'white ',

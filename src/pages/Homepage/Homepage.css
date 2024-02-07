@@ -175,7 +175,10 @@
     font-family: 'Poppins-Bold';
 }
 
-
+.button-container > p{
+    opacity: '0.5';
+    fontSize: '17px'; 
+}
 
 .button-container,
 .button-container2 {
@@ -274,7 +277,7 @@
 
 /*Advertisement area*/
 
-/* svgContainer */
+/* headfarming-area */
 
 .headfarming-area {
     background: url(/public/assets/animations/headfarmingAnimation.svg) no-repeat;
@@ -287,7 +290,7 @@
     margin-top: 50px;
 }
 
-/* svgContainer */
+/* headfarming-area */
 
 /*Accordion Area*/
 .acc {

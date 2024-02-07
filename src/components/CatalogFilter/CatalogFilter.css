@@ -120,7 +120,3 @@
 .catalog-filter-content ::-webkit-scrollbar-thumb:hover {
     background-color: #93fc;
 }
-
-.catalog-filter-content .form-check-label {
-    color: white;
-}

@@ -13,6 +13,8 @@ import GetListSessionResponse from '../../models/responses/session/getListSessio
 import SessionService from '../../services/sessionService';
 import GetListUserOperationClaimResponse from '../../models/responses/userOperationClaim/getListUserOperationClaimResponse';
 import userOperationClaimService from '../../services/userOperationClaimService';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router';
 
 
 type Props = {};
@@ -23,7 +25,10 @@ const Calendar = (props: Props) => {
   const [searchText, setSearchText] = useState<string>('');
   const [selectedInstructors, setSelectedInstructors] = useState<any>([]);
   const [selectedFilters, setSelectedFilters] = useState<any[]>([]);
-
+  const authState = useSelector((state: any) => state.auth);
+  const location = useLocation();
+  const pathArray = location.pathname.split('/');
+  const lastPathSegment = pathArray[pathArray.length - 1];
   useEffect(() => {
     const fetchSessions = async () => {
       try {
@@ -59,8 +64,8 @@ const Calendar = (props: Props) => {
         }
 
         if (selectedFilters.includes('eventBuyed')) {
-          setEvents([]); 
-          return; 
+          setEvents([]);
+          return;
         }
 
         if (selectedFilters.includes('eventNotStarted')) {
@@ -72,7 +77,7 @@ const Calendar = (props: Props) => {
         const sessionEvents = filteredSessions.map((session) => ({
           start: moment(session.startDate).format(),
           title: session.occupationClassName,
-          instructor:session.userId
+          instructor: session.userId
         }));
 
         setEvents(sessionEvents);
@@ -100,17 +105,17 @@ const Calendar = (props: Props) => {
     setEvents([...events, { title: title, ...selectInfo }]);
   }
 
-    const optionsInstructor = (sessions?.items || []).map((s) => ({
-      value: s.userId,
-      label: s.userId, 
-    }));
+  const optionsInstructor = (sessions?.items || []).map((s) => ({
+    value: s.userId,
+    label: s.userId,
+  }));
 
   return (
-    <>
+    <div className={authState.isAuthenticated && lastPathSegment?.includes("takvim-anasayfa") ? "calendar-page bg-front-dark" : "calendar-page  bg-front-white"}>
       {/* Instructor Select */}
       <div className="container filterCommon">
         <div className='row'>
-          <h1 className='education'>Eğitim ve Etkinlik Takvimi</h1>
+          <h1 className='education' style={{ color: authState.isAuthenticated && lastPathSegment?.includes("takvim-anasayfa") ? "#fff" : "#000" }} >Eğitim ve Etkinlik Takvimi</h1>
         </div>
         <div className='row educationFilter'>
           <div className='educationFilterInput col-md-5'>
@@ -214,7 +219,7 @@ const Calendar = (props: Props) => {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

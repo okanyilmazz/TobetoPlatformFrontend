@@ -1,5 +1,5 @@
 .for-institutions {
-    margin-top: 16rem !important;
+    padding-top: 8rem;
     margin-bottom: 5rem;
 }
 
@@ -16,16 +16,26 @@
     align-items: center;
     text-align: center;
     justify-content: center;
-    padding-bottom: 3rem !important;
+    padding-bottom: 3rem;
 }
 
 .for-institutions .content-text {
     background: linear-gradient(180deg, #1b1b1b, #181717 67.74%);
     border-radius: 25px;
-    padding-top: 2rem !important;
-    padding-bottom: 2rem !important;
-    height: 150px !important;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    height: 150px;
     margin-bottom: 20px;
+    margin-top: 6rem;
+}
+
+.for-institutions .ik-cards {
+    margin-top: 6rem;
+}
+
+.for-institutions .ik-cards .ik-card {
+    box-shadow: none;
+    height: 300px !important;
 }
 
 .for-institutions .ik-cards .ik-card button {
@@ -307,9 +317,4 @@
 .for-institutions .contact-us Button:hover {
     background-color: #822BD9;
     color: #fff;
-}
-
-.for-institutions .ik-cards {
-    margin-top: 72px;
-    height: 300px;
 }

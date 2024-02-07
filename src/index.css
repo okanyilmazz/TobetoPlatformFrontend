@@ -63,3 +63,12 @@ code {
   margin-left: 8px;
   border-radius: 6px;
 }
+
+
+.is-authenticated {
+  color: black;
+}
+
+.is-not-authenticated {
+  color: white;
+}

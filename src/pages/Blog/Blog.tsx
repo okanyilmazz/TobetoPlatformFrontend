@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
+import { useEffect, useState } from "react";
 import "./Blog.css";
-import Card from "react-bootstrap/Card";
-import BlogCard from "../../components/BlogCard/BlogCard";
+import BlogCard from "../../components/PhotoCard/PhotoCard";
 import blogService from "../../services/blogService";
 import { Paginate } from "../../models/paginate";
 import GetListBlogResponse from "../../models/responses/blog/getListBlogResponse";
@@ -17,9 +15,9 @@ export default function Blog() {
   }, []);
 
   return (
-    <div className="container">
+    <div className="blog-page ">
       <h1 className="witp-content title-card">Blog</h1>
-      <div>
+      <div className="blog-page-card">
         {blogs?.items.map((blog) => (
           <BlogCard
             key={blog.id}
@@ -34,11 +32,3 @@ export default function Blog() {
     </div>
   );
 }
-
-// {
-//   educationPrograms?.items.map((educationProgram) => (
-//       <EducationCard
-//           title={educationProgram.name}
-//           date={formatCustomDate(educationProgram.startDate)} />
-//   ))
-// }

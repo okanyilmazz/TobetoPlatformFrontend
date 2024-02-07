@@ -1,11 +1,12 @@
-.catalog-content {
+.catalog-filter-content {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 8px;
     width: 300px !important;
-    background-color: white;
+    background-color: #282828;
+    border-radius: 24px;
 }
 
-.catalog-content .accordion .accordion-header .accordion-button {
+.catalog-filter-content .accordion .accordion-header .accordion-button {
     border-radius: 24px !important;
     background-color: #847b8d !important;
     border: none;
@@ -13,75 +14,79 @@
     font-family: "Poppins-Bold";
 }
 
-.catalog-content h2:first-child {
+.catalog-filter-content h2:first-child {
     padding-top: 12px;
     font-size: 18px;
-    color: #181818;
+    color: white;
     font-weight: 600;
 }
 
-.catalog-content .accordion-item:first-of-type .accordion-button:active {
+.accordion-hr {
+    color: white;
+}
+
+.catalog-filter-content .accordion-item:first-of-type .accordion-button:active {
     background-color: #93f !important;
 }
 
-.catalog-content .accordion .accordion-forMe .accordion-button {
+.catalog-filter-content .accordion .accordion-forMe .accordion-button {
     background-color: #93f !important;
     border: 1px solid #93f;
 }
 
-.catalog-content .accordion-forMe .accordion-collapse {
+.catalog-filter-content .accordion-forMe .accordion-collapse {
     display: none !important;
 }
 
-.catalog-content .accordion-forMe .accordion-button::after {
+.catalog-filter-content .accordion-forMe .accordion-button::after {
     display: none !important;
 }
 
-.catalog-content .accordion .accordion-button:after {
+.catalog-filter-content .accordion .accordion-button:after {
     background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
 }
 
-.catalog-content .accordion .accordion-forMe .accordion-button:not(.collapsed) {
+.catalog-filter-content .accordion .accordion-forMe .accordion-button:not(.collapsed) {
     background-color: white !important;
     color: #181818;
 }
 
-.catalog-content .accordion .accordion-button:not(.collapsed) {
+.catalog-filter-content .accordion .accordion-button:not(.collapsed) {
     background-color: #93f !important;
 }
 
-.catalog-content input[type=text] {
+.catalog-filter-content input[type=text] {
     width: 100%;
     padding: 8px 16px;
 }
 
-.catalog-content input[type=text]:focus {
+.catalog-filter-content input[type=text]:focus {
     border-color: #c9f;
     box-shadow: 0 0 0 0.25rem rgba(153, 51, 255, .25);
 }
 
-.catalog-content .form-check {
+.catalog-filter-content .form-check {
     margin-top: 12px;
     display: flex !important;
     gap: 12px;
     margin-right: 2rem !important;
 }
 
-.catalog-content .form-check-input:checked {
+.catalog-filter-content .form-check-input:checked {
     background-color: #93f !important;
     border-color: #93f !important;
 }
 
-.catalog-content .accordion-title {
+.catalog-filter-content .accordion-title {
     margin-bottom: 10px !important;
     margin-top: 12px;
 }
 
-.catalog-content h2:last-child {
+.catalog-filter-content h2:last-child {
     font-weight: bold !important;
 }
 
-.catalog-content .filter-title {
+.catalog-filter-content .filter-title {
     font-size: 18px;
     color: #181818;
     font-weight: 600;
@@ -89,29 +94,29 @@
 
 
 
-.catalog-content .accordion-item {
+.catalog-filter-content .accordion-item {
     border: 0 !important;
     background-color: transparent;
 }
 
-.catalog-content .filter-title {
+.catalog-filter-content .filter-title {
     padding: 12px;
 }
 
-.catalog-content .scrollable-content {
+.catalog-filter-content .scrollable-content {
     max-height: 300px;
     overflow: auto;
 }
 
-.catalog-content ::-webkit-scrollbar {
+.catalog-filter-content ::-webkit-scrollbar {
     width: 4px;
 }
 
-.catalog-content ::-webkit-scrollbar-thumb {
+.catalog-filter-content ::-webkit-scrollbar-thumb {
     background-color: #93f;
     border-radius: 6px;
 }
 
-.catalog-content ::-webkit-scrollbar-thumb:hover {
+.catalog-filter-content ::-webkit-scrollbar-thumb:hover {
     background-color: #93fc;
 }

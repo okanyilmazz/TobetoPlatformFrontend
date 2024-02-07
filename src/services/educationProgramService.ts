@@ -6,6 +6,9 @@ import AddEducationProgramRequest from "../models/requests/educationProgram/addE
 import UpdateEducationProgramRequest from "../models/requests/educationProgram/updateEducationProgramRequest";
 import { AddedEducationProgramResponse } from "../models/responses/educationProgram/addedEducationProgramResponse";
 import { UpdatedEducationProgramResponse } from "../models/responses/educationProgram/updatedEducationProgramResponse";
+import { AxiosResponse } from "axios";
+import axiosInstance from "../core/interceptors/axiosInterceptor";
+import EducationProgramFilterRequest from "../models/requests/filter/educationProgramFilterRequest";
 
 class EducationProgramService extends BaseService<
     Paginate<GetListEducationProgramResponse>,
@@ -17,7 +20,17 @@ class EducationProgramService extends BaseService<
 > {
     constructor() {
         super()
-        this.apiUrl = "EducationPrograms/GetList?PageIndex=0&PageSize=4"
+        this.apiUrl = "EducationPrograms/GetList?PageSize=2"
+    }
+
+    getByFilter(request: EducationProgramFilterRequest): Promise<AxiosResponse<Paginate<GetListEducationProgramResponse>, any>> {
+        return axiosInstance.post<Paginate<GetListEducationProgramResponse>>("EducationPrograms/GetListByFiltered", request);
+    }
+
+
+    customGetAll(pageIndex: number, pageSize: number): Promise<AxiosResponse<Paginate<GetListEducationProgramResponse>, any>> {
+        this.apiUrl = "EducationPrograms/GetList?PageIndex=" + pageIndex + "&PageSize=" + pageSize
+        return this.getAll();
     }
 }
 

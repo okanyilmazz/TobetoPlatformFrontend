@@ -1,43 +1,226 @@
-.calendarCommon {
-    color: white !important;
+/* Instructor filter  */
+
+.filterCommon {
+    color: white;
+    margin-top: 8rem;
+}
+
+.calendar-page div>h1 {
+    font-size: 54px;
+    margin-bottom: 45px;
+    margin-top: 45px;
+    font-family: 'Poppins-Bold';
+}
+
+.educationFilter {
+    font-size: 18px;
+    color: gray;
+    border-radius: 15px;
+    background-color: #2f2f2f;
+    padding-top: 45px;
+    padding-left: 15px;
+    padding-bottom: 45px;
+    display: flex;
+}
+
+.educationFilterInput>header {
+    padding-bottom: 10px;
+}
+
+.inputEducation {
+    background-color: #282828;
+    color: white;
+    width: 520px;
+    padding: 9px;
+    border-color: #2f2f2f;
+
+}
+
+
+.instructorList header {
+    margin-bottom: 10px;
+}
+
+.instructorSelect .select__control {
+    width: 520px;
+    background-color: #282828;
+    border-color: #828282;
+}
+
+.checkboxList {
+    display: flex;
+    font-size: 16px;
+}
+
+.educationState {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.checkboxList>span {
+    padding-left: 5px;
+    color: white
+}
+
+.checkboxList>span>.form-check-input.checkEventEnded:checked {
+    background-color: #ff442b;
+}
+
+.checkboxList>span>.form-check-input.checkEventContinue:checked {
+    background-color: #fac059;
+}
+
+.checkboxList>span>.form-check-input.checkEventBuyed:checked {
+    background-color: #5fbf9f;
+}
+
+.checkboxList>span>.form-check-input.checkEventNotStarted:checked {
+    background-color: #5c6cc1;
+}
+
+.fc .fc-daygrid-event {
+    width: 80x;
+    height: 59px;
+    display: grid;
+    font-style: normal !important;
+    padding-left: 45px;
+    background-color: #5c6dc180;
+    border: 1px solid white;
+    font-size: 14px;
+    font-style: normal !important;
+}
+
+.checkboxList .eventEnded {
+    border: 2px solid #ff442b !important;
+    border-radius: 4px !important;
+    background-color: rgba(255, 68, 43, .3) !important;
+    color: #fff !important;
+}
+
+.checkboxList .eventNotStarted {
+    border: 2px solid #5c6cc1 !important;
+    border-radius: 4px !important;
+    background-color: rgba(92, 108, 193, .3) !important;
+    color: #fff !important;
+}
+
+.fc-event-start .checkEventEnded {
+    background-color: #5c6dc199;
+    overflow: hidden;
+    border: 1px solid;
+}
+
+.fc-h-event {
+    /* Site üzerinden eklenen event rengi */
+    background-color: #ff442b96 !important;
+    border: 1px solid white;
+    overflow: hidden;
+}
+
+.fc-h-event-start {
+    background-color: #5c6dc199;
+    border: 1px solid white;
+}
+
+/* Instructor filter  */
+
+
+
+/* Calendar  */
+
+.dark-calendar .fc .fc-daygrid-day-number {
+    color: rgb(167, 117, 117) !important;
 }
 
 .fc-day {
-    background-color: white;
+    background-color: #2f2f2f;
+    /* başlıklar */
 }
 
 .fc-daygrid-day {
-    background-color: white;
+    background-color: #2f2f2f !important;
+    /* hücrelerin rengi 1-2-3 */
 }
 
-.fc .fc-toolbar.fc-header-toolbar {
-    margin-bottom: 1.5em;
-}
-.fc .fc-toolbar {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-}
-
-.fc, .fc *, .fc ::after, .fc ::before {
-    box-sizing: border-box;
-}
-
-.fc .fc-daygrid-day-top {
-    display: flex;
-    flex-direction: row-reverse;
-}
-
-.fc .fc-col-header-cell-cushion, .fc .fc-toolbar-title {
+.fc .fc-col-header-cell-cushion,
+.fc .fc-toolbar-title {
     color: #828282 !important;
-    font-weight: 400 !important;
+    /* gün rengi - pzt-salı */
+    font-weight: 500 !important;
 }
 
-.fc .fc-col-header-cell-cushion {
+.fc .fc-daygrid-day {
+    height: 132px !important;
+}
+
+.dark-calendar .fc-button-group button {
+    background-color: transparent !important;
+    color: #bfbfbf !important;
+    border: none !important;
+}
+
+.dark-calendar .calendar-bg {
+    border-radius: 12px;
+    background: #2f2f2f !important;
+}
+
+.calendar-page .card {
+    margin-top: 70px;
+    background-color: #2f2f2f !important;
+}
+
+.fc .fc-today-button {
+    /* bugün butonu */
+    background-color: #2f2f2f !important;
+    color: #828282 !important;
+    border: 2px solid !important;
+    border-radius: 20px !important;
+    font-size: 16px !important;
+}
+
+.fc .fc-button {
+    /* sağ sol  hafta gün */
+    background-color: #2f2f2f;
+    border: 1px solid white;
+    opacity: 0.7;
+    border-radius: 20px;
     display: inline-block;
-    padding: 2px 4px;
-    
+    font-size: 1em;
+    font-weight: 400;
+    line-height: 1.5;
+    padding: 0.4em 0.65em;
+    text-align: center;
+    user-select: none;
+    vertical-align: middle;
 }
-.fc-col-header-cell-cushion {
-    text-decoration: none !important;
+
+.fc .fc-button-primary:disabled {
+    background-color: #2f2f2f;
+    border-color: #2f2f2f;
+    color: #2f2f2f;
+
 }
+
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):active {
+    /* ay */
+    background-color: #2f2f2f;
+    border-color: white;
+    color: white;
+    opacity: 0.7;
+}
+
+/* .fc-direction-ltr .fc-button-group>.fc-button:not(:last-child) {
+    display: flex;
+    align-items: center;
+    opacity: 0.7;
+    justify-content: space-between;
+} */
+
+/* :root {
+    --fc-button-active-bg-color: none;
+    --fc-button-hover-bg-color: none;
+    --fc-button-hover-border-color: none;
+} */
+
+/* Calendar  */

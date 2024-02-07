@@ -10,10 +10,10 @@ import Profile from '../../pages/Profile/Profile';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import ProtectedRoute from './ProtectedRoute';
 import CatalogPage from '../../pages/CatalogPage/CatalogPage';
-import SignUp from '../../pages/SignUp/SignUp';
-
+import SignUp from '../../pages/SignUp/SignUp'; 
 import Blog from '../../pages/Blog/Blog';
 import MediaNews from '../../pages/MediaNews/MediaNews';
+import Codecademy from '../../pages/Codecademy/Codecademy';
 
 
 
@@ -37,7 +37,7 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/giris" Component={LoginPage} />
             <Route path="/kayit-ol" Component={SignUp} />
             <Route path="/katalog" Component={CatalogPage} />
-            {/* <Route path="/codecademy" Component={Codeacademy} /> */}
+            <Route path="/codecademy" Component={Codecademy} />
             <Route path="/platform-katalog" Component={CatalogPage} />
 
 

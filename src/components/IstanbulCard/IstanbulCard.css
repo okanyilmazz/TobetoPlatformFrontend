@@ -22,21 +22,28 @@
 }
 
 
+
 .ik-card .content-bottom {
     justify-self: center;
     margin-top: 1rem;
 }
 
 .ik-card .content-bottom Button {
-    background-color: #0fcdfa !important;
+    background-color: #0fcdfa;
     color: #1d1141;
     border: 0;
     border-radius: 50px;
     line-height: 18px;
     min-width: 100px;
     font-family: 'Poppins-Bold';
-    font-size: 10px;
-    padding: 5px;
+    font-size: 14px;
+    padding: 8px 37px;
+}
+
+.ik-card .content-bottom Button:hover,
+.ik-card .content-bottom Button:active,
+.ik-card .content-bottom Button:focus {
+    background-color: #0fcdfa;
 }
 
 .ik-card::before {
@@ -76,4 +83,33 @@
 #right-quote {
     margin-left: 0;
     margin-right: 5px;
+}
+
+
+.ik-card .text-ik {
+    background-color: #fff;
+    height: 50px;
+    border-radius: 0 30px 30px 0;
+    display: grid;
+    grid-template-columns: 80% auto;
+}
+
+.ik-card .text-ik #circle {
+
+    width: 35px;
+    height: 35px;
+    background: #1d1141;
+    border-radius: 100%;
+    justify-self: end;
+    align-self: center;
+    margin-right: 1rem;
+}
+
+.ik-card .text-ik span {
+    font-family: 'Poppins-Bold';
+    font-weight: 700;
+    color: #1d1141;
+    font-size: 20px;
+    align-self: center;
+    text-align: end;
 }

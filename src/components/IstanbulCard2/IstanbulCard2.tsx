@@ -6,7 +6,6 @@ export default function IstanbulCard2(props: any) {
     const navigate = useNavigate();
     return (
         <div className="login-page-ik ">
-            <div className="login-ik-container"> </div>
             <div className="login-ik-container">
                 <img className="tobeto-icon" src="https://tobeto.com/_next/static/media/ik-logo-dark.7938c0de.svg" alt="" />
             </div>

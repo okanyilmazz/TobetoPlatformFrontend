@@ -7,7 +7,7 @@ import 'semantic-ui-css/semantic.min.css'
 import { BrowserRouter } from 'react-router-dom';
 import { globalStore } from './store/configureStore';
 import { Provider } from 'react-redux';
-
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const root = ReactDOM.createRoot(

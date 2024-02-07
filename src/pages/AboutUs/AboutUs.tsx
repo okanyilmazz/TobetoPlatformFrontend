@@ -4,12 +4,17 @@ import { Col, Container, Image, Row } from 'react-bootstrap'
 import '../../components/TeamCard/TeamCard'
 import AboutUsTeamMember from '../../components/TeamCard/TeamCard'
 import { SocialMediaIcon } from '../../components/SocialMediaIcon/SocialMediaIcon'
+import { useLocation } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 
 
 function AboutUs() {
+    const location = useLocation();
+    const pathArray = location.pathname.split('/');
+    const lastPathSegment = pathArray[pathArray.length - 1];
+    const authState = useSelector((state: any) => state.auth);
     return (
-
-        <div className=' bg-front-dark about-content d-flex'  >
+        <div className={(authState.isAuthenticated && lastPathSegment === "hakkimizda") ? 'about-content d-flex bg-front-dark' : 'about-content d-flex'} >
             <Container >
                 <Row className='aboutUs'>
                     <Col md={2}>

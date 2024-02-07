@@ -4,7 +4,6 @@
 
 .platform .platform-content {
     height: auto;
-    margin-top: 18rem !important;
     margin-bottom: 3.5rem;
 }
 
@@ -12,6 +11,19 @@
     display: flex !important;
     flex-direction: column !important;
     text-align: center;
+}
+
+.platform-content section:first-child::before {
+    content: "";
+    background: url("../../../public/assets/Icons/dot-purple.svg");
+    background-repeat: no-repeat;
+    background-size: 150px 150px;
+    width: 150px;
+    height: 150px;
+    display: block;
+    position: absolute;
+    right: 8rem;
+    top: 10rem;
 }
 
 .platform .platform-content .tobeto-slogan {
@@ -22,7 +34,7 @@
 .platform .platform-content .tobeto-slogan span {
     font-size: 24px;
     color: #1C1917;
-
+    font-family: 'Poppins-Medium';
 }
 
 .platform .content-title span {
@@ -72,6 +84,10 @@
     border-radius: 10px;
     height: auto;
     border-radius: 12px;
+}
+
+.bottom-section .my-exams {
+    display: flex;
 }
 
 .platform .platform-content .middle-section .ik-slogan {

@@ -6,6 +6,7 @@ import Footer from './layouts/Footer/Footer';
 import Navi from './layouts/Navi/Navi';
 import { useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import Profile from './pages/Profile/Profile';
 
 function App() {
   const authState = useSelector((state: any) => state.auth);
@@ -35,9 +36,10 @@ function App() {
         <OverlayLoader />
         <RouteDefinitions />
         <Footer />
+
       </>
     </div>
   );
-} 
+}
 
 export default App;

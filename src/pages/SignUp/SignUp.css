@@ -1,4 +1,4 @@
-.sign-up-page{
+.sign-up-page {
     margin-top: 12rem;
     display: flex;
     justify-items: center;
@@ -116,20 +116,15 @@
     margin-top: 127px;
     margin-bottom: -93px;
 }
-.rainbow-card h3 {
-    font-size: 36px;
-    font-family: Poppins, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-    line-height: 43.2px;
-    font-weight: 700;
 
-}
-.rainbow-card .sign-up-form .field input{
+
+.rainbow-card .sign-up-form .field input {
 
     display: block;
     width: 285px;
     height: 47px;
     background-color: #fff;
-    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
     border-radius: 5px;
     padding: 14px 24px;
     font-family: 'Poppins-Regular';
@@ -138,16 +133,17 @@
     line-height: 1.25;
     border: 1px solid #e7e5e4;
     letter-spacing: normal;
-   
+}
+
+.rainbow-card .sign-up-form .rainbow-card-button:hover {
+    cursor: pointer;
 }
 
 .rainbow-card .rainbow-card-button {
-
+    border-radius: 20px;
     color: #fff;
-    pointer-events: none;
     background-color: #93f;
     border-color: #93f;
-    opacity: revert-layer;
 }
 
 .rainbow-card-ik {
@@ -222,7 +218,6 @@
     border: 0;
     box-shadow: none;
     margin: auto;
-
 }
 
 .rainbow-card-ik .banner-horizontal {
@@ -239,22 +234,38 @@
     margin: auto;
 }
 
-.rainbow-card-2 small {
-    background: transparent;
-}
-
-.decorated-text-login {
+.sign-up-page .decorated-text-login {
     background: transparent;
     color: #282828;
+    font-weight: 600;
+}
+
+.sign-up-page .decorated-text-login:hover {
+    cursor: pointer;
 }
 
 
 .sign-up-page .rainbow-card button:hover {
-    background-color:#822bd9;  
+    background-color: #822bd9;
 }
 
-.sign-up-form .field input:focus{
+.sign-up-form .field input:focus {
     border-color: #c9f !important;
-    box-shadow: 0 0 0 0.25rem rgba(153,51,255,.25);
+    box-shadow: 0 0 0 0.25rem rgba(153, 51, 255, .25);
     outline: 0;
+}
+
+.sign-up-form span {
+    font-family: 'Poppins-Bold';
+    font-size: 36px;
+    line-height: 43.2px;
+    font-weight: 700;
+}
+
+.sign-up-page .rainbow-card-2 {
+    margin-top: 1.5rem;
+}
+
+.sign-up-page .login-page-ik {
+    height: 687px;
 }

@@ -36,11 +36,15 @@
     background: none;
 }
 
-.sign {
+.sign-out {
     display: flex;
     gap: 24px;
     justify-content: flex-end;
 
+}
+
+.sign-out .register {
+    padding: 0.9em 1.5em 0.785714em !important;
 }
 
 /* .ui.button {

@@ -1,25 +1,22 @@
-.login-page-content{
-    margin-top: 12rem !important;
-}
-
 .Container-login {
     display: flex;
     justify-content: space-between;
     height: 50vh;
     margin-top: 10px;
-    
-  
+
+
 }
+
 .login-page-icon {
     display: flex;
-    flex-direction: row; 
+    flex-direction: row;
     gap: 1em;
 }
 
-.content {
-  background-color: white;
-    padding-top: 5rem!important;
-    padding-bottom: 5rem!important;
+.login-page-ik .content {
+    background-color: white;
+    padding-top: 5rem !important;
+    padding-bottom: 5rem !important;
 }
 
 
@@ -28,10 +25,11 @@
     margin-top: 57px;
 }
 
-.login-page-ik .col-md-6{
-    border-radius:16px;
+.login-page-ik .col-md-6 {
+    border-radius: 16px;
 }
-.row.content-center{
+
+.row.content-center {
     padding-top: 124px;
     align-items: center;
     justify-content: center;
@@ -41,16 +39,15 @@
     flex-wrap: nowrap;
 }
 
-.login-page-ik .login-ik-container{
+.login-page-ik .login-ik-container {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100%;
-    margin-bottom: 24px; 
+    margin-bottom: 24px;
 }
 
 .login-page-ik {
-    
+    border-radius: 25px;
     position: sticky;
     background: #fff;
     color: #282828;
@@ -60,7 +57,9 @@
     flex-direction: column;
     align-items: center;
     height: 480px;
+    justify-content: center;
 }
+
 .login-page-ik:after,
 .login-page-ik:before {
     content: "";
@@ -80,7 +79,7 @@
     background: inherit
 }
 
-.login-page-ik::before{
+.login-page-ik::before {
     content: '';
     animation: rainbow-border 4s linear infinite;
     background: linear-gradient(135deg, #1e0f41, #0fcdfa, #87ff87, #1e0f41, #0fcdfa, #87ff87);
@@ -95,19 +94,19 @@
     line-height: 9px;
     margin-bottom: 76px;
     padding: 10px 20px;
-    text-align: center; 
+    text-align: center;
     background-color: #1e0f41;
     border-radius: 60px;
     font-size: 14px;
     font-weight: bold;
     min-width: 140px;
     color: #0fcdfa;
-    border-color:  #1e0f41;
+    border-color: #1e0f41;
     font-family: "Poppins-Bold";
 }
 
-.login-page-ik .btn:hover{
-    border-color:  #1e0f41;
+.login-page-ik .btn:hover {
+    border-color: #1e0f41;
     color: #0fcdfa;
     background-color: #1e0f41;
 }
@@ -136,4 +135,4 @@
     background-size: 51px;
     background-repeat: no-repeat;
     visibility: visible !important;
-} 
+}

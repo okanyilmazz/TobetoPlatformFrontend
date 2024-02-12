@@ -9,7 +9,6 @@ const CatalogCard = (props: any) => {
     const navigate = useNavigate();
     const handleClick = () => {
         navigate(`/education-program-details/${props.id}`);
-
     };
     return (
         <div className="row">

@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
-import "./WeInThePress.css";
-import Card from "react-bootstrap/Card";
-import BlogCard from "../../components/BlogCard/BlogCard";
+import { useEffect, useState } from "react";
+import PhotoCard from "../../components/PhotoCard/PhotoCard";
 import mediaNewService from "../../services/mediaNewService";
 import { Paginate } from "../../models/paginate";
 import GetListMediaNewResponse from "../../models/responses/mediaNew/getListMediaNewResponse";
 import { useNavigate } from "react-router-dom";
+import "./MediaNews.css";
 
-export default function WeInThePress(props: any) {
+export default function MediaNews(props: any) {
   const [mediaNews, setMediaNews] = useState<Paginate<GetListMediaNewResponse>>();
 
   useEffect(() => {
@@ -22,18 +20,17 @@ export default function WeInThePress(props: any) {
     navigate(`/basinda-biz-details/${props.id}`);
   }
   return (
-    <div className="container">
+    <div className="media-news-page container">
       <h1 className="witp-content title-card">Basında Biz</h1>
-      <div>
+      <div className="media-news-page-card">
         {mediaNews?.items.map((mediaNew) => (
-          <BlogCard
+          <PhotoCard
             key={mediaNew.id}
             thumbnailPath={mediaNew.thumbnailPath}
             description={mediaNew.description}
             title={mediaNew.title}
             releaseDate={mediaNew.releaseDate}
             id={mediaNew.id}
-            
           />
         ))}
       </div>

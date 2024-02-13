@@ -7,7 +7,6 @@ function Modals(props: any) {
     const handleClose = () => {
         props.onHide();
     };
-
     return (
         <div>
             <Modal className='modals-container' show={props.show} onHide={handleClose}>

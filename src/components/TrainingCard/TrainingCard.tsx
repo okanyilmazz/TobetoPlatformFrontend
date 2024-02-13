@@ -13,11 +13,11 @@ export default function TrainingCard(props: any) {
   const [occupations, setOccupations] = useState<Paginate<GetListOccupationResponse>>();
 
   useEffect(() => {
-    subjectService.customGetAll(0, 6).then(result => {
+    subjectService.getAll(0, 6).then(result => {
       setSubjects(result.data)
     })
 
-    occupationService.customGetAll(0, 6).then(result => {
+    occupationService.getAll(0, 6).then(result => {
       setOccupations(result.data)
     })
   }, []);

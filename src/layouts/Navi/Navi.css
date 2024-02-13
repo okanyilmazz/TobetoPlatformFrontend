@@ -146,10 +146,6 @@
 }
 
 
-.login-header .active-item {
-    color: #9933FF !important;
-    font-weight: 600 !important;
-}
 
 .login-header .item:hover {
     background: transparent !important;

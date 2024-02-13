@@ -26,7 +26,7 @@ export default function CatalogPage() {
 
     useEffect(() => {
         if (pageIndexState !== undefined) {
-            educationProgramService.customGetAll(pageIndexState, 12).then(result => {
+            educationProgramService.getAll(pageIndexState, 12).then(result => {
                 setEducationPrograms(result.data);
             });
         }
@@ -40,7 +40,7 @@ export default function CatalogPage() {
 
 
     const getEducationPrograms = () => {
-        educationProgramService.getAll().then(result => {
+        educationProgramService.getAll(0, 100).then(result => {
             setEducationPrograms(result.data);
         })
     }

@@ -8,7 +8,10 @@ import { BrowserRouter } from 'react-router-dom';
 import { globalStore } from './store/configureStore';
 import { Provider } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';
-
+import 'react-circular-progressbar/dist/styles.css';
+import '@uppy/core/dist/style.min.css';
+import '@uppy/drag-drop/dist/style.min.css';
+import '@uppy/dashboard/dist/style.css'
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

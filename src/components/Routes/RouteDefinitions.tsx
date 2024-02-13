@@ -16,7 +16,7 @@ import SignUp from '../../pages/SignUp/SignUp';
 import Blog from '../../pages/Blog/Blog';
 import MediaNews from '../../pages/MediaNews/MediaNews';
 import Codecademy from '../../pages/Codecademy/Codecademy';
-
+import ProfileSettingsPage from '../../pages/ProfileSettingsPage/ProfileSettingsPage';
 
 
 
@@ -31,7 +31,6 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/bireyler-icin" Component={ForIndividuals} />
             <Route path="/takvim-anasayfa" Component={Calendar} />
             <Route path="/takvim" Component={Calendar} />
-
             <Route path="/platform" element={<ProtectedRoute><PlatformPage /></ProtectedRoute>} />
             <Route path="/basvuru" Component={ApplicationCard} />
             <Route path="/profilim" Component={Profile} />
@@ -40,8 +39,13 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/giris" Component={LoginPage} />
             <Route path="/kayit-ol" Component={SignUp} />
             <Route path="/katalog" Component={CatalogPage} />
-            <Route path="/codeacademy" Component={Codecademy} />
+            <Route path="/codecademy" Component={Codecademy} />
             <Route path="/platform-katalog" Component={CatalogPage} />
+            <Route path="/profilim/profilimi-duzenle/sertifikalarim" Component={ProfileSettingsPage} />
+            <Route path="/profilim/profilimi-duzenle/yetkinliklerim" Component={ProfileSettingsPage} />
+
+
+
 
 
 

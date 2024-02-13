@@ -9,7 +9,7 @@ export default function CountryList() {
     const [countries, setCountries] = useState<Paginate<GetListCountryResponse>>();
 
     useEffect(() => {
-        countryService.getAll().then(result => {
+        countryService.getAll(0, 100).then(result => {
             setCountries(result.data)
         })
     }, []);

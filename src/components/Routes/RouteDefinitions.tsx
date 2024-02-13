@@ -6,15 +6,18 @@ import PlatformPage from '../../pages/PlatformPage/PlatformPage'
 import ApplicationCard from '../../components/ApplicationCard/ApplicationCard'
 import { ForIndividuals } from '../../pages/ForIndividuals/ForIndividuals';
 import Calendar from '../../pages/Calendar/Calendar';
+
+
 import Profile from '../../pages/Profile/Profile';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import ProtectedRoute from './ProtectedRoute';
 import CatalogPage from '../../pages/CatalogPage/CatalogPage';
 import SignUp from '../../pages/SignUp/SignUp';
-
 import Blog from '../../pages/Blog/Blog';
 import MediaNews from '../../pages/MediaNews/MediaNews';
-import Codecademy from '../../pages/Codecademy/Codeacademy';
+import Codecademy from '../../pages/Codecademy/Codecademy';
+
+
 
 
 type Props = {}
@@ -37,7 +40,7 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/giris" Component={LoginPage} />
             <Route path="/kayit-ol" Component={SignUp} />
             <Route path="/katalog" Component={CatalogPage} />
-            <Route path="/codeacademy" Component={Codecademy} />
+            <Route path="/codecademy" Component={Codecademy} />
             <Route path="/platform-katalog" Component={CatalogPage} />
 
 

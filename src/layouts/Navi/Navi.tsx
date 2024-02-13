@@ -76,7 +76,7 @@ export default function Navi() {
                                 </DropdownMenu>
                             </Dropdown>
                             <MenuItem as={Link} to="/katalog" name='Katalog' />
-                            <MenuItem as={Link} to="/codeacademy" name='Codeacademy' />
+                            <MenuItem as={Link} to="/codecademy" name='Codecademy' />
                             <Dropdown simple item text="Tobeto'da Bu Ay">
                                 <DropdownMenu>
                                     <DropdownItem as={Link} to="/blog">Blog</DropdownItem>

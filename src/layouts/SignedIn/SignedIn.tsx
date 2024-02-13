@@ -2,7 +2,7 @@ import './SignedIn.css'
 import { Button, Dropdown, DropdownDivider, Image } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { authActions } from '../../store/auth/authSlice';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { userActions } from '../../store/user/userSlice';
 import { useEffect } from 'react';
 
@@ -38,17 +38,17 @@ export default function SignedIn() {
                         lastPathSegment === "takvim-anasayfa" ? { display: 'none' } : { display: 'block' }}></Button>
             <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                    <Image src="assets/logos/sign-in-profile.png" />
+                    <Image src="/assets/logos/sign-in-profile.png" />
                     <span>{userState.user?.firstName + " " + userState.user?.lastName}</span>
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu>
-                    <Dropdown.Item href="#/action-1">Profil Bilgileri</Dropdown.Item>
+                    <Dropdown.Item as={Link} to="/profilim">Profil Bilgileri</Dropdown.Item>
                     <DropdownDivider className='divider-1'></DropdownDivider>
                     <DropdownDivider className='divider-2'></DropdownDivider>
                     <Dropdown.Item onClick={() => handleLogOut()}>Oturumu Kapat</Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
-        </div>
+        </div >
     )
 }

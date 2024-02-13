@@ -11,10 +11,10 @@ import GetListAnnouncementProjectResponse from '../../models/responses/announcem
 import educationProgramService from '../../services/educationProgramService'
 import announcementProjectService from '../../services/announcementProjectService'
 import ShowMoreButton from '../../components/ShowMoreButton/ShowMoreButton'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import GetListExamResponse from '../../models/responses/exam/getListExamResponse'
 import examService from '../../services/examService'
-import authService from '../../services/authService'
+import { userActions } from '../../store/user/userSlice'
 
 export default function PlatformPage() {
     const [educationPrograms, setEducationPrograms] = useState<Paginate<GetListEducationProgramResponse>>();
@@ -22,10 +22,12 @@ export default function PlatformPage() {
     const [exams, setExams] = useState<Paginate<GetListExamResponse>>();
 
     const userState = useSelector((state: any) => state.user);
-    const user = authService.getUserInfo();
+    const dispatch = useDispatch();
 
     useEffect(() => {
+
         if (!userState.user) {
+            dispatch(userActions.getUserInfo());
             return;
         }
 
@@ -33,11 +35,11 @@ export default function PlatformPage() {
             setExams(result.data);
         });
 
-        educationProgramService.getAll().then(result => {
+        educationProgramService.getAll(0, 100).then(result => {
             setEducationPrograms(result.data);
         });
 
-        announcementProjectService.getAll().then(result => {
+        announcementProjectService.getAll(0, 100).then(result => {
             setAnnouncementProjects(result.data);
         });
     }, [userState]);
@@ -60,7 +62,7 @@ export default function PlatformPage() {
     }
 
     return (
-        <div className='platform bg-front-white'>
+        <div className='platform bg-front-white '>
             <div className="platform-content bg-front-white">
                 <section>
                     <div className='container'>
@@ -163,20 +165,6 @@ export default function PlatformPage() {
                         }
                     </div>
 
-                    {/* 
-                    <div className='exam-details'>
-                        <div className='exam-details-left'>
-                            <span className='exam-title'>Herkes İçin Kodlama 1A Değerlendirme Sınavı</span>
-                            <span className='exam-name'>Herkes İçin Kodlama - 1A</span>
-                            <div className='exam-time'>
-                                <span >45 Dakika</span>
-                            </div>
-                        </div>
-
-                        <div className='exam-details-right'>
-                            <span className='status'></span>
-                        </div>
-                    </div> */}
                 </section>
 
                 <section className='section-card container'>

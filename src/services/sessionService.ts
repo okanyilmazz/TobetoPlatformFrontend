@@ -17,7 +17,7 @@ class SessionService extends BaseService<
 > {
     constructor() {
         super()
-        this.apiUrl = "Sessions/GetList?PageIndex=0&PageSize=10"
+        this.apiUrl = "Sessions"
     }
 }
 

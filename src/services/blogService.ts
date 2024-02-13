@@ -18,8 +18,10 @@ class BlogService extends BaseService<
 > {
     constructor() {
         super()
-        this.apiUrl = "Blogs/GetList?PageSize=100"
+        this.apiUrl = "Blogs"
     }
+
+
 }
 
 export default new BlogService();

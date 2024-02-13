@@ -72,3 +72,9 @@ code {
 .is-not-authenticated {
   color: white;
 }
+
+
+.active-item {
+  color: #9933FF !important;
+  font-weight: 600 !important;
+}

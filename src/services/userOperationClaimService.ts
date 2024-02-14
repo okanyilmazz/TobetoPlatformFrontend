@@ -18,7 +18,7 @@ class UserOperationClaimService extends BaseService<
 > {
     constructor() {
         super()
-        this.apiUrl = "UserOperationClaim/GetList?PageIndex=0&PageSize=17"
+        this.apiUrl = "UserOperationClaims"
     }
 }
 

@@ -32,7 +32,7 @@ const Calendar = (props: Props) => {
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        const result = await SessionService.getAll();
+        const result = await SessionService.getAll(0, 100);
         setSessions(result.data);
 
         let filteredSessions = result.data.items;

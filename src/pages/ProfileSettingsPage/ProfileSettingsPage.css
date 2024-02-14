@@ -1,0 +1,100 @@
+.profile-settings-page {
+    display: flex;
+    margin-top: 20px;
+}
+
+.profile-settings-page .sidebar {
+    margin-top: 2rem;
+    padding: 10px;
+}
+
+
+
+.profile-settings-page .sidebar ul li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 16px;
+    color: #828282;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-family: 'Poppins-Medium';
+    width: 245px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.profile-settings-page .sidebar .active-edit {
+    border-radius: 0 !important;
+    border-right: 3px solid #93f !important;
+}
+
+.profile-settings-page .sidebar ul li:hover {
+    cursor: pointer;
+}
+
+.profile-settings-page .sidebar .active-item {
+    font-weight: normal !important;
+}
+
+.profile-settings-page .profile-settings-content {
+
+    margin-left: 20px;
+}
+
+
+/*CERTIFICATES*/
+
+.profile-settings-page .profile-settings-header {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #93f;
+    font-family: 'Poppins-Medium';
+    margin-left: 10px;
+}
+
+.profile-settings-page .profile-settings-content .upload-content {
+    border-radius: 12px;
+    position: relative;
+    border: 1px solid #f8f3fb;
+    background-color: #fbf9fc;
+    margin-bottom: 2em;
+    margin-top: 0.5em !important;
+    height: 204px;
+    width: 852px;
+}
+
+.profile-settings-page .profile-settings-content .upload-area {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1em;
+    justify-content: center;
+    border: 2px dashed #a486c3;
+    border-radius: 8px;
+    height: 204px;
+    width: 830px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.profile-settings-page .profile-settings-content .upload-area span {
+    font-size: 1.1em;
+    color: #828282;
+    font-family: 'Poppins-Medium';
+}
+
+.profile-settings-page .profile-settings-content .upload-area svg:hover {
+    cursor: pointer;
+}
+
+.modals-container .modal-dialog .modal-content {
+    height: max-content;
+    width: max-content;
+    margin-top: 80%;
+    background-color: transparent;
+    border: 0;
+}

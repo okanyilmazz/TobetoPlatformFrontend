@@ -18,7 +18,7 @@ class EducationProgramLevelService extends BaseService<
 > {
     constructor() {
         super()
-        this.apiUrl = "EducationProgramLevels/GetList?PageSize=10"
+        this.apiUrl = "EducationProgramLevels"
     }
 }
 

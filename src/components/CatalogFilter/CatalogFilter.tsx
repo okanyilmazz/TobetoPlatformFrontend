@@ -4,9 +4,6 @@ import "./CatalogFilter.css"
 import { Paginate } from '../../models/paginate';
 import { GetListEducationProgramLevelResponse } from '../../models/responses/educationProgramLevel/getListEducationProgramLevelResponse';
 import educationProgramLevelService from '../../services/educationProgramLevelService';
-import educationProgramService from '../../services/educationProgramService';
-import { GetListEducationProgramResponse } from '../../models/responses/educationProgram/getListEducationProgramResponse';
-import { Identifier } from 'typescript';
 import EducationProgramFilterRequest from '../../models/requests/filter/educationProgramFilterRequest';
 import GetListSubjectResponse from '../../models/responses/subject/getListSubjectResponse';
 import subjectService from '../../services/subjectService';
@@ -17,6 +14,8 @@ import programmingLanguageService from '../../services/programmingLanguageServic
 import GetListProgrammingLanguageResponse from '../../models/responses/programmingLanguage/getListProgrammingLanguageResponse';
 import { NIL as NIL_UUID } from 'uuid';
 import { useLocation } from 'react-router-dom';
+import userService from '../../services/userService';
+import GetListUserResponse from '../../models/responses/user/getListUserResponse';
 
 
 export default function CatalogFilter(props: any) {
@@ -24,10 +23,8 @@ export default function CatalogFilter(props: any) {
     const pathArray = location.pathname.split('/');
     const lastPathSegment = pathArray[pathArray.length - 1];
 
-    const [selectedEducationId, setSelectedEducationId] = useState(-1);
-
-
     const [selectedEducationLevelId, setSelectedEducationLevelId] = useState<any>(NIL_UUID);
+    const [selectedInstructorId, setSelectedInstructorId] = useState<any>(NIL_UUID);
     const [selectedSubjectId, setSelectedSubjectId] = useState<any>(NIL_UUID);
     const [selectedProgrammingLanguageId, setSelectedProgrammingLanguageId] = useState<any>(NIL_UUID);
     const [selectedEducationProgramDevelopmentId, setSelectedEducationProgramDevelopmentId] = useState<any>(NIL_UUID);
@@ -40,14 +37,15 @@ export default function CatalogFilter(props: any) {
     const [educationProgramDevelopments, setEducationProgramDevelopments] = useState<Paginate<GetListEducationProgramDevelopmentResponse>>();
     const [programmingLanguages, setProgrammingLanguages] = useState<Paginate<GetListProgrammingLanguageResponse>>();
     const [educationProgramLevels, setEducationProgramLevels] = useState<Paginate<GetListEducationProgramLevelResponse>>();
+    const [instructors, setInstructors] = useState<Paginate<GetListUserResponse>>();
+
 
 
     const [filteredSubjects, setFilteredSubjects] = useState<Paginate<GetListSubjectResponse>>();
     const [filteredEducationProgramDevelopments, setFilteredEducationProgramDevelopments] = useState<Paginate<GetListEducationProgramDevelopmentResponse>>();
     const [filteredProgrammingLanguages, setFilteredProgrammingLanguages] = useState<Paginate<GetListProgrammingLanguageResponse>>();
     const [filteredEducationProgramLevels, setFilteredEducationProgramLevels] = useState<Paginate<GetListEducationProgramLevelResponse>>();
-
-
+    const [filteredInstructors, setFilteredInstructors] = useState<Paginate<GetListUserResponse>>();
 
     const [initialRender, setInitialRender] = useState<boolean>(false);
     const userState = useSelector((state: any) => state.user);
@@ -56,27 +54,29 @@ export default function CatalogFilter(props: any) {
 
 
     useEffect(() => {
-        educationProgramLevelService.getAll().then((result) => {
+        educationProgramLevelService.getAll(0, 100).then((result) => {
             setEducationProgramLevels(result.data);
             setFilteredEducationProgramLevels(result.data);
-
         });
 
-        subjectService.customGetAll(0, 6).then((result) => {
+        subjectService.getAll(0, 6).then((result) => {
             setSubjects(result.data);
             setFilteredSubjects(result.data);
         });
 
-        educationProgramDevelopmentService.getAll().then((result) => {
-            setEducationProgramDevelopments(result.data)
+        educationProgramDevelopmentService.getAll(0, 100).then((result) => {
+            setEducationProgramDevelopments(result.data);
             setFilteredEducationProgramDevelopments(result.data);
-
         });
 
-        programmingLanguageService.getAll().then((result) => {
-            setProgrammingLanguages(result.data)
+        programmingLanguageService.getAll(0, 100).then((result) => {
+            setProgrammingLanguages(result.data);
             setFilteredProgrammingLanguages(result.data);
+        });
 
+        userService.getInstructorList().then((result) => {
+            setInstructors(result.data);
+            setFilteredInstructors(result.data);
         });
 
     }, []);
@@ -132,28 +132,6 @@ export default function CatalogFilter(props: any) {
         props.onDataFromChild(filterRequest);
     }
 
-    const instructors = [
-        { id: 1 as number, name: "Tüm Eğitmenler" as string },
-        { id: 2 as number, name: "Eğitmen Dojo" as string },
-        { id: 3 as number, name: "Roiva Eğitmen" as string },
-        { id: 4 as number, name: "Veli Bahçeci" as string },
-        { id: 5 as number, name: "Ahmet Çetinkaya" as string },
-        { id: 6 as number, name: "İrem Balcı" as string },
-        { id: 7 as number, name: "Cem Bayraktaroğlu" as string },
-        { id: 8 as number, name: "Denizhan Dursun" as string },
-        { id: 9 as number, name: "Halit Enes Kalaycı" as string },
-        { id: 10 as number, name: "Kadir Murat Başaren" as string },
-        { id: 11 as number, name: "Gürkan İlişen" as string },
-        { id: 12 as number, name: "Aykut Baştuğ" as string },
-        { id: 13 as number, name: "Mehmet Emin Kortak" as string },
-        { id: 14 as number, name: "Engin Demiroğ" as string },
-        { id: 15 as number, name: "Serkan Tekin" as string },
-        { id: 16 as number, name: "Semih Karduz" as string },
-        { id: 17 as number, name: "Barbaros Ciga" as string },
-        { id: 18 as number, name: "Ali Seyhan" as string },
-        { id: 19 as number, name: "Kader Yavuz" as string },
-    ];
-
     const statuses = [
         { id: 0 as number, name: "Alınan Tüm Eğitimler" as string },
         { id: 1 as number, name: "Henüz Başlanmamış Eğitimler" as string },
@@ -161,35 +139,8 @@ export default function CatalogFilter(props: any) {
         { id: 3 as number, name: "Devam Eden Eğitimler" as string },
     ];
 
-    const handleRadioChange = (id: number) => {
-        setSelectedEducationId(id);
-    };
-
-    function handleSelectedSpecialForMeRadioChange(selected: boolean) {
-        setSelectedSpecialForMe(selected);
-    };
-
-    function handleStatusRadioChange(id: number) {
-        setSelectedStatusId(id);
-    };
-
-    function handleLevelRadioChange(id: any) {
-        setSelectedEducationLevelId(id);
-    };
-
-    function handleDevelopmentRadioChange(id: any) {
-        setSelectedEducationProgramDevelopmentId(id);
-    };
-
-    function handlePriceRadioChange(id: number) {
-        setSelectedPaidId(id);
-    };
-    function handleSubjectRadioChange(id: any) {
-        setSelectedSubjectId(id);
-    };
-
-    function handleLanguageRadioChange(id: any) {
-        setSelectedProgrammingLanguageId(id);
+    const handleRadioChange = (value: any, stateModel: any): void => {
+        stateModel(value);
     };
 
     return (
@@ -203,7 +154,7 @@ export default function CatalogFilter(props: any) {
                     <Accordion.Item eventKey="0">
                         <h2 className='accordion-title' style={authState.isAuthenticated && lastPathSegment !== "katalog" ? { color: 'Black' } : { color: 'White' }}>Filtrele</h2>
                         <hr className='accordion-hr' />
-                        <Accordion.Header className='accordion-forMe' onClick={() => handleSelectedSpecialForMeRadioChange(!selectedSpecialForMe)}>Bana Özel</Accordion.Header>
+                        <Accordion.Header className='accordion-forMe' onClick={() => handleRadioChange(!selectedSpecialForMe, setSelectedSpecialForMe)}>Bana Özel</Accordion.Header>
                     </Accordion.Item>
                     <Accordion.Item eventKey="1">
                         <Accordion.Header className='accordion-title'>Kategori</Accordion.Header>
@@ -217,7 +168,7 @@ export default function CatalogFilter(props: any) {
                                     name="category"
                                     type='radio'
                                     id={'-1'}
-                                    onChange={(event) => handlePriceRadioChange(Number(event?.target.id))}
+                                    onChange={(event) => handleRadioChange(Number(event?.target.id), setSelectedPaidId)}
                                 />
                                 <Form.Check
                                     className={authState.isAuthenticated && lastPathSegment !== "katalog" ? 'is-authenticated' : 'is-not-authenticated'}
@@ -226,7 +177,7 @@ export default function CatalogFilter(props: any) {
                                     name="category"
                                     type='radio'
                                     id={'0'}
-                                    onChange={(event) => handlePriceRadioChange(Number(event?.target.id))}
+                                    onChange={(event) => handleRadioChange(Number(event?.target.id), setSelectedPaidId)}
                                 />
                                 <Form.Check
                                     className={authState.isAuthenticated && lastPathSegment !== "katalog" ? 'is-authenticated' : 'is-not-authenticated'}
@@ -235,7 +186,7 @@ export default function CatalogFilter(props: any) {
                                     name="category"
                                     type='radio'
                                     id={'1'}
-                                    onChange={(event) => handlePriceRadioChange(Number(event?.target.id))}
+                                    onChange={(event) => handleRadioChange(Number(event?.target.id), setSelectedPaidId)}
                                 />
                             </Form>
                         </Accordion.Body>
@@ -252,7 +203,7 @@ export default function CatalogFilter(props: any) {
                                     name="development"
                                     type='radio'
                                     id={NIL_UUID}
-                                    onChange={(event) => handleDevelopmentRadioChange(event.target.id)} />
+                                    onChange={(event) => handleRadioChange(event.target.id, setSelectedEducationProgramDevelopmentId)} />
 
                                 {filteredEducationProgramDevelopments?.items.map((educationProgramDevelopment, index) => (
                                     <Form.Check
@@ -264,7 +215,7 @@ export default function CatalogFilter(props: any) {
                                         label={educationProgramDevelopment.name}
                                         value={String(educationProgramDevelopment.id)}
                                         checked={selectedEducationProgramDevelopmentId === educationProgramDevelopment.id}
-                                        onChange={() => handleDevelopmentRadioChange(educationProgramDevelopment.id)}
+                                        onChange={() => handleRadioChange(educationProgramDevelopment.id, setSelectedEducationProgramDevelopmentId)}
                                     />
                                 ))}
                             </Form>
@@ -282,7 +233,7 @@ export default function CatalogFilter(props: any) {
                                     name="educationProgramLevel"
                                     type='radio'
                                     id={NIL_UUID}
-                                    onChange={(event) => handleLevelRadioChange(event.target.id)} />
+                                    onChange={(event) => handleRadioChange(event.target.id, setSelectedEducationLevelId)} />
 
                                 {filteredEducationProgramLevels?.items.map((educationProgramLevel) => (
                                     <Form.Check
@@ -293,7 +244,7 @@ export default function CatalogFilter(props: any) {
                                         label={educationProgramLevel.name}
                                         value={String(educationProgramLevel.id)}
                                         checked={selectedEducationLevelId === educationProgramLevel.id}
-                                        onChange={() => handleLevelRadioChange(educationProgramLevel.id)}
+                                        onChange={() => handleRadioChange(educationProgramLevel.id, setSelectedEducationLevelId)}
                                     />
                                 ))}
                             </Form>
@@ -312,7 +263,7 @@ export default function CatalogFilter(props: any) {
                                     name="subject"
                                     type='radio'
                                     id={NIL_UUID}
-                                    onChange={(event) => handleSubjectRadioChange(event?.target.id)}
+                                    onChange={(event) => handleRadioChange(event?.target.id, setSelectedSubjectId)}
                                 />
 
                                 {filteredSubjects?.items.map((subject, index) => (
@@ -325,7 +276,7 @@ export default function CatalogFilter(props: any) {
                                         label={subject.name}
                                         value={String(subject.id)}
                                         checked={selectedSubjectId === subject.id}
-                                        onChange={() => handleSubjectRadioChange(subject.id)}
+                                        onChange={() => handleRadioChange(subject.id, setSelectedSubjectId)}
                                     />
                                 ))}
                             </Form>
@@ -343,7 +294,7 @@ export default function CatalogFilter(props: any) {
                                     name="programmingLanguage"
                                     type='radio'
                                     id={NIL_UUID}
-                                    onChange={(event) => handleLanguageRadioChange(event.target.id)} />
+                                    onChange={(event) => handleRadioChange(event.target.id, setSelectedProgrammingLanguageId)} />
 
                                 {filteredProgrammingLanguages?.items.map((programmingLanguage, index) => (
                                     <Form.Check
@@ -355,7 +306,7 @@ export default function CatalogFilter(props: any) {
                                         label={programmingLanguage.name}
                                         value={String(programmingLanguage.id)}
                                         checked={selectedProgrammingLanguageId === programmingLanguage.id}
-                                        onChange={() => handleLanguageRadioChange(programmingLanguage.id)}
+                                        onChange={() => handleRadioChange(programmingLanguage.id, setSelectedProgrammingLanguageId)}
                                     />
                                 ))}
                             </Form>
@@ -366,19 +317,17 @@ export default function CatalogFilter(props: any) {
                         <Accordion.Body className='scrollable-content'>
                             <Form>
                                 <Form.Control type="text" placeholder="Arama" />
-
-                                {instructors.map((instructor) => (
+                                {instructors?.items.map((instructor, index) => (
                                     <Form.Check
                                         className={authState.isAuthenticated && lastPathSegment !== "katalog" ? 'is-authenticated' : 'is-not-authenticated'}
-                                        key={instructor.id}
+                                        key={index}
                                         type="radio"
                                         id={instructor.id.toString()}
                                         name="instructor"
-                                        label={instructor.name}
-                                        value={instructor.id}
-                                        checked={selectedEducationId === instructor.id}
-                                        onChange={() => handleRadioChange(instructor.id)}
-                                    />
+                                        label={instructor.firstName + " " + instructor.lastName}
+                                        value={String(instructor.id)}
+                                        checked={selectedInstructorId === instructor.id}
+                                        onChange={() => handleRadioChange(instructor.id, setSelectedInstructorId)} />
                                 ))}
                             </Form>
                         </Accordion.Body>
@@ -395,7 +344,7 @@ export default function CatalogFilter(props: any) {
                                     name="status"
                                     type='radio'
                                     id={"-1"}
-                                    onChange={(event) => handleStatusRadioChange(Number(event.target.id))} />
+                                    onChange={(event) => handleRadioChange(Number(event.target.id), setSelectedStatusId)} />
 
                                 {statuses.map((status) => (
                                     <Form.Check
@@ -407,7 +356,7 @@ export default function CatalogFilter(props: any) {
                                         label={status.name}
                                         value={status.id}
                                         checked={selectedStatusId === status.id}
-                                        onChange={() => handleStatusRadioChange(status.id)}
+                                        onChange={() => handleRadioChange(status.id, setSelectedStatusId)}
                                     />
                                 ))}
                             </Form>

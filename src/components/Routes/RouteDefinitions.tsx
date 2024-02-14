@@ -6,14 +6,17 @@ import PlatformPage from '../../pages/PlatformPage/PlatformPage'
 import ApplicationCard from '../../components/ApplicationCard/ApplicationCard'
 import { ForIndividuals } from '../../pages/ForIndividuals/ForIndividuals';
 import Calendar from '../../pages/Calendar/Calendar';
+
+
 import Profile from '../../pages/Profile/Profile';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import ProtectedRoute from './ProtectedRoute';
 import CatalogPage from '../../pages/CatalogPage/CatalogPage';
-import SignUp from '../../pages/SignUp/SignUp'; 
+import SignUp from '../../pages/SignUp/SignUp';
 import Blog from '../../pages/Blog/Blog';
 import MediaNews from '../../pages/MediaNews/MediaNews';
 import Codecademy from '../../pages/Codecademy/Codecademy';
+import ProfileSettingsPage from '../../pages/ProfileSettingsPage/ProfileSettingsPage';
 
 
 
@@ -28,7 +31,6 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/bireyler-icin" Component={ForIndividuals} />
             <Route path="/takvim-anasayfa" Component={Calendar} />
             <Route path="/takvim" Component={Calendar} />
-
             <Route path="/platform" element={<ProtectedRoute><PlatformPage /></ProtectedRoute>} />
             <Route path="/basvuru" Component={ApplicationCard} />
             <Route path="/profilim" Component={Profile} />
@@ -39,6 +41,11 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/katalog" Component={CatalogPage} />
             <Route path="/codecademy" Component={Codecademy} />
             <Route path="/platform-katalog" Component={CatalogPage} />
+            <Route path="/profilim/profilimi-duzenle/sertifikalarim" Component={ProfileSettingsPage} />
+            <Route path="/profilim/profilimi-duzenle/yetkinliklerim" Component={ProfileSettingsPage} />
+
+
+
 
 
 

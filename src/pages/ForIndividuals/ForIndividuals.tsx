@@ -16,11 +16,11 @@ export const ForIndividuals = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    occupationService.getAll().then(result => {
+    occupationService.getAll(0, 100).then(result => {
       setOccupations(result.data);
     })
 
-    subjectService.getAll().then(result => {
+    subjectService.getAll(0, 100).then(result => {
       setSubjects(result.data);
     })
   }, [])

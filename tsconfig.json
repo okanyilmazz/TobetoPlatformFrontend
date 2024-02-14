@@ -20,7 +20,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": [
-    "src"
-  ]
+"include": ["./package.json", "./src/**/*.*", "./path/to/uppy-utils.d.ts"],
 }

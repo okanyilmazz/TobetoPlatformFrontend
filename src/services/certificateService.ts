@@ -8,6 +8,8 @@ import UpdatedCertificateResponse from "../models/responses/certificate/updatedC
 import AddCertificateRequest from "../models/requests/certificate/addCertificateRequest";
 import UpdateCertificateRequest from "../models/requests/certificate/updateCertificateRequest";
 
+import axiosInstance from "../core/interceptors/axiosInterceptor";
+import { AxiosResponse } from "axios";
 
 class CertificateService extends BaseService<
     Paginate<GetListCertificateResponse>,
@@ -20,6 +22,10 @@ class CertificateService extends BaseService<
     constructor() {
         super()
         this.apiUrl = "Certificates"
+    }
+    getByAccountId(accountId: number, pageIndex: number, pageSize: number): Promise<AxiosResponse<Paginate<GetListCertificateResponse>, any>> {
+        console.log(accountId)
+        return axiosInstance.get<Paginate<GetListCertificateResponse>>(this.apiUrl + "/GetByAccountId?accountId=" + accountId + "&PageIndex=" + pageIndex + "&PageSize=" + pageSize);
     }
 }
 

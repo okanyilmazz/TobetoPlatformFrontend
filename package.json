@@ -85,5 +85,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/toastify-js": "^1.12.3"
   }
 }

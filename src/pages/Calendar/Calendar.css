@@ -5,7 +5,6 @@
     margin-top: 8rem;
 }
 
-
 .calendar-page div>h1 {
     font-size: 54px;
     margin-bottom: 45px;
@@ -86,7 +85,7 @@
     padding-left: 45px;
     background-color: #5c6dc180;
     border: 1px solid white;
-    font-size: 10px;
+    font-size: 14px;
     font-style: normal !important;
     color: white
 }

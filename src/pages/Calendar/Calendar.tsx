@@ -34,6 +34,11 @@ const optionsInstructor = [
   { value: 'Kader Yavuz', label: 'Kader Yavuz' },
 ];
 
+import GetListUserOperationClaimResponse from '../../models/responses/userOperationClaim/getListUserOperationClaimResponse';
+import userOperationClaimService from '../../services/userOperationClaimService';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router';
+
 type Props = {};
 const Calendar = (props: Props) => {
   const [sessions, setSessions] = useState<Paginate<GetListSessionResponse>>();
@@ -49,6 +54,7 @@ const Calendar = (props: Props) => {
     const fetchSessions = async () => {
       try {
         const result = await SessionService.getAll(1,100);
+        const result = await SessionService.getAll(0, 100);
         setSessions(result.data);
 
         let filteredSessions = result.data.items;
@@ -93,6 +99,7 @@ const Calendar = (props: Props) => {
           start: moment(session.startDate).format(),
           title: session.occupationClassName,
           // instructor: "Engin demiroğ"
+          instructor: session.userId
         }));
 
         setEvents(sessionEvents);
@@ -125,6 +132,11 @@ const Calendar = (props: Props) => {
   //   value: s.userId,
   //   label: s.userId,
   // }));
+
+  const optionsInstructor = (sessions?.items || []).map((s) => ({
+    value: s.userId,
+    label: s.userId,
+  }));
 
   return (
     <div className={authState.isAuthenticated && lastPathSegment?.includes("takvim-anasayfa") ? "calendar-page bg-front-dark" : "calendar-page  bg-front-white"}>

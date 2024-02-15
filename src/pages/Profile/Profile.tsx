@@ -21,6 +21,9 @@ import Switch from 'react-switch';
 import ProfileRadar from '../../components/ProfileRadar/ProfileRadar';
 import 'react-toastify/dist/ReactToastify.css';
 import ProfileToaster from '../../components/ProfileToaster/ProfileToaster';
+import Tooltip from '@uiw/react-tooltip';
+import HeatMap from '@uiw/react-heat-map';
+
 
 
 export default function Profile() {
@@ -50,8 +53,6 @@ export default function Profile() {
       copyTextElement.classList.remove("active");
     }, 2500);
   };
-
-
 
   const heatMapRows = () => {
     return (
@@ -204,6 +205,12 @@ export default function Profile() {
               </Dropdown.Menu>
             </Dropdown>
           </div>
+  return (
+    <div className='profile-card'>
+
+      <div className='container '>
+
+        <div className='row'>
 
           <div className='col-md-4'>
             <div className='profile-col-account'>
@@ -320,15 +327,35 @@ export default function Profile() {
                     </div>
                   </div>
                 </div>
+            </div>
+
+          </div>
+          <div className='col-md-8'>
+            <div className="ActivityMapContainer">
+              <div className="activityMapContent activityMapPadding">
+                <div className="ActivityMapHeader">
+                  <span>Aktivite Haritam</span>
+                  <hr />
+                </div>
+
+                <div className='abc-heatmap'>
+                  {heatMapRows()}
+                </div>
+
               </div>
             </div>
           </div>
+
+
         </div>
+
+
       </div>
 
 
       {/* SAĞDAKİLER BURAYA */}
-
     </div>
+
+
   )
 }

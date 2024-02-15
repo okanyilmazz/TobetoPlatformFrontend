@@ -16,6 +16,14 @@ import { Paginate } from "../../models/paginate";
 import GetListSocialMediaResponse from "../../models/responses/socialMedia/getListSocialMediaResponse";
 import socialMediaService from "../../services/socialMediaService";
 import { RiPencilFill } from "react-icons/ri";
+import ProfileToaster from '../../components/ProfileToaster/ProfileToaster';
+import DeleteCard from '../../components/DeleteCard/DeleteCard';
+import languageService from '../../services/languageService';
+import languageLevelService from '../../services/languageLevelService';
+import GetListLanguageResponse from '../../models/responses/language/getListLanguageResponse';
+import GetListLanguageLevelResponse from '../../models/responses/languageLevel/getListLanguageLevelResponse';
+import DeleteLanguageRequest from '../../models/requests/language/deleteLanguageRequest';
+import Forms from 'react-bootstrap/Form';
 import { Paginate } from '../../models/paginate';
 import GetListSkillResponse from '../../models/responses/skill/getListSkillResponse';
 import skillService from '../../services/skillService';
@@ -36,6 +44,10 @@ export default function ProfileSettingsPage() {
     const lastPathSegment = pathArray[pathArray.length - 1];
     const [shows, setShows] = useState(false)
     const navigate = useNavigate();
+    const [showDeleteCard, setShowDeleteCard] = useState(false);
+    const [languages, setLanguages] = useState<Paginate<GetListLanguageResponse>>();
+    const [languageLevels, setLanguageLevels] = useState<Paginate<GetListLanguageLevelResponse>>();
+    const [deleteRequest, setDeleteRequest] = useState<DeleteLanguageRequest | null>(null);
     const userState = useSelector((state: any) => state.user);
     const uppy = new Uppy({
         autoProceed: false,
@@ -63,6 +75,46 @@ export default function ProfileSettingsPage() {
             setSocialMedias(result.data);
         });
     }, []);
+
+
+    const handleClick = () => {
+        setShowDeleteCard(true);
+    };
+
+    const handleDeleteConfirmation = () => {
+        console.log('Öğeleri silme işlemi gerçekleştiriliyor...');
+        if (deleteRequest) {
+            // Silme isteğini burada kullanarak işlemi gerçekleştirin
+        }
+        setShowDeleteCard(false);
+    };
+
+    useEffect(() => {
+        languageService.getAll(0, 10).then(response => {
+            setLanguages(response.data)
+        })
+        languageLevelService.getAll(0, 10).then(response => {
+            setLanguageLevels(response.data)
+        })
+    }, []);
+
+
+    const languageAndLevelsData = [
+        { language: "Türkçe", level: "Orta Seviye" },
+        { language: "Fransızca", level: "Başlangıç Seviye" },
+    ];
+
+
+    const languageData = [
+        { language: "Türkçe" },
+        { language: "Fransızca" },
+    ];
+
+
+    const languageLevelData = [
+        { languageLevel: "Başlangıç Seviye (A1-A2)" },
+        { languageLevel: "Orta Seviye (B1-B2)" },
+    ];
 
 
     useEffect(() => {
@@ -143,7 +195,7 @@ export default function ProfileSettingsPage() {
                             <span>Medya Hesaplarım</span>
                         </div>
                     </li>
-                    <li>
+                    <li onClick={() => navigate("/profilim/profilimi-duzenle/yabanci-dil")} className={lastPathSegment === "yabanci-dil" ? 'active-item active-edit' : ''}>
                         <div className='sidebar-icon'>
                             <Image src='/assets/Icons/profile-settings/translate.svg' />
                         </div>
@@ -256,6 +308,47 @@ export default function ProfileSettingsPage() {
                         </div>
                     </div>
                 </div >
+
+                <div style={lastPathSegment === "yabanci-dil" ? { display: 'block' } : { display: 'none' }}>
+                <form>
+                    <div className='pe-language'>
+                        <Forms.Select size="lg" id='pe-language-select'>
+                            <option selected>Dil Seçiniz*</option>
+                            {languageData.map((item, index) => (
+                                <option key={index} value={item.language}>
+                                    {item.language}
+                                </option>
+                            ))}
+                        </Forms.Select>
+                        <Forms.Select size="lg" id='pe-language-select'>
+                            <option selected>Seviye Seçiniz*</option>
+                            {languageLevelData.map((item, index) => (
+                                <option key={index} value={item.languageLevel}>
+                                    {item.languageLevel}
+                                </option>
+                            ))}
+                        </Forms.Select>
+                    </div>
+                    <button className="py-2 pe-language-button" /* onClick={() =>  ProfileToaster({ name: "... Kaydedildi" }); }} } */>Kaydet</button>
+                </form>
+
+                <div className='pe-result'>
+                    {languageAndLevelsData.map((item, index) => (
+                        <div className="pe-container" key={index}>
+                            <div className="pe-edit-language">
+                                <div>
+                                    <span>{item.language}</span>
+                                    <p>{item.level}</p> 
+                                </div>
+                                <button className="pe-delete-button" onClick={() => { handleClick(); ProfileToaster({ name: "Yabancı dil bilgisi kaldırıldı." }); }}></button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {showDeleteCard && <DeleteCard handleDeleteConfirmation={handleDeleteConfirmation} />}
+            </div>
+
             </div>
         </div>
                         <div className="col-md-12">

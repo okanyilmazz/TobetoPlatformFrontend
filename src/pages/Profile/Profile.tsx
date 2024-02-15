@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react'
 import ProfileCard from './../../components/ProfileCard/ProfileCard';
 import './Profile.css';
@@ -34,6 +33,7 @@ export default function Profile() {
 
   const [checked, setChecked] = useState<boolean>(false);
 
+  const [checked, setChecked] = useState<boolean>(false);
   const handleChange = (newChecked: boolean) => {
     setChecked(newChecked);
   };
@@ -53,6 +53,8 @@ export default function Profile() {
       copyTextElement.classList.remove("active");
     }, 2500);
   };
+
+
 
   const heatMapRows = () => {
     return (
@@ -152,6 +154,7 @@ export default function Profile() {
 
   const options = { year: 'numeric', month: 'long', day: 'numeric' } as const;
   const defaultProfilePhotoPath = 'https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fimages.19a45d39.png&w=128&q=75';
+
 
   return (
     <div className='profile-card'>
@@ -373,7 +376,9 @@ export default function Profile() {
             </div>
 
 
+
           </div>
+          <br />
 
 
           {/* SAĞDAKİLER BURAYA */}

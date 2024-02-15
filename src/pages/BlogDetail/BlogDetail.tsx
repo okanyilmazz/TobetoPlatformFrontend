@@ -10,7 +10,7 @@ export default function BlogDetail() {
     const [blogs, setBlogs] = useState<Paginate<GetListBlogResponse>>();
 
     useEffect(() => {
-        blogService.getAll().then(result => {
+        blogService.getAll(0, 100).then(result => {
             setBlogs(result.data);
         })
     }, []);

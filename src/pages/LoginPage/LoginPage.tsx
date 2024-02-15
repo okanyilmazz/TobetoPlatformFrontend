@@ -2,11 +2,12 @@
 import LoginPageCard from "../../components/LoginPageCard/LoginPageCard";
 import './LoginPage.css';
 import IstanbulCard2 from '../../components/IstanbulCard2/IstanbulCard2';
+import { ToastContainer } from "react-toastify";
 
 export default function LoginPage() {
     return (
         <div className='bg-front-white login-page-content'>
-            <div className="container bg-front-white">
+            <div className="container">
                 <div className="row content-center">
                     <div className="login-page col-md-6">
                         <LoginPageCard />

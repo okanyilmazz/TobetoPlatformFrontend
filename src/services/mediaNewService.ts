@@ -17,7 +17,7 @@ class MediaNewService extends BaseService<
 > {
   constructor() {
     super();
-    this.apiUrl = "MediaNews/GetList?PageSize=3";
+    this.apiUrl = "MediaNews";
   }
 }
 

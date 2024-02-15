@@ -6,6 +6,13 @@
     z-index: 100;
 }
 
+.login-header {
+    width: 100%;
+    top: 0;
+    z-index: 100;
+    border-bottom: 1px solid #f8f3fb;
+}
+
 .home .btn {
     background: #00b078 !important;
     border: 3px solid #00b078 !important;
@@ -53,9 +60,6 @@
 /* ENDREGION */
 
 /*NAVBAR*/
-#backgroundStyle {
-    background-color: #181717;
-}
 
 #navbarStyle {
     width: 96%;
@@ -73,48 +77,78 @@
 }
 
 
-#homeMessagesStyle {
+#home-messages {
     display: flex;
     justify-content: space-between;
 }
 
-.ui.secondary.menu .item {
+#home-messages .item {
+    font-family: 'Poppins-Medium';
+}
+
+.header .ui.secondary.menu .item {
     color: #fff;
     font-family: 'Poppins-Regular';
     font-weight: 500;
     font-size: 16px;
 }
 
-.ui.secondary.menu .item:hover,
-.ui.secondary.menu .item:focus,
-.ui.secondary.menu .item:active {
+.header .ui.secondary.menu .item:hover,
+.header .ui.secondary.menu .item:focus,
+.header .ui.secondary.menu .item:active {
     color: #93f !important;
     cursor: pointer;
 }
 
-.ui.dropdown>.text:hover {
+.header .ui.dropdown>.text:hover {
     color: #93f
 }
 
-.ui.dropdown>.dropdown.icon {
+.header .ui.dropdown>.dropdown.icon {
     display: none;
 }
 
-.ui.secondary.menu .item .menu {
+.header .ui.secondary.menu .item .menu {
     background-color: #93f !important;
 }
 
-.ui.secondary.menu .dropdown.item .menu {
+.header .ui.secondary.menu .dropdown.item .menu {
     margin-top: 0 !important;
 }
 
-.ui.menu .ui.dropdown.item .menu .item:not(.filtered) {
+.header .ui.menu .ui.dropdown.item .menu .item:not(.filtered) {
     display: block;
     color: white !important;
 }
 
 .tobeto-icon img {
     width: 150px;
+}
+
+/* ENDREGION */
+
+
+/* LOGIN HEADER */
+.login-header #menu-content {
+    display: flex;
+}
+
+.login-header #menu-content .item {
+    font-size: 15px;
+    padding: 8px 16px;
+    color: #282828;
+    font-family: 'Poppins-Medium';
+
+}
+
+.login-header #containerStyle {
+    grid-template-columns: 1fr auto 1fr;
+}
+
+
+
+.login-header .item:hover {
+    background: transparent !important;
 }
 
 /* ENDREGION */

@@ -1,40 +1,73 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Navi.css';
-import SignedOut from '../SignedOut/SingedOut';
 import { Image, Dropdown, DropdownItem, DropdownMenu, Menu, MenuItem, Button } from 'semantic-ui-react';
+import SignedIn from '../SignedIn/SignedIn';
+import { useSelector } from 'react-redux';
+import SignedOut from '../SignedOut/SignedOut';
 
 export default function Navi() {
+
+    const location = useLocation();
+    const pathArray = location.pathname.split('/');
+    const lastPathSegment = pathArray[pathArray.length - 1];
     const navigate = useNavigate();
+    const authState = useSelector((state: any) => state.auth);
+
     return (
-        <div className='header'>
-            {/* Header */}
-            <div className='header-banner' >
+        <>
+            <div style={{
+                display: (
+                    authState.isAuthenticated &&
+                    (
+                        lastPathSegment !== "katalog" &&
+                        lastPathSegment !== "hakkimizda" &&
+                        lastPathSegment !== "blog" &&
+                        lastPathSegment !== "basinda-biz" &&
+                        lastPathSegment !== "kurumlar-icin" &&
+                        lastPathSegment !== "bireyler-icin" &&
+                        lastPathSegment !== "takvim-anasayfa" &&
+                        lastPathSegment !== ""
+                    )
+                ) ? 'none' : 'block'
+            }}
+                className={
+                    authState.isAuthenticated &&
+                        (
+                            lastPathSegment !== "katalog" &&
+                            lastPathSegment !== "hakkimizda" &&
+                            lastPathSegment !== "bireyler-icin" &&
+                            lastPathSegment !== "kurumlar-icin" &&
+                            lastPathSegment !== "blog" &&
+                            lastPathSegment !== "basinda-biz" &&
+                            lastPathSegment !== "takvim-anasayfa" &&
+                            lastPathSegment !== ""
+                        ) ? 'header' : 'header bg-front-dark'}>
 
-                <div className='home container'>
-                    <div className='img'   >
-                        <Image className='my-custom-image' src="https://tobeto.com/_next/static/media/ik-logo-light.ace655db.svg"></Image>
-                    </div>
-                    <div >
-                        <p>Aradığın <span >"</span>İş<span >"</span> Burada!</p>
-                    </div>
+                {/* Header */}
+                <div className='header-banner' >
 
-                    <div >
-                        <Button className='btn' onClick={() => { navigate("") }}> Başvur</Button>
+                    <div className='home container'>
+                        <div className='img'   >
+                            <Image className='my-custom-image' src="https://tobeto.com/_next/static/media/ik-logo-light.ace655db.svg"></Image>
+                        </div>
+                        <div>
+                            <p>Aradığın <span >"</span>İş<span >"</span> Burada!</p>
+                        </div>
+                        <div >
+                            <Button className='btn' onClick={() => { navigate("/istanbul-kodluyor") }}> Başvur</Button>
+                        </div>
                     </div>
                 </div>
-            </div>
 
 
-            {/* Navbar */}
+                {/* Navbar */}
 
-            <div id="backgroundStyle">
                 <div id="navbarStyle">
                     <Menu secondary size='large' id="containerStyle">
                         <div id="leftContentStyle">
                             <Image className='tobeto-icon' as={Link} to="/" src='https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FTebeto-logo-yatay-beyaz.8c2d6927.png&w=256&q=75' size='small' />
                         </div>
-
-                        <div id="homeMessagesStyle">
+                        <div id="home-messages">
                             <MenuItem as={Link} to="/hakkimizda" name='Biz Kimiz?' />
                             <Dropdown simple item text='Neler Sunuyoruz?'>
                                 <DropdownMenu>
@@ -42,22 +75,67 @@ export default function Navi() {
                                     <DropdownItem as={Link} to="/kurumlar-icin">Kurumlar İçin</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
-                            <MenuItem as={Link} to="/katalog" >Katalog</MenuItem>
-                            <MenuItem name='Codeacademy' />
+                            <MenuItem as={Link} to="/katalog" name='Katalog' />
+                            <MenuItem as={Link} to="/codecademy" name='Codecademy' />
                             <Dropdown simple item text="Tobeto'da Bu Ay">
                                 <DropdownMenu>
-                                    <DropdownItem>Blog</DropdownItem>
-                                    <DropdownItem>Basında Biz</DropdownItem>
+                                    <DropdownItem as={Link} to="/blog">Blog</DropdownItem>
+                                    <DropdownItem as={Link} to="/basinda-biz">Basında Biz</DropdownItem>
                                     <DropdownItem as={Link} to="/takvim-anasayfa">Takvim</DropdownItem>
                                     <DropdownItem>İstanbul Kodluyor</DropdownItem>
                                 </DropdownMenu>
                             </Dropdown>
                         </div>
-                        <SignedOut />
+
+                        <div style={{ display: authState.isAuthenticated ? 'none' : 'block' }}>
+                            <SignedOut />
+                        </div>
+
+                        <div style={{ display: authState.isAuthenticated ? 'block' : 'none' }}>
+                            <SignedIn />
+                        </div>
                     </Menu>
                 </div>
-            </div >
 
-        </div>
+            </div>
+
+            <div className="login-header bg-front-white" style={{
+                display:
+                    (
+                        authState.isAuthenticated &&
+                        (
+                            lastPathSegment !== "katalog"
+                            && lastPathSegment !== "hakkimizda"
+                            && lastPathSegment !== "blog"
+                            && lastPathSegment !== "basinda-biz"
+                            && lastPathSegment !== "kurumlar-icin"
+                            && lastPathSegment !== "bireyler-icin"
+                            && lastPathSegment !== "takvim-anasayfa"
+                            && lastPathSegment !== ""
+                        )
+
+                    ) ? 'block' : 'none'
+            }}>
+
+                <div id="navbarStyle">
+                    <Menu secondary size='large' id="containerStyle">
+                        <div id="leftContentStyle">
+                            <Image className='tobeto-icon' as={Link} to="/" src='/assets/logos/TobetoLogo.png' size='large' />
+                        </div>
+                        <div id="menu-content">
+                            <MenuItem className={lastPathSegment === "platform" ? 'active-item' : ''} as={Link} to="/platform" name='Ana Sayfa' />
+                            <MenuItem className={pathArray.includes("profilim") ? 'active-item' : ''} as={Link} to="/profilim/profilimi-duzenle/sertifikalarim" name='Profilim' />
+                            <MenuItem className={lastPathSegment === "degerlendirmeler" ? 'active-item' : ''} as={Link} to="/degerlendirmeler">Değerlendirmeler</MenuItem>
+                            <MenuItem className={lastPathSegment === "platform-katalog" ? 'active-item' : ''} as={Link} to="/platform-katalog" name='Katalog' />
+                            <MenuItem className={lastPathSegment === "takvim" ? 'active-item' : ''} as={Link} to="/takvim" name='Takvim' />
+                            <MenuItem name='İstanbul Kodluyor' />
+                        </div>
+                        <SignedIn />
+                    </Menu>
+                </div>
+
+            </div>
+        </>
+
     )
 }

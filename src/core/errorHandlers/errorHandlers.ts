@@ -8,7 +8,6 @@ export const handleError = (error: any) => {
 
     if (error.response && error.response.data && error.response.data.type) {
         let type = error.response.data.type;
-
         switch (type) {
             case BUSINESS_ERROR:
                 handleBusinessError(error.response.data);
@@ -27,12 +26,11 @@ export const handleBusinessError = (error: any) => {
     toast.error(error.detail);
 };
 export const handleValidationError = (error: any) => {
-    console.log(error);
-
     Object.keys(error.errors).forEach(key => {
         toast.error(`${key}: ${error.errors[key]}`);
     });
 };
 export const handleDefault = (error: any) => {
+    toast.error("Bilinmedik hata...");
     console.log("Bilinmedik hata..");
 };

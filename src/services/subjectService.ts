@@ -18,7 +18,7 @@ class SubjectService extends BaseService<
 
     constructor() {
         super()
-        this.apiUrl = "Subjects/GetList?PageIndex=0&PageSize=20";
+        this.apiUrl = "Subjects";
     }
 }
 

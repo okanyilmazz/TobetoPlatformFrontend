@@ -17,7 +17,7 @@ class CountryService extends BaseService<
 > {
     constructor() {
         super()
-        this.apiUrl = "Countries/GetList?PageIndex=0&PageSize=4"
+        this.apiUrl = "Countries"
     }
 }
 

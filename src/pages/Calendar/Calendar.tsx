@@ -11,23 +11,44 @@ import { Paginate } from '../../models/paginate';
 import moment from 'moment';
 import GetListSessionResponse from '../../models/responses/session/getListSessionResponse';
 import SessionService from '../../services/sessionService';
-import GetListUserOperationClaimResponse from '../../models/responses/userOperationClaim/getListUserOperationClaimResponse';
-import userOperationClaimService from '../../services/userOperationClaimService';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router';
 
+const optionsInstructor = [
+  { value: 'Eğitmen Dojo', label: 'Eğitmen Dojo' },
+  { value: 'Roiva Eğitmen', label: 'Roiva Eğitmen' },
+  { value: 'Veli Bahçeci', label: 'Veli Bahçeci' },
+  { value: 'Ahmet Çetinkaya', label: 'Ahmet Çetinkaya' },
+  { value: 'İrem Balcı', label: 'İrem Balcı' },
+  { value: 'Cem Bayraktaroğlu', label: 'Cem Bayraktaroğlu' },
+  { value: 'Denizhan Dursun', label: 'Denizhan Dursun' },
+  { value: 'Halit Enes Kalaycı', label: 'Halit Enes Kalaycı' },
+  { value: 'Gürkan İlişen', label: 'Gürkan İlişen' },
+  { value: 'Kadir Murat Başeren', label: 'Kadir Murat Başeren' },
+  { value: 'Aykut Baştuğ', label: 'Aykut Baştuğ' },
+  { value: 'Mehmet Emin Kortak', label: 'Mehmet Emin Kortak' },
+  { value: 'Engin Demiroğ', label: 'Engin Demiroğ' },
+  { value: 'Serkan Tekin', label: 'Serkan Tekin' },
+  { value: 'Barbaros Ciga', label: 'Barbaros Ciga' },
+  { value: 'Ali Seyhan', label: 'Ali Seyhan' },
+  { value: 'Kader Yavuz', label: 'Kader Yavuz' },
+];
 
 type Props = {};
 const Calendar = (props: Props) => {
   const [sessions, setSessions] = useState<Paginate<GetListSessionResponse>>();
-  const [userOperationClaims, setuserOperationClaims] = useState<Paginate<GetListUserOperationClaimResponse>>();
   const [events, setEvents] = useState<any>([]);
   const [searchText, setSearchText] = useState<string>('');
   const [selectedInstructors, setSelectedInstructors] = useState<any>([]);
   const [selectedFilters, setSelectedFilters] = useState<any[]>([]);
-
+  const authState = useSelector((state: any) => state.auth);
+  const location = useLocation();
+  const pathArray = location.pathname.split('/');
+  const lastPathSegment = pathArray[pathArray.length - 1];
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        const result = await SessionService.getAll();
+        const result = await SessionService.getAll(1,100);
         setSessions(result.data);
 
         let filteredSessions = result.data.items;
@@ -35,7 +56,7 @@ const Calendar = (props: Props) => {
         if (selectedInstructors.length > 0 && !selectedInstructors.includes(optionsInstructor)) {
           filteredSessions = filteredSessions.filter((session) =>
             selectedInstructors.includes(optionsInstructor)
-          );
+          );  
         }
 
         if (searchText.trim() !== '') {
@@ -43,7 +64,6 @@ const Calendar = (props: Props) => {
             session.occupationClassName.toLowerCase().includes(searchText.toLowerCase())
           );
         }
-
         const currentDate = moment();
 
         if (selectedFilters.includes('eventEnded')) {
@@ -59,8 +79,8 @@ const Calendar = (props: Props) => {
         }
 
         if (selectedFilters.includes('eventBuyed')) {
-          setEvents([]); 
-          return; 
+          setEvents([]);
+          return;
         }
 
         if (selectedFilters.includes('eventNotStarted')) {
@@ -72,7 +92,7 @@ const Calendar = (props: Props) => {
         const sessionEvents = filteredSessions.map((session) => ({
           start: moment(session.startDate).format(),
           title: session.occupationClassName,
-          instructor:session.userId
+          // instructor: "Engin demiroğ"
         }));
 
         setEvents(sessionEvents);
@@ -99,18 +119,19 @@ const Calendar = (props: Props) => {
     calendarApi.unselect();
     setEvents([...events, { title: title, ...selectInfo }]);
   }
+  debugger;
 
-    const optionsInstructor = (sessions?.items || []).map((s) => ({
-      value: s.userId,
-      label: s.userId, 
-    }));
+  // const optionsInstructor = (sessions?.items || []).map((s) => ({
+  //   value: s.userId,
+  //   label: s.userId,
+  // }));
 
   return (
-    <>
+    <div className={authState.isAuthenticated && lastPathSegment?.includes("takvim-anasayfa") ? "calendar-page bg-front-dark" : "calendar-page  bg-front-white"}>
       {/* Instructor Select */}
       <div className="container filterCommon">
         <div className='row'>
-          <h1 className='education'>Eğitim ve Etkinlik Takvimi</h1>
+          <h1 className='education' style={{ color: authState.isAuthenticated && lastPathSegment?.includes("takvim-anasayfa") ? "#fff" : "#000" }} >Eğitim ve Etkinlik Takvimi</h1>
         </div>
         <div className='row educationFilter'>
           <div className='educationFilterInput col-md-5'>
@@ -179,6 +200,7 @@ const Calendar = (props: Props) => {
                   type="checkbox"
                   name="eventNotStarted"
                   value="eventNotStarted"
+                  color='white'
                   onChange={() => handleFilterChange('eventNotStarted')}
                 />
                 Başlamamış Dersler
@@ -214,7 +236,7 @@ const Calendar = (props: Props) => {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
@@ -223,7 +245,7 @@ function renderEventContent(eventInfo: any) {
     <>
       <b>{eventInfo.timeText}</b>
       <b>{eventInfo.event.title}</b>
-      <i>{eventInfo.event.instructor}</i>
+      {/* <i>{eventInfo.event.instructor}</i> */}
     </>
   );
 }

@@ -20,11 +20,11 @@ class EducationProgramService extends BaseService<
 > {
     constructor() {
         super()
-        this.apiUrl = "EducationPrograms/GetList?PageSize=12"
+        this.apiUrl = "EducationPrograms"
     }
 
     getByFilter(request: EducationProgramFilterRequest): Promise<AxiosResponse<Paginate<GetListEducationProgramResponse>, any>> {
-        return axiosInstance.post<Paginate<GetListEducationProgramResponse>>("EducationPrograms/GetListFiltered", request);
+        return axiosInstance.post<Paginate<GetListEducationProgramResponse>>("EducationPrograms/GetListByFiltered", request);
     }
 }
 

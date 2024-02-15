@@ -11,19 +11,38 @@ import GetListAnnouncementProjectResponse from '../../models/responses/announcem
 import educationProgramService from '../../services/educationProgramService'
 import announcementProjectService from '../../services/announcementProjectService'
 import ShowMoreButton from '../../components/ShowMoreButton/ShowMoreButton'
+import { useDispatch, useSelector } from 'react-redux'
+import GetListExamResponse from '../../models/responses/exam/getListExamResponse'
+import examService from '../../services/examService'
+import { userActions } from '../../store/user/userSlice'
 
 export default function PlatformPage() {
     const [educationPrograms, setEducationPrograms] = useState<Paginate<GetListEducationProgramResponse>>();
     const [announcementProjects, setAnnouncementProjects] = useState<Paginate<GetListAnnouncementProjectResponse>>();
+    const [exams, setExams] = useState<Paginate<GetListExamResponse>>();
+
+    const userState = useSelector((state: any) => state.user);
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        educationProgramService.getAll().then(result => {
+
+        if (!userState.user) {
+            dispatch(userActions.getUserInfo());
+            return;
+        }
+
+        examService.getByAccountId(userState.user.id, 0, 2).then(result => {
+            setExams(result.data);
+        });
+
+        educationProgramService.getAll(0, 100).then(result => {
             setEducationPrograms(result.data);
-        })
-        announcementProjectService.getAll().then(result => {
+        });
+
+        announcementProjectService.getAll(0, 100).then(result => {
             setAnnouncementProjects(result.data);
-        })
-    }, [])
+        });
+    }, [userState]);
 
     function formatCustomDate(inputDate: Date) {
         const months = [
@@ -43,13 +62,13 @@ export default function PlatformPage() {
     }
 
     return (
-        <div className='platform bg-front-white'>
+        <div className='platform bg-front-white '>
             <div className="platform-content bg-front-white">
                 <section>
                     <div className='container'>
                         <div className='content-title'>
                             <span> <span className='tobeto-text'>TOBETO'</span>ya hoş geldin</span>
-                            <span className='user-name'>Okan</span>
+                            <span className='user-name'>{userState.user?.firstName}</span>
                         </div>
                         <div className='tobeto-slogan'>
                             <span>Yeni nesil öğrenme deneyimi ile Tobeto kariyer yolculuğunda senin yanında!</span>
@@ -91,7 +110,8 @@ export default function PlatformPage() {
                                             educationPrograms?.items.map((educationProgram) => (
                                                 <EducationCard
                                                     title={educationProgram.name}
-                                                    date={formatCustomDate(educationProgram.startDate)} />
+                                                    date={formatCustomDate(educationProgram.startDate)}
+                                                    id={educationProgram.id} />
                                             ))
                                         }
                                     </div>
@@ -125,18 +145,26 @@ export default function PlatformPage() {
                     <div className='bottom-section-title'>
                         <span>Sınavlarım</span>
                     </div>
-                    <div className='exam-details'>
-                        <div className='exam-details-left'>
-                            <span className='exam-title'>Herkes İçin Kodlama 1A Değerlendirme Sınavı</span>
-                            <span className='exam-name'>Herkes İçin Kodlama - 1A</span>
-                            <div className='exam-time'>
-                                <span >45 Dakika</span>
-                            </div>
-                        </div>
-                        <div className='exam-details-right'>
-                            <span className='status'></span>
-                        </div>
+                    <div className='my-exams'>
+                        {
+                            exams?.items.map((exam) => (
+
+                                <div className='exam-details'>
+                                    <div className='exam-details-left'>
+                                        <span className='exam-title'>{exam.name} Değerlendirme Sınavı</span>
+                                        <span className='exam-name'>{exam.name}</span>
+                                        <div className='exam-time'>
+                                            <span >{exam.duration} Dakika</span>
+                                        </div>
+                                    </div>
+                                    <div className='exam-details-right'>
+                                        <span className='status'></span>
+                                    </div>
+                                </div>
+                            ))
+                        }
                     </div>
+
                 </section>
 
                 <section className='section-card container'>
@@ -152,9 +180,7 @@ export default function PlatformPage() {
                         <span>Öğrenmeye başla</span>
                         <Button>Başla</Button>
                     </div>
-
                 </section>
-
             </div>
         </div>
     )

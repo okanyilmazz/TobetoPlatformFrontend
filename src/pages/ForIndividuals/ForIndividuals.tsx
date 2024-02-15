@@ -1,119 +1,67 @@
-import React from "react";
-import ApplyCard from "../../components/ApplyCard/ApplyCard";
-import "../ForIndividuals/ForIndividuals.css";
 import IstanbulCard from "../../components/IstanbulCard/IstanbulCard";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import "../ForIndividuals/ForIndividuals.css";
+import { useEffect, useState } from "react";
+import occupationService from "../../services/occupationService";
+import GetListOccupationResponse from "../../models/responses/occupation/getListOccupationResponse";
+import { Paginate } from "../../models/paginate";
+import GetListSubjectResponse from "../../models/responses/subject/getListSubjectResponse";
+import subjectService from "../../services/subjectService";
+import GradientLine from "../../components/GradientLine/GradientLine";
 
 export const ForIndividuals = () => {
+  const [occupations, setOccupations] = useState<Paginate<GetListOccupationResponse>>();
+  const [subjects, setSubjects] = useState<Paginate<GetListSubjectResponse>>();
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    occupationService.getAll(0, 100).then(result => {
+      setOccupations(result.data);
+    })
+
+    subjectService.getAll(0, 100).then(result => {
+      setSubjects(result.data);
+    })
+  }, [])
   return (
-    <div className="container forIndividuals-component">
-      <div className="row">
+    <div className="container for-individuals-page">
+
+      <div className="row for-individuals-content">
+
         <div className="offset-md-2 row col-md-8 col-8 ik-cards">
-          <IstanbulCard
-            title={
-              <span>
-                Aradığın
-                <span
-                  style={{
-                    color: "rgb(0, 176, 120)",
-                    marginRight: "0",
-                    marginLeft: "5px",
-                  }}
-                >
-                  "
-                </span>
-                İş
-                <span
-                  style={{
-                    color: "rgb(0, 176, 120)",
-                    marginLeft: "0",
-                    marginRight: "5px",
-                  }}
-                >
-                  "
-                </span>
-                Burada!
-              </span>
-            }
-            buttonStyle={{
-              background: "#00b078",
-              fontSize: "14px",
-              padding: "10px 40px",
-              marginTop: "70px",
-
-            }}
-            contentStyle={{
-              alignSelf: "center",
-              height: "160px"
-
-            }}
-          />
+          <IstanbulCard title={
+            <span>Aradığın  <span className='quote' id='left-quote'>"</span>iş<span className='quote' id='right-quote'>"</span> Burada!</span>} />
         </div>
 
-        <div className="container text-center for-individuals-content">
+        <div className="container  for-individuals-content-top">
           <div className=" mx-auto position-relative">
             <div className="vector">
-              <img
-                src="https://tobeto.s3.cloud.ngn.com.tr/03_005013e668_71411c39a1.svg"
-                alt=""
-                width="100"
-                height="100"
-              />
+              <img src="https://tobeto.s3.cloud.ngn.com.tr/03_005013e668_71411c39a1.svg" alt="" width="100" height="100" />
             </div>
 
-            <h1 className="text-white-big">Kariyerinin kontrolü</h1>
-            <h1 className="text-white-big mb-5">senin elinde</h1>
-            <p className="text-white borderp">
-              <a
-                className="text-white"
-                href="https://tobeto.com/bireyler-icin#dijital-bir-meslek"
-              >
-                Dijital Bir Meslek
-              </a>
-              &nbsp; edinmek,&nbsp;
-              <a
-                className="text-white"
-                href="https://tobeto.com/bireyler-icin#profesyonel-bir-yonetici"
-              >
-
-                Profesyonel Bir Yönetici
-              </a>
-              &nbsp;olmak ya da &nbsp;
-              <a
-                className="text-white"
-                href="https://tobeto.com/bireyler-icin#kendini-gelistirmek"
-              >
-
-                Kendini Geliştirmek
-              </a>
-              &nbsp; için İstediğin bölümden, istediğin kadar eğitimi seçip, eş zamanlı
+            <h1>Kariyerinin kontrolü</h1>
+            <h1 className="mb-4">senin elinde</h1>
+            <p className="borderp">
+              <span id="text-link">Dijital Bir Meslek</span>  &nbsp; edinmek,&nbsp; <span id="text-link"> Profesyonel Bir Yönetici</span>   &nbsp;olmak ya da &nbsp; <span id="text-link">Kendini Geliştirmek</span>     &nbsp; için İstediğin bölümden, istediğin kadar eğitimi seçip, eş zamanlı
               olarak alabilirsin.
             </p>
-            <p className="text-white my-8 codeacademy-p">
-              <a href="http://www.codecademy.com">
 
-                <span className="codeacademy-purple"> Codecademy </span>
-              </a>
-              &nbsp;iş birliği ile, fark yaratmak senin elinde!
+            <p className="text-white my-8 codeacademy-p">
+              <Link to="http://www.codecademy.com" className="codeacademy-purple">Codecademy</Link> iş birliği ile, fark yaratmak senin elinde!
             </p>
 
-            <a
-              href="https://tobeto.com/kayit-ol"
-              className="btn  btn-rainbow py-4 rainbow-text"
-            >
-              Uzmanlaşmak istediğin alanı seç, Tobeto platformda öğrenmeye
-              başla!
-
-            </a>
+            <span onClick={() => navigate("/kayit-ol")} className=" btn btn-rainbow rainbow-text py-4" > Uzmanlaşmak istediğin alanı seç, Tobeto platformda öğrenmeye
+              başla! </span>
           </div>
-          <div
-            className="gradient-line2 mt-20"
-            style={{ marginTop: "66px" }}
-          ></div>
+
+          <GradientLine />
+
         </div>
+
         <div className="container want-to-start">
-          <div className="mw-5xl mx-auto position-relative">
-            <h4 className="text-white mb-20 text-center mx-auto position-relative">
+          <div className="mx-auto position-relative">
+            <h4 className="text-white text-center mx-auto position-relative">
               Bir Yerden Başlamak İstiyorum
             </h4>
             <div className="vector-loading">
@@ -122,92 +70,27 @@ export const ForIndividuals = () => {
                 alt=""
               ></img>
             </div>
-            <div className="row">
-              <div className="col-lg-3 col-4">
-                <div className="pack-box">
-                  <a>C# Programming</a>
-                </div>
-              </div>
-              <div className="col-lg-3 col-4">
-                <div className="pack-box">
-                  <a>
-                    Object Oriented Programming
-                    <br />
-                    (OOP)
-                  </a>
-                </div>
-              </div>
-              <div className="col-lg-3 col-4">
-                <div className="pack-box">
-                  <a>Windows Form Application Programming</a>
-                </div>
-              </div>
-              <div className="col-lg-3 col-4">
-                <div className="pack-box">
-                  <a>
-                    Microsoft <br />
-                    SQL Server
-                    <br />
-                    Databace
-                  </a>
-                </div>
-              </div>
-              <div className="col-lg-3 col-4">
-                <div className="pack-box">
-                  <a>ADONET</a>
-                </div>
-              </div>
-              <div className="col-lg-3 col-4">
-                <div className="pack-box">
-                  <a>DAPPER</a>
-                </div>
-              </div>
-              <div className="col-lg-3 col-4">
-                <div className="pack-box">
-                  <a>HTML-CSS-SASS</a>
-                </div>
-              </div>
-              <div className="col-lg-3 col-4">
-                <div className="pack-box">
-                  <a>Javascript</a>
-                </div>
-              </div>
-              <div className="col-lg-3 col-4">
-                <div className="pack-box">
-                  <a>ASPNET Core MVC</a>
-                </div>
-              </div>
-              <div className="col-lg-3 col-4">
-                <div className="pack-box">
-                  <a>Git/Github</a>
-                </div>
-              </div>
-              <div className="col-lg-3 col-4">
-                <div className="pack-box">
-                  <a>ReactJS</a>
-                </div>
-              </div>
-              <div className="col-lg-3 col-4">
-                <div className="pack-box">
-                  <a>NextJS</a>
-                </div>
-              </div>
+            <div className="row subjects">
+              {
+                subjects?.items.map((subject) => (
+                  <div className="col-lg-3 col-4 subject">
+                    <div className="pack-box">
+                      <span  >{subject.name}</span>
+                    </div>
+                  </div>
+                ))
+              }
             </div>
-            <a
-              href="https://tobeto.com/katalog"
-              className="tab-link mobile-mx-auto d-flex justify-content-center"
-            >
-              Tümünü İncele &gt;&gt;
-            </a>
+            <div className="see-more-text" >
+              <span onClick={() => navigate("/katalog")}>Tümünü İncele &gt;&gt;</span>
+            </div>
           </div>
-          <div className="gradient-line2 mt-5 digital-job" id="dijital-bir-meslek"></div>
+
+          <GradientLine />
+
           <div className="row individuals-common">
             <div className="position-relative ">
-              <h4
-                style={{ padding: "60px", fontSize: "34px", marginTop: "20px" }}
-              >
-                Dijital Bir Meslek İstiyorum
-              </h4>
+              <h4> Dijital Bir Meslek İstiyorum</h4>
               <div className="vector-dots">
                 <img
                   src="https://tobeto.s3.cloud.ngn.com.tr/dot_gray_8a5a605556_eb3dd4f77d.svg"
@@ -218,93 +101,27 @@ export const ForIndividuals = () => {
               </div>
             </div>
 
-            <div className="row mw-5xl mx-auto">
-              <div className="col-lg-3 col-4">
-                <div className="pack-box ">
-                  <Link to="/programlar/frontend">
-                    Front End
-                    <br />
-                    Developer
-                  </Link>
-                </div>
+            <div className="row mx-auto occupations">
+              {
+                occupations?.items.map((occupation) => (
+                  <div className="col-lg-3 col-4 occupation">
+                    <div className="pack-box ">
+                      {occupation.name}
+                    </div>
+                  </div>
+                ))
+              }
+              <div className="see-more-text" >
+                <span onClick={() => navigate("/katalog")}>Tümünü İncele &gt;&gt;</span>
               </div>
-
-              <div className="col-lg-3 col-4">
-                <div className="pack-box">
-
-                  <Link to="/programlar/bilgi-al">
-                    {" "}
-                    Back End
-                    <br />
-                    Developer
-                  </Link>
-
-                </div>
-              </div>
-
-              <div className=" col-lg-3 col-4">
-                <div className="pack-box">
-
-                  <Link to="/programlar/full-stack-developer">
-                    {" "}
-                    Full Stack
-                    <br />
-                    Developer
-                  </Link>
-
-                </div>
-              </div>
-
-              <div className="col-lg-3 col-4">
-                <div className="pack-box">
-                  <Link to="/programlar/web-mobile">
-                    {" "}
-                    Web &amp; Mobile
-                    <br /> Developer
-                  </Link>
-                </div>
-              </div>
-
-              <div className="col-lg-4  col-4">
-                <div className="pack-box">
-                  <Link to="/programlar/bilgi-al">
-                    Veri Bilimi
-                    <br />
-                    Uzmanı
-                  </Link>
-                </div>
-              </div>
-
-              <div className="col-lg-4 col-4">
-                <div className="pack-box">
-                  <Link to="/programlar/bilgi-al">
-                    Siber Güvenlik <br />
-                    Uzmanı
-                  </Link>
-                </div>
-              </div>
-
-              <div className="col-lg-4 col-4">
-                <div className="pack-box">
-                  <Link to="/programlar/bilgi-al">
-                    UI / UX <br />
-                    Developer
-                  </Link>
-                </div>
-              </div>
-              <div className="tab-link"></div>
-              <Link className="view-all" to="/katalog">Tümünü İncele &gt;&gt;</Link>
             </div>
 
             <div className="container">
               <div className="row fw-bold">
-                <a className="btn mx-auto btn-rainbow py-4 rainbow-text">
-                  Uzmanlaşmak istediğin alanı seç, Tobeto platformda öğrenmeye başla!
-                </a>
+                <span onClick={() => navigate("/kayit-ol")} className=" btn btn-rainbow rainbow-text py-4" > Uzmanlaşmak istediğin alanı seç, Tobeto platformda öğrenmeye
+                  başla! </span>
               </div>
-            </div>
-            <div>
-              <div style={{ marginTop: '20px' }} className="gradient-line2"></div>
+              <GradientLine />
             </div>
 
             <div className="want-to-start">
@@ -313,11 +130,9 @@ export const ForIndividuals = () => {
                   src="https://tobeto.s3.cloud.ngn.com.tr/comingsoon_4e9690b5a9_84706ccf9b.svg"
                   alt=""
                   width="130"
-                />{" "}
+                />
               </div>
-              <h4
-                className="position-relative want-to-manager"
-              >
+              <h4 className="position-relative want-to-manager">
                 Profesyonel Bir Yönetici Olmak İstiyorum
                 <div className="vector-star">
                   <img
@@ -329,73 +144,33 @@ export const ForIndividuals = () => {
                 </div>
               </h4>
             </div>
-            <div className=" col-lg-2 col-4">
-              <div className="pack-box">
-                <Link to="/programlar/bilgi-al">
-                  Ürün <br /> Yönetim
-                  <br />
-                  Programı
-                </Link>
-              </div>
-            </div>
-
-            <div className=" col-lg-2 col-4">
-              <div className="pack-box">
-                <Link to="/programlar/bilgi-al">
-                  Dijital <br /> Pazarlama
-                  <br />
-                  Programı
-                </Link>
-              </div>
-            </div>
-
-            <div className=" col-lg-2 col-4">
-              <div className="pack-box">
-                <Link to="/programlar/bilgi-al">
-                  Proje
-                  <br />
-                  Yönetimi
-                  <br />
-                  Programı
-                </Link>
-              </div>
-            </div>
-
-            <div className=" col-lg-2 col-4">
-              <div className="pack-box">
-                <Link to="/programlar/bilgi-al">
-                  Yetenek
-                  <br />
-                  Yönetimi
-                  <br />
-                  Programı
-                </Link>
-              </div>
+            <div className="management-programs">
+              {
+                subjects?.items.map((subject) => (
+                  <div className="col-lg-2 col-4 management-program">
+                    <div className="pack-box">
+                      <span>{subject.name}</span>
+                    </div>
+                  </div>
+                ))
+              }
             </div>
           </div>
-          <div>
-            <div className=" gradient-line2 mt-5"></div>
-          </div>
+
+          <GradientLine />
+
           <div className="position-relative text-white">
-            <h4
-              style={{
-                padding: "60px",
-                fontSize: "34px",
-                marginTop: "20px",
-                textAlign: "center",
-              }}
-            >
-              Kendimi Geliştirmek İstiyorum
-            </h4>
+            <h4 id="improve"> Kendimi Geliştirmek İstiyorum </h4>
             <div className=" vector-dots-purple">
               <img
                 src="https://tobeto.com/_next/static/media/dot-purple.e0e5c9d8.svg"
                 alt=""
                 width="150"
-                height="150"
-              />
+                height="150" />
             </div>
           </div>
+
+
           <div className="shadow-lg  spec-list">
             <div className="loop">
               <div className="inner">

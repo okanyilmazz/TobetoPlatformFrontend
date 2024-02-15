@@ -8,13 +8,21 @@ import GetListAccountResponse from '../../models/responses/account/getListAccoun
 import { useSelector } from 'react-redux';
 import { userActions } from '../../store/user/userSlice';
 import accountService from '../../services/accountService';
+import GetListSocialMediaResponse from '../../models/responses/socialMedia/getListSocialMediaResponse';
+import socialMediaSevice from '../../services/socialMediaService';
+import socialMediaService from '../../services/socialMediaService';
+import { Paginate } from '../../models/paginate';
+import { Image } from 'react-bootstrap';
+
 
 export default function Profile() {
   const [account, setAccount] = useState<GetListAccountResponse>();
+  const [socialMedias, setSocialMedias] = useState<Paginate<GetListSocialMediaResponse>>();
 
   const userState = useSelector((state: any) => state.user);
   const user = authService.getUserInfo();
   const dispatch = useDispatch();
+  //const ProfileSection = ({ experiences })
 
 
 
@@ -26,10 +34,13 @@ export default function Profile() {
     }
 
     console.log(user.id)
-    accountService.getByAccountId(user.id).then(result => {
+    accountService.getByAccountId(userState.user.id).then(result => {
       setAccount(result.data);
       console.log(result.data)
     });
+    socialMediaService.getByAccountId(userState.user.id).then(result => {
+      setSocialMedias(result.data);
+    })
 
   }, [userState]);
 
@@ -95,6 +106,21 @@ export default function Profile() {
                 <span className='profile-account-text' >{account?.phoneNumber || "Girilmemiş"} </span>
               </div>
             </div>
+          <div className='col-md-4 col-12'>
+            <div className='sm-card'>
+              Profiles?.items.map((profile) => (
+              <ProfileCard
+                title={<div className='sm-header'>
+                  <span>Medya Hesaplarım</span>
+                </div>}
+                content={<div>
+                  {
+                    
+                  }
+                </div>}
+              />)
+            </div>
+            {/* Soldakiler buraya */}
           </div>
 
         </div>
@@ -110,11 +136,68 @@ export default function Profile() {
               />
 
             </div>
+          <div className='col-md-8 col-12'>
+            <div className='sm-card'>
+              <ProfileCard
+                title={<div className='sm-header'>
+                  <span>Eğitim Hayatım ve Deneyeimlerim</span>
+                </div>}
+                content='Henüz bir eğitim ve deneyim bilgisi eklemedin.'
+              />
+            </div>
+            {/* <ProfileCard
+              title={<div className=''>
+                <span >Hakkımızda</span>
+                <img src="https://tobeto.com/eye.svg" alt="eye" />
+              </div>}
+              content="İçerik"
+            /> */}
+            {/* Sağdakilerde buraya */}
+
           </div>
         </div>
-      </div>
+        <div className='sm-card col-md-4'>
+          <ProfileCard
+            title={
+              <div className='sm-header'>
+                <span>Medya Hesaplarım</span>
+              </div>
+            }
+            content={
+              <div className='sm-card-content'>
+                {socialMedias?.items.map((socialMedia, index) => (
+                  <div className='sm-icon' key={index}>
+                    <Image src={socialMedia.iconPath} alt={socialMedia.name} />
+                  </div>
+                ))}
+                {socialMedias?.items.length === 0 && (
+                  <p>Hesap eklenmedi. Eklemek için buraya tıklayın.</p>
+                )}
+              </div>
+            }
+          />
+        </div>
 
-      {/* Sağdakilerde buraya */}
+      </div>
+{/* 
+      <div className='sm-card col-md-8'>
+        <ProfileCard
+          title={
+            <div className='sm-header'>
+              <span>Eğitim Hayatım ve Deneyimlerim</span>
+            </div>
+          }
+          content={
+            <div className='sm-card-content'>
+              {experiences.length === 0 ? (
+                <p>Henüz bir eğitim ve deneyim bilgisi eklemedin. Eklemek için buraya tıklayın.</p>
+              ) : (
+                <ExperienceTimeline experiences={experiences} />
+              )}
+            </div>
+          }
+        />
+      </div> */}
 
     </div>
 

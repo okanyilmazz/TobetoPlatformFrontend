@@ -1,4 +1,4 @@
-export default interface getLanguagelevelResponse{
+export default interface GetLanguageLevelResponse{
      id:Identifier;
      name: string;
 } 

@@ -210,3 +210,151 @@
     width: 50px;
     margin-right: 10px;
 }
+
+/* Assesment */
+
+
+.assesment-head {
+    margin-top: 60px !important;
+    margin-bottom: 48px !important;
+    text-align: center;
+    font-size: 36px !important;
+}
+
+.assesment-span {
+    font-size: 36px;
+    font-weight: 500;
+    color: #9933FF;
+}
+
+.assesment-title {
+    font-size: 35px;
+    font-family: "Poppins-Regular";
+    color: #4D4D4D;
+    font-weight: normal;
+}
+
+.assesment-img {
+    position: absolute !important;
+    top: 100px !important;
+    right: 200px !important;
+    width: 50px !important;
+}
+
+.assesment-img img {
+    height: 150px;
+}
+
+.assesment-rapor {
+    min-height: 300px;
+    -webkit-backdrop-filter: blur(40px);
+    backdrop-filter: blur(40px);
+    border-radius: 0 30px 40px 40px;
+    padding: 2em 10%;
+    background: rgba(31, 31, 71, .6);
+    box-shadow: 0 40px 80px rgba(24, 32, 79, .25), inset 0 0 0 0.5px hsla(0, 0%, 100%, .5);
+    background: linear-gradient(209.21deg, #3c0b8c 13.57%, #e3a6fe 98.38%) !important;
+    z-index: 1;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    margin-top: 40px;
+    margin-bottom: 36px !important;
+}
+
+.assesment-rapor h1 {
+    padding-top: 15px;
+}
+
+.assesment-rapor p {
+    margin-top: 20px;
+    font-size: 20px;
+}
+
+.assesment-btn {
+    background-color: #9933FF;
+    border-radius: 50px;
+    border: none;
+    padding: 10px;
+    color: white;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-family: Poppins-Regular;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.assesment-btn:hover {
+    background-color: #7a29cc;
+}
+
+.assesment-line {
+    padding: 6px !important;
+    background: linear-gradient(180deg, #93f, #953dac 27.08%, #fff);
+    width: 6px !important;
+    height: 180px !important;
+    margin: 36px auto 8px auto !important;
+}
+
+.assesment-text {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+.assesment-col1 {
+
+    backdrop-filter: blur(40px);
+    border-radius: 0 30px 40px 40px;
+    padding: 2em 0;
+    background: rgba(31, 31, 71, .6);
+    box-shadow: 0 40px 80px rgba(24, 32, 79, .25), inset 0 0 0 0.5px hsla(0, 0%, 100%, .5);
+    background: linear-gradient(109.6deg, #ad1deb 11.2%, #6e72fc 91.1%);
+    border: none;
+    color: white;
+    width: 550px !important;
+    font-weight: bold;
+    text-align: center;
+}
+
+.assesment-col2 {
+    border-radius: 0 30px 40px 40px;
+    padding: 2em 0;
+    background: rgba(31, 31, 71, .6);
+    box-shadow: 0 40px 80px rgba(24, 32, 79, .25), inset 0 0 0 0.5px hsla(0, 0%, 100%, .5);
+    background: linear-gradient(109.6deg, #ad1deb 11.2%, #6e72fc 91.1%);
+    z-index: 1;
+    border: none;
+    text-align: center;
+    color: white;
+    width: 550px !important;
+    margin-left: 30px;
+}
+
+.assesment-col2 i:hover {
+    color: RGB(242 216 49);
+}
+
+.assesment-content {
+    display: flex;
+}
+
+.assesment-col1 h1 {
+    padding-top: 20px;
+}
+
+.assesment-col1 p {
+    font-size: 1.25em;
+    padding-top: 40px;
+    font: 20px Poppins-Regular;
+}
+
+.assesment-col2 p {
+    font-size: 1.25em;
+    padding-top: 40px;
+    font: 20px Poppins-Regular;
+}

@@ -94,7 +94,11 @@
 .modals-container .modal-dialog .modal-content {
     height: max-content;
     width: max-content;
-    margin-top: 80%;
+    /* margin-top: 40% !important; */
     background-color: transparent;
     border: 0;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
 }

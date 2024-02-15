@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Button } from 'react-bootstrap';
-import "./Reviews.css";
+import "./AssesmentsPage.css";
 import examService from '../../services/examService';
 import { Paginate } from '../../models/paginate';
 import GetListExamResponse from '../../models/responses/exam/getListExamResponse';
@@ -11,7 +11,7 @@ import { userActions } from '../../store/user/userSlice';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import Modals from '../../components/Modal/Modal';
 
-export default function Reviews() {
+export default function AssesmentsPage() {
 
     const [exams, setExams] = useState<Paginate<GetListExamResponse>>()
     const [examResults, setExamResults] = useState<Paginate<GetListExamResultResponse>>();
@@ -37,6 +37,7 @@ export default function Reviews() {
         });
 
     }, [userState])
+
 
 
     const [subjectStates, setSubjectStates] = useState<{ [key: string]: boolean }>({});

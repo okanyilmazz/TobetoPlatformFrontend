@@ -120,12 +120,12 @@ export default function Navi() {
                 <div id="navbarStyle">
                     <Menu secondary size='large' id="containerStyle">
                         <div id="leftContentStyle">
-                            <Image className='tobeto-icon' as={Link} to="/" src='assets/logos/TobetoLogo.png' size='large' />
+                            <Image className='tobeto-icon' as={Link} to="/" src='/assets/logos/TobetoLogo.png' size='large' />
                         </div>
                         <div id="menu-content">
                             <MenuItem className={lastPathSegment === "platform" ? 'active-item' : ''} as={Link} to="/platform" name='Ana Sayfa' />
-                            <MenuItem name='Profilim' />
-                            <MenuItem>Değerlendirmeler</MenuItem>
+                            <MenuItem className={pathArray.includes("profilim") ? 'active-item' : ''} as={Link} to="/profilim/profilimi-duzenle/sertifikalarim" name='Profilim' />
+                            <MenuItem className={lastPathSegment === "degerlendirmeler" ? 'active-item' : ''} as={Link} to="/degerlendirmeler">Değerlendirmeler</MenuItem>
                             <MenuItem className={lastPathSegment === "platform-katalog" ? 'active-item' : ''} as={Link} to="/platform-katalog" name='Katalog' />
                             <MenuItem className={lastPathSegment === "takvim" ? 'active-item' : ''} as={Link} to="/takvim" name='Takvim' />
                             <MenuItem name='İstanbul Kodluyor' />

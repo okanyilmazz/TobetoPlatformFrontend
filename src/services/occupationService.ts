@@ -6,10 +6,6 @@ import AddedOccupationResponse from "../models/responses/occupation/addedOccupat
 import GetListOccupation from "../models/responses/occupation/getListOccupationResponse";
 import GetOccupation from "../models/responses/occupation/getOccupationResponse";
 import UpdatedOccupationResponse from "../models/responses/occupation/updatedOccupationResponse";
-import { AxiosResponse } from 'axios';
-import GetListOccupationResponse from '../models/responses/occupation/getListOccupationResponse';
-import axiosInstance from '../core/interceptors/axiosInterceptor';
-
 class OccupationService extends BaseService<
     Paginate<GetListOccupation>,
     GetOccupation,
@@ -21,16 +17,6 @@ class OccupationService extends BaseService<
     constructor() {
         super();
         this.apiUrl = "Occupations"
-    }
-
-
-    customGetAll(pageIndex: number, pageSize: number): Promise<AxiosResponse<Paginate<GetListOccupationResponse>, any>> {
-        this.apiUrl = this.apiUrl + "/GetList?PageIndex=" + pageIndex + "&PageSize=" + pageSize
-        return this.getAll();
-    }
-
-    getAll(): Promise<AxiosResponse<Paginate<GetListOccupationResponse>, any>> {
-        return axiosInstance.get<Paginate<GetListOccupationResponse>>(this.apiUrl);
     }
 }
 

@@ -1,0 +1,179 @@
+.profile-settings-page {
+    display: flex;
+    margin-top: 20px;
+}
+
+.profile-settings-page .sidebar {
+    margin-top: 2rem;
+    padding: 10px;
+}
+
+
+
+.profile-settings-page .sidebar ul li {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 16px;
+    color: #828282;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-family: 'Poppins-Medium';
+    width: 245px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.profile-settings-page .sidebar .active-edit {
+    border-radius: 0 !important;
+    border-right: 3px solid #93f !important;
+}
+
+.profile-settings-page .sidebar ul li:hover {
+    cursor: pointer;
+}
+
+.profile-settings-page .sidebar .active-item {
+    font-weight: normal !important;
+}
+
+.profile-settings-page .profile-settings-content {
+
+    margin-left: 20px;
+}
+
+
+/*CERTIFICATES*/
+
+.profile-settings-page .profile-settings-header {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #93f;
+    font-family: 'Poppins-Medium';
+    margin-left: 10px;
+}
+
+.profile-settings-page .profile-settings-content .upload-content {
+    border-radius: 12px;
+    position: relative;
+    border: 1px solid #f8f3fb;
+    background-color: #fbf9fc;
+    margin-bottom: 2em;
+    margin-top: 0.5em !important;
+    height: 204px;
+    width: 852px;
+}
+
+.profile-settings-page .profile-settings-content .upload-area {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 1em;
+    justify-content: center;
+    border: 2px dashed #a486c3;
+    border-radius: 8px;
+    height: 204px;
+    width: 830px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.profile-settings-page .profile-settings-content .upload-area span {
+    font-size: 1.1em;
+    color: #828282;
+    font-family: 'Poppins-Medium';
+}
+
+.profile-settings-page .profile-settings-content .upload-area svg:hover {
+    cursor: pointer;
+}
+
+.modals-container .modal-dialog .modal-content {
+    height: max-content;
+    width: max-content;
+    /* margin-top: 40% !important; */
+    background-color: transparent;
+    border: 0;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+
+/*SOCIAL-MEDIA*/
+
+.ui input {
+    column-width: 500px;
+}
+
+.input-wrapper {
+    margin-bottom: 20px;
+
+}
+
+.input-label-text {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: left;
+    color: #828282;
+
+}
+
+#input-group-text {
+    background-color: transparent !important;
+}
+
+
+.delete-btn {
+    background-color: #fc6d6d !important;
+    border: none;
+    border-radius: 50px !important;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.edit-btn {
+    background-color: black !important;
+    border: none;
+    border-radius: 6px !important;
+    margin-left: 25px;
+    width: 25px;
+    height: 25px;
+}
+
+.edit-btn .lu-pencil {
+    color: white;
+    margin-top: -5px;
+    margin-left: -6px;
+}
+
+.edit-btn:hover {
+    background-color: #9933ff !important;
+}
+
+.span-text {
+    color: rgb(153, 51, 255) !important;
+    display: flex;
+    margin-top: -15px !important;
+    font-size: 16px;
+}
+
+.form-control {
+    padding: 8px !important;
+}
+
+.form-control:focus {
+    border-color: #c9f !important;
+    box-shadow: 0 0 0 0.25rem rgba(153, 51, 255, .25) !important;
+    outline: 0;
+}

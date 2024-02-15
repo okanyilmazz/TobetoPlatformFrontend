@@ -10,7 +10,7 @@ export default function EducationProgramDetail() {
     const [educationPrograms, setEducationPrograms] = useState<Paginate<GetListEducationProgramResponse>>();
 
     useEffect(() => {
-        educationProgramService.getAll().then(result => {
+        educationProgramService.getAll(0, 100).then(result => {
             setEducationPrograms(result.data);
         })
     }, [])

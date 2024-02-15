@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import { BaseService } from "../core/services/baseService";
 import { Paginate } from "../models/paginate";
 import AddSubjectRequest from "../models/requests/subject/addSubjectRequest";
@@ -7,7 +6,6 @@ import AddedSubjectResponse from "../models/responses/subject/addedSubjectRespon
 import GetListSubjectResponse from "../models/responses/subject/getListSubjectResponse";
 import GetSubjectResponse from "../models/responses/subject/getSubjectResponse";
 import UpdatedSubjectResponse from "../models/responses/subject/updatedSubjectResponse";
-import axiosInstance from "../core/interceptors/axiosInterceptor";
 
 class SubjectService extends BaseService<
     Paginate<GetListSubjectResponse>,
@@ -21,15 +19,6 @@ class SubjectService extends BaseService<
     constructor() {
         super()
         this.apiUrl = "Subjects";
-    }
-
-    customGetAll(pageIndex: number, pageSize: number): Promise<AxiosResponse<Paginate<GetListSubjectResponse>, any>> {
-        this.apiUrl = "Subjects/GetList?PageIndex=" + pageIndex + "&PageSize=" + pageSize
-        return this.getAll();
-    }
-
-    getAll(): Promise<AxiosResponse<Paginate<GetListSubjectResponse>, any>> {
-        return axiosInstance.get<Paginate<GetListSubjectResponse>>(this.apiUrl);
     }
 }
 

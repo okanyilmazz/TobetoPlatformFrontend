@@ -1,15 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
 import authService from "../../services/authService";
 
-const getInitialState = () => {
-    return {
-        user: {}
-    };
+const initialState: any = {
+    id: null,
+    firstName: "",
+    lastName: "",
+    email: "",
 };
 
 const userSlice = createSlice({
     name: "user",
-    initialState: getInitialState(),
+    initialState,
     reducers: {
         getUserInfo: (state) => {
             const user = authService.getUserInfo();

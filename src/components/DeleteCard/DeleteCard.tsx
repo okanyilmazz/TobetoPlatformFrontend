@@ -44,4 +44,4 @@ function DeleteCard(props: any) {
   );
 }
 
-export default DeleteCard;
+export default DeleteCard; 

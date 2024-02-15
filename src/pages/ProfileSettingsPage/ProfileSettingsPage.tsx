@@ -318,7 +318,7 @@ export default function ProfileSettingsPage() {
                             <div className="pe-edit-language">
                                 <div>
                                     <span>{item.language}</span>
-                                    <p>{item.level}</p>
+                                    <p>{item.level}</p> 
                                 </div>
                                 <button className="pe-delete-button" onClick={() => { handleClick(); ProfileToaster({ name: "Yabancı dil bilgisi kaldırıldı." }); }}></button>
                             </div>

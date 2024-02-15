@@ -25,4 +25,4 @@ class LanguageLevelService extends BaseService<
     } */
 }
 
-export default new LanguageLevelService();
+export default new LanguageLevelService(); 

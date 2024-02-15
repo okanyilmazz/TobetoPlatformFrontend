@@ -20,8 +20,6 @@ import ProfileSettingsPage from '../../pages/ProfileSettingsPage/ProfileSettings
 import AssesmentsPage from '../../pages/AssesmentsPage/AssesmentsPage';
 
 
-
-
 type Props = {}
 
 const RouteDefinitions = (props: Props) => {

@@ -25,4 +25,4 @@ class LanguageService extends BaseService<
     } */
 }
 
-export default new LanguageService();
+export default new LanguageService(); 

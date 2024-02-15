@@ -133,16 +133,7 @@ export default function Profile() {
             <div className='profile-col-account'>
               <div className='profile-account '>
                 <ul className="circles">
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
+                  <li /><li /><li /><li /><li /><li /><li /><li /><li /><li />
                 </ul>
                 <img className='profile-account-img' src={account?.profilePhotoPath || defaultProfilePhotoPath} />
               </div>

@@ -143,7 +143,6 @@ export default function AssesmentsPage() {
                                 </div>
                             );
                         })}
-
                     </div>
                 </div>
             </div>

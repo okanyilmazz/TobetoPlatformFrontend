@@ -21,6 +21,7 @@ import AssesmentsPage from '../../pages/AssesmentsPage/AssesmentsPage';
 
 
 
+
 type Props = {}
 
 const RouteDefinitions = (props: Props) => {
@@ -45,6 +46,8 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/degerlendirmeler" Component={AssesmentsPage} />
             <Route path="/profilim/profilimi-duzenle/sertifikalarim" Component={ProfileSettingsPage} />
             <Route path="/profilim/profilimi-duzenle/yetkinliklerim" Component={ProfileSettingsPage} />
+            <Route path="/profilim/profilimi-duzenle/medya-hesaplarim" Component={ProfileSettingsPage} />
+
 
 
 

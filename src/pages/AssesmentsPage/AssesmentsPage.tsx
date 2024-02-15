@@ -10,6 +10,7 @@ import examResultService from '../../services/examResultService';
 import { userActions } from '../../store/user/userSlice';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import Modals from '../../components/Modal/Modal';
+import { Link } from 'react-router-dom';
 
 export default function AssesmentsPage() {
 
@@ -57,8 +58,23 @@ export default function AssesmentsPage() {
     };
 
     return (
-        <div className="container bg-front-white reviews-page    a">
+        <div className="container bg-front-white reviews-page">
             <div className="row bg-front-white">
+                <div className="assesment-head container">
+                    <h1 className='assesment-title'><span className='assesment-span'>Yetkin</span>liklerini ücretsiz ölç, <span className='assesment-span'>bilgi</span>lerini test et.</h1>
+                </div>
+                <div className='assesment-img'>
+                    <img src='https://tobeto.com/_next/static/media/dot-purple.e0e5c9d8.svg' />
+                </div>
+                <div className='assesment-rapor container'>
+
+                    <h1 >Tobeto İşte Başarı Modeli</h1>
+                    <p>80 soru ile yetkinliklerini <b>ölç,</b> önerilen eğitimleri <b>tamamla,</b> rozetini <b>kazan.</b></p>
+                    <Link to='/'>
+                        <button className="assesment-btn">Raporu Görüntüle</button>
+                    </Link>
+                </div>
+
                 <div className="col-md-6">
                     <div className="reviews-cart-1">
                         <span>Yazılımda Başarı Testi</span>
@@ -143,10 +159,40 @@ export default function AssesmentsPage() {
                                 </div>
                             );
                         })}
+                    </div>
+                </div>
 
+
+                <div className='assesment-line '>
+                </div>
+                <div className='assesment-text '>
+                    <h1 className='assesment-title'><span className='assesment-span'>Aboneliğe özel</span> değerlendirme araçları için</h1>
+
+                </div>
+                <div className='container mt-5'>
+                    <div className='assesment-content row'>
+                        <div className='assesment-col1 col-md-6'>
+                            <h1>Kazanım Odaklı Testler</h1><br />
+                            <p>Dijital gelişim kategorisindeki eğitimlere <br />
+                                başlamadan öncekonuyla ilgili bilgin <br />
+                                ölçülür ve seviyene göre yönlendirilirsin.</p>
+                        </div>
+                        <div className='assesment-col2 col-md-6'>
+                            <h1>Huawei Talent Interview <br />
+                                Teknik Bilgi Sınavı*</h1>
+                            <p><b><i>Sertifika alabilmen için,</i> </b>eğitim <br />
+                                yolculuğunun sonunda teknik <br />
+                                yetkinliklerin ve kod bilgin ölçülür. <br />
+
+                                <br />
+                                4400+ soru | 30+ programlama dili <br />
+                                4 zorluk seviyesi
+                                <br /></p>
+                            <span> *Türkiye Ar-Ge Merkezi tarafından tasarlanmıştır.</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    );
+    )
 }

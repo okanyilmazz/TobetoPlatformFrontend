@@ -8,10 +8,22 @@ import certificateService from '../../services/certificateService';
 import { useSelector } from 'react-redux';
 import StatusBar from '@uppy/status-bar';
 import Modals from '../../components/Modal/Modal';
-
+import TobetoTextInput from "../../utilities/customFormControls/TobetoTextInput";
+import { Form, Formik } from "formik";
+import { Button, Col, FormControl, InputGroup, Row } from "react-bootstrap"; // Import Col and Row from react-bootstrap
+import TobetoSelect from "../../utilities/customFormControls/TobetoSelect";
+import { Paginate } from "../../models/paginate";
+import GetListSocialMediaResponse from "../../models/responses/socialMedia/getListSocialMediaResponse";
+import socialMediaService from "../../services/socialMediaService";
+import { RiPencilFill } from "react-icons/ri";
 
 
 export default function ProfileSettingsPage() {
+    const initialValues = {
+        link: "",
+        socialMedia: "Seçiniz*"
+    };
+    const [socialMedias, setSocialMedias] = useState<Paginate<GetListSocialMediaResponse>>();
 
     const location = useLocation();
     const pathArray = location.pathname.split('/');
@@ -27,6 +39,13 @@ export default function ProfileSettingsPage() {
         }
     })
     uppy.use(StatusBar);
+
+    useEffect(() => {
+        socialMediaService.getAll(0, 5).then((result) => {
+            setSocialMedias(result.data);
+        });
+    }, []);
+
 
     useEffect(() => {
         uppy.on('complete', async (response) => {
@@ -98,7 +117,7 @@ export default function ProfileSettingsPage() {
                             <span>Sertifikalarım</span>
                         </div>
                     </li>
-                    <li>
+                    <li onClick={() => navigate("/profilim/profilimi-duzenle/medya-hesaplarim")} className={lastPathSegment === "medya-hesaplarim" ? 'active-item active-edit' : ''}>
                         <div className='sidebar-icon'>
                             <Image src='/assets/Icons/profile-settings/globe.svg' />
                         </div>
@@ -120,6 +139,7 @@ export default function ProfileSettingsPage() {
                         </div>
                         <div className='sidebar-text'>
                             <span>Ayarlar</span>
+
                         </div>
                     </li>
                 </ul>
@@ -151,7 +171,73 @@ export default function ProfileSettingsPage() {
                     </div>
                 </div>
 
+                <div style={lastPathSegment === "medya-hesaplarim" ? { display: 'block' } : { display: 'none' }}>
+                    <div className="row mt-5">
+                        <div className="formik-form">
+                            <Formik
+                                initialValues={initialValues}
+                                onSubmit={(values) => {
+                                    console.log("Form submitted with values:", values);
+                                }}
+                            >
+                                <Form className="login-form">
+                                    <Row>
+                                        <Col md={4}>
+                                            <TobetoSelect
+                                                name="socialMedia"
+                                                className="mb-4"
+                                                component="select"
+                                            >
+                                                <option value="SocialMedia">Seçiniz*</option>
+                                                {socialMedias?.items.map((socialMedia, index) => (
+                                                    <option key={index} value={String(socialMedia.id)}>
+                                                        {socialMedia.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+                                        <Col md={8}>
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="link"
+                                                placeholder="http://"
+                                                placeholderTextColor="#fff"
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Button className="mb-4" type="submit">
+                                        Kaydet
+                                    </Button>
+                                    <Row>
+                                        <Col>
+                                            {socialMedias?.items.slice(0, 3).map((socialMedia) => (
+                                                <div className="social-media-content">
+                                                    <label className="social-media-text">{socialMedia.name}</label>
+                                                    <InputGroup size="lg">
+                                                        <InputGroup.Text id="social-media-icon">
+                                                            <img src={socialMedia.iconPath} />
+                                                        </InputGroup.Text>
+                                                        <FormControl className="social-media-form" aria-label="Amount (to the nearest dollar)" />
+                                                        <InputGroup.Text id="social-media-icon">
+                                                            <button className="social-media-delete-btn">
+                                                                <img src="https://tobeto.com/trash.svg" alt="Delete" />
+                                                            </button>
+                                                            <button className="social-media-edit-btn">
+                                                                <RiPencilFill className="lu-pencil" />
+                                                            </button>
+                                                        </InputGroup.Text>
+                                                    </InputGroup>
+                                                </div>
+                                            ))}
+                                            <p className="social-media-span-text">En fazla 3 adet medya seçimi yapılabilir.</p>
+                                        </Col>
+                                    </Row>
+                                </Form>
+                            </Formik>
+                        </div>
+                    </div>
+                </div >
             </div>
-        </div >
+        </div>
     )
 }

@@ -83,7 +83,7 @@ code {
   background-color: #93f;
   padding: 6px 12px;
   border-radius: 999px;
-  width: 100%;
+  /* width: 100%; */
   font-size: 14px;
   font-weight: bold;
   border-color: #93f;

@@ -10,7 +10,7 @@ const initialState: any = {
 
 const userSlice = createSlice({
     name: "user",
-    initialState: initialState,
+    initialState,
     reducers: {
         getUserInfo: (state) => {
             const user = authService.getUserInfo();

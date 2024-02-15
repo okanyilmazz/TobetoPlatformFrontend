@@ -95,7 +95,7 @@ code {
 }
 
 .formik-form .field input:focus {
-  border-color: #c9f !important;
+  border-color: #c9f;
   box-shadow: 0 0 0 0.25rem rgba(153, 51, 255, .25);
   outline: 0;
 }
@@ -125,7 +125,7 @@ code {
 }
 
 .formik-form .field select:focus {
-  border-color: #c9f !important;
+  border-color: #c9f;
   box-shadow: 0 0 0 0.25rem rgba(153, 51, 255, .25);
   outline: 0;
 }

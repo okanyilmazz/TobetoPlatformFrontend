@@ -1,5 +1,5 @@
 import './ProfileSettingsPage.css'
-import { Image } from 'react-bootstrap'
+import { Button, Col, Image, Row, } from 'react-bootstrap'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Dashboard } from '@uppy/react';
@@ -8,7 +8,12 @@ import certificateService from '../../services/certificateService';
 import { useSelector } from 'react-redux';
 import StatusBar from '@uppy/status-bar';
 import Modals from '../../components/Modal/Modal';
-
+import { Paginate } from '../../models/paginate';
+import GetListSkillResponse from '../../models/responses/skill/getListSkillResponse';
+import skillService from '../../services/skillService';
+import { Formik, Form } from 'formik';
+import TobetoSelect from '../../utilities/customFormControls/TobetoSelect';
+import CreatableSelect from 'react-select/creatable';
 
 
 export default function ProfileSettingsPage() {
@@ -27,6 +32,18 @@ export default function ProfileSettingsPage() {
         }
     })
     uppy.use(StatusBar);
+    const handleSvgClick = () => {
+        setShows(true);
+    };
+
+    const handleClose = () => {
+        setShows(false);
+    };
+
+    const initialValues = {
+        skill: "name"
+    };
+    const [skills, setSkills] = useState<Paginate<GetListSkillResponse>>();
 
     useEffect(() => {
         uppy.on('complete', async (response) => {
@@ -46,13 +63,13 @@ export default function ProfileSettingsPage() {
         });
     }, [uppy]);
 
-    const handleSvgClick = () => {
-        setShows(true);
-    };
+    useEffect(() => {
+        skillService.getAll(0, 25).then((result) => {
+            setSkills(result.data);
+        });
+    }, []);
 
-    const handleClose = () => {
-        setShows(false);
-    };
+
 
     return (
         <div className='profile-settings-page container'>
@@ -126,7 +143,6 @@ export default function ProfileSettingsPage() {
             </div>
 
             <div className='profile-settings-content col-md-8 col-lg-8 col-12'>
-
                 <div style={lastPathSegment === "sertifikalarim" ? { display: 'block' } : { display: 'none' }}>
                     <h1 className='profile-settings-header'>Sertifikalarım</h1>
                     <div className='upload-content'>
@@ -150,8 +166,64 @@ export default function ProfileSettingsPage() {
                         </div>
                     </div>
                 </div>
+                <div className="container profile-details-page" style={lastPathSegment === "yetkinliklerim" ? { display: 'block' } : { display: 'none' }}>
+                    <div className="row">
 
+                        <div className="col-md-12">
+
+                            <Row>
+                                <div className="col-md-12 formik-form"> {/* Use col-md-12 to occupy full width */}
+                                    <Formik
+                                        initialValues={initialValues}
+                                        onSubmit={(values) => {
+                                            console.log("Form submitted with values:", values);
+                                        }}
+                                    >
+                                        <Form className="login-form">
+                                            <Row>
+                                                <Col md={12}>
+                                                    <span className="skill-input-label">Yetkinlik</span>
+
+                                                    <div className='skill-select-area'>
+                                                        <CreatableSelect
+                                                            // isMulti
+                                                            isClearable
+                                                            // onCreateOption={handleAdd}
+                                                            options={skills?.items.map((skill) => ({
+                                                                value: skill.id,
+                                                                label: skill.name
+                                                            }))}
+                                                            placeholder="Seçiniz"
+                                                            className="skill-select"
+                                                        />
+
+                                                    </div>
+                                                </Col>
+                                            </Row>
+
+                                            <Button className="login-button" type="submit">
+                                                Kaydet
+                                            </Button>
+                                        </Form>
+                                    </Formik>
+                                </div>
+                            </Row>
+                        </div>
+                    </div >
+                </div >
             </div>
-        </div >
+        </div>
+
     )
+
 }
+
+
+
+
+
+
+
+
+
+

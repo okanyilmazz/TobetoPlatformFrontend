@@ -10,17 +10,15 @@ import { userActions } from '../../store/user/userSlice';
 import accountService from '../../services/accountService';
 import { Paginate } from '../../models/paginate';
 import certificateService from '../../services/certificateService';
+import Tooltip from '@uiw/react-tooltip';
 import HeatMap from '@uiw/react-heat-map';
-import { Tooltip, Dropdown } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Dropdown } from 'react-bootstrap';
+import Switch from 'react-switch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClone } from '@fortawesome/free-solid-svg-icons';
-import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
-import Switch from 'react-switch';
-import ProfileRadar from '../../components/ProfileRadar/ProfileRadar';
-import 'react-toastify/dist/ReactToastify.css';
 import ProfileToaster from '../../components/ProfileToaster/ProfileToaster';
-import UiwTooltip from '@uiw/react-tooltip';
+import ProfileRadar from '../../components/ProfileRadar/ProfileRadar';
 
 
 
@@ -30,8 +28,6 @@ export default function Profile() {
   const userState = useSelector((state: any) => state.user);
   const user = authService.getUserInfo();
   const dispatch = useDispatch();
-
-  const [checked, setChecked] = useState<boolean>(false);
 
   const [checked, setChecked] = useState<boolean>(false);
   const handleChange = (newChecked: boolean) => {
@@ -71,12 +67,12 @@ export default function Profile() {
         endDate={endDate}
         rectRender={(props, data,) => {
           if (!data || !data.count || data.count == 0)
-            return <UiwTooltip placement="top" content={`Herhangi bir aktiviteniz yok : ${0}`}>
+            return <Tooltip placement="top" content={`Herhangi bir aktiviteniz yok : ${0}`}>
               <rect {...props}></rect>
-            </UiwTooltip>
+            </Tooltip>
           else
             return (
-              <UiwTooltip
+              <Tooltip
                 placement="top"
                 content={`${data.date
                   .split('/')
@@ -85,7 +81,7 @@ export default function Profile() {
                   .join('/')} : ${data.count + ' adet aktivite'}`}
               >
                 <rect {...props}></rect>
-              </UiwTooltip>
+              </Tooltip>
             );
         }}
         style={{ color: '#ad001d' }}
@@ -208,182 +204,137 @@ export default function Profile() {
               </Dropdown.Menu>
             </Dropdown>
           </div>
-          return (
-          <div className='profile-card'>
 
-            <div className='container '>
+          <div className='col-md-4'>
+            <div className='profile-col-account'>
+              <div className='profile-account '>
+                <ul className="circles">
+                  <li /><li /><li /><li /><li /><li /><li /><li /><li /><li />
 
-              <div className='row'>
-
-                <div className='col-md-4'>
-                  <div className='profile-col-account'>
-                    <div className='profile-account '>
-                      <ul className="circles">
-                        <li /><li /><li /><li /><li /><li /><li /><li /><li /><li />
-                      </ul >
-                      <img className='profile-account-img' src={account?.profilePhotoPath || defaultProfilePhotoPath} />
-                    </div >
-
-                    <div className='profile-account-field'>
-                      <img className='profile-icon' src='https://tobeto.com/cv-name.svg' alt='Icon' />
-                      <div className='profile-all-text'>
-                        <span className='profile-header'> Ad Soyad  </span>
-                        <span className='profile-account-text' >{account?.userName || "Girilmemiş"} </span>
-                      </div>
-                    </div>
-
-                    <div className='profile-account-field'>
-                      <img className='profile-icon' src='https://tobeto.com/cv-date.svg' alt='Icon' />
-                      <div className='profile-all-text'>
-                        <span className='profile-header'> Doğum Tarihi  </span>
-                        <span className='profile-account-text' >
-                          {account?.birthDate
-                            ? new Date(account.birthDate).toLocaleString('tr-TR', options)
-                            : "Girilmemiş"}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className='profile-account-field'>
-                      <img className='profile-icon' src='https://tobeto.com/cv-mail.svg' alt='Icon' />
-                      <div className='profile-all-text'>
-                        <span className='profile-header'> E-Posta Adresi  </span>
-                        <span className='profile-account-text' >{account?.email}</span>
-                      </div>
-                    </div>
-                    <div className='profile-account-field'>
-                      <img className='profile-icon' src='https://tobeto.com/cv-phone.svg' alt='Icon' />
-                      <div className='profile-all-text'>
-                        <span className='profile-header'>Telefon Numarası  </span>
-                        <span className='profile-account-text' >{account?.phoneNumber || "Girilmemiş"} </span>
-                      </div>
-                    </div>
-                  </div >
-                  <div className='about-me container mt-5'>
-                    <div >
-                      <ProfileCard
-                        key={account?.id}
-                        content={account?.description}
-                        title={"Hakkımda"}
-                      />
-
-                      <div className='certificates-section'>
-                        <div className="certificates-box certificates-padding">
-                          <span>Sertifikalarım</span>
-                          <hr />
-                          <div className='certificates-container'>
-                            <div>
-                              {
-                                certificates?.items.map((certificate) => (
-                                  <div>
-                                    <div className='certificate-skill'>
-                                      <div className='text-truncate'>
-                                        <div className='file-container'>
-                                          {certificate.name.slice(0, 25)}...
-                                          <img className='pdf-png-icon' src="https://tobeto.com/pdf.png" alt="PDF Icon" />
-                                        </div>
-                                      </div>
-
-                                    </div >
-                                  </div >
-                                ))
-                              }
-                            </div >
-                            {/* <div>Henüz bir sertifika yüklemedin.</div> */}
-                          </div >
-                        </div >
-                      </div >
-                    </div >
-
-                  </div >
-
-                </div >
-                <div className='col-md-8'>
-                  <div className="ActivityMapContainer">
-                    <div className="activityMapContent activityMapPadding">
-                      <div className="ActivityMapHeader">
-                        <span>Aktivite Haritam</span>
-                        <hr />
-                      </div>
-
-                      <div className='abc-heatmap'>
-                        {heatMapRows()}
-                      </div>
-
-                    </div >
-                  </div >
-                </div >
-
-
-              </div >
-
-
-            </div >
-            {/* Sağdakilerde buraya */}
-            <div className='col-md-8'>
-              <br />
-              <ProfileCard
-                title={<div className='profile-card-work-success'>
-                  <span >Tobeto İşte Başarı Modelim</span>
-                  <Link to="/profilim/degerlendirmeler/rapor/tobeto-iste-basari-yetkinlikleri/1">
-                    <img src="https://tobeto.com/eye.svg" alt="eyeIcon" />
-                  </Link>
-                </div>}
-                content={
-                  <div>
-                    <div className='row'>
-                      <div className='col-md-12'>
-                        <ProfileRadar />
-                      </div>
-                    </div>
-                  </div>}
-              />
-              <br />
-              <div className='col-md-12'>
-                <div className='row'>
-                  <div className="ActivityMapContainer">
-                    <div className="activityMapContent activityMapPadding">
-                      <div className="ActivityMapHeader">
-                        <span>Aktivite Haritam</span>
-                        <hr />
-                      </div>
-
-                      <div className='abc-heatmap'>
-                        {heatMapRows()}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
+                </ul>
+                <img className='profile-account-img' src={account?.profilePhotoPath || defaultProfilePhotoPath} />
               </div>
-              <div className='col-md-8'>
-                <div className="ActivityMapContainer">
-                  <div className="activityMapContent activityMapPadding">
-                    <div className="ActivityMapHeader">
-                      <span>Aktivite Haritam</span>
-                      <hr />
-                    </div>
 
-                    <div className='abc-heatmap'>
-                      {heatMapRows()}
-                    </div>
-
-                  </div>
+              <div className='profile-account-field'>
+                <img className='profile-icon' src='https://tobeto.com/cv-name.svg' alt='Icon' />
+                <div className='profile-all-text'>
+                  <span className='profile-header'> Ad Soyad  </span>
+                  <span className='profile-account-text' >{account?.userName || "Girilmemiş"} </span>
                 </div>
               </div>
 
+              <div className='profile-account-field'>
+                <img className='profile-icon' src='https://tobeto.com/cv-date.svg' alt='Icon' />
+                <div className='profile-all-text'>
+                  <span className='profile-header'> Doğum Tarihi  </span>
+                  <span className='profile-account-text' >
+                    {account?.birthDate
+                      ? new Date(account.birthDate).toLocaleString('tr-TR', options)
+                      : "Girilmemiş"}
+                  </span>
+                </div>
+              </div>
 
+              <div className='profile-account-field'>
+                <img className='profile-icon' src='https://tobeto.com/cv-mail.svg' alt='Icon' />
+                <div className='profile-all-text'>
+                  <span className='profile-header'> E-Posta Adresi  </span>
+                  <span className='profile-account-text' >{account?.email}</span>
+                </div>
+              </div>
+              <div className='profile-account-field'>
+                <img className='profile-icon' src='https://tobeto.com/cv-phone.svg' alt='Icon' />
+                <div className='profile-all-text'>
+                  <span className='profile-header'>Telefon Numarası  </span>
+                  <span className='profile-account-text' >{account?.phoneNumber || "Girilmemiş"} </span>
+                </div>
+              </div>
             </div>
+            <div className='about-me container mt-5'>
+              <div >
+                <ProfileCard
+                  key={account?.id}
+                  content={account?.description}
+                  title={"Hakkımda"}
+                />
 
+                <div className='certificates-section'>
+                  <div className="certificates-box certificates-padding">
+                    <span>Sertifikalarım</span>
+                    <hr />
+                    <div className='certificates-container'>
+                      <div>
+                        {
+                          certificates?.items.map((certificate) => (
+                            <div>
+                              <div className='certificate-skill'>
+                                <div className='text-truncate'>
+                                  <div className='file-container'>
+                                    {certificate.name.slice(0, 25)}...
+                                    <img className='pdf-png-icon' src="https://tobeto.com/pdf.png" alt="PDF Icon" />
+                                  </div>
+                                </div>
 
+                              </div>
+                            </div>
+                          ))
+                        }
+                      </div>
+                      {/* <div>Henüz bir sertifika yüklemedin.</div> */}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
+          <br />
+          <div className='col-md-8'>
+            <ProfileCard
+              title={<div className='profile-card-work-success'>
+                <span >Tobeto İşte Başarı Modelim</span>
+                <Link to="/profilim/degerlendirmeler/rapor/tobeto-iste-basari-yetkinlikleri/1">
+                  <img src="https://tobeto.com/eye.svg" alt="eyeIcon" />
+                </Link>
+              </div>}
+              content={
+                <div>
+                  <div className='row'>
+                    <div className='col-md-12'>
+                      <ProfileRadar />
+                    </div>
+                  </div>
+                </div>}
+            />
+
+            <div className='col-md-12'>
+              <div className="ActivityMapContainer">
+                <div className="activityMapContent activityMapPadding">
+                  <div className="ActivityMapHeader">
+                    <span>Aktivite Haritam</span>
+                    <hr />
+                  </div>
+
+                  <div className='abc-heatmap'>
+                    {heatMapRows()}
+                  </div>
+
+                </div>
+              </div>
+            </div>
           </div>
           <br />
 
 
-          {/* SAĞDAKİLER BURAYA */}
-        </div >
+
+        </div>
+
+
       </div>
+      {/* Sağdakilerde buraya */}
+
     </div>
+
+
   )
 }

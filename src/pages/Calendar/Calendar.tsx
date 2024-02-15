@@ -57,7 +57,7 @@ const Calendar = (props: Props) => {
         if (selectedInstructors.length > 0 && !selectedInstructors.includes(optionsInstructor)) {
           filteredSessions = filteredSessions.filter((session) =>
             selectedInstructors.includes(optionsInstructor)
-          );  
+          );
         }
 
         if (searchText.trim() !== '') {

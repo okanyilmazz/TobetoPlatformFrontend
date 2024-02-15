@@ -118,6 +118,7 @@
     color: #fff;
     margin-top: 25px;
 
+}
 
 /*SOCIAL-MEDIA*/
 
@@ -193,7 +194,7 @@
 }
 
 #pe-language-select {
-    margin-right:10px;
+    margin-right: 10px;
 }
 
 #pe-language-select-level {
@@ -203,7 +204,7 @@
 
 .pe-language-button {
     border-Radius: 20px;
-    margin-top:10px;
+    margin-top: 10px;
     width: 80px;
     background-Color: #9933ff;
     color: white;
@@ -217,7 +218,7 @@
     padding: 10px;
     display: flex;
     flex-wrap: wrap;
-    padding-left: 60px ;
+    padding-left: 60px;
 }
 
 .pe-container {
@@ -257,7 +258,7 @@
 
 .pe-edit-language span {
     font-size: 12px;
-    font-weight: bold; 
+    font-weight: bold;
 }
 
 .pe-container .pe-delete-button {
@@ -278,7 +279,7 @@
     background-repeat: no-repeat;
     width: 25px;
     height: 25px;
-    border:none;
+    border: none;
 }
 
 /* Profile Edit Language */

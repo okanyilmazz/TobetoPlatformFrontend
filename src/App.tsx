@@ -35,7 +35,7 @@ function App() {
         <Navi />
         <OverlayLoader />
         <RouteDefinitions />
-        <Footer />
+        {/* <Footer /> */}
 
       </>
     </div>

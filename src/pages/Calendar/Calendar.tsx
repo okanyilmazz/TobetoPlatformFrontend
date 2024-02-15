@@ -34,10 +34,6 @@ const optionsInstructor = [
   { value: 'Kader Yavuz', label: 'Kader Yavuz' },
 ];
 
-import GetListUserOperationClaimResponse from '../../models/responses/userOperationClaim/getListUserOperationClaimResponse';
-import userOperationClaimService from '../../services/userOperationClaimService';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router';
 
 type Props = {};
 const Calendar = (props: Props) => {
@@ -54,7 +50,6 @@ const Calendar = (props: Props) => {
     const fetchSessions = async () => {
       try {
         const result = await SessionService.getAll(1,100);
-        const result = await SessionService.getAll(0, 100);
         setSessions(result.data);
 
         let filteredSessions = result.data.items;

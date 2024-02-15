@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react'
 import ProfileCard from './../../components/ProfileCard/ProfileCard';
 import './Profile.css';
@@ -11,18 +10,15 @@ import { userActions } from '../../store/user/userSlice';
 import accountService from '../../services/accountService';
 import { Paginate } from '../../models/paginate';
 import certificateService from '../../services/certificateService';
-import HeatMap from '@uiw/react-heat-map';
-import { Tooltip, Dropdown } from 'react-bootstrap';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClone } from '@fortawesome/free-solid-svg-icons';
-import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
-import Switch from 'react-switch';
-import ProfileRadar from '../../components/ProfileRadar/ProfileRadar';
-import 'react-toastify/dist/ReactToastify.css';
-import ProfileToaster from '../../components/ProfileToaster/ProfileToaster';
 import Tooltip from '@uiw/react-tooltip';
 import HeatMap from '@uiw/react-heat-map';
+import { Link } from 'react-router-dom';
+import { Dropdown } from 'react-bootstrap';
+import Switch from 'react-switch';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClone } from '@fortawesome/free-solid-svg-icons';
+import ProfileToaster from '../../components/ProfileToaster/ProfileToaster';
+import ProfileRadar from '../../components/ProfileRadar/ProfileRadar';
 
 
 
@@ -32,8 +28,8 @@ export default function Profile() {
   const userState = useSelector((state: any) => state.user);
   const user = authService.getUserInfo();
   const dispatch = useDispatch();
-  const [checked, setChecked] = useState<boolean>(false);
 
+  const [checked, setChecked] = useState<boolean>(false);
   const handleChange = (newChecked: boolean) => {
     setChecked(newChecked);
   };
@@ -53,6 +49,8 @@ export default function Profile() {
       copyTextElement.classList.remove("active");
     }, 2500);
   };
+
+
 
   const heatMapRows = () => {
     return (
@@ -153,6 +151,7 @@ export default function Profile() {
   const options = { year: 'numeric', month: 'long', day: 'numeric' } as const;
   const defaultProfilePhotoPath = 'https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fimages.19a45d39.png&w=128&q=75';
 
+
   return (
     <div className='profile-card'>
       <div className='container '>
@@ -205,18 +204,13 @@ export default function Profile() {
               </Dropdown.Menu>
             </Dropdown>
           </div>
-  return (
-    <div className='profile-card'>
-
-      <div className='container '>
-
-        <div className='row'>
 
           <div className='col-md-4'>
             <div className='profile-col-account'>
               <div className='profile-account '>
                 <ul className="circles">
                   <li /><li /><li /><li /><li /><li /><li /><li /><li /><li />
+
                 </ul>
                 <img className='profile-account-img' src={account?.profilePhotoPath || defaultProfilePhotoPath} />
               </div>
@@ -294,8 +288,8 @@ export default function Profile() {
             </div>
           </div>
 
+          <br />
           <div className='col-md-8'>
-            <br />
             <ProfileCard
               title={<div className='profile-card-work-success'>
                 <span >Tobeto İşte Başarı Modelim</span>
@@ -312,48 +306,33 @@ export default function Profile() {
                   </div>
                 </div>}
             />
-            <br />
+
             <div className='col-md-12'>
-              <div className='row'>
-                <div className="ActivityMapContainer">
-                  <div className="activityMapContent activityMapPadding">
-                    <div className="ActivityMapHeader">
-                      <span>Aktivite Haritam</span>
-                      <hr />
-                    </div>
-
-                    <div className='abc-heatmap'>
-                      {heatMapRows()}
-                    </div>
+              <div className="ActivityMapContainer">
+                <div className="activityMapContent activityMapPadding">
+                  <div className="ActivityMapHeader">
+                    <span>Aktivite Haritam</span>
+                    <hr />
                   </div>
-                </div>
-            </div>
 
-          </div>
-          <div className='col-md-8'>
-            <div className="ActivityMapContainer">
-              <div className="activityMapContent activityMapPadding">
-                <div className="ActivityMapHeader">
-                  <span>Aktivite Haritam</span>
-                  <hr />
-                </div>
+                  <div className='abc-heatmap'>
+                    {heatMapRows()}
+                  </div>
 
-                <div className='abc-heatmap'>
-                  {heatMapRows()}
                 </div>
-
               </div>
             </div>
           </div>
+          <br />
+
 
 
         </div>
 
 
       </div>
+      {/* Sağdakilerde buraya */}
 
-
-      {/* SAĞDAKİLER BURAYA */}
     </div>
 
 

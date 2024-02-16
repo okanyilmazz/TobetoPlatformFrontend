@@ -30,9 +30,9 @@ code {
   src: url('/public/assets/fonts/Poppins-Bold.ttf');
 }
 
-.bg-front-dark {
+/* .bg-front-dark {
   background-color: #181717 !important;
-}
+} */
 
 .bg-front-white {
   background-color: #fff !important;

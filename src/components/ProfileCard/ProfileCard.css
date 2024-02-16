@@ -6,6 +6,7 @@
     padding: 1rem;
     padding-right: 20px !important;
     box-shadow: 0 7px 29px rgba(0, 0, 0, .13);
+    margin-bottom: 12px;
 }
 
 .line {
@@ -13,8 +14,6 @@
     padding-left: 20px !important;
     padding-right: 20px !important;
     box-shadow: 0 7px 29px rgba(0, 0, 0, .13);
-
-
 }
 
 .line {
@@ -26,4 +25,3 @@
     border-top: 2px solid;
     opacity: .4;
 }
-

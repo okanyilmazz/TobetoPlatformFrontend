@@ -143,7 +143,6 @@ export default function Profile() {
       return;
     }
 
-    console.log(user.id)
     accountService.getByAccountId(user.id).then(result => {
       setAccount(result.data);
     });

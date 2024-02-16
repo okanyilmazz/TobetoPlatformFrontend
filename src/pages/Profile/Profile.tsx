@@ -319,8 +319,7 @@ export default function Profile() {
                   </div>
                 </div>}
             />
-
-
+            <br />
             <div className='col-md-12'>
               <ProfileCard
                 title={"Tobeto Seviye Testlerim"}

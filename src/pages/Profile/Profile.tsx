@@ -19,15 +19,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClone } from '@fortawesome/free-solid-svg-icons';
 import ProfileToaster from '../../components/ProfileToaster/ProfileToaster';
 import ProfileRadar from '../../components/ProfileRadar/ProfileRadar';
+import examResultService from '../../services/examResultService';
+import GetListExamResultResponse from '../../models/responses/examResult/getListExamResultResponse';
+import GetListAccountBadgeResponse from '../../models/responses/accountBadge/getListAccountBadgeResponse';
+import accountBadgeService from '../../services/accountBadgeService';
 
 
 
 export default function Profile() {
   const [account, setAccount] = useState<GetListAccountResponse>();
   const [certificates, setCertificates] = useState<Paginate<GetListCertificateResponse>>();
+  const [examResults, setExamResults] = useState<Paginate<GetListExamResultResponse>>();
   const userState = useSelector((state: any) => state.user);
   const user = authService.getUserInfo();
   const dispatch = useDispatch();
+  const [accountBadges, setAccountBadges] = useState<Paginate<GetListAccountBadgeResponse>>();
 
   const [checked, setChecked] = useState<boolean>(false);
   const handleChange = (newChecked: boolean) => {
@@ -90,7 +96,7 @@ export default function Profile() {
           1: '#b6f', //1-9
           10: '#93f', //10-19
           20: '#5c1f99', //20-29
-          30: '#361259', //30 ve üzeri
+          30: '#361259', //30 ve Ã¼zeri
 
         }}
 
@@ -140,11 +146,18 @@ export default function Profile() {
     console.log(user.id)
     accountService.getByAccountId(user.id).then(result => {
       setAccount(result.data);
-      console.log(result.data)
     });
     certificateService.getByAccountId(userState.user.id, 0, 5).then(result => {
       setCertificates(result.data)
-      console.log(result.data)
+    });
+    examResultService.getByAccountId(user.id).then(result => {
+      setExamResults(result.data)
+
+    })
+
+    accountBadgeService.getByAccountId(user.id).then(result => {
+      setAccountBadges(result.data);
+
     });
   }, [userState]);
 
@@ -250,7 +263,7 @@ export default function Profile() {
                 </div>
               </div>
             </div>
-            <div className='about-me container mt-5'>
+            <div className='about-me  mt-3'>
               <div >
                 <ProfileCard
                   key={account?.id}
@@ -307,6 +320,45 @@ export default function Profile() {
                 </div>}
             />
 
+
+            <div className='col-md-12'>
+              <ProfileCard
+                title={"Tobeto Seviye Testlerim"}
+                content={
+                  <div className='row'>
+                    {examResults?.items.map((examResult) => (
+                      <div className="col-md-6">
+                        <div className="exam-cart">
+                          <div className="exam-cart-top">
+                            <p className='exam-name'>{examResult.examName}</p>
+                            <p className='profile-exam-time'>{new Date(examResult.createdDate).toLocaleDateString('tr-TR')}</p>
+                          </div>
+                          <div className="bottom">
+                            <p className='exam-result'>{examResult.result}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                }
+              />
+              <ProfileCard
+                title={
+                  "Yetkinlik Rozetlerim"
+                }
+                content={
+                  <div className="profile-badge-container">
+                    {accountBadges?.items.map((accountBadge) => (
+                      <div className="profile-badge">
+                        <img src={String(accountBadge.badgeThumbnail)} alt="" />
+                      </div>
+                    ))}
+                  </div>
+
+                }
+              />
+            </div>
+
             <div className='col-md-12'>
               <div className="ActivityMapContainer">
                 <div className="activityMapContent activityMapPadding">
@@ -323,18 +375,8 @@ export default function Profile() {
               </div>
             </div>
           </div>
-          <br />
-
-
-
         </div>
-
-
       </div>
-      {/* Sağdakilerde buraya */}
-
     </div>
-
-
   )
 }

@@ -1,5 +1,5 @@
 import './ProfileSettingsPage.css'
-import { Image } from 'react-bootstrap'
+import { Button, Col, Image, Row, } from 'react-bootstrap'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Dashboard } from '@uppy/react';
@@ -10,9 +10,7 @@ import StatusBar from '@uppy/status-bar';
 import Modals from '../../components/Modal/Modal';
 import TobetoTextInput from "../../utilities/customFormControls/TobetoTextInput";
 import { Form, Formik } from "formik";
-import { Button, Col, FormControl, InputGroup, Row } from "react-bootstrap"; // Import Col and Row from react-bootstrap
-import TobetoSelect from "../../utilities/customFormControls/TobetoSelect";
-import { Paginate } from "../../models/paginate";
+import { FormControl, InputGroup } from "react-bootstrap"; // Import Col and Row from react-bootstrap
 import GetListSocialMediaResponse from "../../models/responses/socialMedia/getListSocialMediaResponse";
 import socialMediaService from "../../services/socialMediaService";
 import { RiPencilFill } from "react-icons/ri";
@@ -24,6 +22,12 @@ import GetListLanguageResponse from '../../models/responses/language/getListLang
 import GetListLanguageLevelResponse from '../../models/responses/languageLevel/getListLanguageLevelResponse';
 import DeleteLanguageRequest from '../../models/requests/language/deleteLanguageRequest';
 import Forms from 'react-bootstrap/Form';
+import { Paginate } from '../../models/paginate';
+import GetListSkillResponse from '../../models/responses/skill/getListSkillResponse';
+import skillService from '../../services/skillService';
+import TobetoSelect from '../../utilities/customFormControls/TobetoSelect';
+import CreatableSelect from 'react-select/creatable';
+
 
 export default function ProfileSettingsPage() {
     const initialValues = {
@@ -50,6 +54,16 @@ export default function ProfileSettingsPage() {
         }
     })
     uppy.use(StatusBar);
+    const handleSvgClick = () => {
+        setShows(true);
+    };
+
+    const handleClose = () => {
+        setShows(false);
+    };
+
+
+    const [skills, setSkills] = useState<Paginate<GetListSkillResponse>>();
 
     useEffect(() => {
         socialMediaService.getAll(0, 5).then((result) => {
@@ -116,13 +130,13 @@ export default function ProfileSettingsPage() {
         });
     }, [uppy]);
 
-    const handleSvgClick = () => {
-        setShows(true);
-    };
+    useEffect(() => {
+        skillService.getAll(0, 25).then((result) => {
+            setSkills(result.data);
+        });
+    }, []);
 
-    const handleClose = () => {
-        setShows(false);
-    };
+
 
     return (
         <div className='profile-settings-page container'>
@@ -290,44 +304,85 @@ export default function ProfileSettingsPage() {
                 </div >
 
                 <div style={lastPathSegment === "yabanci-dil" ? { display: 'block' } : { display: 'none' }}>
-                <form>
-                    <div className='pe-language'>
-                        <Forms.Select size="lg" id='pe-language-select'>
-                            <option selected>Dil Seçiniz*</option>
-                            {languageData.map((item, index) => (
-                                <option key={index} value={item.language}>
-                                    {item.language}
-                                </option>
-                            ))}
-                        </Forms.Select>
-                        <Forms.Select size="lg" id='pe-language-select'>
-                            <option selected>Seviye Seçiniz*</option>
-                            {languageLevelData.map((item, index) => (
-                                <option key={index} value={item.languageLevel}>
-                                    {item.languageLevel}
-                                </option>
-                            ))}
-                        </Forms.Select>
-                    </div>
-                    <button className="py-2 pe-language-button" /* onClick={() =>  ProfileToaster({ name: "... Kaydedildi" }); }} } */>Kaydet</button>
-                </form>
-
-                <div className='pe-result'>
-                    {languageAndLevelsData.map((item, index) => (
-                        <div className="pe-container" key={index}>
-                            <div className="pe-edit-language">
-                                <div>
-                                    <span>{item.language}</span>
-                                    <p>{item.level}</p> 
-                                </div>
-                                <button className="pe-delete-button" onClick={() => { handleClick(); ProfileToaster({ name: "Yabancı dil bilgisi kaldırıldı." }); }}></button>
-                            </div>
+                    <form>
+                        <div className='pe-language'>
+                            <Forms.Select size="lg" id='pe-language-select'>
+                                <option selected>Dil Seçiniz*</option>
+                                {languageData.map((item, index) => (
+                                    <option key={index} value={item.language}>
+                                        {item.language}
+                                    </option>
+                                ))}
+                            </Forms.Select>
+                            <Forms.Select size="lg" id='pe-language-select'>
+                                <option selected>Seviye Seçiniz*</option>
+                                {languageLevelData.map((item, index) => (
+                                    <option key={index} value={item.languageLevel}>
+                                        {item.languageLevel}
+                                    </option>
+                                ))}
+                            </Forms.Select>
                         </div>
-                    ))}
+                        <button className="py-2 pe-language-button" /* onClick={() =>  ProfileToaster({ name: "... Kaydedildi" }); }} } */>Kaydet</button>
+                    </form>
+
+                    <div className='pe-result'>
+                        {languageAndLevelsData.map((item, index) => (
+                            <div className="pe-container" key={index}>
+                                <div className="pe-edit-language">
+                                    <div>
+                                        <span>{item.language}</span>
+                                        <p>{item.level}</p>
+                                    </div>
+                                    <button className="pe-delete-button" onClick={() => { handleClick(); ProfileToaster({ name: "Yabancı dil bilgisi kaldırıldı." }); }}></button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {showDeleteCard && <DeleteCard handleDeleteConfirmation={handleDeleteConfirmation} />}
                 </div>
 
-                {showDeleteCard && <DeleteCard handleDeleteConfirmation={handleDeleteConfirmation} />}
-            </div>
+                <div className="col-md-12" style={lastPathSegment === "yetkinliklerim" ? { display: 'block' } : { display: 'none' }}>
+                    <Row>
+                        <div className="col-md-12 formik-form"> {/* Use col-md-12 to occupy full width */}
+                            <Formik
+                                initialValues={initialValues}
+                                onSubmit={(values) => {
+                                    console.log("Form submitted with values:", values);
+                                }}
+                            >
+                                <Form className="login-form">
+                                    <Row>
+                                        <Col md={12}>
+                                            <span className="skill-input-label">Yetkinlik</span>
+
+                                            <div className='skill-select-area'>
+                                                <CreatableSelect
+                                                    // isMulti
+                                                    isClearable
+                                                    // onCreateOption={handleAdd}
+                                                    options={skills?.items.map((skill) => ({
+                                                        value: skill.id,
+                                                        label: skill.name
+                                                    }))}
+                                                    placeholder="Seçiniz"
+                                                    className="skill-select"
+                                                />
+
+                                            </div>
+                                        </Col>
+                                    </Row>
+
+                                    <Button className="login-button" type="submit">
+                                        Kaydet
+                                    </Button>
+                                </Form>
+                            </Formik>
+                        </div>
+                    </Row>
+                </div>
+
 
             </div>
         </div>

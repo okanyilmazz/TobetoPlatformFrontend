@@ -22,12 +22,8 @@ class ExamResultService extends BaseService<
     this.apiUrl = "ExamResults";
   }
 
-  getByAccountId(
-    accountId: number
-  ): Promise<AxiosResponse<Paginate<GetListExamResultResponse>, any>> {
-    return axiosInstance.get<Paginate<GetListExamResultResponse>>(
-      this.apiUrl + "/GetByAccountId?accountId=" + accountId
-    );
+  getByAccountId(accountId: number): Promise<AxiosResponse<Paginate<GetListExamResultResponse>, any>> {
+    return axiosInstance.get<Paginate<GetListExamResultResponse>>(this.apiUrl + "/GetByAccountId?accountId=" + accountId);
   }
 }
 

@@ -2,38 +2,46 @@ import { AxiosResponse } from "axios";
 import axiosInstance from "../interceptors/axiosInterceptor";
 
 export class BaseService<
-    GetAllType,
-    GetByIdType,
-    AddRequestType,
-    AddResponseType,
-    UpdateRequestType,
-    UpdateResponseType>{
+  GetAllType,
+  GetByIdType,
+  AddRequestType,
+  AddResponseType,
+  UpdateRequestType,
+  UpdateResponseType
+> {
+  public apiUrl: string;
 
-    public apiUrl: string;
+  constructor() {
+    this.apiUrl = "";
+  }
 
-    constructor() {
-        this.apiUrl = "";
-    }
+  getAll(
+    pageIndex: number,
+    pageSize: number
+  ): Promise<AxiosResponse<GetAllType, any>> {
+    return axiosInstance.get<GetAllType>(
+      this.apiUrl + "/GetList?PageIndex=" + pageIndex + "&PageSize=" + pageSize
+    );
+  }
 
-    getAll(pageIndex: number, pageSize: number): Promise<AxiosResponse<GetAllType, any>> {
-        return axiosInstance.get<GetAllType>(this.apiUrl = "/GetList?PageIndex=" + pageIndex + "&PageSize=" + pageSize);
-    }
+  getById(id: number): Promise<AxiosResponse<GetByIdType, any>> {
+    return axiosInstance.get<GetByIdType>(this.apiUrl + "/GetById?id=" + id);
+  }
 
-    getById(id: number): Promise<AxiosResponse<GetByIdType, any>> {
-        return axiosInstance.get<GetByIdType>(this.apiUrl + "/GetById?id=" + id);
-    }
+  add(request: AddRequestType): Promise<AxiosResponse<AddResponseType, any>> {
+    return axiosInstance.post<AddResponseType>(this.apiUrl + "/Add", request);
+  }
 
-    add(request: AddRequestType): Promise<AxiosResponse<AddResponseType, any>> {
-        return axiosInstance.post<AddResponseType>(this.apiUrl + "/Add", request);
-    }
+  update(
+    request: UpdateRequestType
+  ): Promise<AxiosResponse<UpdateResponseType, any>> {
+    return axiosInstance.put<UpdateResponseType>(
+      this.apiUrl + "/Update",
+      request
+    );
+  }
 
-    update(
-        request: UpdateRequestType,
-    ): Promise<AxiosResponse<UpdateResponseType, any>> {
-        return axiosInstance.put<UpdateResponseType>(this.apiUrl + "/Update", request);
-    }
-
-    delete(id: number) {
-        return axiosInstance.post(this.apiUrl + "/Delete?id=" + id);
-    }
+  delete(id: number) {
+    return axiosInstance.post(this.apiUrl + "/Delete?id=" + id);
+  }
 }

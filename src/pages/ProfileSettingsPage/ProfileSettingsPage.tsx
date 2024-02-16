@@ -1,5 +1,5 @@
 import './ProfileSettingsPage.css'
-import { Image } from 'react-bootstrap'
+import { Button, Col, Image, Row, } from 'react-bootstrap'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Dashboard } from '@uppy/react';
@@ -10,12 +10,23 @@ import StatusBar from '@uppy/status-bar';
 import Modals from '../../components/Modal/Modal';
 import TobetoTextInput from "../../utilities/customFormControls/TobetoTextInput";
 import { Form, Formik } from "formik";
-import { Button, Col, FormControl, InputGroup, Row } from "react-bootstrap"; // Import Col and Row from react-bootstrap
-import TobetoSelect from "../../utilities/customFormControls/TobetoSelect";
-import { Paginate } from "../../models/paginate";
+import { FormControl, InputGroup } from "react-bootstrap"; // Import Col and Row from react-bootstrap
 import GetListSocialMediaResponse from "../../models/responses/socialMedia/getListSocialMediaResponse";
 import socialMediaService from "../../services/socialMediaService";
 import { RiPencilFill } from "react-icons/ri";
+import ProfileToaster from '../../components/ProfileToaster/ProfileToaster';
+import DeleteCard from '../../components/DeleteCard/DeleteCard';
+import languageService from '../../services/languageService';
+import languageLevelService from '../../services/languageLevelService';
+import GetListLanguageResponse from '../../models/responses/language/getListLanguageResponse';
+import GetListLanguageLevelResponse from '../../models/responses/languageLevel/getListLanguageLevelResponse';
+import DeleteLanguageRequest from '../../models/requests/language/deleteLanguageRequest';
+import Forms from 'react-bootstrap/Form';
+import { Paginate } from '../../models/paginate';
+import GetListSkillResponse from '../../models/responses/skill/getListSkillResponse';
+import skillService from '../../services/skillService';
+import TobetoSelect from '../../utilities/customFormControls/TobetoSelect';
+import CreatableSelect from 'react-select/creatable';
 
 
 export default function ProfileSettingsPage() {
@@ -30,6 +41,10 @@ export default function ProfileSettingsPage() {
     const lastPathSegment = pathArray[pathArray.length - 1];
     const [shows, setShows] = useState(false)
     const navigate = useNavigate();
+    const [showDeleteCard, setShowDeleteCard] = useState(false);
+    const [languages, setLanguages] = useState<Paginate<GetListLanguageResponse>>();
+    const [languageLevels, setLanguageLevels] = useState<Paginate<GetListLanguageLevelResponse>>();
+    const [deleteRequest, setDeleteRequest] = useState<DeleteLanguageRequest | null>(null);
     const userState = useSelector((state: any) => state.user);
     const uppy = new Uppy({
         autoProceed: false,
@@ -39,6 +54,63 @@ export default function ProfileSettingsPage() {
         }
     })
     uppy.use(StatusBar);
+    const handleSvgClick = () => {
+        setShows(true);
+    };
+
+    const handleClose = () => {
+        setShows(false);
+    };
+
+
+    const [skills, setSkills] = useState<Paginate<GetListSkillResponse>>();
+
+    useEffect(() => {
+        socialMediaService.getAll(0, 5).then((result) => {
+            setSocialMedias(result.data);
+        });
+    }, []);
+
+
+    const handleClick = () => {
+        setShowDeleteCard(true);
+    };
+
+    const handleDeleteConfirmation = () => {
+        console.log('Öğeleri silme işlemi gerçekleştiriliyor...');
+        if (deleteRequest) {
+            // Silme isteğini burada kullanarak işlemi gerçekleştirin
+        }
+        setShowDeleteCard(false);
+    };
+
+    useEffect(() => {
+        languageService.getAll(0, 10).then(response => {
+            setLanguages(response.data)
+        })
+        languageLevelService.getAll(0, 10).then(response => {
+            setLanguageLevels(response.data)
+        })
+    }, []);
+
+
+    const languageAndLevelsData = [
+        { language: "Türkçe", level: "Orta Seviye" },
+        { language: "Fransızca", level: "Başlangıç Seviye" },
+    ];
+
+
+    const languageData = [
+        { language: "Türkçe" },
+        { language: "Fransızca" },
+    ];
+
+
+    const languageLevelData = [
+        { languageLevel: "Başlangıç Seviye (A1-A2)" },
+        { languageLevel: "Orta Seviye (B1-B2)" },
+    ];
+
 
     useEffect(() => {
         socialMediaService.getAll(0, 5).then((result) => {
@@ -65,13 +137,13 @@ export default function ProfileSettingsPage() {
         });
     }, [uppy]);
 
-    const handleSvgClick = () => {
-        setShows(true);
-    };
+    useEffect(() => {
+        skillService.getAll(0, 25).then((result) => {
+            setSkills(result.data);
+        });
+    }, []);
 
-    const handleClose = () => {
-        setShows(false);
-    };
+
 
     return (
         <div className='profile-settings-page container'>
@@ -125,7 +197,7 @@ export default function ProfileSettingsPage() {
                             <span>Medya Hesaplarım</span>
                         </div>
                     </li>
-                    <li>
+                    <li onClick={() => navigate("/profilim/profilimi-duzenle/yabanci-dil")} className={lastPathSegment === "yabanci-dil" ? 'active-item active-edit' : ''}>
                         <div className='sidebar-icon'>
                             <Image src='/assets/Icons/profile-settings/translate.svg' />
                         </div>
@@ -170,6 +242,154 @@ export default function ProfileSettingsPage() {
                         </div>
                     </div>
                 </div>
+
+                <div style={lastPathSegment === "medya-hesaplarim" ? { display: 'block' } : { display: 'none' }}>
+                    <div className="row mt-5">
+                        <div className="formik-form">
+                            <Formik
+                                initialValues={initialValues}
+                                onSubmit={(values) => {
+                                    console.log("Form submitted with values:", values);
+                                }}
+                            >
+                                <Form className="login-form">
+                                    <Row>
+                                        <Col md={4}>
+                                            <TobetoSelect
+                                                name="socialMedia"
+                                                className="mb-4"
+                                                component="select"
+                                            >
+                                                <option value="SocialMedia">Seçiniz*</option>
+                                                {socialMedias?.items.map((socialMedia, index) => (
+                                                    <option key={index} value={String(socialMedia.id)}>
+                                                        {socialMedia.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+                                        <Col md={8}>
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="link"
+                                                placeholder="http://"
+                                                placeholderTextColor="#fff"
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Button className="mb-4" type="submit">
+                                        Kaydet
+                                    </Button>
+                                    <Row>
+                                        <Col>
+                                            {socialMedias?.items.slice(0, 3).map((socialMedia) => (
+                                                <div className="social-media-content">
+                                                    <label className="social-media-text">{socialMedia.name}</label>
+                                                    <InputGroup size="lg">
+                                                        <InputGroup.Text id="social-media-icon">
+                                                            <img src={socialMedia.iconPath} />
+                                                        </InputGroup.Text>
+                                                        <FormControl className="social-media-form" aria-label="Amount (to the nearest dollar)" />
+                                                        <InputGroup.Text id="social-media-icon">
+                                                            <button className="social-media-delete-btn">
+                                                                <img src="https://tobeto.com/trash.svg" alt="Delete" />
+                                                            </button>
+                                                            <button className="social-media-edit-btn">
+                                                                <RiPencilFill className="lu-pencil" />
+                                                            </button>
+                                                        </InputGroup.Text>
+                                                    </InputGroup>
+                                                </div>
+                                            ))}
+                                            <p className="social-media-span-text">En fazla 3 adet medya seçimi yapılabilir.</p>
+                                        </Col>
+                                    </Row>
+                                </Form>
+                            </Formik>
+                        </div>
+                    </div>
+                </div >
+
+                <div style={lastPathSegment === "yabanci-dil" ? { display: 'block' } : { display: 'none' }}>
+                    <form>
+                        <div className='pe-language'>
+                            <Forms.Select size="lg" id='pe-language-select'>
+                                <option selected>Dil Seçiniz*</option>
+                                {languageData.map((item, index) => (
+                                    <option key={index} value={item.language}>
+                                        {item.language}
+                                    </option>
+                                ))}
+                            </Forms.Select>
+                            <Forms.Select size="lg" id='pe-language-select'>
+                                <option selected>Seviye Seçiniz*</option>
+                                {languageLevelData.map((item, index) => (
+                                    <option key={index} value={item.languageLevel}>
+                                        {item.languageLevel}
+                                    </option>
+                                ))}
+                            </Forms.Select>
+                        </div>
+                        <button className="py-2 pe-language-button" /* onClick={() =>  ProfileToaster({ name: "... Kaydedildi" }); }} } */>Kaydet</button>
+                    </form>
+
+                    <div className='pe-result'>
+                        {languageAndLevelsData.map((item, index) => (
+                            <div className="pe-container" key={index}>
+                                <div className="pe-edit-language">
+                                    <div>
+                                        <span>{item.language}</span>
+                                        <p>{item.level}</p>
+                                    </div>
+                                    <button className="pe-delete-button" onClick={() => { handleClick(); ProfileToaster({ name: "Yabancı dil bilgisi kaldırıldı." }); }}></button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {showDeleteCard && <DeleteCard handleDeleteConfirmation={handleDeleteConfirmation} />}
+                </div>
+
+                <div className="col-md-12" style={lastPathSegment === "yetkinliklerim" ? { display: 'block' } : { display: 'none' }}>
+                    <Row>
+                        <div className="col-md-12 formik-form"> {/* Use col-md-12 to occupy full width */}
+                            <Formik
+                                initialValues={initialValues}
+                                onSubmit={(values) => {
+                                    console.log("Form submitted with values:", values);
+                                }}
+                            >
+                                <Form className="login-form">
+                                    <Row>
+                                        <Col md={12}>
+                                            <span className="skill-input-label">Yetkinlik</span>
+
+                                            <div className='skill-select-area'>
+                                                <CreatableSelect
+                                                    // isMulti
+                                                    isClearable
+                                                    // onCreateOption={handleAdd}
+                                                    options={skills?.items.map((skill) => ({
+                                                        value: skill.id,
+                                                        label: skill.name
+                                                    }))}
+                                                    placeholder="Seçiniz"
+                                                    className="skill-select"
+                                                />
+
+                                            </div>
+                                        </Col>
+                                    </Row>
+
+                                    <Button className="login-button" type="submit">
+                                        Kaydet
+                                    </Button>
+                                </Form>
+                            </Formik>
+                        </div>
+                    </Row>
+                </div>
+
 
                 <div style={lastPathSegment === "medya-hesaplarim" ? { display: 'block' } : { display: 'none' }}>
                     <div className="row mt-5">

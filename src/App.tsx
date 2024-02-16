@@ -31,11 +31,11 @@ function App() {
 
       style={lastPathSegment === "katalog" ? { marginTop: '11rem' } : { marginTop: '0' }} >
       <>
-        <ToastContainer></ToastContainer>
+        <ToastContainer />
         <Navi />
         <OverlayLoader />
         <RouteDefinitions />
-        <Footer />
+        {/* <Footer /> */}
 
       </>
     </div>

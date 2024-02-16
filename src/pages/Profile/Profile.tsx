@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react'
 import ProfileCard from './../../components/ProfileCard/ProfileCard';
 import './Profile.css';
@@ -13,6 +12,13 @@ import { Paginate } from '../../models/paginate';
 import certificateService from '../../services/certificateService';
 import Tooltip from '@uiw/react-tooltip';
 import HeatMap from '@uiw/react-heat-map';
+import { Link } from 'react-router-dom';
+import { Dropdown } from 'react-bootstrap';
+import Switch from 'react-switch';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClone } from '@fortawesome/free-solid-svg-icons';
+import ProfileToaster from '../../components/ProfileToaster/ProfileToaster';
+import ProfileRadar from '../../components/ProfileRadar/ProfileRadar';
 
 
 
@@ -22,6 +28,30 @@ export default function Profile() {
   const userState = useSelector((state: any) => state.user);
   const user = authService.getUserInfo();
   const dispatch = useDispatch();
+
+  const [checked, setChecked] = useState<boolean>(false);
+  const handleChange = (newChecked: boolean) => {
+    setChecked(newChecked);
+  };
+
+  const [inputValue, setInputValue] = useState<string>("https://tobeto.com/profiller/95452f1d");
+
+  const handleCopyClick = () => {
+    const copyTextElement = document.querySelector(".copy-text") as HTMLElement;
+    const input = copyTextElement.querySelector("input.text") as HTMLInputElement;
+
+    input.select();
+    document.execCommand("copy");
+    copyTextElement.classList.add("active");
+    window.getSelection()?.removeAllRanges();
+
+    setTimeout(() => {
+      copyTextElement.classList.remove("active");
+    }, 2500);
+  };
+
+
+
   const heatMapRows = () => {
     return (
       <HeatMap
@@ -124,16 +154,63 @@ export default function Profile() {
 
   return (
     <div className='profile-card'>
-
       <div className='container '>
-
         <div className='row'>
+          <div className='d-flex justify-content-end dropdown-profile '>
+            <Link to="/profilim/profilimi-duzenle/kisisel-bilgilerim">
+              <span className='cv-edit-icon'></span>
+            </Link>
+            <Dropdown autoClose={false}>
+              <Dropdown.Toggle id="dropdown-basic" variant='light' className="cv-share-icon">
+                <img src="https://tobeto.com/share.svg" alt="ShareIcon" />
+              </Dropdown.Toggle>
+              <Dropdown.Menu className="profileCustom-dropdown-menu customProfil-dropdown-menu">
+                <Dropdown.Item>
+                  <div className='d-flex justify-content-between dropdown-menu-profile '>
+                    <p>Profilimi paylaş</p>
+                    <div className="react-switch-card">
+                      <label htmlFor="normal-switch">
+                        <Switch
+                          onChange={handleChange}
+                          checked={checked}
+                          onColor="#9932FF"
+                          className="react-switch"
+                          id="normal-switch"
+                          height={20}
+                          width={40}
+                        />
+                      </label>
+                    </div>
+                  </div>
+                </Dropdown.Item>
+                <Dropdown.Item id='dropdown-menu-profile'>
+                  <div className='d-flex justify-content-end '>
+                    <div className="input-copy-component">
+                      <div>Profil Linki</div>
+                      <div className="copy-text">
+                        <input
+                          type="text"
+                          className="text"
+                          value={inputValue}
+                          onChange={(e) => setInputValue(e.target.value)}
+                        />
+                        <button onClick={() => { handleCopyClick(); ProfileToaster({ name: "Url kopyalandı." }); }}>
+                          <FontAwesomeIcon icon={faClone} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+          </div>
 
           <div className='col-md-4'>
             <div className='profile-col-account'>
               <div className='profile-account '>
                 <ul className="circles">
                   <li /><li /><li /><li /><li /><li /><li /><li /><li /><li />
+
                 </ul>
                 <img className='profile-account-img' src={account?.profilePhotoPath || defaultProfilePhotoPath} />
               </div>
@@ -208,25 +285,46 @@ export default function Profile() {
                   </div>
                 </div>
               </div>
-
             </div>
-
           </div>
+
+          <br />
           <div className='col-md-8'>
-            <div className="ActivityMapContainer">
-              <div className="activityMapContent activityMapPadding">
-                <div className="ActivityMapHeader">
-                  <span>Aktivite Haritam</span>
-                  <hr />
-                </div>
+            <ProfileCard
+              title={<div className='profile-card-work-success'>
+                <span >Tobeto İşte Başarı Modelim</span>
+                <Link to="/profilim/degerlendirmeler/rapor/tobeto-iste-basari-yetkinlikleri/1">
+                  <img src="https://tobeto.com/eye.svg" alt="eyeIcon" />
+                </Link>
+              </div>}
+              content={
+                <div>
+                  <div className='row'>
+                    <div className='col-md-12'>
+                      <ProfileRadar />
+                    </div>
+                  </div>
+                </div>}
+            />
 
-                <div className='abc-heatmap'>
-                  {heatMapRows()}
-                </div>
+            <div className='col-md-12'>
+              <div className="ActivityMapContainer">
+                <div className="activityMapContent activityMapPadding">
+                  <div className="ActivityMapHeader">
+                    <span>Aktivite Haritam</span>
+                    <hr />
+                  </div>
 
+                  <div className='abc-heatmap'>
+                    {heatMapRows()}
+                  </div>
+
+                </div>
               </div>
             </div>
           </div>
+          <br />
+
 
 
         </div>

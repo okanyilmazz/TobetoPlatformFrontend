@@ -22,30 +22,9 @@ class AccountBadgeService extends BaseService<
     this.apiUrl = "AccountBadges";
   }
 
-  getByAccountId(
-    accountId: number
-  ): Promise<AxiosResponse<Paginate<GetListAccountBadgeResponse>, any>> {
-    return axiosInstance.get<Paginate<GetListAccountBadgeResponse>>(
-      this.apiUrl + "/GetByAccountId?id=" + accountId
-    );
+  getByAccountId(accountId: number): Promise<AxiosResponse<Paginate<GetListAccountBadgeResponse>, any>> {
+    return axiosInstance.get<Paginate<GetListAccountBadgeResponse>>(this.apiUrl + "/GetByAccountId?id=" + accountId);
   }
-
-  // getByAccountId(
-  //   accountId: number,
-  //   pageIndex: number,
-  //   pageSize: number
-  // ): Promise<AxiosResponse<Paginate<GetListAccountBadgeResponse>, any>> {
-  //   console.log(accountId);
-  //   return axiosInstance.get<Paginate<GetListAccountBadgeResponse>>(
-  //     this.apiUrl +
-  //       "/GetByAccountId?accountId=" +
-  //       accountId +
-  //       "&PageIndex=" +
-  //       pageIndex +
-  //       "&PageSize=" +
-  //       pageSize
-  //   );
-  // }
 }
 
 export default new AccountBadgeService();

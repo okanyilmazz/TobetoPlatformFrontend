@@ -146,22 +146,17 @@ export default function Profile() {
     console.log(user.id)
     accountService.getByAccountId(user.id).then(result => {
       setAccount(result.data);
-      // console.log(result.data)
     });
     certificateService.getByAccountId(userState.user.id, 0, 5).then(result => {
       setCertificates(result.data)
-      // console.log(result.data)
     });
     examResultService.getByAccountId(user.id).then(result => {
       setExamResults(result.data)
-      console.log("EXAMRESULT");
 
     })
 
     accountBadgeService.getByAccountId(user.id).then(result => {
       setAccountBadges(result.data);
-      console.log(result.data);
-      console.dir(result.data)
 
     });
   }, [userState]);

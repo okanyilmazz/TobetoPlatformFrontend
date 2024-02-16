@@ -76,7 +76,6 @@ export default function ProfileSettingsPage() {
         socialMedia: "Seçiniz*"
     };
 
-
     const uppy = new Uppy({
         autoProceed: false,
         restrictions: {

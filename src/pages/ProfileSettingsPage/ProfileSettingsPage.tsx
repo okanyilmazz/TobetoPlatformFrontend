@@ -16,7 +16,6 @@ import socialMediaService from "../../services/socialMediaService";
 import { RiPencilFill } from "react-icons/ri";
 import ProfileToaster from '../../components/ProfileToaster/ProfileToaster';
 import DeleteCard from '../../components/DeleteCard/DeleteCard';
-import languageService from '../../services/languageService';
 import languageLevelService from '../../services/languageLevelService';
 import GetListLanguageResponse from '../../models/responses/language/getListLanguageResponse';
 import GetListLanguageLevelResponse from '../../models/responses/languageLevel/getListLanguageLevelResponse';
@@ -27,6 +26,7 @@ import GetListSkillResponse from '../../models/responses/skill/getListSkillRespo
 import skillService from '../../services/skillService';
 import TobetoSelect from '../../utilities/customFormControls/TobetoSelect';
 import CreatableSelect from 'react-select/creatable';
+import languageService from '../../services/languageService';
 
 
 export default function ProfileSettingsPage() {

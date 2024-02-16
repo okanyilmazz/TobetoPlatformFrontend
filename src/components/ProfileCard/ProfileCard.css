@@ -4,12 +4,26 @@
     font-weight: 600;
     border-radius: 10px;
     padding: 1rem;
-    padding-left: 20px !important;
     padding-right: 20px !important;
+    box-shadow: 0 7px 29px rgba(0, 0, 0, .13);
 }
 
 .line {
     margin: 0.5rem 0;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-shadow: 0 7px 29px rgba(0, 0, 0, .13);
+
+
+}
+
+.line {
     margin-left: 0.1rem;
     margin-right: 0.1rem;
+    margin: 0.5rem 0;
+    color: rgba(153, 51, 255, .4);
+    border: 0;
+    border-top: 2px solid;
+    opacity: .4;
 }
+

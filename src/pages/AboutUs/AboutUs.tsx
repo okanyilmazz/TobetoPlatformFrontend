@@ -66,7 +66,7 @@ function AboutUs() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
 
             <div className='tobeto-slogan'>
                 <span>Tobeto ile işe hazırlan, işe yerleş, işinde geliş, yüksel!</span>

@@ -17,7 +17,7 @@ class ProgrammingLanguageService extends BaseService<
 >{
     constructor() {
         super();
-        this.apiUrl = "ProgrammingLanguages/GetList?PageSize=20";
+        this.apiUrl = "ProgrammingLanguages";
     }
 }
 

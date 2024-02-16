@@ -24,18 +24,18 @@ function App() {
           lastPathSegment !== "blog" &&
           lastPathSegment !== "basinda-biz" &&
           lastPathSegment !== "takvim-anasayfa" &&
-
           lastPathSegment !== ""
         ) ||
         lastPathSegment?.includes("giris") ||
         lastPathSegment?.includes("kayit-ol") ? "App bg-front-white" : "App bg-front-dark"}
+
       style={lastPathSegment === "katalog" ? { marginTop: '11rem' } : { marginTop: '0' }} >
       <>
-        <ToastContainer></ToastContainer>
+        <ToastContainer />
         <Navi />
         <OverlayLoader />
         <RouteDefinitions />
-        <Footer />
+        {/* <Footer /> */}
 
       </>
     </div>

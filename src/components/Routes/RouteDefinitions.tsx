@@ -16,8 +16,8 @@ import SignUp from '../../pages/SignUp/SignUp';
 import Blog from '../../pages/Blog/Blog';
 import MediaNews from '../../pages/MediaNews/MediaNews';
 import Codecademy from '../../pages/Codecademy/Codecademy';
-
-
+import ProfileSettingsPage from '../../pages/ProfileSettingsPage/ProfileSettingsPage';
+import AssesmentsPage from '../../pages/AssesmentsPage/AssesmentsPage';
 
 
 type Props = {}
@@ -31,7 +31,6 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/bireyler-icin" Component={ForIndividuals} />
             <Route path="/takvim-anasayfa" Component={Calendar} />
             <Route path="/takvim" Component={Calendar} />
-
             <Route path="/platform" element={<ProtectedRoute><PlatformPage /></ProtectedRoute>} />
             <Route path="/basvuru" Component={ApplicationCard} />
             <Route path="/profilim" Component={Profile} />
@@ -42,6 +41,15 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/katalog" Component={CatalogPage} />
             <Route path="/codecademy" Component={Codecademy} />
             <Route path="/platform-katalog" Component={CatalogPage} />
+            <Route path="/degerlendirmeler" Component={AssesmentsPage} />
+            <Route path="/profilim/profilimi-duzenle/sertifikalarim" Component={ProfileSettingsPage} />
+            <Route path="/profilim/profilimi-duzenle/yetkinliklerim" Component={ProfileSettingsPage} />
+            <Route path="/profilim/profilimi-duzenle/medya-hesaplarim" Component={ProfileSettingsPage} />
+            <Route path="/profilim/profilimi-duzenle/yabanci-dil" Component={ProfileSettingsPage} />
+
+
+
+
 
 
 

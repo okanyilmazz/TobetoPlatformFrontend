@@ -24,10 +24,13 @@ class AuthService {
 
     getUserInfo(): any {
         const token = tokenService.getToken();
+
         if (!token) {
             return null;
         }
+
         const tokenDetails: TokenDetails = jwtDecode(token);
+
         const {
             'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier': userId,
             email,

@@ -86,8 +86,7 @@ export default function AssesmentsPage() {
                     <div className="reviews-cart-2">
                         {exams?.items.map((exam, index) => {
                             const filteredResults = examResults?.items.filter(examResult =>
-                                // examResult.examId === exam.id
-                                examResult.examName
+                                examResult.examId === exam.id
                             );
                             console.log(filteredResults?.length);
                             return (

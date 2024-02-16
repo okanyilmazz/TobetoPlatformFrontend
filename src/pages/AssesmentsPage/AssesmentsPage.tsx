@@ -114,9 +114,10 @@ export default function AssesmentsPage() {
                                         </Button>
                                     </div>
                                     <Modals
+                                        header={true}
                                         show={subjectStates[exam.name] || false}
                                         onHide={() => handleClose(exam.name)}
-                                        examDetails={exam.name}
+                                        title={exam.name}
                                         body={
                                             <>
                                                 {filteredResults && filteredResults.length > 0 ? (

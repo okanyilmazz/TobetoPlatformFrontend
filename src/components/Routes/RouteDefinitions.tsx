@@ -50,6 +50,8 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/profilim/profilimi-duzenle/yabanci-dil" Component={ProfileSettingsPage} />
             <Route path="/profilim/profilimi-duzenle/kisisel-bilgilerim" Component={ProfileSettingsPage} />
 
+            <Route path="/profilim/profilimi-duzenle/medya-hesaplarim" Component={ProfileSettingsPage} />
+
 
 
 

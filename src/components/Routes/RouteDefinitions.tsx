@@ -6,8 +6,6 @@ import PlatformPage from '../../pages/PlatformPage/PlatformPage'
 import ApplicationCard from '../../components/ApplicationCard/ApplicationCard'
 import { ForIndividuals } from '../../pages/ForIndividuals/ForIndividuals';
 import Calendar from '../../pages/Calendar/Calendar';
-
-
 import Profile from '../../pages/Profile/Profile';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import ProtectedRoute from './ProtectedRoute';
@@ -19,8 +17,7 @@ import Codecademy from '../../pages/Codecademy/Codecademy';
 import ProfileSettingsPage from '../../pages/ProfileSettingsPage/ProfileSettingsPage';
 import AssesmentsPage from '../../pages/AssesmentsPage/AssesmentsPage';
 import EducationsPage from '../../pages/EducationsPage/EducationsPage';
-import SlideModal from '../EducationDrawer/EducationDrawer';
-import EducationDrawerPage from '../../pages/EducationDrawerPage/EducationDrawerPage';
+import EducationProgramContent from '../../pages/EducationProgramContent/EducationProgramContent';
 
 
 
@@ -53,7 +50,7 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/profilim/profilimi-duzenle/yabanci-dil" Component={ProfileSettingsPage} />
             <Route path="/profilim/profilimi-duzenle/kisisel-bilgilerim" Component={ProfileSettingsPage} />
             <Route path="/profilim/profilimi-duzenle/medya-hesaplarim" Component={ProfileSettingsPage} />
-            <Route path="/test" Component={EducationDrawerPage} />
+            <Route path="/egitimlerim/egitim-detaylari" Component={EducationProgramContent} />
 
         </Routes>
     )

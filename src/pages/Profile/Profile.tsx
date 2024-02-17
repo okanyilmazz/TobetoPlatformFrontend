@@ -142,7 +142,6 @@ export default function Profile() {
 
       return;
     }
-    debugger
 
     accountService.getByAccountId(user.id).then(result => {
       console.log("girdi")

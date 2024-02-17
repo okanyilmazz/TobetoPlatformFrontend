@@ -1,6 +1,5 @@
 .profile-card {
     margin-top: 12rem !important;
-
 }
 
 .about-me {
@@ -209,6 +208,7 @@
     border-radius: 54px;
     text-align: left;
     width: 100%;
+    margin-bottom: 12px;
 }
 
 .certificate-skill:hover {
@@ -220,7 +220,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-
 }
 
 .pdf-png-icon {
@@ -232,12 +231,11 @@
 .file-container {
     display: flex;
     align-items: center;
-    /* Dikey hizalama */
+    justify-content: space-between;
 }
 
 .file-container p {
     margin-right: 20px;
-    /* P elemanı ile ikon arasında boşluk bırakmak için */
 }
 
 
@@ -318,4 +316,196 @@
 .react-calendar-heatmap-week rect:hover {
     stroke: #000;
     stroke-width: 1;
+}
+
+/* Work Success Model */
+.profile-card {
+    margin-top: 150px;
+}
+
+.dropdown-profile ::after {
+    display: none !important;
+}
+
+.cv-edit-icon {
+    content: url(https://tobeto.com/edit2.svg);
+    padding-top: 7px;
+    padding-right: 7px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.dropdown-profile {
+    background-color: white;
+    border-radius: 10px;
+}
+
+.customProfile-dropdown-menu.show {
+    border: 1px solid rgb(153, 50, 255);
+}
+
+.profileCustom-dropdown-menu {
+    --bs-dropdown-link-active-bg: none !important;
+    /* Tek dropdowna etki eder. */
+}
+
+.dropdown-menu-profile-p {
+    font-size: 15px;
+}
+
+.dropdown-menu-profile {
+    justify-content: space-around !important;
+    font-size: 15px;
+    font-weight: bold;
+    opacity: 0.9;
+}
+
+
+.profile-card-work-success {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+}
+
+.profile-profile-link {
+    font-size: 17px;
+}
+
+.tobeto-input-profile {
+    position: relative;
+    align-items: center;
+    border-radius: 8px !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-image: initial !important;
+}
+
+.input-copy {
+    padding-left: 5px;
+    padding-top: 0px;
+}
+
+.react-switch {
+    vertical-align: middle;
+    margin-left: 4px;
+    box-shadow: none;
+}
+
+.copy-text {
+    position: relative;
+    padding: 10px;
+    border: 3px solid #ddd;
+    border-radius: 10px;
+    display: flex;
+}
+
+.copy-text input.text {
+    font-size: 10px;
+    color: #555;
+    border: none;
+    outline: none;
+}
+
+.copy-text button {
+    color: rgb(153, 51, 255);
+    font-size: 20px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.copy-text button:hover {
+    opacity: 0.5;
+}
+
+.input-copy-component {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.customCopyToast {
+    padding-Top: '10px';
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.customCopyToast img {
+    margin-right: 5px;
+    background-color: white;
+}
+
+.customCopyToastUrl {
+    font-size: 15px;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.copyToast {
+    background: #65B996 !important;
+    color: white !important;
+}
+
+/* Work Success Model */
+
+
+/* EXAMS */
+.exam-cart {
+    /* display: flex; */
+    box-shadow: 2px 10px 24px hsla(0, 0%, 9%, .12);
+    background-color: #fff;
+    padding: 0.75em;
+    align-items: flex-start;
+    justify-content: space-between;
+    border-radius: 12px;
+    transition: .3s;
+    border: 2px solid transparent;
+    height: 100px;
+    color: #828282;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+.exam-cart-top {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bottom .exam-result {
+    margin-top: 15px;
+}
+
+.exam-cart-top .exam-name {
+    margin-right: 20px;
+}
+
+.exam-cart:hover {
+    border: 2px solid #93f;
+    box-shadow: 2px 10px 24px rgba(157, 0, 255, .12);
+}
+
+.exam-time {
+    color: #828282;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+/* BADGE */
+
+.profile-badge {
+    background: #fff;
+    box-shadow: 0 10px 24px 0 hsla(0, 0%, 9%, .05);
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.profile-badge-container img {
+    width: 60px;
+}
+
+.profile-badge-container {
+    display: flex;
+    gap: 12px;
+    max-width: 100%;
+    flex-wrap: wrap;
 }

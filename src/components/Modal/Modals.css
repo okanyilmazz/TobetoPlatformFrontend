@@ -1,6 +1,6 @@
 .modals-container .modal-dialog .modal-content {
     min-height: 400px !important;
-    margin-top: 50%;
+    margin-top: 50vh;
     transform: translate(-50%, -50%);
     left: 50% !important;
     top: 50% !important;

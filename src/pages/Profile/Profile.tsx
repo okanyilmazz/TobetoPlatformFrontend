@@ -142,11 +142,15 @@ export default function Profile() {
 
       return;
     }
+    debugger
 
     accountService.getByAccountId(user.id).then(result => {
+      console.log("girdi")
       setAccount(result.data);
     });
     certificateService.getByAccountId(userState.user.id, 0, 5).then(result => {
+      console.log("girdi")
+
       setCertificates(result.data)
     });
     examResultService.getByAccountId(user.id).then(result => {

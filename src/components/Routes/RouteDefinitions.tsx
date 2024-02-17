@@ -19,6 +19,9 @@ import Codecademy from '../../pages/Codecademy/Codecademy';
 import ProfileSettingsPage from '../../pages/ProfileSettingsPage/ProfileSettingsPage';
 import AssesmentsPage from '../../pages/AssesmentsPage/AssesmentsPage';
 import EducationsPage from '../../pages/EducationsPage/EducationsPage';
+import SlideModal from '../EducationDrawer/EducationDrawer';
+import EducationDrawerPage from '../../pages/EducationDrawerPage/EducationDrawerPage';
+
 
 
 type Props = {}
@@ -49,15 +52,8 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/profilim/profilimi-duzenle/medya-hesaplarim" Component={ProfileSettingsPage} />
             <Route path="/profilim/profilimi-duzenle/yabanci-dil" Component={ProfileSettingsPage} />
             <Route path="/profilim/profilimi-duzenle/kisisel-bilgilerim" Component={ProfileSettingsPage} />
-
             <Route path="/profilim/profilimi-duzenle/medya-hesaplarim" Component={ProfileSettingsPage} />
-
-
-
-
-
-
-
+            <Route path="/test" Component={EducationDrawerPage} />
 
         </Routes>
     )

@@ -12,21 +12,22 @@ import axiosInstance from "../core/interceptors/axiosInterceptor";
 import { AxiosResponse } from "axios";
 
 class CertificateService extends BaseService<
-    Paginate<GetListCertificateResponse>,
-    GetCertificateResponse,
-    FormData,
-    AddedCertificateResponse,
-    UpdateCertificateRequest,
-    UpdatedCertificateResponse
+  Paginate<GetListCertificateResponse>,
+  GetCertificateResponse,
+  FormData,
+  AddedCertificateResponse,
+  UpdateCertificateRequest,
+  UpdatedCertificateResponse
 > {
-    constructor() {
-        super()
-        this.apiUrl = "Certificates"
-    }
-    getByAccountId(accountId: number, pageIndex: number, pageSize: number): Promise<AxiosResponse<Paginate<GetListCertificateResponse>, any>> {
-        console.log(accountId)
-        return axiosInstance.get<Paginate<GetListCertificateResponse>>(this.apiUrl + "/GetByAccountId?accountId=" + accountId + "&PageIndex=" + pageIndex + "&PageSize=" + pageSize);
-    }
+  constructor() {
+    super();
+    this.apiUrl = "Certificates";
+  }
+  getByAccountId(
+    accountId: number,pageIndex: number,pageSize: number): Promise<AxiosResponse<Paginate<GetListCertificateResponse>, any>> {
+    return axiosInstance.get<Paginate<GetListCertificateResponse>>(this.apiUrl +"/GetByAccountId?accountId=" +accountId +"&PageIndex=" +pageIndex +"&PageSize=" +pageSize
+    );
+  }
 }
 
 export default new CertificateService();

@@ -17,7 +17,7 @@ class AnnouncementProjectService extends BaseService<
 > {
     constructor() {
         super()
-        this.apiUrl = "AnnouncementProjects/GetList?PageIndex=0&PageSize=4"
+        this.apiUrl = "AnnouncementProjects"
     }
 }
 

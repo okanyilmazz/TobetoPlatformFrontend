@@ -32,12 +32,21 @@ function App() {
 
       style={lastPathSegment === "katalog" ? { marginTop: '11rem' } : { marginTop: '0' }} >
       <>
+<<<<<<< HEAD
         {/* <ToastContainer />
         <Navi />
         <OverlayLoader />
         <RouteDefinitions />
         <Footer /> */}
         <EducationProgramContent />
+=======
+         <ToastContainer />
+        <Navi />
+        <OverlayLoader />
+        <RouteDefinitions />
+        <Footer /> 
+        
+>>>>>>> b93077fcea1f2846c244b074e520c3af973c9e7b
       </>
     </div>
   );

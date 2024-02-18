@@ -26,7 +26,10 @@ class AccountService extends BaseService<
 
     getByAccountId(id: number): Promise<AxiosResponse<GetListAccountResponse, any>> {
         return axiosInstance.get<GetListAccountResponse>(this.apiUrl + "/GetById?id=" + id)
+    }
 
+    getByLessonIdForLike(lessonId: string, pageIndex: number, pageSize: number): Promise<AxiosResponse<Paginate<GetListAccountResponse>, any>> {
+        return axiosInstance.get<Paginate<GetListAccountResponse>>(this.apiUrl + "/GetByLessonIdForLike?lessonId=" + lessonId + "&PageIndex=" + pageIndex + "&PageSize=" + pageSize)
     }
 }
 

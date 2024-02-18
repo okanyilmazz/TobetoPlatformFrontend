@@ -23,6 +23,12 @@ import examResultService from '../../services/examResultService';
 import GetListExamResultResponse from '../../models/responses/examResult/getListExamResultResponse';
 import GetListAccountBadgeResponse from '../../models/responses/accountBadge/getListAccountBadgeResponse';
 import accountBadgeService from '../../services/accountBadgeService';
+import socialMediaService from '../../services/socialMediaService';
+import GetListSocialMediaResponse from '../../models/responses/socialMedia/getListSocialMediaResponse';
+import { Image } from 'react-bootstrap';
+import { Timeline } from 'antd';
+import { Progress } from 'semantic-ui-react';
+
 
 
 
@@ -34,6 +40,8 @@ export default function Profile() {
   const user = authService.getUserInfo();
   const dispatch = useDispatch();
   const [accountBadges, setAccountBadges] = useState<Paginate<GetListAccountBadgeResponse>>();
+  const [socialMedias, setSocialMedias] = useState<Paginate<GetListSocialMediaResponse>>();
+
 
   const [checked, setChecked] = useState<boolean>(false);
   const handleChange = (newChecked: boolean) => {
@@ -156,6 +164,14 @@ export default function Profile() {
       setExamResults(result.data)
 
     })
+    accountService.getByAccountId(userState.user.id).then(result => {
+      setAccount(result.data);
+      console.log(result.data)
+    });
+
+    socialMediaService.getByAccountId(userState.user.id, 0, 10).then(result => {
+      setSocialMedias(result.data);
+    });
 
     accountBadgeService.getByAccountId(user.id).then(result => {
       setAccountBadges(result.data);
@@ -299,6 +315,27 @@ export default function Profile() {
                     </div>
                   </div>
                 </div>
+                <div className='sm-card '>
+                  <ProfileCard
+                    title={
+                      <div className='sm-header'>
+                        <span>Medya Hesaplarım</span>
+                      </div>
+                    }
+                    content={
+                      <div className='sm-card-content'>
+                        {socialMedias?.items.map((socialMedia, index) => (
+                          <div className='sm-icon' key={index}>
+                            <Image src={socialMedia.iconPath} alt={socialMedia.name} />
+                          </div>
+                        ))}
+                        {socialMedias?.items.length === 0 && (
+                          <p>Hesap eklenmedi. Eklemek için buraya tıklayın.</p>
+                        )}
+                      </div>
+                    }
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -413,6 +450,26 @@ export default function Profile() {
 
                 </div>
               </div>
+            </div>
+            <div className='sm-card col-md-8'>
+              <ProfileCard
+                title={
+                  <div className='sm-header'>
+                    <span>Eğitim Hayatım ve Deneyimlerim</span>
+                  </div>
+                }
+                content={
+                  <div className='sm-card-content'>
+                    <div className='timeline'>
+                      <div className='line'>
+                        <div className='circle'>                        
+                        </div>
+                      </div>
+                    {/* <p>Henüz bir eğitim ve deneyim bilgisi eklemedin. Eklemek için buraya tıklayın.</p> */}
+                    </div>
+                  </div>
+                }
+              />
             </div>
           </div>
         </div>

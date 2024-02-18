@@ -49,7 +49,7 @@ const Calendar = (props: Props) => {
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        const result = await SessionService.getAll(1,100);
+        const result = await SessionService.getAll(0,100);
         setSessions(result.data);
 
         let filteredSessions = result.data.items;
@@ -122,11 +122,6 @@ const Calendar = (props: Props) => {
     setEvents([...events, { title: title, ...selectInfo }]);
   }
   debugger;
-
-  // const optionsInstructor = (sessions?.items || []).map((s) => ({
-  //   value: s.userId,
-  //   label: s.userId,
-  // }));
 
   const optionsInstructor = (sessions?.items || []).map((s) => ({
     value: s.userId,

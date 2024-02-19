@@ -350,3 +350,136 @@
 }
 
 /*EDUCATION DRAWER */
+
+
+/* ActivityDetailHeader */
+.activity-image {
+    width: 80px;
+    border-radius: 7px !important;
+}
+
+.progress-wrapper {
+    width: 100% !important;
+    background-color: linear-gradient(to right, #2ddfff, #b7df2d) !important;
+}
+
+.ui.progress {
+    height: 6px;
+}
+
+.ui.progress .bar {
+    display: block;
+    line-height: 1;
+    position: relative;
+    width: 0%;
+    min-width: 2em;
+    background: linear-gradient(to right, #2ddfff, #b7df2d) !important;
+    border-radius: 0.28571429rem;
+    transition: width .1s ease, background-color .1s ease;
+}
+
+
+.activity-title h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+}
+
+.date-info {
+    margin-top: 15px;
+    font-weight: 700;
+    display: flex;
+    color: #2372ba !important
+}
+
+.activity-score {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.activity-button {
+    font-size: 16px;
+    background-color: #549be6;
+    color: #ffffff;
+    border-radius: 5px;
+    padding-right: 5px;
+    padding-left: 5px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-right: 10px;
+    margin-left: 0px;
+    font-family: 'Poppins-Medium';
+}
+
+
+.activity-score img {
+    width: 35px;
+}
+
+.clicked-image {
+    filter: brightness(80%);
+}
+
+.tooltip-color {
+    padding: 6px 8px;
+    background-color: #ffffff;
+    color: black;
+    font-family: 'Poppins-Medium';
+    font-size: 14px;
+}
+
+.question-icon {
+    color: #7a8292;
+    padding-left: 10px;
+}
+
+:where(.css-dev-only-do-not-override-1xg9z9n).ant-progress .ant-progress-bg {
+    position: relative;
+    background: linear-gradient(to right, #2ddfff, #b7df2d) !important;
+    border-radius: 100px;
+    transition: all 0.3s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+}
+
+.tooltip {
+    padding: 0 !important;
+    --bs-tooltip-max-width: 500px !important;
+}
+
+
+.tooltip-inner {
+    --bs-tooltip-bg: white !important;
+    border: 1px solid rgba(0, 0, 0, 0.075) !important;
+}
+
+.tooltip-arrow {
+    --bs-tooltip-bg: rgba(0, 0, 0, 0.027) !important;
+}
+
+.date-tooltip {
+    color: #000;
+    font-family: 'Poppins-Medium';
+    width: 380px !important;
+}
+
+.lesson1 {
+    text-align: left;
+    font-weight: 700;
+}
+
+.activity-score .education-drawer-like-area .like-button svg {
+    width: 40px;
+    height: 40px;
+}
+
+.activity-score .education-drawer-like-area .like-text span {
+    font-size: 30px;
+}
+
+.activity-score .education-drawer-like-area {
+    align-items: end;
+    gap: 10px;
+}
+
+/* ActivityDetailHeader */

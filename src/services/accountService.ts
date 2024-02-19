@@ -18,7 +18,7 @@ class AccountService extends BaseService<
     UpdateAccountRequest,
     UpdatedAccountResponse
 
-> {
+>{
     constructor() {
         super()
         this.apiUrl = "Accounts"
@@ -31,8 +31,14 @@ class AccountService extends BaseService<
     getByLessonIdForLike(lessonId: string, pageIndex: number, pageSize: number): Promise<AxiosResponse<Paginate<GetListAccountResponse>, any>> {
         return axiosInstance.get<Paginate<GetListAccountResponse>>(this.apiUrl + "/GetByLessonIdForLike?lessonId=" + lessonId + "&PageIndex=" + pageIndex + "&PageSize=" + pageSize)
     }
+
+    getByEducationProgramIdForLike(educationProgramId: string, pageIndex: number, pageSize: number): Promise<AxiosResponse<Paginate<GetListAccountResponse>, any>> {
+        return axiosInstance.get<Paginate<GetListAccountResponse>>(this.apiUrl + "/GetByEducationProgramIdForLike?educationProgramId=" + educationProgramId + "&PageIndex=" + pageIndex + "&PageSize=" + pageSize)
+    }
+
+
+
+
 }
 
 export default new AccountService();
-
-

@@ -447,3 +447,63 @@
     box-shadow: 0 0 0 0.25rem rgba(153, 51, 255, .25) !important;
     outline: 0;
 }
+
+/* Ayarlar */
+.pgn-npt{
+    
+}
+.pswrd-row{
+    display: flex;
+    justify-content: space-between;
+    
+}
+.pswrd-row .npt{
+    font-family: 'Poppins-Medium';
+    font-size: 1.1em; 
+    color:hsl(273, 7%, 51%);
+    
+}
+
+.pswrd-row .npt .tbt-input {
+    font-family: Poppins,sans-serif!important;
+    padding-inline: 2px;
+    padding-block: 1px;
+    padding: 0.875rem 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 8px !important;
+    border: 1px solid #b3a6c0 !important;
+    width: 100%;
+    font-size: .875rem;
+    line-height: 1.25;
+    font-weight: 400;
+}
+
+.row-btn {
+  margin: 22em;
+}
+.row-btn .btn-primary:hover{
+    background: #8928bd;
+}
+.row-btn .btn-primary{
+    margin-bottom: 10px;
+    border-radius: 25px;
+    width: 100%;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: medium;
+    background: #a523e1;
+    border-color: #9933ff;
+}
+.row-btn .btn-danger{
+    margin-bottom: 10px;
+    border-radius: 25px;
+    width: 100%;
+    font-weight: bold;
+    justify-content: space-between;
+    font-size: medium;
+    background: #e04242;
+    border-color: #e04242;
+}
+
+/* Ayarlar */
+

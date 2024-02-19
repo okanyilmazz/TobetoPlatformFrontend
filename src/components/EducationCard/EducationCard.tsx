@@ -16,7 +16,7 @@ export default function EducationCard(props: any) {
                             <Card.Text>
                                 {props.date}
                             </Card.Text>
-                            <Button variant="primary" onClick={() => navigate("/egitimlerim/egitim-detaylari")}>Eğitime Git</Button>
+                            <Button variant="primary" onClick={() => navigate("/egitimlerim/egitim-detaylari/" + props.id)}>Eğitime Git</Button>
                         </Card.Body>
                     </Card>
                 }

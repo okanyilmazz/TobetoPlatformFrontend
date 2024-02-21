@@ -1,6 +1,7 @@
 import { BaseService } from "../core/services/baseService";
 import { Paginate } from "../models/paginate";
 import AddSubjectRequest from "../models/requests/subject/addSubjectRequest";
+import DeleteSubjectRequest from "../models/requests/subject/deleteSubjectRequest";
 import UpdateSubjectRequest from "../models/requests/subject/updateSubjectRequest";
 import AddedSubjectResponse from "../models/responses/subject/addedSubjectResponse";
 import GetListSubjectResponse from "../models/responses/subject/getListSubjectResponse";
@@ -13,7 +14,8 @@ class SubjectService extends BaseService<
     AddSubjectRequest,
     AddedSubjectResponse,
     UpdateSubjectRequest,
-    UpdatedSubjectResponse
+    UpdatedSubjectResponse,
+    DeleteSubjectRequest
 >{
 
     constructor() {

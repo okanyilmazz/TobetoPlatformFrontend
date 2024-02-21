@@ -1,5 +1,6 @@
 import { BaseService } from "../core/services/baseService";
 import AddSessionRequest from "../models/requests/session/addSessionRequest";
+import DeleteSessionRequest from "../models/requests/session/deleteSessionRequest";
 import UpdateSessionRequest from "../models/requests/session/updateSessionRequest";
 import AddedSessionResponse from "../models/responses/session/addedSessionResponse";
 import GetListSessionResponse from "../models/responses/session/getListSessionResponse";
@@ -13,7 +14,8 @@ class SessionService extends BaseService<
     AddSessionRequest,
     AddedSessionResponse,
     UpdateSessionRequest,
-    UpdatedSessionResponse
+    UpdatedSessionResponse,
+    DeleteSessionRequest
 > {
     constructor() {
         super()

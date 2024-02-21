@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'react-phone-input-2/lib/style.css';
 import "./PhoneNumberValidation.css"
 import PhoneInput from 'react-phone-input-2';
 
-const PhoneNumberValidation: React.FC = () => {
+export default function PhoneNumberValidation(props: any) {
     const [phoneNumber, setPhoneNumber] = useState<string>('');
     const [valid, setValid] = useState<boolean>(true);
+
+    useEffect(() => {
+        setPhoneNumber(props.phoneNumber);
+    }, [props.phoneNumber])
+
 
     const handleChange = (value: string) => {
         setPhoneNumber(value);
         setValid(validatePhoneNumber(value));
     };
+
 
     const validatePhoneNumber = (phoneNumber: string): boolean => {
         const phoneNumberPattern: RegExp = /^\+?[1-9]\d{1,14}$/;
@@ -36,5 +42,3 @@ const PhoneNumberValidation: React.FC = () => {
         </div>
     );
 };
-
-export default PhoneNumberValidation;

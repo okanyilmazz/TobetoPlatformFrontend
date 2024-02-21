@@ -6,8 +6,6 @@ import PlatformPage from '../../pages/PlatformPage/PlatformPage'
 import ApplicationCard from '../../components/ApplicationCard/ApplicationCard'
 import { ForIndividuals } from '../../pages/ForIndividuals/ForIndividuals';
 import Calendar from '../../pages/Calendar/Calendar';
-
-
 import Profile from '../../pages/Profile/Profile';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import ProtectedRoute from './ProtectedRoute';
@@ -16,9 +14,15 @@ import SignUp from '../../pages/SignUp/SignUp';
 import Blog from '../../pages/Blog/Blog';
 import MediaNews from '../../pages/MediaNews/MediaNews';
 import Codecademy from '../../pages/Codecademy/Codecademy';
-import ProfileSettingsPage from '../../pages/ProfileSettingsPage/ProfileSettingsPage';
 import AssesmentsPage from '../../pages/AssesmentsPage/AssesmentsPage';
 import EducationsPage from '../../pages/EducationsPage/EducationsPage';
+import EducationProgramContent from '../../pages/EducationProgramContent/EducationProgramContent';
+import CertificatePage from '../../pages/CertificatePage/CertificatePage';
+import SkillPage from '../../pages/SkillPage/SkillPage';
+import SocialMediaPage from '../../pages/SocialMediaPage/SocialMediaPage';
+import LanguagePage from '../../pages/LanguagePage/LanguagePage';
+import PersonalInformationPage from '../../pages/PersonalInformationPage/PersonalInformationPage';
+
 
 
 type Props = {}
@@ -44,17 +48,12 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/platform-katalog" Component={CatalogPage} />
             <Route path="/degerlendirmeler" Component={AssesmentsPage} />
             <Route path="/egitimlerim" Component={EducationsPage} />
-            <Route path="/profilim/profilimi-duzenle/sertifikalarim" Component={ProfileSettingsPage} />
-            <Route path="/profilim/profilimi-duzenle/yetkinliklerim" Component={ProfileSettingsPage} />
-            <Route path="/profilim/profilimi-duzenle/medya-hesaplarim" Component={ProfileSettingsPage} />
-            <Route path="/profilim/profilimi-duzenle/yabanci-dil" Component={ProfileSettingsPage} />
-
-
-
-
-
-
-
+            <Route path="/profilim/profilimi-duzenle/sertifikalarim" Component={CertificatePage} />
+            <Route path="/profilim/profilimi-duzenle/yetkinliklerim" Component={SkillPage} />
+            <Route path="/profilim/profilimi-duzenle/medya-hesaplarim" Component={SocialMediaPage} />
+            <Route path="/profilim/profilimi-duzenle/yabanci-dil" Component={LanguagePage} />
+            <Route path="/profilim/profilimi-duzenle/kisisel-bilgilerim" Component={PersonalInformationPage} />
+            <Route path="/egitimlerim/egitim-detaylari/:educationProgramId" Component={EducationProgramContent} />
 
         </Routes>
     )

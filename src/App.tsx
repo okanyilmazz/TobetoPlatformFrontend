@@ -6,7 +6,9 @@ import Footer from './layouts/Footer/Footer';
 import Navi from './layouts/Navi/Navi';
 import { useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import Profile from './pages/Profile/Profile';
+import EducationProgramContent from './pages/EducationProgramContent/EducationProgramContent';
+
+
 
 function App() {
   const authState = useSelector((state: any) => state.auth);

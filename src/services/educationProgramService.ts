@@ -9,6 +9,7 @@ import { UpdatedEducationProgramResponse } from "../models/responses/educationPr
 import { AxiosResponse } from "axios";
 import axiosInstance from "../core/interceptors/axiosInterceptor";
 import EducationProgramFilterRequest from "../models/requests/filter/educationProgramFilterRequest";
+import DeleteEducationProgramRequest from "../models/requests/educationProgram/deleteEducationProgramRequest";
 
 class EducationProgramService extends BaseService<
     Paginate<GetListEducationProgramResponse>,
@@ -16,7 +17,9 @@ class EducationProgramService extends BaseService<
     AddEducationProgramRequest,
     AddedEducationProgramResponse,
     UpdateEducationProgramRequest,
-    UpdatedEducationProgramResponse
+    UpdatedEducationProgramResponse,
+    DeleteEducationProgramRequest
+
 > {
     constructor() {
         super()

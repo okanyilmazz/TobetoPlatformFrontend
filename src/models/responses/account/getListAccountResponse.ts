@@ -5,7 +5,8 @@ export default interface GetListAccountResponse {
     cityName: string;
     districtName: string;
     countryName: string;
-    userName: string;
+    firstName: string;
+    lastName: string;
     phoneNumber: string;
     nationalId: string;
     description: string;

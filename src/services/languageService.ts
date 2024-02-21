@@ -6,6 +6,7 @@ import AddedLanguageResponse from "../models/responses/language/addedLanguageRes
 import UpdateLanguageRequest from "../models/requests/language/updateLanguageRequest";
 import UpdatedLanguageResponse from "../models/responses/language/updatedLanguageResponse";
 import { BaseService } from "../core/services/baseService";
+import DeleteLanguageRequest from "../models/requests/language/deleteLanguageRequest";
 
 class LanguageService extends BaseService<
     Paginate<GetListLanguageResponse>,
@@ -13,7 +14,9 @@ class LanguageService extends BaseService<
     AddLanguageRequest,
     AddedLanguageResponse,
     UpdateLanguageRequest,
-    UpdatedLanguageResponse
+    UpdatedLanguageResponse,
+    DeleteLanguageRequest
+
 > {
     constructor() {
         super();

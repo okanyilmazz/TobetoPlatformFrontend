@@ -52,7 +52,7 @@ export default function LikeButton(props: any) {
                                     <Image src='/assets/Icons/common_show_picture_cached.png' />
                                 </div>
                                 <div className='user-name'>
-                                    <span>{liker.userName}</span>
+                                    <span>{liker.firstName + " " + liker.lastName}</span>
                                 </div>
                             </li>
                         ))

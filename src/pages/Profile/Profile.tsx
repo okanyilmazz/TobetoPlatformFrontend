@@ -13,7 +13,7 @@ import certificateService from '../../services/certificateService';
 import Tooltip from '@uiw/react-tooltip';
 import HeatMap from '@uiw/react-heat-map';
 import { Link } from 'react-router-dom';
-import { Dropdown } from 'react-bootstrap';
+import { Dropdown, Image } from 'react-bootstrap';
 import Switch from 'react-switch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClone } from '@fortawesome/free-solid-svg-icons';
@@ -25,10 +25,10 @@ import GetListAccountBadgeResponse from '../../models/responses/accountBadge/get
 import accountBadgeService from '../../services/accountBadgeService';
 import socialMediaService from '../../services/socialMediaService';
 import GetListSocialMediaResponse from '../../models/responses/socialMedia/getListSocialMediaResponse';
-import { Image } from 'react-bootstrap';
 import { Timeline } from 'antd';
 import { Progress } from 'semantic-ui-react';
 
+import { DEFAULT_PROFILE_PHOTO } from '../../environment/environment';
 
 
 
@@ -80,7 +80,7 @@ export default function Profile() {
         startDate={startDate}
         endDate={endDate}
         rectRender={(props, data,) => {
-          if (!data || !data.count || data.count == 0)
+          if (!data || !data.count || data.count === 0)
             return <Tooltip placement="top" content={`Herhangi bir aktiviteniz yok : ${0}`}>
               <rect {...props}></rect>
             </Tooltip>
@@ -180,7 +180,6 @@ export default function Profile() {
   }, [userState]);
 
   const options = { year: 'numeric', month: 'long', day: 'numeric' } as const;
-  const defaultProfilePhotoPath = 'https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fimages.19a45d39.png&w=128&q=75';
 
 
   return (
@@ -243,14 +242,14 @@ export default function Profile() {
                   <li /><li /><li /><li /><li /><li /><li /><li /><li /><li />
 
                 </ul>
-                <img className='profile-account-img' src={account?.profilePhotoPath || defaultProfilePhotoPath} />
+                <img className='profile-account-img' src={account?.profilePhotoPath || DEFAULT_PROFILE_PHOTO} />
               </div>
 
               <div className='profile-account-field'>
                 <img className='profile-icon' src='https://tobeto.com/cv-name.svg' alt='Icon' />
                 <div className='profile-all-text'>
                   <span className='profile-header'> Ad Soyad  </span>
-                  <span className='profile-account-text' >{account?.userName || "Girilmemiş"} </span>
+                  <span className='profile-account-text' >{account?.firstName + " " + account?.lastName || "Girilmemiş"} </span>
                 </div>
               </div>
 
@@ -296,18 +295,25 @@ export default function Profile() {
                     <div className='certificates-container'>
                       <div>
                         {
-                          certificates?.items.map((certificate) => (
-                            <div>
-                              <div className='certificate-skill'>
-                                <div className='text-truncate'>
-                                  <div className='file-container'>
-                                    {certificate.name.slice(0, 25)}...
-                                    <img className='pdf-png-icon' src="https://tobeto.com/pdf.png" alt="PDF Icon" />
+                          certificates?.items.map((certificate, index) => (
+                            <Tooltip key={index} placement="top" content={certificate.name}>
+                              <div>
+                                <div className='certificate-skill'>
+                                  <div className='text-truncate'>
+                                    <div className='file-container'>
+                                      {
+                                        certificate.name.slice(0, 25)
+                                      }...
+                                      <Image className='pdf-png-icon'
+                                        src={certificate.description.includes("pdf") ? "/assets/Icons/profile-settings/pdf.png" : "/assets/Icons/profile-settings/png.png"}
+                                        alt={certificate.description.includes("pdf") ? "pdf icon" : "png icon"}
+                                      />
+                                    </div>
                                   </div>
-                                </div>
 
+                                </div>
                               </div>
-                            </div>
+                            </Tooltip>
                           ))
                         }
                       </div>
@@ -462,10 +468,10 @@ export default function Profile() {
                   <div className='sm-card-content'>
                     <div className='timeline'>
                       <div className='line'>
-                        <div className='circle'>                        
+                        <div className='circle'>
                         </div>
                       </div>
-                    {/* <p>Henüz bir eğitim ve deneyim bilgisi eklemedin. Eklemek için buraya tıklayın.</p> */}
+                      {/* <p>Henüz bir eğitim ve deneyim bilgisi eklemedin. Eklemek için buraya tıklayın.</p> */}
                     </div>
                   </div>
                 }

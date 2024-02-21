@@ -16,7 +16,9 @@ class LessonLikeService extends BaseService<
     AddLessonLikeRequest,
     AddedLessonLikeResponse,
     UpdateLessonLikeRequest,
-    UpdatedLessonLikeResponse
+    UpdatedLessonLikeResponse,
+    DeleteLessonLikeRequest
+
 > {
     constructor() {
         super();

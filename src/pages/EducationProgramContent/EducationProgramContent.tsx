@@ -136,9 +136,7 @@ export default function EducationProgramContent() {
                 setEducationProgramLikeCount(educationProgramLikeCount + 1);
             } else {
                 const deleteEducationProgramLike: DeleteEducationProgramLikeRequest = {
-                    id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    accountId: user.id,
-                    educationProgramId: educationProgramId
+                    id: user.id,
                 }
                 await educationProgramLikeService.deleteByAccountIdAndEducationProgramId(deleteEducationProgramLike);
                 setEducationProgramLikeCount(educationProgramLikeCount - 1);
@@ -158,9 +156,7 @@ export default function EducationProgramContent() {
             setLessonLikeCount(lessonLikeCount + 1);
         } else {
             const deleteLessonLike: DeleteLessonLikeRequest = {
-                id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                accountId: user.id,
-                lessonId: "f0ce896c-7258-4f1d-ba4d-08dc2f2c25fb"
+                id: user.id
             }
             await lessonLikeService.deleteByAccountIdAndLessonId(deleteLessonLike);
             setLessonLikeCount(lessonLikeCount - 1);

@@ -1,6 +1,7 @@
 import { BaseService } from "../core/services/baseService";
 import { Paginate } from "../models/paginate";
 import AddOperationClaimRequest from "../models/requests/operationClaim/addOperationClaimRequest";
+import DeleteOperationClaimRequest from "../models/requests/operationClaim/deleteOperationClaimRequest";
 import UpdateOperationClaimRequest from "../models/requests/operationClaim/updateOperationClaimRequest";
 import AddedOperationClaimResponse from "../models/responses/operationClaim/addedOperationClaimResponse";
 import GetListOperationClaimResponse from "../models/responses/operationClaim/getListOperationClaimResponse";
@@ -13,8 +14,8 @@ class OperationClaimService extends BaseService<
     AddOperationClaimRequest,
     AddedOperationClaimResponse,
     UpdateOperationClaimRequest,
-    UpdatedOperationClaimResponse
-
+    UpdatedOperationClaimResponse,
+    DeleteOperationClaimRequest
 > {
     constructor() {
         super()

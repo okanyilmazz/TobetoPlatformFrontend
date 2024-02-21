@@ -1,6 +1,6 @@
 import { Identifier } from "typescript";
 
-export default interface DeletedEducationProgramDevelopmentResponse {
+export default interface GetProjectResponse {
     id: Identifier;
     name: string;
 }

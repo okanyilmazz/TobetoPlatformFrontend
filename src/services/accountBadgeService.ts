@@ -8,6 +8,7 @@ import UpdateAccountBadgeRequest from "../models/requests/accountBadge/updateAcc
 import UpdatedAccountBadgeResponse from "../models/responses/accountBadge/updatedAccountBadgeResponse";
 import { AxiosResponse } from "axios";
 import axiosInstance from "../core/interceptors/axiosInterceptor";
+import DeleteAccountBadgeRequest from "../models/requests/accountBadge/deleteAccountBadgeRequest";
 
 class AccountBadgeService extends BaseService<
   Paginate<GetListAccountBadgeResponse>,
@@ -15,7 +16,8 @@ class AccountBadgeService extends BaseService<
   AddAccountBadgeRequest,
   AddedAccountBadgeResponse,
   UpdateAccountBadgeRequest,
-  UpdatedAccountBadgeResponse
+  UpdatedAccountBadgeResponse,
+  DeleteAccountBadgeRequest
 > {
   constructor() {
     super();

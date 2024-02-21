@@ -1,5 +1,4 @@
 import { Identifier } from 'typescript';
-
-export default interface DeletedAccountResponse {
+export default interface DeleteBlogRequest {
     id: Identifier;
 }

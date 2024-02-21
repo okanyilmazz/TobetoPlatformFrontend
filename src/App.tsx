@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import EducationProgramContent from './pages/EducationProgramContent/EducationProgramContent';
 
 
+
 function App() {
   const authState = useSelector((state: any) => state.auth);
   const location = useLocation();
@@ -32,21 +33,12 @@ function App() {
 
       style={lastPathSegment === "katalog" ? { marginTop: '11rem' } : { marginTop: '0' }} >
       <>
-<<<<<<< HEAD
-        {/* <ToastContainer />
+        <ToastContainer />
         <Navi />
         <OverlayLoader />
         <RouteDefinitions />
-        <Footer /> */}
-        <EducationProgramContent />
-=======
-         <ToastContainer />
-        <Navi />
-        <OverlayLoader />
-        <RouteDefinitions />
-        <Footer /> 
-        
->>>>>>> b93077fcea1f2846c244b074e520c3af973c9e7b
+        <Footer />
+
       </>
     </div>
   );

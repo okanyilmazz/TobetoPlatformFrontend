@@ -8,12 +8,12 @@ function Modals(props: any) {
 
     return (
         <div>
-            <Modal className='modals-container' show={props.show} onHide={handleClose}>
+            <Modal className={props.className} show={props.show} onHide={handleClose}>
                 <Modal.Header closeButton style={props.header ? { display: 'block' } : { display: 'none' }}>
                     <Modal.Title>{props.title}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body> {props.body}</Modal.Body>
-                <Modal.Footer style={props.footer ? { display: 'block' } : { display: 'none' }}>
+                <Modal.Footer style={props.footerShow ? { display: 'block' } : { display: 'none' }}>
                     {props.footer}
                 </Modal.Footer>
             </Modal>

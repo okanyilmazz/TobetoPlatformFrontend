@@ -133,7 +133,7 @@ return (
                                 </Col>
                                 <Col md={9}>
                                     <span className="mb-5">İş Tanımı*</span>
-                                    <TobetoTextInput className="mb-4" name="work-description" />
+                                    <TobetoTextInput className="mb-4" name="work-description"  />
                                     <Button className="mb-4" type="submit">Kaydet</Button>
                                 </Col>
                             </Row>

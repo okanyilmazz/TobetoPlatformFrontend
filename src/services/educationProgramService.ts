@@ -9,6 +9,7 @@ import { UpdatedEducationProgramResponse } from "../models/responses/educationPr
 import { AxiosResponse } from "axios";
 import axiosInstance from "../core/interceptors/axiosInterceptor";
 import EducationProgramFilterRequest from "../models/requests/filter/educationProgramFilterRequest";
+import DeleteEducationProgramRequest from "../models/requests/educationProgram/deleteEducationProgramRequest";
 
 class EducationProgramService extends BaseService<
     Paginate<GetListEducationProgramResponse>,
@@ -16,7 +17,9 @@ class EducationProgramService extends BaseService<
     AddEducationProgramRequest,
     AddedEducationProgramResponse,
     UpdateEducationProgramRequest,
-    UpdatedEducationProgramResponse
+    UpdatedEducationProgramResponse,
+    DeleteEducationProgramRequest
+
 > {
     constructor() {
         super()
@@ -25,6 +28,10 @@ class EducationProgramService extends BaseService<
 
     getByFilter(request: EducationProgramFilterRequest): Promise<AxiosResponse<Paginate<GetListEducationProgramResponse>, any>> {
         return axiosInstance.post<Paginate<GetListEducationProgramResponse>>("EducationPrograms/GetListByFiltered", request);
+    }
+
+    getByAccountId(accountId: number, pageIndex: number, pageSize: number): Promise<AxiosResponse<Paginate<GetListEducationProgramResponse>, any>> {
+        return axiosInstance.get<Paginate<GetListEducationProgramResponse>>(this.apiUrl + "/GetByAccountId?accountId=" + accountId + "&PageIndex=" + pageIndex + "&PageSize=" + pageSize);
     }
 }
 

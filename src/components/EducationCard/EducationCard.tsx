@@ -1,8 +1,10 @@
+import { useNavigate } from 'react-router';
 import './EducationCard.css';
 import { Button, Card } from 'react-bootstrap';
 
 export default function EducationCard(props: any) {
 
+    const navigate = useNavigate();
     return (
         <div className='education-card-content'>
             <div className='content'>
@@ -14,7 +16,7 @@ export default function EducationCard(props: any) {
                             <Card.Text>
                                 {props.date}
                             </Card.Text>
-                            <Button variant="primary">Eğitime Git</Button>
+                            <Button variant="primary" onClick={() => navigate("/egitimlerim/egitim-detaylari/" + props.id)}>Eğitime Git</Button>
                         </Card.Body>
                     </Card>
                 }

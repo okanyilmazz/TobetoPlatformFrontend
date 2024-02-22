@@ -15,44 +15,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../store/user/userSlice";
 
 
-
-
-// export default function MyExperiences() {
-//     const initialValues = {
-//         "institution-name": "",
-//         "sector": "",
-//         "work-start-date": "",
-//         "position": "",
-//         "city": "",
-//         "work-end-date": "",
-//         "work-description": ""
-//     };
-//     const dispatch = useDispatch();
-
-//     const [show, setShow] = useState(false);
-
-//     const [cities, setCities] = useState<Paginate<GetListCityResponse>>();
-
-//     const userState = useSelector((state: any) => state.user);
-//     // const [selectedCityId, setSelectedCityId] = useState<any>(NIL_UUID);
-
-//     useEffect(() => {
-
-//         if (!userState.user) {
-//           dispatch(userActions.getUserInfo());
-   
-//           cityService.getAll().then(result => {
-//         setCities(result.data)
-//     });
-
-//     accountService.getByAccountId(userState.user.id).then(result => {
-//         setAccount(result.data);
-//         console.log(result.data);
-//     });
-
-
-// }
-//   }, [userState]);
 export default function MyExperiences() {
     const initialValues = {
         "institution-name": "",
@@ -74,7 +36,7 @@ export default function MyExperiences() {
             dispatch(userActions.getUserInfo());
         }
 
-        cityService.getAll().then((result: Paginate<GetListCityResponse>) => {
+        cityService.getAll(0,100).then((result: any) => {
             setCities(result.data);
         });
 
@@ -85,8 +47,6 @@ export default function MyExperiences() {
 
 const handleSubmit = (values: FormikValues) => {
     console.log('Form submitted with values:', values);
-    // Burada form değerlerini işleyebilirsiniz
-    // Örnek olarak, form değerlerini bir API'ye gönderebilir veya başka bir işlem yapabilirsiniz
 };
 
 return (

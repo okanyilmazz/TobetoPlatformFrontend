@@ -38,10 +38,9 @@ function App() {
         <OverlayLoader />
         <RouteDefinitions />
         <Footer />
-
       </>
     </div>
   );
-} 
+}
 
 export default App;

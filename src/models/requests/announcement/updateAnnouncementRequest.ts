@@ -4,4 +4,6 @@ export default interface UpdateAnnouncementRequest {
     title: string;
     description: string;
     announcementDate: Date;
+    announcementTypeId: Identifier;
+
 }

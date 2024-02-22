@@ -5,4 +5,5 @@ export default interface GetListAnnouncementResponse {
     title: string;
     description: string;
     announcementDate: Date;
+    announcementTypeName: string
 }

@@ -436,6 +436,7 @@
   border-radius: 12px;
   margin-top: 1em;
 }
+
 .sm-header {
   font-weight: 600;
   font-size: 18px;
@@ -446,10 +447,12 @@
   display: flex;
   flex-direction: row;
 }
+
 .sm-card .pf-card .sm-card-content img {
   height: 90px;
   width: 90px;
 }
+
 /* EXAMS */
 .exam-cart {
   /* display: flex; */
@@ -531,6 +534,7 @@
   border-radius: 12px;
   margin-top: 1em;
 }
+
 .sm-header {
   font-weight: 600;
   font-size: 18px;
@@ -541,10 +545,12 @@
   display: flex;
   flex-direction: row;
 }
+
 .sm-card .pf-card .sm-card-content img {
   height: 90px;
   width: 90px;
 }
+
 .sm-card-content .progress {
   height: 6px;
   width: -moz-fit-content;
@@ -560,10 +566,12 @@
   display: flex;
   cursor: default;
 }
-.line{
+
+.line {
   display: flex;
   justify-content: space-between;
 }
+
 .circle {
   width: 20px;
   height: 20px;
@@ -587,13 +595,14 @@
   position: relative;
   min-height: 100px;
   cursor: default;
-  
-  
+
+
 }
+
 .timeline .line .before {
   transform: translateY(-100%);
   border-left: 3px solid #a442ff;
   margin-left: 5px;
-  
-  
+
+
 }

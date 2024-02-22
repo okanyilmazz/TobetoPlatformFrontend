@@ -1,11 +1,12 @@
 import { BaseService } from "../core/services/baseService";
 import { Paginate } from "../models/paginate";
 import AddEducationProgramDevelopmentRequest from "../models/requests/educationProgramDevelopment/addEducationProgramDevelopmentRequest";
-import UpdateEducationProgramLevelRequest from "../models/requests/educationProgramLevel/updateEducationProgramLevelRequest";
+import DeleteEducationProgramDevelopmentRequest from "../models/requests/educationProgramDevelopment/deleteEducationProgramDevelopmentRequest";
+import UpdateEducationProgramDevelopmentRequest from "../models/requests/educationProgramDevelopment/updateEducationProgramDevelopmentRequest";
 import AddedEducationProgramDevelopmentResponse from "../models/responses/educationProgramDevelopment/addedEducationProgramDevelopmentResponse";
 import GetEducationProgramDevelopmentResponse from "../models/responses/educationProgramDevelopment/getEducationProgramDevelopmentResponse";
 import GetListEducationProgramDevelopmentResponse from "../models/responses/educationProgramDevelopment/getListEducationProgramDevelopmentResponse";
-import { UpdatedEducationProgramLevelResponse } from "../models/responses/educationProgramLevel/updatedEducationProgramLevelResponse";
+import UpdatedEducationProgramDevelopmentResponse from "../models/responses/educationProgramDevelopment/updatedEducationProgramDevelopmentResponse";
 
 
 class EducationProgramDevelopmentService extends BaseService<
@@ -13,8 +14,9 @@ class EducationProgramDevelopmentService extends BaseService<
     GetEducationProgramDevelopmentResponse,
     AddEducationProgramDevelopmentRequest,
     AddedEducationProgramDevelopmentResponse,
-    UpdateEducationProgramLevelRequest,
-    UpdatedEducationProgramLevelResponse
+    UpdateEducationProgramDevelopmentRequest,
+    UpdatedEducationProgramDevelopmentResponse,
+    DeleteEducationProgramDevelopmentRequest
 > {
     constructor() {
         super()

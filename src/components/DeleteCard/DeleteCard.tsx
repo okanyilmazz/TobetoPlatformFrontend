@@ -8,10 +8,10 @@ function DeleteCard(props: any) {
 
   const handleClose = () => setShow(false);
 
-/*   const handleDelete = () => {
-    setShow(false);
-    props.handleDeleteConfirmation(); // Silme işlemini gerçekleştirecek fonksiyonu çağır
-  }; */
+  /*   const handleDelete = () => {
+      setShow(false);
+      props.handleDeleteConfirmation(); // Silme işlemini gerçekleştirecek fonksiyonu çağır
+    }; */
 
   return (
     <Modal

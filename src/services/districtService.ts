@@ -8,6 +8,7 @@ import UpdateDistrictRequest from "../models/requests/district/updateDistrictReq
 import UpdatedDistrictResponse from "../models/responses/district/updatedDistrictResponse";
 import { AxiosResponse } from "axios";
 import axiosInstance from "../core/interceptors/axiosInterceptor";
+import DeleteDistrictRequest from "../models/requests/district/deleteDistrictRequest";
 
 class DistrictService extends BaseService<
   Paginate<GetListDistrictResponse>,
@@ -15,7 +16,8 @@ class DistrictService extends BaseService<
   AddDistrictRequest,
   AddedDistrictResponse,
   UpdateDistrictRequest,
-  UpdatedDistrictResponse
+  UpdatedDistrictResponse,
+  DeleteDistrictRequest
 > {
   constructor() {
     super();

@@ -17,7 +17,9 @@ class EducationProgramLikeService extends BaseService<
     AddEducationProgramLikeRequest,
     AddedEducationProgramLikeResponse,
     UpdateEducationProgramLikeRequest,
-    UpdatedEducationProgramLikeResponse
+    UpdatedEducationProgramLikeResponse,
+    DeleteEducationProgramLikeRequest
+
 > {
     constructor() {
         super();

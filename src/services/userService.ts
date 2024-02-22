@@ -8,6 +8,7 @@ import GetListUserResponse from "../models/responses/user/getListUserResponse";
 import GetUserResponse from "../models/responses/user/getUserResponse";
 import UpdatedUserResponse from "../models/responses/user/updatedUserResponse";
 import axiosInstance from "../core/interceptors/axiosInterceptor";
+import DeleteUserRequest from "../models/requests/user/deleteUserRequest";
 
 class UserService extends BaseService<
     Paginate<GetListUserResponse>,
@@ -15,7 +16,8 @@ class UserService extends BaseService<
     AddUserRequest,
     AddedUserResponse,
     UpdateUserRequest,
-    UpdatedUserResponse
+    UpdatedUserResponse,
+    DeleteUserRequest
 >{
     constructor() {
         super();

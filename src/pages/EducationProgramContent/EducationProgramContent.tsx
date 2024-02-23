@@ -436,8 +436,5 @@ export default function EducationProgramContent() {
                 />
             </div >
         </div>
-
-
-
     )
 }

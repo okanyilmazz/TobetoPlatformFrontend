@@ -6,7 +6,7 @@ import { SocialMediaIcon } from "../../components/SocialMediaIcon/SocialMediaIco
 const Footer = () => {
   return (
     <MDBFooter className="fontFooter">
-      <hr/>
+      <hr />
       <MDBContainer className="p-4">
         <MDBRow>
           <MDBCol lg="3" md="6" className="mb-4 mb-md-0">
@@ -157,7 +157,7 @@ const Footer = () => {
         <MDBCol lg="12" md="3" className="custom-class text-white">
           <div className="d-flex justify-content-around">
             <div>
-              <a href="https://tobeto.com/"><img style={{width:'200px'}} src="../../Assets/Logos/TobetoLogo.png" alt="Tobeto" /></a>
+              <a href="https://tobeto.com/"><img style={{ width: '200px' }} src="../../Assets/Logos/TobetoLogo.png" alt="Tobeto" /></a>
             </div>
             <div className="mt-2 ps-2 pe-4 ">
               <p>© 2022 Tobeto | Her Hakkı Saklıdır</p>
@@ -166,6 +166,26 @@ const Footer = () => {
           </div>
         </MDBCol>
       </MDBContainer>
+      <div className="footer-info">
+        <div className="footer-container">
+          <div className="row">
+            <div className="footer-tobeto-logo col-6 col-lg-4 mb-lg-0 my-4">
+              <a href="#">
+                <img src="https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FTebeto-logo-yatay-beyaz.8c2d6927.png&w=256&q=75" alt="tobeto-logo" />
+              </a>
+            </div>
+            <div className="footer-tobeto-contact col-6 col-lg-8 my-4">
+              <div className="footer-contact">
+                <button className="footer-tobeto-contact-button">
+                  <a href="#" >Bize Ulaşın</a>
+                </button>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
     </MDBFooter>
 

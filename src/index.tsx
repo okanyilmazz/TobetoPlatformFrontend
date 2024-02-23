@@ -12,7 +12,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import '@uppy/core/dist/style.min.css';
 import '@uppy/drag-drop/dist/style.min.css';
 import '@uppy/dashboard/dist/style.css'
-import ContentAccordionBibi from './pages/ContentAccordionBibi/ContentAccordionBibi';
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -20,11 +20,10 @@ const root = ReactDOM.createRoot(
 root.render(
   <Provider store={globalStore}>
     <BrowserRouter>
-      {/* <App /> */}
-      <ContentAccordionBibi/>
+      <App />
     </BrowserRouter>
   </Provider>
-);  
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

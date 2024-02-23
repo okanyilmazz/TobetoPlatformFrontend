@@ -29,11 +29,12 @@ import { Timeline } from 'antd';
 import { Progress } from 'semantic-ui-react';
 
 import { DEFAULT_PROFILE_PHOTO } from '../../environment/environment';
+import GetAccountResponse from '../../models/responses/account/getAccountResponse';
 
 
 
 export default function Profile() {
-  const [account, setAccount] = useState<GetListAccountResponse>();
+  const [account, setAccount] = useState<GetAccountResponse>();
   const [certificates, setCertificates] = useState<Paginate<GetListCertificateResponse>>();
   const [examResults, setExamResults] = useState<Paginate<GetListExamResultResponse>>();
   const userState = useSelector((state: any) => state.user);
@@ -79,7 +80,7 @@ export default function Profile() {
         rectSize={11}
         startDate={startDate}
         endDate={endDate}
-        rectRender={(props:any, data:any,) => {
+        rectRender={(props: any, data: any,) => {
           if (!data || !data.count || data.count === 0)
             return <Tooltip placement="top" content={`Herhangi bir aktiviteniz yok : ${0}`}>
               <rect {...props}></rect>
@@ -91,7 +92,7 @@ export default function Profile() {
                 content={`${data.date
                   .split('/')
                   .reverse()
-                  .map((part:any) => part.padStart(2, '0'))
+                  .map((part: any) => part.padStart(2, '0'))
                   .join('/')} : ${data.count + ' adet aktivite'}`}
               >
                 <rect {...props}></rect>
@@ -151,10 +152,10 @@ export default function Profile() {
       return;
     }
 
-    accountService.getByAccountId(user.id).then(result => {
-      console.log("girdi")
+    accountService.getById(user.id).then(result => {
       setAccount(result.data);
     });
+
     certificateService.getByAccountId(userState.user.id, 0, 5).then(result => {
       console.log("girdi")
 
@@ -164,7 +165,7 @@ export default function Profile() {
       setExamResults(result.data)
 
     })
-    accountService.getByAccountId(userState.user.id).then(result => {
+    accountService.getById(userState.user.id).then(result => {
       setAccount(result.data);
       console.log(result.data)
     });
@@ -502,13 +503,13 @@ export default function Profile() {
                 <div className='languages-content'>
                   <div className='languages-box'>
                     <div className='languages-box-title'>
-                    <span className='languages-text'>
-                      İngilizce
-                    </span>
-                    <br />
-                    <span className='languages-subtext'>
-                      İleri Seviye
-                    </span>
+                      <span className='languages-text'>
+                        İngilizce
+                      </span>
+                      <br />
+                      <span className='languages-subtext'>
+                        İleri Seviye
+                      </span>
                     </div>
                   </div>
                   <div className='languages-box'>

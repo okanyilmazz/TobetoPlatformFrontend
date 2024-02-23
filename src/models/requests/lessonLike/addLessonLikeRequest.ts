@@ -2,5 +2,5 @@ import { Identifier } from "typescript";
 
 export default interface AddLessonLikeRequest {
     accountId: Identifier;
-    lessonId: string;
+    lessonId: Identifier;
 }

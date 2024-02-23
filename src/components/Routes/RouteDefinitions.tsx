@@ -22,6 +22,9 @@ import SkillPage from '../../pages/SkillPage/SkillPage';
 import SocialMediaPage from '../../pages/SocialMediaPage/SocialMediaPage';
 import LanguagePage from '../../pages/LanguagePage/LanguagePage';
 import PersonalInformationPage from '../../pages/PersonalInformationPage/PersonalInformationPage';
+import AnalysisReport from '../../pages/AnalysisReport/AnalysisReport';
+import SessionsPage from '../../pages/SessionsPage/SessionsPage';
+
 
 
 
@@ -54,6 +57,8 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/profilim/profilimi-duzenle/yabanci-dil" Component={LanguagePage} />
             <Route path="/profilim/profilimi-duzenle/kisisel-bilgilerim" Component={PersonalInformationPage} />
             <Route path="/egitimlerim/egitim-detaylari/:educationProgramId" Component={EducationProgramContent} />
+            <Route path="/text" Component={AnalysisReport} />
+            <Route path="/text3" Component={SessionsPage} />
 
         </Routes>
     )

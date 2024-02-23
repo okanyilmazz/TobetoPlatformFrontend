@@ -29,11 +29,12 @@ import { Timeline } from 'antd';
 import { Progress } from 'semantic-ui-react';
 
 import { DEFAULT_PROFILE_PHOTO } from '../../environment/environment';
+import GetAccountResponse from '../../models/responses/account/getAccountResponse';
 
 
 
 export default function Profile() {
-  const [account, setAccount] = useState<GetListAccountResponse>();
+  const [account, setAccount] = useState<GetAccountResponse>();
   const [certificates, setCertificates] = useState<Paginate<GetListCertificateResponse>>();
   const [examResults, setExamResults] = useState<Paginate<GetListExamResultResponse>>();
   const userState = useSelector((state: any) => state.user);
@@ -151,10 +152,10 @@ export default function Profile() {
       return;
     }
 
-    accountService.getByAccountId(user.id).then(result => {
-      console.log("girdi")
+    accountService.getById(user.id).then(result => {
       setAccount(result.data);
     });
+
     certificateService.getByAccountId(userState.user.id, 0, 5).then(result => {
       console.log("girdi")
 
@@ -164,7 +165,7 @@ export default function Profile() {
       setExamResults(result.data)
 
     })
-    accountService.getByAccountId(userState.user.id).then(result => {
+    accountService.getById(userState.user.id).then(result => {
       setAccount(result.data);
       console.log(result.data)
     });

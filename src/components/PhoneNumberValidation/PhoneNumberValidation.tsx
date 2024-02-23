@@ -37,7 +37,7 @@ export default function PhoneNumberValidation(props: any) {
                 />
             </label>
             {!valid && (
-                <p className='phone-not-valid'   >Please enter a valid phone number.</p>
+                <p className='phone-not-valid'>Lütfen geçerli telefon numarası giriniz.</p>
             )}
         </div>
     );

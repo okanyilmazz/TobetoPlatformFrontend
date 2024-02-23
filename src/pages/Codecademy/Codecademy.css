@@ -13,6 +13,10 @@
 
 }
 
+.codecademy-page .codecademy-text1 a {
+  color:#9933FF
+  }
+
 .codecademy-page .codecademy-row1 p {
   font-size: 36px;
   color: #fff;
@@ -47,8 +51,8 @@
   /* margin-bottom: auto; */
 }
 .codecademy-page .codecademy-text1 a {
-color:#9933FF
-}
+  color:#9933FF
+  }
 
 .codecademy-page .codecademy-row2 .codecademy-sub-text{
   font-size: 12px;
@@ -82,7 +86,7 @@ color:#9933FF
   margin-inline-start: 0px;
   margin-inline-end: 0px;
 }
-.codecademy-page .codecademy-row3 .codecademy-signup-btn1{
+.codecademy-page .codecademy-signup-btn{
   color: #fff;
   background-color: #93f;
 border-color: #93f;
@@ -92,22 +96,7 @@ padding-right: 1rem;
 font-family: 'Poppins-Bold';
 
 }
-.codecademy-page .codecademy-row3 .codecademy-signup-btn1:hover{
-  color:#fff;
-  background-color: #822bd9;
-}
-
-.codecademy-page .codecademy-row5 .codecademy-signup-btn2{
-  color: #fff;
-  background-color: #93f;
-border-color: #93f;
-border-radius: 25px;
-padding-left: 1rem;
-padding-right: 1rem;
-font-family: 'Poppins-bold';
-}
-
-.codecademy-page .codecademy-row5 .codecademy-signup-btn2:hover{
+.codecademy-page .codecademy-signup-btn:hover{
   color:#fff;
   background-color: #822bd9;
 }

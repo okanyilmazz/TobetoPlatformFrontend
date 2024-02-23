@@ -46,6 +46,8 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/basinda-biz" Component={MediaNews} />
             <Route path="/giris" Component={LoginPage} />
             <Route path="/kayit-ol" Component={SignUp} />
+            <Route path="/kayit-ol" Component={Homepage} />
+            <Route path="/kayit-ol" Component={Codecademy} />
             <Route path="/katalog" Component={CatalogPage} />
             <Route path="/codecademy" Component={Codecademy} />
             <Route path="/platform-katalog" Component={CatalogPage} />

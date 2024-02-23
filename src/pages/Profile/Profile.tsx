@@ -79,7 +79,7 @@ export default function Profile() {
         rectSize={11}
         startDate={startDate}
         endDate={endDate}
-        rectRender={(props, data,) => {
+        rectRender={(props:any, data:any,) => {
           if (!data || !data.count || data.count === 0)
             return <Tooltip placement="top" content={`Herhangi bir aktiviteniz yok : ${0}`}>
               <rect {...props}></rect>
@@ -91,7 +91,7 @@ export default function Profile() {
                 content={`${data.date
                   .split('/')
                   .reverse()
-                  .map((part) => part.padStart(2, '0'))
+                  .map((part:any) => part.padStart(2, '0'))
                   .join('/')} : ${data.count + ' adet aktivite'}`}
               >
                 <rect {...props}></rect>
@@ -478,6 +478,57 @@ export default function Profile() {
               />
             </div>
           </div>
+          <div className='col-md-4 col-12'>
+            {/* Soldakiler buraya */}
+
+            <ProfileCard
+              title={"Yetkinliklerim"}
+              content={
+                <div className='abilities-content'>
+                  <div className='abilities-box'>
+                    <span className='abilities-text'>
+                      .NET
+                    </span>
+                  </div>
+                  <div className='abilities-box'>
+                    <span className='abilities-text'>
+                      JAVA
+                    </span>
+                  </div>
+                </div>
+              } />
+            <ProfileCard title={"Yabancı Dillerim"}
+              content={
+                <div className='languages-content'>
+                  <div className='languages-box'>
+                    <div className='languages-box-title'>
+                    <span className='languages-text'>
+                      İngilizce
+                    </span>
+                    <br />
+                    <span className='languages-subtext'>
+                      İleri Seviye
+                    </span>
+                    </div>
+                  </div>
+                  <div className='languages-box'>
+                    <span className='languages-text'>
+                      İspanyolca
+                    </span>
+                    <br />
+                    <span className='languages-subtext'>
+                      İleri Seviye
+                    </span>
+                  </div>
+                </div>
+              } />
+
+          </div>
+
+        </div>
+        <div className='col-md-8 col-12'>
+
+
         </div>
       </div>
     </div>

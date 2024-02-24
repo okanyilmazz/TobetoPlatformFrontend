@@ -212,7 +212,7 @@ export default function Profile() {
               </Dropdown.Toggle>
               <Dropdown.Menu className="profileCustom-dropdown-menu customProfil-dropdown-menu">
                 <Dropdown.Item>
-                  <div className='d-flex justify-content-between dropdown-menu-profile '>
+                  <div className='d-flex dropdown-menu-profile '>
                     <p>Profilimi paylaş</p>
                     <div className="react-switch-card">
                       <label htmlFor="normal-switch">

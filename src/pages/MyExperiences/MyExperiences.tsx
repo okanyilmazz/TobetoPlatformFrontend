@@ -3,16 +3,13 @@ import { Col, Container, Row, Button } from 'react-bootstrap';
 import { Formik, Form, FormikValues } from "formik";
 import TobetoTextInput from "../../utilities/customFormControls/TobetoTextInput";
 import TobetoSelect from "../../utilities/customFormControls/TobetoSelect";
-import countryService from "../../services/countryService";
-import { GetListCountryResponse } from "../../models/responses/country/getListCountryResponse";
+import { GetListCityResponse } from "../../models/responses/city/getListCityResponse";
+import accountService from "../../services/accountService";
+import { userActions } from "../../store/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { Paginate } from "../../models/paginate";
 import cityService from "../../services/cityService";
-import { GetListCityResponse } from "../../models/responses/city/getListCityResponse";
-import Modals from "../../components/Modal/Modal";
-import accountService from "../../services/accountService";
-import GetListAccountResponse from "../../models/responses/account/getListAccountResponse";
-import { useDispatch, useSelector } from "react-redux";
-import { userActions } from "../../store/user/userSlice";
+import GetAccountResponse from "../../models/responses/account/getAccountResponse";
 
 
 export default function MyExperiences() {
@@ -29,7 +26,7 @@ export default function MyExperiences() {
     const dispatch = useDispatch();
     const userState = useSelector((state: any) => state.user);
     const [cities, setCities] = useState<Paginate<GetListCityResponse>>();
-    const [account, setAccount] = useState<GetListAccountResponse>();
+    const [account, setAccount] = useState<GetAccountResponse>();
 
     useEffect(() => {
         if (!userState.user) {

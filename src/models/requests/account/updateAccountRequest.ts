@@ -7,11 +7,4 @@ export default interface UpdateAccountRequest {
     description: string;
     birthDate: Date;
     profilePhotoPath: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    country: string;
-    city: string;
-    district: string;
-    addressDetail: string;
 }

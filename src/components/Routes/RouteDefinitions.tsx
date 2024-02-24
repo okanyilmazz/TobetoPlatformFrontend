@@ -22,6 +22,10 @@ import SkillPage from '../../pages/SkillPage/SkillPage';
 import SocialMediaPage from '../../pages/SocialMediaPage/SocialMediaPage';
 import LanguagePage from '../../pages/LanguagePage/LanguagePage';
 import PersonalInformationPage from '../../pages/PersonalInformationPage/PersonalInformationPage';
+import AnalysisReport from '../../pages/AnalysisReport/AnalysisReport';
+import SessionsPage from '../../pages/SessionsPage/SessionsPage';
+import AdminPanel from '../../pages/AdminPanel/AdminPanel';
+
 
 
 
@@ -43,6 +47,8 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/basinda-biz" Component={MediaNews} />
             <Route path="/giris" Component={LoginPage} />
             <Route path="/kayit-ol" Component={SignUp} />
+            <Route path="/kayit-ol" Component={Homepage} />
+            <Route path="/kayit-ol" Component={Codecademy} />
             <Route path="/katalog" Component={CatalogPage} />
             <Route path="/codecademy" Component={Codecademy} />
             <Route path="/platform-katalog" Component={CatalogPage} />
@@ -54,6 +60,17 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/profilim/profilimi-duzenle/yabanci-dil" Component={LanguagePage} />
             <Route path="/profilim/profilimi-duzenle/kisisel-bilgilerim" Component={PersonalInformationPage} />
             <Route path="/egitimlerim/egitim-detaylari/:educationProgramId" Component={EducationProgramContent} />
+            <Route path="/text" Component={AnalysisReport} />
+            <Route path="/text3" Component={SessionsPage} />
+            <Route path="/admin-panel" Component={AdminPanel} />
+            <Route path="/admin-panel/ogrenciler" Component={AdminPanel} />
+            <Route path="/admin-panel/dersler" Component={AdminPanel} />
+            <Route path="/admin-panel/duyurular" Component={AdminPanel} />
+            <Route path="/admin-panel/egitimler" Component={AdminPanel} />
+            <Route path="/admin-panel/oturumlar" Component={AdminPanel} />
+            <Route path="/admin-panel/egitimler" Component={AdminPanel} />
+            <Route path="/admin-panel/roller" Component={AdminPanel} />
+            <Route path="/admin-panel/kullanicilar" Component={AdminPanel} />
 
         </Routes>
     )

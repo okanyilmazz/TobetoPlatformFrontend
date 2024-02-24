@@ -60,7 +60,7 @@ export default function LikeButton(props: any) {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Pagination onChange={(event) => handleLikersPaginate(event)} simple defaultCurrent={1} total={(props.likersPaginateCount * 10)} />
+                    <Pagination onChange={(event: any) => handleLikersPaginate(event)} simple defaultCurrent={1} total={(props.likersPaginateCount * 10)} />
                 </Modal.Footer>
             </Modal>
         </div>

@@ -1,12 +1,10 @@
 import { useState } from 'react'
-import { Button, Accordion } from 'react-bootstrap';
+import { Button, Accordion, Container, Row, Col } from 'react-bootstrap';
 import './Homepage.css'
 import TrainingCard from '../../components/TrainingCard/TrainingCard'
 import IstanbulCard from '../../components/IstanbulCard/IstanbulCard';
 import { Card, Image } from 'semantic-ui-react';
 import GradientLine from '../../components/GradientLine/GradientLine';
-
-
 
 export default function Homepage() {
 
@@ -276,6 +274,38 @@ export default function Homepage() {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className='success-model'>
+                <Container>
+                    <Row className='hp-success-model'>
+                        <Col md={7}>
+                            <div>
+                                <Image className='success-model-img' src='https://tobeto.s3.cloud.ngn.com.tr/spider_2_75142468a4.gif'></Image>
+                            </div>
+
+                        </Col>
+                        <Col md={5}>
+                            <div>
+                                <p className='hp-success-model-header'>
+                                    Tobeto 'İşte Başarı
+                                    Modeli'mizi Keşfet!
+                                </p>
+                                <p className='hp-success-model-text'>
+                                    Üyelerimize ücretsiz sunduğumuz, iş bulma ve işte
+                                    başarılı olma sürecinde gerekli 80 tane davranış
+                                    ifadesinden oluşan Tobeto 'İşte Başarı Modeli' ile,
+                                    profesyonellik yetkinliklerini ölç,
+                                    <br></br>
+                                    raporunu gör.
+                                </p>
+                                <Button className='success-model-btn'>
+                                    Hemen Başla
+                                </Button>
+                            </div>
+
+                        </Col>
+                    </Row>
+                </Container>
             </div>
         </div>
 

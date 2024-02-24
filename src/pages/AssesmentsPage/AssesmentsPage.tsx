@@ -9,7 +9,7 @@ import GetListExamResultResponse from '../../models/responses/examResult/getList
 import examResultService from '../../services/examResultService';
 import { userActions } from '../../store/user/userSlice';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import Modals from '../../components/Modal/Modal';
+import Modals from '../../components/Modal/Modals';
 import { Link } from 'react-router-dom';
 
 export default function AssesmentsPage() {

@@ -185,7 +185,8 @@
     box-shadow: 0 2px 0 rgba(0, 0, 0, 0.02);
 }
 
-.ed-drawer-sub-content .unit-icon {
+.ed-drawer-sub-content .unit-icon,
+.lesson-text .unit-icon {
     width: 13px;
     height: 13px;
     display: inline-block;
@@ -195,8 +196,14 @@
 
 }
 
-.ed-drawer-sub-content .unit-ongoing {
+.ed-drawer-sub-content .unit-ongoing,
+.lesson-text .unit-ongoing,
+.unit-ongoing {
     background: url(/public/assets/Icons/unit-ongoing.svg) no-repeat;
+}
+
+.lesson-text .unit-ongoing {
+    margin-left: 15px;
 }
 
 .ed-drawer-course-status-info {
@@ -216,7 +223,68 @@
     display: flex;
 }
 
+.not-start {
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
 
+.not-start span {
+    margin-left: 5px;
+}
+
+
+.unit-end {
+    margin-left: 15px;
+    color: #3DCB79;
+    display: flex;
+}
+
+.ed-drawer-course-status-info .unit-end-text {
+    color: #3DCB79;
+}
+
+
+.accordion-education-program-lesson {
+    border-color: transparent;
+}
+
+.accordion-education-program-lesson .lesson-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.accordion-education-program-lesson .active-accordion {
+    background-color: #F2F2F2;
+}
+
+.accordion-education-program-lesson .accordion-item .accordion-header .accordion-button {
+    background: transparent !important;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    font-family: 'Poppins-Bold';
+}
+
+.accordion-education-program-lesson .accordion-item {
+    border: 0;
+
+}
+
+.accordion-education-program-lesson .accordion-body {
+    padding: 5px;
+    height: 50px;
+    align-items: center;
+}
+
+.accordion-education-program-lesson .accordion-body:hover {
+    cursor: pointer;
+}
+
+.accordion-education-program-lesson .accordion-button:focus {
+    box-shadow: none;
+}
 
 /*DRAWER LIKE AREA */
 
@@ -331,9 +399,9 @@
     font-weight: 600;
 }
 
-.education-drawer-info .education-drawer-lesson-description-title span {
+/* .education-drawer-info .education-drawer-lesson-description-title span {
     font-size: 16px;
-}
+} */
 
 .education-drawer-info .title svg {
     margin-right: 5px;
@@ -481,5 +549,27 @@
     align-items: end;
     gap: 10px;
 }
+
+.education-drawer-lesson-description-title .tag-list {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+
+
+}
+
+.education-drawer-lesson-description-title .tag-list .tag-link {
+    padding: 6px 8px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    background: #d6d9de;
+    color: #444 !important;
+    font-weight: 500;
+    font-size: 12px;
+}
+
 
 /* ActivityDetailHeader */

@@ -1,7 +1,8 @@
-import { Identifier } from 'typescript';
+import { Identifier } from "typescript";
+
 export default interface GetListAccountLanguageResponse {
     id: Identifier;
-    accountName: string;
+    accountId: Identifier;
     languageName: string;
     languageLevelName: string;
 }

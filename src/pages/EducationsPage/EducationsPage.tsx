@@ -9,17 +9,16 @@ import { userActions } from '../../store/user/userSlice';
 import educationProgramService from '../../services/educationProgramService';
 import { GetListEducationProgramResponse } from '../../models/responses/educationProgram/getListEducationProgramResponse';
 import GetListProjectResponse from '../../models/responses/project/getListProjectResponse';
-import GetListAccountResponse from '../../models/responses/account/getListAccountResponse';
 import authService from '../../services/authService';
 import accountService from '../../services/accountService';
+import GetAccountResponse from '../../models/responses/account/getAccountResponse';
 
 const EducationsPage = () => {
-    const [account, setAccount] = useState<GetListAccountResponse>();
+    const [account, setAccount] = useState<GetAccountResponse>();
     const userState = useSelector((state: any) => state.user);
     const user = authService.getUserInfo();
     const dispatch = useDispatch();
     const [educationPrograms, setEducationPrograms] = useState<GetListEducationProgramResponse[]>([]);
-    const [projects, setProjects] = useState<GetListProjectResponse[]>([]);
     const [filteredEducationPrograms, setFilteredEducationPrograms] = useState<GetListEducationProgramResponse[]>([]);
     const [searchText, setSearchText] = useState('');
     const [sortOption, setSortOption] = useState('');
@@ -42,9 +41,8 @@ const EducationsPage = () => {
             return;
         }
 
-        accountService.getByAccountId(user.id).then(result => {
+        accountService.getById(user.id).then(result => {
             setAccount(result.data);
-            console.log(result.data)
         });
 
         educationProgramService.getAll(0, 100).then(result => {

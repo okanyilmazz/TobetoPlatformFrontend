@@ -7,6 +7,8 @@ import UpdateLanguageRequest from "../models/requests/language/updateLanguageReq
 import UpdatedLanguageResponse from "../models/responses/language/updatedLanguageResponse";
 import { BaseService } from "../core/services/baseService";
 import DeleteLanguageRequest from "../models/requests/language/deleteLanguageRequest";
+import { AxiosResponse } from "axios";
+import axiosInstance from "../core/interceptors/axiosInterceptor";
 
 class LanguageService extends BaseService<
     Paginate<GetListLanguageResponse>,
@@ -23,9 +25,9 @@ class LanguageService extends BaseService<
         this.apiUrl = "Languages";
     }
 
-    /*   getByAccountId(accountId: number, pageIndex: number, pageSize: number): Promise<AxiosResponse<Paginate<GetListLanguageResponse>, any>> {
+    getByAccountId(accountId: number, pageIndex: number, pageSize: number): Promise<AxiosResponse<Paginate<GetListLanguageResponse>, any>> {
         return axiosInstance.get<Paginate<GetListLanguageResponse>>(this.apiUrl + "/GetByAccountId?accountId=" + accountId + "&PageIndex=" + pageIndex + "&PageSize=" + pageSize);
-    } */
+    }
 }
 
 export default new LanguageService(); 

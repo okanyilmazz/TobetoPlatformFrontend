@@ -38,6 +38,7 @@ function App() {
         <OverlayLoader />
         <RouteDefinitions />
         <Footer />
+
       </>
     </div>
   );

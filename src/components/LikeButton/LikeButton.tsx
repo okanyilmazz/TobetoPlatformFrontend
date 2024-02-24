@@ -52,7 +52,7 @@ export default function LikeButton(props: any) {
                                     <Image src='/assets/Icons/common_show_picture_cached.png' />
                                 </div>
                                 <div className='user-name'>
-                                    <span>{liker.userName}</span>
+                                    <span>{liker.firstName + " " + liker.lastName}</span>
                                 </div>
                             </li>
                         ))
@@ -60,7 +60,7 @@ export default function LikeButton(props: any) {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Pagination onChange={(event) => handleLikersPaginate(event)} simple defaultCurrent={1} total={(props.likersPaginateCount * 10)} />
+                    <Pagination onChange={(event: any) => handleLikersPaginate(event)} simple defaultCurrent={1} total={(props.likersPaginateCount * 10)} />
                 </Modal.Footer>
             </Modal>
         </div>

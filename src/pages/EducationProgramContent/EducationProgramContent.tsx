@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import LessonCard from '../../components/LessonCard/LessonCard'
-import { Progress } from 'antd'
+import { Collapse, Progress } from 'antd'
 import { FaCircle } from "react-icons/fa";
 import Button from 'react-bootstrap/Button';
 import './EducationProgramContent.css'
@@ -15,7 +15,7 @@ import AddLessonLikeRequest from '../../models/requests/lessonLike/addLessonLike
 import DeleteLessonLikeRequest from '../../models/requests/lessonLike/deleteLessonLikeRequest';
 import { Link, useParams } from 'react-router-dom';
 import LikeButton from '../../components/LikeButton/LikeButton';
-import { Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Accordion, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import EducationDrawer from '../../components/EducationDrawer/EducationDrawer';
 import AddEducationProgramLikeRequest from '../../models/requests/educationProgramLike/addEducationProgramLikeRequest';
 import DeleteEducationProgramLikeRequest from '../../models/requests/educationProgramLike/deleteEducationProgramLikeRequest';
@@ -24,7 +24,12 @@ import { GetListEducationProgramResponse } from '../../models/responses/educatio
 import educationProgramService from '../../services/educationProgramService';
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import educationProgramLikeService from '../../services/educationProgramLikeService';
-
+import GetListAccountLessonResponse from '../../models/responses/accountLesson/getListAccountLessonResponse';
+import GetListEducationProgramLessonResponse from '../../models/responses/educationProgramLesson/getListEducationProgramLessonResponse';
+import accountLessonService from '../../services/accountLessonService';
+import educationProgramLessonService from '../../services/educationProgramLessonService';
+import UpdateAccountLessonRequest from '../../models/requests/accountLesson/updateAccountLessonRequest';
+import ReactPlayer from "react-player"
 
 export default function EducationProgramContent() {
 
@@ -32,11 +37,17 @@ export default function EducationProgramContent() {
     const [isLikedEducationProgram, setIsLikedEducationProgram] = useState(false);
     const [isLikedLesson, setIsLikedLesson] = useState(false);
 
-    const [lessonLikeCount, setLessonLikeCount] = useState(-1);
-    const [educationProgramLikeCount, setEducationProgramLikeCount] = useState(-1);
+    const [lessonLikeCount, setLessonLikeCount] = useState(0);
+    const [educationProgramLikeCount, setEducationProgramLikeCount] = useState(0);
 
     const [educationProgram, setEducationProgram] = useState<GetListEducationProgramResponse>()
     const [lesson, setLesson] = useState<GetListLessonResponse>();
+    const [selectedLessonId, setSelectedLessonId] = useState<any>();
+    const [accountLessonList, setAccountLessonList] = useState<Paginate<GetListAccountLessonResponse>>();
+
+    const [accountLesson, setAccountLesson] = useState<GetListAccountLessonResponse>();
+
+    const [educationProgramLessons, setEducationProgramLessons] = useState<Paginate<GetListEducationProgramLessonResponse>>();
 
     const [lessonLikers, setLessonLikers] = useState<Paginate<GetListAccountResponse>>()
     const [educationProgramLikers, setEducationProgramLikers] = useState<Paginate<GetListAccountResponse>>()
@@ -46,46 +57,85 @@ export default function EducationProgramContent() {
     const [openDrawer, setOpenDrawer] = useState(false);
 
 
+    /*Video */
+
+    const playerRef = useRef<ReactPlayer | null>(null);
+    const [videoCurrentSeconds, setVideoCurrentSeconds] = useState<number>(0);
+    const [videoDuration, setVideoDuration] = useState<number>(0);
+    const [watchPercentage, setWatchPercentage] = useState<number>(0);
+
+    const [accordionState, setAccordionState] = useState(false);
+
+
+
+    // useEffect(() => {
+    //     if (educationProgramId) {
+    //         educationProgramLessonService.getByEducationProgramId(educationProgramId).then((result: any) => {
+    //             setEducationProgramLessons(result.data);
+    //             setSelectedLesson(result.data[0])
+
+    //         })
+    //     }
+    // }, [])
+
+
     useEffect(() => {
-        if (educationProgramId) {
-            lessonService.getById("f0ce896c-7258-4f1d-ba4d-08dc2f2c25fb").then((result: any) => {
+        if (selectedLessonId) {
+            lessonService.getById(selectedLessonId).then((result: any) => {
                 setLesson(result.data)
+            })
+
+            accountService.getByLessonIdForLike(selectedLessonId, 0, 10).then(result => {
+                setLessonLikers(result.data);
+            })
+
+            lessonLikeService.getByLessonId(selectedLessonId).then(result => {
+                const likedLessonFilter = result.data.items.filter((c: any) => c.accountId === user.id)
+                if (likedLessonFilter.length > 0) {
+                    setIsLikedLesson(true);
+                }
+                setLessonLikeCount(result.data.count)
+            })
+        }
+    }, [selectedLessonId])
+
+
+    useEffect(() => {
+
+        if (educationProgramId) {
+            educationProgramLessonService.getByEducationProgramId(educationProgramId).then((result: any) => {
+                setEducationProgramLessons(result.data);
             })
 
             educationProgramService.getById(educationProgramId).then((result: any) => {
                 setEducationProgram(result.data)
             })
 
-            accountService.getByLessonIdForLike("f0ce896c-7258-4f1d-ba4d-08dc2f2c25fb", 0, 10).then(result => {
-                setLessonLikers(result.data);
-            })
-
             accountService.getByEducationProgramIdForLike(educationProgramId, 0, 10).then(result => {
                 setEducationProgramLikers(result.data);
+            })
+
+            accountLessonService.getByAccountId(user.id).then((result: any) => {
+                setAccountLessonList(result.data)
             })
         }
 
 
     }, [user.id, lessonLikeCount, educationProgramLikeCount, educationProgramId])
 
+
+
     useEffect(() => {
         if (educationProgramId) {
-
             educationProgramLikeService.getByEducationProgramId(educationProgramId).then((result: any) => {
-                const likedEducationProgramFilter = result.data.items.filter((c: any) => c.accountId === user.id)
-                console.dir(likedEducationProgramFilter)
-                if (likedEducationProgramFilter.length > 0) {
-                    setIsLikedEducationProgram(true);
+                const likedEducationProgramFilter = result.data.items?.filter((c: any) => c.accountId === user.id)
+                if (likedEducationProgramFilter) {
+                    console.dir(likedEducationProgramFilter)
+                    if (likedEducationProgramFilter.length > 0) {
+                        setIsLikedEducationProgram(true);
+                    }
+                    setEducationProgramLikeCount(result.data.count)
                 }
-                setEducationProgramLikeCount(result.data.count)
-            })
-
-            lessonLikeService.getByLessonId("f0ce896c-7258-4f1d-ba4d-08dc2f2c25fb").then(result => {
-                const likedLessonFilter = result.data.items.filter((c: any) => c.accountId === user.id)
-                if (likedLessonFilter.length > 0) {
-                    setIsLikedLesson(true);
-                }
-                setLessonLikeCount(result.data.count)
             })
         }
     }, [setIsLikedEducationProgram])
@@ -136,9 +186,7 @@ export default function EducationProgramContent() {
                 setEducationProgramLikeCount(educationProgramLikeCount + 1);
             } else {
                 const deleteEducationProgramLike: DeleteEducationProgramLikeRequest = {
-                    id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    accountId: user.id,
-                    educationProgramId: educationProgramId
+                    id: user.id,
                 }
                 await educationProgramLikeService.deleteByAccountIdAndEducationProgramId(deleteEducationProgramLike);
                 setEducationProgramLikeCount(educationProgramLikeCount - 1);
@@ -146,21 +194,17 @@ export default function EducationProgramContent() {
         }
     }
 
-
-
     async function handleLessonLikeFromChild(dataFromLikeButton: any) {
-        if (dataFromLikeButton) {
+        if (dataFromLikeButton && accountLesson) {
             const addLessonLike: AddLessonLikeRequest = {
                 accountId: user.id,
-                lessonId: "f0ce896c-7258-4f1d-ba4d-08dc2f2c25fb"
+                lessonId: accountLesson?.lessonId
             }
             await lessonLikeService.add(addLessonLike);
             setLessonLikeCount(lessonLikeCount + 1);
         } else {
             const deleteLessonLike: DeleteLessonLikeRequest = {
-                id: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                accountId: user.id,
-                lessonId: "f0ce896c-7258-4f1d-ba4d-08dc2f2c25fb"
+                id: user.id
             }
             await lessonLikeService.deleteByAccountIdAndLessonId(deleteLessonLike);
             setLessonLikeCount(lessonLikeCount - 1);
@@ -176,6 +220,38 @@ export default function EducationProgramContent() {
     const onClose = () => {
         setOpenDrawer(false);
     };
+
+    const handleUpdateAccountLessonStatus = async () => {
+        if (accountLesson) {
+            if (watchPercentage >= accountLesson.statusPercent) {
+                const updateAccountLesson: UpdateAccountLessonRequest = {
+                    id: accountLesson.id,
+                    accountId: user.id,
+                    lessonId: selectedLessonId,
+                    statusPercent: watchPercentage
+                };
+                await accountLessonService.update(updateAccountLesson);
+            }
+        }
+    };
+
+    const handleSelectLesson = async (selectedLessonId: any) => {
+        setSelectedLessonId(selectedLessonId)
+        accountLessonService.getByAccountIdAndLessonId(user.id, selectedLessonId).then((result: any) => {
+            setAccountLesson(result.data)
+        });
+    };
+
+
+    const calculateWatchPercentage = (playedSeconds: number, duration: number) => {
+        const percentage = (playedSeconds / duration) * 100;
+        const formattedPercentage = parseFloat(percentage.toFixed(1));
+        setWatchPercentage(formattedPercentage);
+    };
+
+    useEffect(() => {
+        console.log('İzlenme Yüzdesi:', watchPercentage);
+    }, [watchPercentage]);
 
     return (
 
@@ -310,15 +386,68 @@ export default function EducationProgramContent() {
 
                 <div className="row">
                     <div className='col-md-5 mt-5'>
+                        <div className='test-page'>
+                            {/* <Collapse {...CollapseProps} /> */}
 
+                            <Accordion className='accordion-education-program-lesson' defaultActiveKey="0">
+                                <Accordion.Item eventKey="0">
+                                    <Accordion.Header>{educationProgram?.name}</Accordion.Header>
+                                    {
+
+                                        educationProgramLessons?.items.map((educationProgramLesson) => {
+                                            const lessonId = educationProgramLesson.lessonId;
+                                            const matchingLesson = accountLessonList?.items.find(lesson => lesson.lessonId === lessonId);
+                                            const statusPercent = matchingLesson?.statusPercent || 0;
+                                            return (
+                                                <Accordion.Body className={selectedLessonId === lessonId ? "active-accordion" : ""} onClick={() => handleSelectLesson(lessonId)} key={String(lessonId)}>
+                                                    <div className='lesson-info'>
+                                                        <span >{educationProgramLesson.lessonName}</span>
+                                                        <span style={statusPercent === 0 || statusPercent > 99.2 ? { display: 'none' } : { display: 'block' }}>
+                                                            <div className='unit-icon unit-ongoing'></div>
+                                                        </span>
+                                                        <span className="unit-end" style={statusPercent > 99.5 ? { display: 'flex' } : { display: 'none' }}>
+                                                            <Image src='/assets/Icons/unit-completed.svg' width={14} height={14}></Image>
+                                                        </span>
+                                                    </div>
+
+                                                </Accordion.Body>
+                                            );
+                                        })}
+                                </Accordion.Item>
+                            </Accordion>
+
+                        </div>
                     </div>
                     <div className='col-md-7'>
                         <LessonCard header={
                             <div className="lesson-card-content">
-                                <iframe className="lesson-card-video" src="https://www.youtube.com/embed/-AoWSjeW9T8" ></iframe>
+                                <ReactPlayer
+                                    ref={playerRef}
+                                    className="lesson-card-video"
+                                    url='/assets/videos/a.m3u8'
+                                    width='100%'
+                                    height='100%'
+                                    onPause={() => handleUpdateAccountLessonStatus()}
+                                    onProgress={({ playedSeconds, played, loaded }) => {
+                                        const duration = playerRef.current?.getDuration() || 0;
+                                        calculateWatchPercentage(playedSeconds, duration);
+                                    }}
+                                    controls={true} />
                             </div>}
                             title={<div className='lesson-title'>{lesson?.name}</div>}
-                            text={<div className='lesson-text'>Video - {lesson?.duration} dk <FaCircle className='lesson-card-icon-first' /> Başlamadın</div>}
+                            text={
+                                <div className='lesson-text d-flex'>
+                                    <span>Video - {lesson?.duration} dk </span>
+                                    <span style={accountLesson?.statusPercent === 0 ? { display: 'block' } : { display: 'none' }}> <FaCircle className='lesson-card-icon-first' /> Başlamadın</span>
+                                    <span style={accountLesson && (accountLesson?.statusPercent === 0 || accountLesson?.statusPercent > 99.5) ? { display: 'none' } : { display: 'block' }}>
+                                        <div className='unit-icon unit-ongoing'></div>
+                                        Devam Ediyor</span>
+                                    <span className="unit-end" style={accountLesson && accountLesson?.statusPercent > 99.2 ? { display: 'flex' } : { display: 'none' }} >
+                                        <div className="unit-icon" >
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#3DCB79" viewBox="0 0 256 256"><path d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path></svg>
+                                        </div>
+                                        Tebrikler, tamamladın!</span>
+                                </div>}
                             button={<Button onClick={showDrawer} className='lesson-card-btn'>DETAY</Button>} />
                     </div>
                 </div>
@@ -330,17 +459,22 @@ export default function EducationProgramContent() {
                     onClose={onClose}
                     body={
                         <>
-                            <div className='education-drawer-content'>
+                            <div className='education-drawer-content'   >
+
                                 <div className='education-drawer-content-left'>
+
                                     <Image src='https://lms.tobeto.com/tobeto/eep/common_show_picture_cached.aspx?pQS=DiBldjEKnwJCe69nG2MNII%2bkPM%2fmZBEP' />
                                 </div>
                                 <div className='education-drawer-content-middle'>
 
                                     <div className='education-title'>
+
                                         <span>{lesson?.name}</span>
                                     </div>
                                     <div className='education-sub-details'>
+
                                         <div className='tag-blue'>
+
                                             <span>VİDEO</span>
                                         </div>
                                         <div className='course-detail-info'>
@@ -373,26 +507,46 @@ export default function EducationProgramContent() {
                                     </div>
                                     <div className='ed-drawer-sub-content'>
                                         <div className='ed-drawer-text-area'>
-                                            <div className='ed-drawer-course-status-info'>
-                                                <span>
+                                            <div className='ed-drawer-course-status-info not-start' style={accountLesson?.statusPercent === 0 ? { display: 'block' } : { display: 'none' }}>
+                                                <FaCircle className='lesson-card-icon-first' />
+                                                <span >
+                                                    Başlamadın</span>
+                                            </div>
+                                            <div className='ed-drawer-course-status-info' style={accountLesson && (accountLesson?.statusPercent === 0 || accountLesson?.statusPercent > 99.5) ? { display: 'none' } : { display: 'flex' }}>
+                                                <span >
                                                     <div className='unit-icon unit-ongoing'></div>
                                                     Devam Ediyor</span>
+
+                                                <div className='ed-drawer-course-status-score'>
+                                                    <span>{accountLesson?.statusPercent} PUAN</span>
+                                                </div>
                                             </div>
-                                            <div className='ed-drawer-course-status-score'>
-                                                <span>75.2 PUAN</span>
+
+
+                                            <div className='ed-drawer-course-status-info' style={accountLesson && accountLesson?.statusPercent > 99.5 ? { display: 'flex' } : { display: 'none' }}>
+                                                <span className="unit-end" >
+                                                    <div className="unit-icon" >
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#3DCB79" viewBox="0 0 256 256"><path d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path></svg>
+                                                    </div>
+                                                    Tebrikler, tamamladın!</span>
+
+                                                <div className='ed-drawer-course-status-score ' style={accountLesson?.statusPercent === 0 ? { display: 'none' } : { display: 'block' }}>
+                                                    <span className='unit-end-text'>{accountLesson && Math.ceil(accountLesson?.statusPercent)} PUAN</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    </div >
+                                </div >
+                            </div >
 
-                            <div className='education-drawer-content-bottom'>
+                            <div className='education-drawer-content-bottom'    >
                                 <div className="education-drawer-info">
                                     <div className='education-drawer-categories-title title'>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#7f6c6c" viewBox="0 0 256 256" transform="rotate(90)">
                                             <path d="M243.31,136,144,36.69A15.86,15.86,0,0,0,132.69,32H40a8,8,0,0,0-8,8v92.69A15.86,15.86,0,0,0,36.69,144L136,243.31a16,16,0,0,0,22.63,0l84.68-84.68a16,16,0,0,0,0-22.63Zm-96,96L48,132.69V48h84.69L232,147.31ZM96,84A12,12,0,1,1,84,72,12,12,0,0,1,96,84Z"></path>
                                         </svg>
                                         <span>Kategori</span>
+                                        {lesson?.lessonCategoryName}
                                     </div>
                                     <div className='education-drawer-categories'>
                                         <span>{lesson?.lessonCategoryName}</span>
@@ -434,11 +588,55 @@ export default function EducationProgramContent() {
                                         <span>{lesson?.name}</span>
                                     </div>
                                 </div>
+
+                                <div className='e-education-drawer-content-bottom '     >
+
+                                    <div className="education-drawer-info">
+                                        <div className='education-drawer-lesson-description-title title'>
+                                            <span>Hedefleri</span>
+                                            <p>Bu eğitim ile</p>
+                                            <ul>
+                                                <li>Tanıştığınız kişilerin kullandığı kalıpları daha kolay anlayıp, yorumlayıp daha doğru ve etkili yanıtlayacak,</li>
+                                                <li>Bu eğitim ile İngilizce’de artık ne konuştuğunuzdan emin olarak yeni insanlarla tanışmaya başlayacak,</li>
+                                                <li>Konuşma anında karar verme ve uygulamayı kolaylaştıracak araçları ve yöntemleri tanıyacak,</li>
+                                            </ul>
+                                        </div>
+                                        <div className='education-drawer-lesson-description-title title'>
+                                            <span>Konu Başlıkları</span>
+                                            <ul>
+                                                <li>Tanıştığınız kişilerin kullandığı kalıpları daha kolay anlayıp, yorumlayıp daha doğru ve etkili yanıtlayacak,</li>
+                                                <li>Bu eğitim ile İngilizce’de artık ne konuştuğunuzdan emin olarak yeni insanlarla tanışmaya başlayacak,</li>
+                                                <li>Konuşma anında karar verme ve uygulamayı kolaylaştıracak araçları ve yöntemleri tanıyacak,</li>
+                                            </ul>
+                                        </div>
+                                        <div className='education-drawer-lesson-description-title title'>
+                                            <span>Hedef Kitle</span>
+                                            <br />
+                                            <p>İngilizce dilinde tanışmanın temelini kavramak, formal ve informal tanışma kalıpları ve amaçlarına göre en sık kullanılan tanışma diyalog şablonları yardımı ile bu alanda kendilerini geliştirme, bilgilerini güncelleme ve yorum yapabilme becerilerini geliştirmek isteyen herkes.</p>
+                                        </div>
+                                        <div className='education-drawer-lesson-description-title title'>
+                                            <span>İlgi Alanları</span>
+                                            <br />
+                                            <div className="tag-list">
+                                                <span className='tag-link'  >İngilizce</span>
+                                                <span className='tag-link'  >Tanışma</span>
+                                                <span className='tag-link'  >English</span>
+                                                <span className='tag-link'  >Learning steps</span>
+                                                <span className='tag-link'  >smes</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
+
                         </>
                     }
                 />
             </div >
-        </div>
+        </div >
+
+
+
     )
 }

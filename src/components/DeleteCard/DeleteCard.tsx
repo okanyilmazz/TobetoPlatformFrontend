@@ -8,10 +8,10 @@ function DeleteCard(props: any) {
 
   const handleClose = () => setShow(false);
 
-/*   const handleDelete = () => {
+  const handleDelete = () => {
     setShow(false);
-    props.handleDeleteConfirmation(); // Silme işlemini gerçekleştirecek fonksiyonu çağır
-  }; */
+    props.handleDeleteConfirmation();
+  };
 
   return (
     <Modal
@@ -37,7 +37,7 @@ function DeleteCard(props: any) {
           <Button className='deletecard-button' onClick={handleClose}>
             X Hayır
           </Button>
-          <Button className='deletecard-button' /* onClick={handleDelete} */>✓ Evet</Button>
+          <Button className='deletecard-button' onClick={handleDelete}>✓ Evet</Button>
         </Modal.Footer>
       </Modal.Body>
     </Modal>

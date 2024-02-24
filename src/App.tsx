@@ -39,6 +39,8 @@ function App() {
         <RouteDefinitions />
         <Footer />
 
+        <Footer />
+
       </>
     </div>
   );

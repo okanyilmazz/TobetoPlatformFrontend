@@ -30,9 +30,9 @@ code {
   src: url('/public/assets/fonts/Poppins-Bold.ttf');
 }
 
-/* .bg-front-dark {
+ .bg-front-dark {
   background-color: #181717 !important;
-} */
+} 
 
 .bg-front-white {
   background-color: #fff !important;
@@ -129,6 +129,7 @@ code {
   box-shadow: 0 0 0 0.25rem rgba(153, 51, 255, .25);
   outline: 0;
 }
+<<<<<<< HEAD
 
 
 
@@ -203,3 +204,5 @@ code {
   align-items: center;
   justify-content: center;
 }
+=======
+>>>>>>> f1a8321239c12f521fa90be1bbb843926359103e

@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import ProfileCard from './../../components/ProfileCard/ProfileCard';
 import './Profile.css';
 import { useDispatch } from 'react-redux';
 import authService from '../../services/authService';
-import GetListAccountResponse from '../../models/responses/account/getListAccountResponse';
 import GetListCertificateResponse from '../../models/responses/certificate/getListCertificateResponse';
 import { useSelector } from 'react-redux';
 import { userActions } from '../../store/user/userSlice';
@@ -25,11 +24,14 @@ import GetListAccountBadgeResponse from '../../models/responses/accountBadge/get
 import accountBadgeService from '../../services/accountBadgeService';
 import socialMediaService from '../../services/socialMediaService';
 import GetListSocialMediaResponse from '../../models/responses/socialMedia/getListSocialMediaResponse';
-import { Timeline } from 'antd';
-import { Progress } from 'semantic-ui-react';
-
 import { DEFAULT_PROFILE_PHOTO } from '../../environment/environment';
 import GetAccountResponse from '../../models/responses/account/getAccountResponse';
+import accountLanguageService from '../../services/accountLanguageService';
+import GetListAccountLanguageResponse from '../../models/responses/accountLanguage/getListAccountLanguageResponse';
+import GetAccountLanguageResponse from '../../models/responses/accountLanguage/getAccountLanguageResponse';
+import GetListSkillResponse from '../../models/responses/skill/getListSkillResponse';
+import accountSkillService from '../../services/accountSkillService';
+import GetListAccountSkillResponse from '../../models/responses/accountSkill/getListAccountSkillResponse';
 
 
 
@@ -42,6 +44,10 @@ export default function Profile() {
   const dispatch = useDispatch();
   const [accountBadges, setAccountBadges] = useState<Paginate<GetListAccountBadgeResponse>>();
   const [socialMedias, setSocialMedias] = useState<Paginate<GetListSocialMediaResponse>>();
+
+  const [accountLanguages, setAccountLanguages] = useState<Paginate<GetListAccountLanguageResponse>>();
+  const [accountSkills, setAccountSkills] = useState<Paginate<GetListAccountSkillResponse>>();
+
 
 
   const [checked, setChecked] = useState<boolean>(false);
@@ -178,6 +184,15 @@ export default function Profile() {
       setAccountBadges(result.data);
 
     });
+
+    accountLanguageService.getByAccountId(user.id).then(result => {
+      setAccountLanguages(result.data);
+    })
+
+    accountSkillService.getByAccountId(user.id, 0, 10).then(result => {
+      setAccountSkills(result.data);
+      console.dir(result.data)
+    })
   }, [userState]);
 
   const options = { year: 'numeric', month: 'long', day: 'numeric' } as const;
@@ -289,6 +304,45 @@ export default function Profile() {
                   title={"Hakkımda"}
                 />
 
+                <ProfileCard
+                  title={"Yetkinliklerim"}
+                  content={
+                    <div className='abilities-content'>
+                      {
+                        accountSkills?.items.map((accountSkill) => (
+                          <div className='abilities-box'>
+                            <span className='abilities-text'>
+                              {accountSkill.skillName}
+                            </span>
+                          </div>
+                        ))
+                      }
+                    </div>
+                  } />
+
+                <ProfileCard title={"Yabancı Dillerim"}
+                  content={
+                    <div className='languages-content'>
+
+                      {
+                        accountLanguages?.items.map((accountLanguage) => (
+                          <div className='languages-box' key={String(accountLanguage.id)}>
+                            <div className='languages-box-title'>
+                              <span className='languages-text'>
+                                {accountLanguage.languageName}
+                              </span>
+                              <br />
+                              <span className='languages-subtext'>
+                                {accountLanguage.languageLevelName}
+                              </span>
+                            </div>
+                          </div>
+                        ))
+                      }
+
+                    </div>
+                  } />
+
                 <div className='certificates-section'>
                   <div className="certificates-box certificates-padding">
                     <span>Sertifikalarım</span>
@@ -345,6 +399,8 @@ export default function Profile() {
                 </div>
               </div>
             </div>
+
+
           </div>
 
           <br />
@@ -366,45 +422,6 @@ export default function Profile() {
                 </div>}
             />
             <br />
-            <div className='col-md-12'>
-              <ProfileCard
-                title={"Tobeto Seviye Testlerim"}
-                content={
-                  <div className='row'>
-                    {examResults?.items.map((examResult) => (
-                      <div className="col-md-6">
-                        <div className="exam-cart">
-                          <div className="exam-cart-top">
-                            <p className='exam-name'>{examResult.examName}</p>
-                            <p className='profile-exam-time'>{new Date(examResult.createdDate).toLocaleDateString('tr-TR')}</p>
-                          </div>
-                          <div className="bottom">
-                            <p className='exam-result'>{examResult.result}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                }
-              />
-              <ProfileCard
-                title={
-                  "Yetkinlik Rozetlerim"
-                }
-                content={
-                  <div className="profile-badge-container">
-                    {accountBadges?.items.map((accountBadge) => (
-                      <div className="profile-badge">
-                        <img src={String(accountBadge.badgeThumbnail)} alt="" />
-                      </div>
-                    ))}
-                  </div>
-
-                }
-              />
-            </div>
-
-
             <div className='col-md-12'>
               <ProfileCard
                 title={"Tobeto Seviye Testlerim"}
@@ -482,48 +499,6 @@ export default function Profile() {
           <div className='col-md-4 col-12'>
             {/* Soldakiler buraya */}
 
-            <ProfileCard
-              title={"Yetkinliklerim"}
-              content={
-                <div className='abilities-content'>
-                  <div className='abilities-box'>
-                    <span className='abilities-text'>
-                      .NET
-                    </span>
-                  </div>
-                  <div className='abilities-box'>
-                    <span className='abilities-text'>
-                      JAVA
-                    </span>
-                  </div>
-                </div>
-              } />
-            <ProfileCard title={"Yabancı Dillerim"}
-              content={
-                <div className='languages-content'>
-                  <div className='languages-box'>
-                    <div className='languages-box-title'>
-                      <span className='languages-text'>
-                        İngilizce
-                      </span>
-                      <br />
-                      <span className='languages-subtext'>
-                        İleri Seviye
-                      </span>
-                    </div>
-                  </div>
-                  <div className='languages-box'>
-                    <span className='languages-text'>
-                      İspanyolca
-                    </span>
-                    <br />
-                    <span className='languages-subtext'>
-                      İleri Seviye
-                    </span>
-                  </div>
-                </div>
-              } />
-
           </div>
 
         </div>
@@ -532,6 +507,6 @@ export default function Profile() {
 
         </div>
       </div>
-    </div>
+    </div >
   )
 }

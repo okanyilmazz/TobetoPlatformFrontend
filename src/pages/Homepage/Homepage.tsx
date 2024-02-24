@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { Button, Accordion, Container, Row, Col, Image } from 'react-bootstrap';
+import { Button, Accordion, Container, Row, Col } from 'react-bootstrap';
 import './Homepage.css'
 import TrainingCard from '../../components/TrainingCard/TrainingCard'
 import IstanbulCard from '../../components/IstanbulCard/IstanbulCard';
-import { Card } from 'semantic-ui-react';
+import { Card, Image } from 'semantic-ui-react';
 import GradientLine from '../../components/GradientLine/GradientLine';
 
 export default function Homepage() {

@@ -3,7 +3,8 @@ import { Identifier } from "typescript";
 export default interface UpdateAddressRequest {
     id: Identifier;
     cityId: Identifier;
-    districtId: Identifier;
+    accountId: Identifier;
     countryId: Identifier;
+    districtId: Identifier;
     addressDetail: string;
 }

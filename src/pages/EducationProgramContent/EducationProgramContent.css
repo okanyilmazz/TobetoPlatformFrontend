@@ -399,9 +399,9 @@
     font-weight: 600;
 }
 
-.education-drawer-info .education-drawer-lesson-description-title span {
+/* .education-drawer-info .education-drawer-lesson-description-title span {
     font-size: 16px;
-}
+} */
 
 .education-drawer-info .title svg {
     margin-right: 5px;
@@ -549,5 +549,27 @@
     align-items: end;
     gap: 10px;
 }
+
+.education-drawer-lesson-description-title .tag-list {
+    margin-top: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+
+
+}
+
+.education-drawer-lesson-description-title .tag-list .tag-link {
+    padding: 6px 8px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    background: #d6d9de;
+    color: #444 !important;
+    font-weight: 500;
+    font-size: 12px;
+}
+
 
 /* ActivityDetailHeader */

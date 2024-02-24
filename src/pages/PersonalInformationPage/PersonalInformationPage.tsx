@@ -83,6 +83,8 @@ export default function PersonalInformationPage() {
     }
 
     const handleCountries = (event: any) => {
+        console.log(event.target.value);
+
         setSelectedCountryId(event.target.value)
     }
 
@@ -236,7 +238,7 @@ export default function PersonalInformationPage() {
                                     <Col md={12}>
                                         <span className="input-area-title">Ülke*</span>
                                         <TobetoSelect
-                                            name="country"
+                                            name="countries"
                                             className="mb-4"
                                             component="select"
                                             onChange={(event: any) => {
@@ -275,7 +277,7 @@ export default function PersonalInformationPage() {
                                         <span className="input-area-title">İlçe</span>
                                         <TobetoSelect
                                             disabled={!selectedCityId || selectedCityId === "İl"}
-                                            name="district"
+                                            name="districts"
                                             className="mb-4"
                                             component="select"
                                             onChange={(event: any) => { handleDistricts(event) }}>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './AnnouncementCard.css';
-import Modals from '../Modal/Modal';
+import Modals from '../Modal/Modals';
 
 export default function AnnouncementCard(props: any) {
     const [modalShow, setModalShow] = useState(false);

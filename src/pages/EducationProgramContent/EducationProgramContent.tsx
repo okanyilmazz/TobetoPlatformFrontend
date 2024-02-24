@@ -24,16 +24,12 @@ import { GetListEducationProgramResponse } from '../../models/responses/educatio
 import educationProgramService from '../../services/educationProgramService';
 import { QuestionCircleOutlined } from "@ant-design/icons";
 import educationProgramLikeService from '../../services/educationProgramLikeService';
-import educationProgramLessonService from '../../services/educationProgramLessonService';
+import GetListAccountLessonResponse from '../../models/responses/accountLesson/getListAccountLessonResponse';
 import GetListEducationProgramLessonResponse from '../../models/responses/educationProgramLesson/getListEducationProgramLessonResponse';
 import accountLessonService from '../../services/accountLessonService';
-import GetListAccountLessonResponse from '../../models/responses/accountLesson/getListAccountLessonResponse';
-import ReactPlayer from 'react-player';
-import AddAccountLessonRequest from '../../models/requests/accountLesson/addAccountLessonRequest';
+import educationProgramLessonService from '../../services/educationProgramLessonService';
 import UpdateAccountLessonRequest from '../../models/requests/accountLesson/updateAccountLessonRequest';
-import { AccordionContent, AccordionTitle, Icon } from 'semantic-ui-react';
-import { C } from '@fullcalendar/core/internal-common';
-
+import ReactPlayer from "react-player"
 
 export default function EducationProgramContent() {
 
@@ -463,17 +459,22 @@ export default function EducationProgramContent() {
                     onClose={onClose}
                     body={
                         <>
-                            <div className='education-drawer-content'>
+                            <div className='education-drawer-content'   >
+
                                 <div className='education-drawer-content-left'>
+
                                     <Image src='https://lms.tobeto.com/tobeto/eep/common_show_picture_cached.aspx?pQS=DiBldjEKnwJCe69nG2MNII%2bkPM%2fmZBEP' />
                                 </div>
                                 <div className='education-drawer-content-middle'>
 
                                     <div className='education-title'>
+
                                         <span>{lesson?.name}</span>
                                     </div>
                                     <div className='education-sub-details'>
+
                                         <div className='tag-blue'>
+
                                             <span>VİDEO</span>
                                         </div>
                                         <div className='course-detail-info'>
@@ -534,17 +535,18 @@ export default function EducationProgramContent() {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    </div >
+                                </div >
+                            </div >
 
-                            <div className='education-drawer-content-bottom'>
+                            <div className='education-drawer-content-bottom'    >
                                 <div className="education-drawer-info">
                                     <div className='education-drawer-categories-title title'>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#7f6c6c" viewBox="0 0 256 256" transform="rotate(90)">
                                             <path d="M243.31,136,144,36.69A15.86,15.86,0,0,0,132.69,32H40a8,8,0,0,0-8,8v92.69A15.86,15.86,0,0,0,36.69,144L136,243.31a16,16,0,0,0,22.63,0l84.68-84.68a16,16,0,0,0,0-22.63Zm-96,96L48,132.69V48h84.69L232,147.31ZM96,84A12,12,0,1,1,84,72,12,12,0,0,1,96,84Z"></path>
                                         </svg>
                                         <span>Kategori</span>
+                                        {lesson?.lessonCategoryName}
                                     </div>
                                     <div className='education-drawer-categories'>
                                         <span>{lesson?.lessonCategoryName}</span>
@@ -586,7 +588,48 @@ export default function EducationProgramContent() {
                                         <span>{lesson?.name}</span>
                                     </div>
                                 </div>
+
+                                <div className='e-education-drawer-content-bottom '     >
+
+                                    <div className="education-drawer-info">
+                                        <div className='education-drawer-lesson-description-title title'>
+                                            <span>Hedefleri</span>
+                                            <p>Bu eğitim ile</p>
+                                            <ul>
+                                                <li>Tanıştığınız kişilerin kullandığı kalıpları daha kolay anlayıp, yorumlayıp daha doğru ve etkili yanıtlayacak,</li>
+                                                <li>Bu eğitim ile İngilizce’de artık ne konuştuğunuzdan emin olarak yeni insanlarla tanışmaya başlayacak,</li>
+                                                <li>Konuşma anında karar verme ve uygulamayı kolaylaştıracak araçları ve yöntemleri tanıyacak,</li>
+                                            </ul>
+                                        </div>
+                                        <div className='education-drawer-lesson-description-title title'>
+                                            <span>Konu Başlıkları</span>
+                                            <ul>
+                                                <li>Tanıştığınız kişilerin kullandığı kalıpları daha kolay anlayıp, yorumlayıp daha doğru ve etkili yanıtlayacak,</li>
+                                                <li>Bu eğitim ile İngilizce’de artık ne konuştuğunuzdan emin olarak yeni insanlarla tanışmaya başlayacak,</li>
+                                                <li>Konuşma anında karar verme ve uygulamayı kolaylaştıracak araçları ve yöntemleri tanıyacak,</li>
+                                            </ul>
+                                        </div>
+                                        <div className='education-drawer-lesson-description-title title'>
+                                            <span>Hedef Kitle</span>
+                                            <br />
+                                            <p>İngilizce dilinde tanışmanın temelini kavramak, formal ve informal tanışma kalıpları ve amaçlarına göre en sık kullanılan tanışma diyalog şablonları yardımı ile bu alanda kendilerini geliştirme, bilgilerini güncelleme ve yorum yapabilme becerilerini geliştirmek isteyen herkes.</p>
+                                        </div>
+                                        <div className='education-drawer-lesson-description-title title'>
+                                            <span>İlgi Alanları</span>
+                                            <br />
+                                            <div className="tag-list">
+                                                <span className='tag-link'  >İngilizce</span>
+                                                <span className='tag-link'  >Tanışma</span>
+                                                <span className='tag-link'  >English</span>
+                                                <span className='tag-link'  >Learning steps</span>
+                                                <span className='tag-link'  >smes</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
+
                         </>
                     }
                 />

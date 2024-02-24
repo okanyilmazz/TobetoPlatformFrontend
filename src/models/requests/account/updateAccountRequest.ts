@@ -8,4 +8,3 @@ export default interface UpdateAccountRequest {
     birthDate: Date;
     profilePhotoPath: string;
 }
-

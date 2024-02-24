@@ -42,9 +42,8 @@ const EducationsPage = () => {
             return;
         }
 
-        accountService.getByAccountId(user.id).then(result => {
+        accountService.getById(user.id).then(result => {
             setAccount(result.data);
-            console.log(result.data)
         });
 
         educationProgramService.getAll(0, 100).then(result => {

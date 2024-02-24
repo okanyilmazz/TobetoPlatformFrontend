@@ -1,10 +1,12 @@
 import { Identifier } from 'typescript';
 export default interface GetAccountResponse {
     id: Identifier;
-    cityName: string;
-    districtName: string;
-    countryName: string;
-    userName: string;
+    cityId: Identifier;
+    districtId: Identifier;
+    countryId: Identifier;
+    addressId: Identifier;
+    firstName: string;
+    lastName: string;
     phoneNumber: string;
     nationalId: string;
     description: string;
@@ -12,4 +14,3 @@ export default interface GetAccountResponse {
     profilePhotoPath: string;
     email: string;
 }
-

@@ -364,7 +364,6 @@
 
 .input-copy {
   padding-left: 5px;
-  padding-top: 0px;
 }
 
 .react-switch {
@@ -407,7 +406,6 @@
 }
 
 .customCopyToast {
-  padding-top: "10px";
   font-size: 18px;
   font-weight: bold;
 }
@@ -603,6 +601,69 @@
   transform: translateY(-100%);
   border-left: 3px solid #a442ff;
   margin-left: 5px;
-
-
 }
+
+
+/*My Experiences */
+.profile-card .abilities-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.abilities-box {
+  padding: 10px 20px;
+  background: #fff;
+  box-shadow: 2px 10px 24px hsla(0, 0%, 9%, .12);
+  border-radius: 54px;
+  text-align: left;
+  width: 100%;
+}
+
+.abilities-box:hover {
+  background: #93f;
+  color: #fff;
+}
+
+.abilities-text {}
+
+.profile-card .languages-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.languages-box {
+  padding: 5px 16px;
+  background: #fff;
+  box-shadow: 2px 10px 24px hsla(0, 0%, 9%, .12);
+  border-radius: 54px;
+  text-align: left;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.languages-subtext {
+  font-size: 12px;
+  font-weight: 500;
+  color: hsla(0, 0%, 51%, .8);
+}
+
+.languages-box::before {
+  content: url(/public/assets/Icons/profile-settings/globe.svg);
+  color: #828282;
+  display: flex;
+  flex-direction: column;
+  margin-right: 8px;
+  justify-content: space-evenly;
+}
+
+.languages-box::after {
+  content: url(/public/assets/Icons/profile-settings/home.svg);
+  color: #828282;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+

@@ -28,8 +28,8 @@ class AccountSkillService extends BaseService<
         return axiosInstance.post<AddedAccountSkillResponse[]>(this.apiUrl + "/AddRange", requests);
     }
 
-    getByAccountId(accountId: number): Promise<AxiosResponse<Paginate<GetListAccountSkillResponse>, any>> {
-        return axiosInstance.get<Paginate<GetListAccountSkillResponse>>(this.apiUrl + "/GetByAccountId?id=" + accountId);
+    getByAccountId(accountId: number, pageIndex: number, pageSize: number): Promise<AxiosResponse<Paginate<GetListAccountSkillResponse>, any>> {
+        return axiosInstance.get<Paginate<GetListAccountSkillResponse>>(this.apiUrl + "/GetByAccountId?accountId=" + accountId + "&PageIndex=" + pageIndex + "&PageSize=" + pageSize);
     }
 
     deleteWithModel(request: DeleteAccountSkillRequest) {

@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import GetListExamResponse from '../../models/responses/exam/getListExamResponse'
 import examService from '../../services/examService'
 import { userActions } from '../../store/user/userSlice'
+import { useNavigate } from 'react-router-dom'
 
 export default function PlatformPage() {
     const [educationPrograms, setEducationPrograms] = useState<Paginate<GetListEducationProgramResponse>>();
@@ -23,6 +24,8 @@ export default function PlatformPage() {
 
     const userState = useSelector((state: any) => state.user);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
 
     useEffect(() => {
 
@@ -111,7 +114,9 @@ export default function PlatformPage() {
                                                 <EducationCard
                                                     title={educationProgram.name}
                                                     date={formatCustomDate(educationProgram.startDate)}
-                                                    id={educationProgram.id} />
+                                                    id={educationProgram.id}
+                                                    thumbnailPath={educationProgram.thumbnailPath}
+                                                     />
                                             ))
                                         }
                                     </div>
@@ -120,16 +125,25 @@ export default function PlatformPage() {
                                 <Tab eventKey="announcements" title="Duyuru ve Haberlerim">
                                     <div className='tab-announcement-content'>
                                         {
-                                            announcementProjects?.items.map((announcementProject) => (
+                                            announcementProjects?.items.slice(0, 3).map((announcementProject) => (
                                                 <AnnouncementCard
+                                                    announcementTypeName={announcementProject.announcement.announcementTypeName}
                                                     projectName={announcementProject.project.name}
                                                     announcementName={announcementProject.announcement.title}
                                                     announcementDate={formatCustomDate(announcementProject.announcement.announcementDate)}
+                                                    announcementDescription={
+                                                        announcementProject.announcement.description.split('\n').filter(line => line.trim() !== '').map((paragraph, index) => (
+                                                            <p key={index}>{paragraph}</p>
+                                                        ))
+                                                    }
                                                 />
                                             ))
                                         }
                                     </div>
-                                    <ShowMoreButton />
+                                    <div onClick={() => navigate("/duyurular")}  >
+
+                                        <ShowMoreButton />
+                                    </div>
                                 </Tab>
                                 <Tab eventKey="surveys" title="Anketlerim">
                                     <div className='tab-application-content'>

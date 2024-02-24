@@ -1,0 +1,156 @@
+.session-title {
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    margin-left: 30px;
+    font-family: "Poppins-Bold";
+
+}
+
+.sessions-title {
+    font-size: 50px;
+    font-family: "Poppins-Bold";
+    font-weight: 600;
+
+}
+
+
+.ant-collapse-header-text .green-img {
+    margin-left: 15px;
+}
+
+.ant-collapse-header-text .green-img,
+.green-text {
+    color: #3dcb79 !important;
+    font-size: 20px;
+}
+
+.session-video {
+    color: red;
+}
+
+.video-number {
+    color: #000;
+    opacity: .5;
+}
+
+.session-video-recording {
+    margin-left: 240px;
+    margin-top: -110px;
+    width: 130px;
+    height: 35px;
+    background-color: white !important;
+    border-color: #9933ff !important;
+    color: #9933ff !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    border-radius: 10px;
+    border: 1px #000 solid;
+    min-width: 11%;
+
+
+}
+
+.LXP-Collapse .sessions-title .ant-collapse-header {
+    align-items: center;
+    padding-bottom: 0;
+
+}
+
+.LXP-Collapse .sessions-title .ant-collapse-header .ant-collapse-expand-icon {
+    padding-inline-end: 5px;
+
+}
+
+
+.unit-detail-session-row {
+    margin-left: 600px;
+}
+
+.homework-accordion-item {
+    border-color: transparent !important;
+}
+
+.work-score .no-time {
+    width: 14px;
+    height: 2px;
+    display: inline-block;
+    vertical-align: middle;
+    background: #000;
+    padding: inherit;
+
+}
+
+.instructor-fullName {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.no-content .no-content-icon {
+    width: 30px;
+    height: 30px;
+    margin: 0 auto 10px;
+    display: flex;
+    margin-top: 55px;
+}
+
+.col-left {
+    padding-bottom: 30px;
+    float: left;
+    width: 230px;
+    background-color: #f5f7f9;
+}
+
+.work-status {
+    color: #818181;
+}
+
+.row-middle-xs {
+    display: flex;
+}
+
+.accordion-works .accordion-button {
+    background-color: white !important;
+
+}
+
+.accordion-works .accordion-button:not(.collapsed) {
+
+    color: black !important;
+}
+
+.accordion-works .accordion-button:focus {
+    box-shadow: none;
+
+}
+
+.session-collapse-info .date-info {
+    display: flex;
+    color: black !important;
+    margin-top: 0 !important;
+
+}
+
+.session-collapse-info .date-info span {
+    width: 100px;
+}
+
+.session-instructor-info {
+
+    display: flex;
+}
+
+.session-instructor-info .session-instructor-title {
+    width: 100px;
+}
+
+.session-instructor-info .session-teacher-list {
+    width: 350px;
+}
+
+.session-collapse-title {
+    font-size: 14px;
+    font-family: "Poppins-Bold";
+}

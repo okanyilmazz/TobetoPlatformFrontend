@@ -27,7 +27,7 @@ class EducationProgramService extends BaseService<
     }
 
     getByFilter(request: EducationProgramFilterRequest): Promise<AxiosResponse<Paginate<GetListEducationProgramResponse>, any>> {
-        return axiosInstance.post<Paginate<GetListEducationProgramResponse>>("EducationPrograms/GetListByFiltered", request);
+        return axiosInstance.post<Paginate<GetListEducationProgramResponse>>(this.apiUrl + "/GetListByFiltered", request);
     }
 
     getByAccountId(accountId: number, pageIndex: number, pageSize: number): Promise<AxiosResponse<Paginate<GetListEducationProgramResponse>, any>> {

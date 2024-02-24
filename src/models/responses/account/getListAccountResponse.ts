@@ -14,4 +14,5 @@ export default interface GetListAccountResponse {
     birthDate: Date;
     profilePhotoPath: string;
     email: string;
+    addressDetail: string
 }

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import certificateService from '../../services/certificateService';
 import GetListCertificateResponse from '../../models/responses/certificate/getListCertificateResponse';
 import { Paginate } from '../../models/paginate';
-import Modals from '../../components/Modal/Modal';
+import Modals from '../../components/Modal/Modals';
 import { Tooltip } from 'antd';
 import { Dashboard } from '@uppy/react';
 import './CertificatePage.css'

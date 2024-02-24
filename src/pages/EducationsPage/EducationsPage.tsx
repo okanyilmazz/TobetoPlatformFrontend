@@ -9,16 +9,18 @@ import { userActions } from '../../store/user/userSlice';
 import educationProgramService from '../../services/educationProgramService';
 import { GetListEducationProgramResponse } from '../../models/responses/educationProgram/getListEducationProgramResponse';
 import GetListProjectResponse from '../../models/responses/project/getListProjectResponse';
+import GetListAccountResponse from '../../models/responses/account/getListAccountResponse';
 import authService from '../../services/authService';
 import accountService from '../../services/accountService';
-import GetAccountResponse from '../../models/responses/account/getAccountResponse';
+import projectService from '../../services/projectService';
 
 const EducationsPage = () => {
-    const [account, setAccount] = useState<GetAccountResponse>();
+    const [account, setAccount] = useState<GetListAccountResponse>();
     const userState = useSelector((state: any) => state.user);
     const user = authService.getUserInfo();
     const dispatch = useDispatch();
     const [educationPrograms, setEducationPrograms] = useState<GetListEducationProgramResponse[]>([]);
+    const [projects, setProjects] = useState<GetListProjectResponse[]>([]);
     const [filteredEducationPrograms, setFilteredEducationPrograms] = useState<GetListEducationProgramResponse[]>([]);
     const [searchText, setSearchText] = useState('');
     const [sortOption, setSortOption] = useState('');
@@ -34,6 +36,10 @@ const EducationsPage = () => {
         });
     };
 
+    const projectOptions = projects.map(project => ({
+        value: project.name,
+        label: project.name
+    }));
 
     useEffect(() => {
         if (!userState.user) {
@@ -41,11 +47,11 @@ const EducationsPage = () => {
             return;
         }
 
-        accountService.getById(user.id).then(result => {
-            setAccount(result.data);
+        projectService.getAll(0, 5).then((result) => {
+            setProjects(result.data.items);
         });
 
-        educationProgramService.getAll(0, 100).then(result => {
+        educationProgramService.getByAccountId(user.id, 0, 100).then(result => {
             const programs = result.data.items.map((program: GetListEducationProgramResponse) => ({
                 ...program,
                 startDate: new Date(program.startDate)
@@ -53,15 +59,6 @@ const EducationsPage = () => {
             setEducationPrograms(programs);
             setFilteredEducationPrograms(programs);
         });
-
-        /*  educationProgramService.getByAccountId(userState.user.id, 0, 100).then(result => {
-            const programs = result.data.items.map((program: GetListEducationProgramResponse) => ({
-                ...program,
-                startDate: new Date(program.startDate)
-            }));
-            setEducationPrograms(programs);
-            setFilteredEducationPrograms(programs);
-        }); */
 
     }, [userState]);
 
@@ -121,9 +118,7 @@ const EducationsPage = () => {
                                 className="projectSelect"
                                 classNamePrefix="select"
                                 placeholder="Kurum Seçiniz"
-                                options={[
-                                    { value: 'İstanbul Kodluyor', label: 'İstanbul Kodluyor' },
-                                ]}
+                                options={projectOptions}
                             />
                         </div>
                         <div className='col-md-3 col-12'>
@@ -170,6 +165,7 @@ const EducationsPage = () => {
                                             title={program.name}
                                             date={formatStartDate(new Date(program.startDate))}
                                             id={program.id}
+                                            thumbnailPath={program.thumbnailPath}
                                         />
                                     ))}
                                 </div>
@@ -206,4 +202,4 @@ const EducationsPage = () => {
     );
 }
 
-export default EducationsPage;
+export default EducationsPage; 

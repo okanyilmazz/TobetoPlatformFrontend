@@ -12,6 +12,7 @@ import GetListProjectResponse from '../../models/responses/project/getListProjec
 import GetListAccountResponse from '../../models/responses/account/getListAccountResponse';
 import authService from '../../services/authService';
 import accountService from '../../services/accountService';
+import projectService from '../../services/projectService';
 
 const EducationsPage = () => {
     const [account, setAccount] = useState<GetListAccountResponse>();
@@ -35,6 +36,10 @@ const EducationsPage = () => {
         });
     };
 
+    const projectOptions = projects.map(project => ({
+        value: project.name,
+        label: project.name
+    }));
 
     useEffect(() => {
         if (!userState.user) {
@@ -42,12 +47,11 @@ const EducationsPage = () => {
             return;
         }
 
-        accountService.getByAccountId(user.id).then(result => {
-            setAccount(result.data);
-            console.log(result.data)
+        projectService.getAll(0, 5).then((result) => {
+            setProjects(result.data.items);
         });
 
-        educationProgramService.getAll(0, 100).then(result => {
+        educationProgramService.getByAccountId(user.id, 0, 100).then(result => {
             const programs = result.data.items.map((program: GetListEducationProgramResponse) => ({
                 ...program,
                 startDate: new Date(program.startDate)
@@ -55,15 +59,6 @@ const EducationsPage = () => {
             setEducationPrograms(programs);
             setFilteredEducationPrograms(programs);
         });
-
-        /*  educationProgramService.getByAccountId(userState.user.id, 0, 100).then(result => {
-            const programs = result.data.items.map((program: GetListEducationProgramResponse) => ({
-                ...program,
-                startDate: new Date(program.startDate)
-            }));
-            setEducationPrograms(programs);
-            setFilteredEducationPrograms(programs);
-        }); */
 
     }, [userState]);
 
@@ -123,9 +118,7 @@ const EducationsPage = () => {
                                 className="projectSelect"
                                 classNamePrefix="select"
                                 placeholder="Kurum Seçiniz"
-                                options={[
-                                    { value: 'İstanbul Kodluyor', label: 'İstanbul Kodluyor' },
-                                ]}
+                                options={projectOptions}
                             />
                         </div>
                         <div className='col-md-3 col-12'>
@@ -172,6 +165,7 @@ const EducationsPage = () => {
                                             title={program.name}
                                             date={formatStartDate(new Date(program.startDate))}
                                             id={program.id}
+                                            thumbnailPath={program.thumbnailPath}
                                         />
                                     ))}
                                 </div>
@@ -208,4 +202,4 @@ const EducationsPage = () => {
     );
 }
 
-export default EducationsPage;
+export default EducationsPage; 

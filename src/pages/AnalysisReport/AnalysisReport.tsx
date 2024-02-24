@@ -1,6 +1,5 @@
 import React from 'react'
 import ProfileRadar from '../../components/ProfileRadar/ProfileRadar';
-import { RadarLabels } from '../../components/RadarLabels/RadarLabels';
 import ReportCard from '../../components/ReportCard/ReportCard';
 import "./AnalysisReport.css";
 

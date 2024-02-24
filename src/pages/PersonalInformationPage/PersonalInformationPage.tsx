@@ -1,27 +1,33 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import './PersonalInformationPage.css'
 import { useLocation } from 'react-router-dom';
-import GetListAccountResponse from '../../models/responses/account/getListAccountResponse';
 import { DEFAULT_PROFILE_PHOTO } from '../../environment/environment';
 import { Form, Formik } from 'formik';
 import { Button, Col, Image, Row } from 'react-bootstrap';
+import { GetListCountryResponse } from '../../models/responses/country/getListCountryResponse';
+import { Paginate } from '../../models/paginate';
+import { GetListCityResponse } from '../../models/responses/city/getListCityResponse';
 import TobetoTextInput from '../../utilities/customFormControls/TobetoTextInput';
 import PhoneNumberValidation from '../../components/PhoneNumberValidation/PhoneNumberValidation';
 import TobetoSelect from '../../utilities/customFormControls/TobetoSelect';
 import countryService from '../../services/countryService';
 import cityService from '../../services/cityService';
 import districtService from '../../services/districtService';
-import { userActions } from '../../store/user/userSlice';
-import { GetListCountryResponse } from '../../models/responses/country/getListCountryResponse';
-import { Paginate } from '../../models/paginate';
-import { GetListCityResponse } from '../../models/responses/city/getListCityResponse';
 import GetListDistrictResponse from '../../models/responses/district/getListDistrictResponse';
-import { useDispatch } from 'react-redux';
 import authService from '../../services/authService';
-import "./PersonalInformationPage.css"
 import SidebarCard from '../../components/SidebarCard/SidebarCard';
 import accountService from '../../services/accountService';
+import UpdateAccountRequest from '../../models/requests/account/updateAccountRequest';
+import TobetoTextArea from '../../utilities/customFormControls/TobetoTextArea';
+import GetAccountResponse from '../../models/responses/account/getAccountResponse';
+import UpdateAddressRequest from '../../models/requests/address/updateAddressRequest';
+import addressService from '../../services/addressService';
+import GetAddressResponse from '../../models/responses/address/getAddressResponse';
+import UpdateUserRequest from '../../models/requests/user/updateUserRequest';
+import userService from '../../services/userService';
+import "./PersonalInformationPage.css"
 export default function PersonalInformationPage() {
+
     const location = useLocation();
     const pathArray = location.pathname.split('/');
     const lastPathSegment = pathArray[pathArray.length - 1];
@@ -30,10 +36,16 @@ export default function PersonalInformationPage() {
     const [countries, setCountries] = useState<Paginate<GetListCountryResponse>>();
     const [cities, setCities] = useState<Paginate<GetListCityResponse>>();
     const [districts, setDistricts] = useState<Paginate<GetListDistrictResponse>>();
-    const [account, setAccount] = useState<GetListAccountResponse>();
+    const [phoneNumberState, setPhoneNumberState] = useState<string>();
+
+    const [account, setAccount] = useState<GetAccountResponse>();
+    const [accountAddress, setAccountAddress] = useState<GetAddressResponse>();
+
 
     const [selectedCountryId, setSelectedCountryId] = useState<any>("Ülke");
     const [selectedCityId, setSelectedCityId] = useState<any>("İl");
+    const [selectedDistrictId, setSelectedDistrictId] = useState<any>("İlçe");
+
 
     useEffect(() => {
         countryService.getAll(0, 10).then((result) => {
@@ -47,11 +59,18 @@ export default function PersonalInformationPage() {
         districtService.getAll(0, 10).then((result) => {
             setDistricts(result.data)
         });
+    }, []);
 
-        accountService.getByAccountId(user.id).then(result => {
+    useEffect(() => {
+        accountService.getById(user.id).then(result => {
             setAccount(result.data);
         });
-    }, []);
+
+        addressService.getById(user.id).then((result) => {
+            setAccountAddress(result.data)
+        });
+    }, [user.id])
+
 
     const formatDate = (date: any) => {
         const inputDate = new Date(date);
@@ -63,18 +82,14 @@ export default function PersonalInformationPage() {
         return formattedDate
     }
 
-
-    const initialValues = {
-        email: account?.email,
-        password: "",
-        birthDate: account?.birthDate,
-        country: "",
-        street: "",
-        about: ""
-    };
-
     const handleCountries = (event: any) => {
+        console.log(event.target.value);
+
         setSelectedCountryId(event.target.value)
+    }
+
+    const handlePhone = (event: any) => {
+        setPhoneNumberState(event.target.value)
     }
 
     const handleCities = (event: any) => {
@@ -83,13 +98,68 @@ export default function PersonalInformationPage() {
             setDistricts(result.data)
         })
     }
+
+    const handleDistricts = (event: any) => {
+        setSelectedDistrictId(event.target.value)
+    }
+
+
+    const initialValues = {
+        firstName: account?.firstName,
+        lastName: account?.lastName || "",
+        email: account?.email || "",
+        birthDate: formatDate(account?.birthDate),
+        country: accountAddress?.countryId,
+        city: accountAddress?.cityId,
+        district: accountAddress?.districtId,
+        addressDetail: accountAddress?.addressDetail || "",
+        about: account?.description || "",
+        nationalId: account?.nationalId || "",
+        phoneNumber: account?.phoneNumber || ""
+    };
+
+
+
+    const updatePersonalInformation = async (values: any) => {
+
+        if (phoneNumberState && accountAddress) {
+            const updateAddress: UpdateAddressRequest = {
+                id: accountAddress?.id,
+                accountId: user.id,
+                cityId: selectedCityId,
+                countryId: selectedCountryId,
+                districtId: selectedDistrictId,
+                addressDetail: values.addressDetail
+            }
+            await addressService.update(updateAddress);
+
+            const updateAccount: UpdateAccountRequest = {
+                id: user.id,
+                userId: user.id,
+                birthDate: values.birthDate,
+                description: values.about,
+                nationalId: values.nationalId,
+                phoneNumber: phoneNumberState,
+                profilePhotoPath: "",
+            }
+            await accountService.update(updateAccount);
+
+            const updateUser: UpdateUserRequest = {
+                id: user.id,
+                email: values.email,
+                firstName: values.firstName,
+                lastName: values.lastName,
+                password: ""
+            }
+            await userService.update(updateUser);
+        }
+    }
     return (
         <div className='personal-information-page container'>
 
             <div className='side-bar-card'>
                 <SidebarCard />
             </div>
-
 
             <div className="profile-details-page col-md-9 col-lg-9 col-12">
                 <div className="profile-details-img">
@@ -99,16 +169,17 @@ export default function PersonalInformationPage() {
                     {account?.profilePhotoPath && (
                         <>
                             <div className="profile-img-delete"></div>
-                            <div className="profile-img-edit"></div>
                         </>
                     )}
+                    <div className="profile-img-edit"></div>
                 </div>
                 <Row>
                     <div className="col-md-12 formik-form">
                         <Formik
+                            enableReinitialize
                             initialValues={initialValues}
                             onSubmit={(values) => {
-                                console.log("Form submitted with values:", values);
+                                updatePersonalInformation(values);
                             }}>
                             <Form className="login-form">
                                 <Row>
@@ -117,16 +188,14 @@ export default function PersonalInformationPage() {
                                         <TobetoTextInput
                                             className=""
                                             type="text"
-                                            name="firstName"
-                                            value={account?.firstName} />
+                                            name="firstName" />
                                     </Col>
                                     <Col md={6}>
                                         <span className="input-area-title">Soyadınız</span>
                                         <TobetoTextInput
                                             className="mb-4"
                                             name="lastName"
-                                            type="text"
-                                            value={account?.lastName} />
+                                            type="text" />
                                     </Col>
                                 </Row>
 
@@ -134,33 +203,34 @@ export default function PersonalInformationPage() {
                                     <Col md={6}>
                                         <span className="input-area-title">Telefon Numaranız*</span>
                                         <PhoneNumberValidation
-                                            phoneNumber={account?.phoneNumber} />
+                                            name="phoneNumber"
+                                            phoneNumber={account?.phoneNumber}
+                                            onChange={(event: any) => {
+                                                handlePhone(event);
+                                            }}
+                                        />
                                     </Col>
                                     <Col md={6}>
                                         <span className="input-area-title">Doğum Tarihiniz*</span>
                                         <TobetoTextInput
                                             className="mb-4"
                                             name="birthDate"
-                                            type="date"
-                                            value={formatDate(account?.birthDate)} />
+                                            type="date" />
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col md={6}>
                                         <span className="input-area-title">TC Kimlik No*</span>
                                         <TobetoTextInput
-                                            className=""
                                             type="text"
-                                            name="nationalId"
-                                            value={account?.nationalId} />
+                                            name="nationalId" />
                                     </Col>
                                     <Col md={6}>
                                         <span className="input-area-title">E Posta*</span>
                                         <TobetoTextInput
                                             className="mb-4"
-                                            name="lastName"
-                                            type="eposta"
-                                            value={account?.email} />
+                                            name="email"
+                                            type="eposta" />
                                     </Col>
                                     <span className='id-required-info'> <i>*Aboneliklerde fatura için doldurulması zorunlu alan</i> </span>
                                 </Row>
@@ -168,11 +238,13 @@ export default function PersonalInformationPage() {
                                     <Col md={12}>
                                         <span className="input-area-title">Ülke*</span>
                                         <TobetoSelect
-                                            name="country"
+                                            name="countries"
                                             className="mb-4"
                                             component="select"
-                                            onChange={(event: any) => { handleCountries(event) }}
-                                            value={selectedCountryId}>
+                                            onChange={(event: any) => {
+                                                handleCountries(event);
+                                            }}
+                                        >
                                             <option value="Ülke">Ülke Seçiniz*</option>
                                             {countries?.items.map((country, index) => (
                                                 <option key={index} value={String(country.id)}>
@@ -187,11 +259,10 @@ export default function PersonalInformationPage() {
                                         <span className="input-area-title">İl</span>
                                         <TobetoSelect
                                             disabled={!selectedCountryId || selectedCountryId === "Ülke"}
-                                            name="cities"
+                                            name="city"
                                             className="mb-4"
                                             component="select"
-                                            onChange={(event: any) => { handleCities(event) }}
-                                            value={selectedCityId}>
+                                            onChange={(event: any) => { handleCities(event) }}>
 
                                             <option value="Ülke">İl Seçiniz</option>
 
@@ -206,13 +277,14 @@ export default function PersonalInformationPage() {
                                         <span className="input-area-title">İlçe</span>
                                         <TobetoSelect
                                             disabled={!selectedCityId || selectedCityId === "İl"}
-                                            name="district"
+                                            name="districts"
                                             className="mb-4"
-                                            component="select">
+                                            component="select"
+                                            onChange={(event: any) => { handleDistricts(event) }}>
 
                                             <option value="İlçe">İlçe Seçiniz</option>
                                             {districts?.items.map((district, index) => (
-                                                <option key={index} value={district.name}>
+                                                <option key={index} value={String(district.id)}>
                                                     {district.name}
                                                 </option>
                                             ))}
@@ -222,17 +294,18 @@ export default function PersonalInformationPage() {
                                 <Row>
                                     <Col md={12}>
                                         <span className="input-area-title">Mahalle/Sokak</span>
-                                        <textarea
+                                        <TobetoTextArea
                                             className="form-control mb-4"
-                                            name="about"
+                                            name="addressDetail"
                                             rows={5} />
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col md={12}>
                                         <span className="input-area-title">Hakkımda</span>
-                                        <textarea
+                                        <TobetoTextArea
                                             className="form-control mb-4 "
+                                            type="text"
                                             name="about"
                                             placeholder="Kendini Kısaca Tanıt"
                                             rows={5} />

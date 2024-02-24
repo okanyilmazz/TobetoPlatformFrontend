@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Accordion, Container, Row, Col, } from 'react-bootstrap';
+import { Button, Accordion, Container, Row, Col } from 'react-bootstrap';
 import './Homepage.css'
 import TrainingCard from '../../components/TrainingCard/TrainingCard'
 import IstanbulCard from '../../components/IstanbulCard/IstanbulCard';

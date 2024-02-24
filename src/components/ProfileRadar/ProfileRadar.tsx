@@ -1,91 +1,80 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Chart from 'chart.js/auto';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
 import './ProfileRadar.css';
+import GetListCompetenceResultResponse from '../../models/responses/competenceResult/getListCompetenceResultResponse';
+import GetListAccountResponse from '../../models/responses/account/getListAccountResponse';
+import { useDispatch, useSelector } from 'react-redux';
+import authService from '../../services/authService';
+import accountService from '../../services/accountService';
+import { userActions } from '../../store/user/userSlice';
+import competenceResultService from '../../services/competenceResultService';
+import GetListCompetenceCategoryResponse from '../../models/responses/competenceCategory/getListCompetenceCategoryResponse';
+import competenceCategoryService from '../../services/competenceCategoryService';
 
-const ProfileRadarChart: React.FC = () => {
+const ProfileRadarChart: React.FC<{ competenceResult: GetListCompetenceResultResponse[], competenceCategory: GetListCompetenceCategoryResponse[] }> = ({ competenceResult, competenceCategory }) => {
     const chartRef = useRef<any>(null);
+    const options = {
+        scales: {
+            r: {
+                beginAtZero: true,
+                suggestedMax: 1,
+                ticks: {
+                    stepSize: 1,
+                    minTicksLimit: 11,
+                    maxTicksLimit: 11,
+                    display: false,
+                },
+                angleLines: {
+                    display: true,
+                    drawBorder: false,
+                },
+                grid: {
+                    circular: true,
+                },
+            },
+        },
+        elements: {
+            line: {
+                borderWidth: 2,
+                borderColor: 'rgb(204, 204, 204)',
+                fill: true,
+            },
+            point: {
+                radius: 6,
+                backgroundColor: (context: any) => {
+                    const dataIndex = context.dataIndex;
+                    const numberOfCategories = 8;
+                    const categoryIndex = dataIndex % numberOfCategories;
+
+                    const colorMap: { [key: number]: string } = {
+                        0: '#85a0a9',
+                        1: '#217925',
+                        2: '#eec16d',
+                        3: '#6667ab',
+                        4: '#e288b6',
+                        5: '#af8962',
+                        6: '#d75078',
+                        7: '#d77e6f',
+                    };
+
+                    return colorMap[categoryIndex] || 'rgb(204, 204, 204)';
+                },
+            },
+        },
+        responsive: true,
+        maintainAspectRatio: true,
+        tooltips: false,
+        plugins: {
+            legend: {
+                display: false,
+            },
+            datalabels: { 
+                display: false,
+            },
+        },
+    };
 
     useEffect(() => {
-        Chart.register(ChartDataLabels);
-
-        const data = {
-            labels: ['', '', '', '', '', '', '', ''],
-            datasets: [
-                {
-                    label: '',
-                    data: [4.7, 4.3, 4.9, 5, 4.6, 4.8, 4.6, 5],
-                },
-            ],
-        };
-
-        const options = {
-            scales: {
-                r: {
-                    beginAtZero: true,
-                    suggestedMax: 1,
-                    ticks: {
-                        stepSize: 1,
-                        minTicksLimit: 11,
-                        maxTicksLimit: 11,
-                        display: false,
-                    },
-                    angleLines: {
-                        display: true,
-                        drawBorder: false,
-                    },
-                    grid: {
-                        circular: true,
-                    },
-                },
-            },
-            elements: {
-                line: {
-                    borderWidth: 2,
-                    borderColor: 'rgb(204, 204, 204)',
-                    fill: true,
-                },
-                point: {
-                    radius: 6,
-                    backgroundColor: (context: any) => {
-                        // Veri noktasının değerine bağlı olarak renk belirle
-                        if (context.dataset.data[context.dataIndex] >= 4.7) {
-                            return 'rgb(133, 160, 169)';
-                        }
-                        if (context.dataset.data[context.dataIndex] >= 4.0 && context.dataset.data[context.dataIndex] <= 4.7) {
-                            return 'rgb(226, 136, 182)';
-                        }
-                    },
-                },
-            },
-            responsive: true,
-            maintainAspectRatio: true,
-            tooltips: false,
-            plugins: {
-                legend: {
-                    display: false, //Buton on-off
-                },
-                datalabels: {
-                    formatter: (value: any, context: any) => {
-                        return context.chart.data.labels[context.dataIndex];
-                    },
-                    color: (context: any) => {
-                        return context.hovered ? 'white' : context.dataset.borderColor;
-                    },
-                    listeners: {
-                        enter: (context: any) => {
-                            context.hovered = true;
-                            return true;
-                        },
-                        leave: (context: any) => {
-                            context.hovered = false;
-                            return true;
-                        },
-                    },
-                },
-            },
-        };
-
         const ctx = document.getElementById('chart') as HTMLCanvasElement | null;
 
         if (chartRef.current) {
@@ -95,11 +84,20 @@ const ProfileRadarChart: React.FC = () => {
         if (ctx) {
             chartRef.current = new Chart(ctx, {
                 type: 'radar',
-                data: data,
+                data: {
+                    labels: new Array(competenceCategory.length).fill(''),
+                    datasets: [
+                        {
+                            label: '',
+                            data: competenceResult.map(item => parseFloat(item.point)),
+                        },
+                    ],
+                },
                 options: options,
             });
+
         }
-    }, []);
+    }, [competenceResult, competenceCategory, options]);
 
     return (
         <div>
@@ -109,43 +107,43 @@ const ProfileRadarChart: React.FC = () => {
 };
 
 const ProfileRadar: React.FC = () => {
+    const [account, setAccount] = useState<GetListAccountResponse>();
+    const userState = useSelector((state: any) => state.user);
+    const user = authService.getUserInfo();
+    const dispatch = useDispatch();
+    const [competenceResult, setCompetenceResult] = useState<GetListCompetenceResultResponse[]>([]);
+    const [competenceCategory, setCompetenceCategory] = useState<GetListCompetenceCategoryResponse[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (!userState.user) {
+            dispatch(userActions.getUserInfo());
+            return;
+        }
+
+        competenceResultService.getByAccountId(user.id,0,8).then(result=>{
+            setCompetenceResult(result.data.items);
+            setLoading(false);
+        })
+
+        competenceCategoryService.getAll(0, 8).then((result) => {
+            setCompetenceCategory(result.data.items);
+            setLoading(false);
+        });
+
+    }, [userState.user, dispatch, user.id]);
+
     return (
         <div className="profile-radar-container">
-            <ProfileRadarChart />
+            <ProfileRadarChart competenceResult={competenceResult} competenceCategory={competenceCategory} />
             <div className='profile-radar-labels'>
                 <div className="radar-labels">
-                    <div className="label">
-                        <span className="legend legend8">4.7</span>
-                        <span className="legendName">Yeni dünyaya hazırlanıyorum</span>
-                    </div>
-                    <div className="label">
-                        <span className="legend legend7">4.3</span>
-                        <span className="legendName">Profesyonel duruşumu geliştiriyorum</span>
-                    </div>
-                    <div className="label">
-                        <span className="legend legend1">4.9</span>
-                        <span className="legendName">Kendimi tanıyor ve yönetiyorum</span>
-                    </div>
-                    <div className="label">
-                        <span className="legend legend5">4.5</span>
-                        <span className="legendName">Yaratıcı ve doğru çözümler geliştiriyorum</span>
-                    </div>
-                    <div className="label">
-                        <span className="legend legend2">4.6</span>
-                        <span className="legendName">Kendimi sürekli geliştiriyorum</span>
-                    </div>
-                    <div className="label">
-                        <span className="legend legend4">4.8</span>
-                        <span className="legendName">Başkaları ile birlikte çalışıyorum</span>
-                    </div>
-                    <div className="label">
-                        <span className="legend legend6">4.6</span>
-                        <span className="legendName">Sonuç ve başarı odaklıyım</span>
-                    </div>
-                    <div className="label">
-                        <span className="legend legend3">5</span>
-                        <span className="legendName">Anlıyorum ve anlaşılıyorum</span>
-                    </div>
+                    {competenceCategory.map((category, index) => (
+                        <div key={index} className="label">
+                            <span className={`legend legend${index + 1}`}>{competenceResult[index]?.point}</span>
+                            <span className="legendName">{category.name}</span>
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>

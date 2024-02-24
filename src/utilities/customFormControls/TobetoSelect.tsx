@@ -2,16 +2,21 @@ import { Field, useField } from 'formik'
 import React from 'react'
 import { FormField, Label } from 'semantic-ui-react'
 
-export default function TobetoSelect({ ...props }: any) {
+export default function TobetoSelect({ onChange, ...props }: any) {
     const [field, meta] = useField(props)
+    const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        field.onChange(event);
+        if (onChange) {
+            onChange(event);
+        }
+    };
+
     return (
-        <div>
-            <FormField error={meta.touched && !!meta.error}>
-                <Field {...field} {...props} />
-                {meta.touched && !!meta.error ? (
-                    <Label pointing basic color="red" content={meta.error}></Label>
-                ) : null}
-            </FormField>
-        </div>
+        <FormField error={meta.touched && !!meta.error}>
+            <select {...field} {...props} onChange={handleSelectChange} />
+            {meta.touched && !!meta.error ? (
+                <Label pointing basic color="red" content={meta.error}></Label>
+            ) : null}
+        </FormField>
     )
 }

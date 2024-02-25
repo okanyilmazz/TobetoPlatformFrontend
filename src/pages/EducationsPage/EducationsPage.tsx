@@ -11,8 +11,8 @@ import { GetListEducationProgramResponse } from '../../models/responses/educatio
 import GetListProjectResponse from '../../models/responses/project/getListProjectResponse';
 import authService from '../../services/authService';
 import accountService from '../../services/accountService';
-import projectService from '../../services/projectService';
 import GetAccountResponse from '../../models/responses/account/getAccountResponse';
+import projectService from '../../services/projectService';
 
 const EducationsPage = () => {
     const [account, setAccount] = useState<GetAccountResponse>();

@@ -25,6 +25,7 @@ import PersonalInformationPage from '../../pages/PersonalInformationPage/Persona
 import AnalysisReport from '../../pages/AnalysisReport/AnalysisReport';
 import SessionsPage from '../../pages/SessionsPage/SessionsPage';
 import AdminPanel from '../../pages/AdminPanel/AdminPanel';
+import EducationalBackgroundPage from '../../pages/EducationalBackgroundPage/EducationalBackgroundPage';
 
 
 
@@ -59,9 +60,10 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/profilim/profilimi-duzenle/medya-hesaplarim" Component={SocialMediaPage} />
             <Route path="/profilim/profilimi-duzenle/yabanci-dil" Component={LanguagePage} />
             <Route path="/profilim/profilimi-duzenle/kisisel-bilgilerim" Component={PersonalInformationPage} />
+            <Route path="/profilim/profilimi-duzenle/egitim-hayatim" Component={EducationalBackgroundPage} />
             <Route path="/egitimlerim/egitim-detaylari/:educationProgramId" Component={EducationProgramContent} />
-            <Route path="/text" Component={AnalysisReport} />
-            <Route path="/text3" Component={SessionsPage} />
+            <Route path="/profilim/degerlendirmeler/rapor/tobeto-iste-basari-yetkinlikleri/1" Component={AnalysisReport} />
+            <Route path="/egitimlerim/egitim-detaylari/:educationProgramId" Component={SessionsPage} />
             <Route path="/admin-panel" Component={AdminPanel} />
             <Route path="/admin-panel/ogrenciler" Component={AdminPanel} />
             <Route path="/admin-panel/dersler" Component={AdminPanel} />

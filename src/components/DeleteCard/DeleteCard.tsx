@@ -10,7 +10,7 @@ function DeleteCard(props: any) {
 
   const handleDelete = () => {
     setShow(false);
-    props.handleDeleteConfirmation();
+    props.delete();
   };
 
   return (
@@ -44,4 +44,4 @@ function DeleteCard(props: any) {
   );
 }
 
-export default DeleteCard; 
+export default DeleteCard;  

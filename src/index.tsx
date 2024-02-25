@@ -12,6 +12,7 @@ import 'react-circular-progressbar/dist/styles.css';
 import '@uppy/core/dist/style.min.css';
 import '@uppy/drag-drop/dist/style.min.css';
 import '@uppy/dashboard/dist/style.css'
+import "react-datepicker/dist/react-datepicker.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

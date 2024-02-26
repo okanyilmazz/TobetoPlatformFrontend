@@ -14,4 +14,3 @@ export interface GetListEducationProgramResponse {
     startDate: Date;
     deadline: Date;
 }
-

@@ -1,9 +1,8 @@
 import { Identifier } from "typescript";
 
-export default interface GetListAccountLessonResponse {
+export default interface GetAccountEducationProgramResponse {
     id: Identifier;
     accountId: Identifier;
-    lessonId: Identifier;
+    educationProgramId: Identifier;
     statusPercent: number;
-    lessonPath: string;
 }

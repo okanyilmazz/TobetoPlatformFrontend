@@ -69,7 +69,7 @@ export default function SidebarCard() {
                         <span>Yabancı Dillerim</span>
                     </div>
                 </li>
-                <li>
+                <li onClick={() => navigate("/profilim/profilimi-duzenle/ayarlar")} className={lastPathSegment === "ayarlar" ? 'active-item active-edit' : ''}>
                     <div className='sidebar-icon'>
                         <Image src='/assets/Icons/profile-settings/settings.svg' />
                     </div>

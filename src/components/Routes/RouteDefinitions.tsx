@@ -28,6 +28,7 @@ import AdminPanel from '../../pages/AdminPanel/AdminPanel';
 import EducationalBackgroundPage from '../../pages/EducationalBackgroundPage/EducationalBackgroundPage';
 import MyExperiences from '../../pages/MyExperiences/MyExperiences';
 import AnnouncementsPage from '../../pages/AnnouncementsPage/AnnouncementsPage';
+import SettingsPage from '../../pages/SettingsPage/SettingsPage';
 
 
 
@@ -67,6 +68,8 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/profilim/degerlendirmeler/rapor/tobeto-iste-basari-yetkinlikleri/1" element={<ProtectedRoute><AnalysisReport /></ProtectedRoute>} />
             <Route path="/egitimlerim/egitim-detaylari/:educationProgramId" Component={SessionsPage} />
             <Route path="/profilim/profilimi-duzenle/deneyimlerim" element={<ProtectedRoute><MyExperiences /></ProtectedRoute>} />
+            <Route path="/profilim/profilimi-duzenle/ayarlar" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+
 
             <Route path="/admin-panel" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
             <Route path="/admin-panel/ogrenciler" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
@@ -77,7 +80,20 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/admin-panel/egitimler" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
             <Route path="/admin-panel/roller" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
             <Route path="/admin-panel/kullanicilar" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
-        </Routes >
+
+            <Route path="/text" Component={AnalysisReport} />
+            <Route path="/text3" Component={SessionsPage} />
+            <Route path="/admin-panel" Component={AdminPanel} />
+            <Route path="/admin-panel/ogrenciler" Component={AdminPanel} />
+            <Route path="/admin-panel/dersler" Component={AdminPanel} />
+            <Route path="/admin-panel/duyurular" Component={AdminPanel} />
+            <Route path="/admin-panel/egitimler" Component={AdminPanel} />
+            <Route path="/admin-panel/oturumlar" Component={AdminPanel} />
+            <Route path="/admin-panel/egitimler" Component={AdminPanel} />
+            <Route path="/admin-panel/roller" Component={AdminPanel} />
+            <Route path="/admin-panel/kullanicilar" Component={AdminPanel} />
+
+        </Routes>
     )
 }
 export default RouteDefinitions;

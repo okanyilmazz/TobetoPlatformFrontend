@@ -30,6 +30,11 @@ import accountLessonService from '../../services/accountLessonService';
 import educationProgramLessonService from '../../services/educationProgramLessonService';
 import UpdateAccountLessonRequest from '../../models/requests/accountLesson/updateAccountLessonRequest';
 import ReactPlayer from "react-player"
+import AddAccountLessonRequest from '../../models/requests/accountLesson/addAccountLessonRequest';
+import { formatDate } from '@fullcalendar/core';
+import { ADDED_FAVORITE, DELETED_FAVORITE } from '../../environment/environment';
+import AddAccountEducationProgramRequest from '../../models/requests/accountEducationProgram/addEducationProgramRequest';
+import accountEducationProgramService from '../../services/accountEducationProgramService';
 
 export default function EducationProgramContent() {
 
@@ -42,6 +47,8 @@ export default function EducationProgramContent() {
 
     const [educationProgram, setEducationProgram] = useState<GetListEducationProgramResponse>()
     const [lesson, setLesson] = useState<GetListLessonResponse>();
+    const [defaultLesson, setDefaultLesson] = useState<GetListLessonResponse>();
+
     const [selectedLessonId, setSelectedLessonId] = useState<any>();
     const [accountLessonList, setAccountLessonList] = useState<Paginate<GetListAccountLessonResponse>>();
 
@@ -60,25 +67,16 @@ export default function EducationProgramContent() {
     /*Video */
 
     const playerRef = useRef<ReactPlayer | null>(null);
-    const [videoCurrentSeconds, setVideoCurrentSeconds] = useState<number>(0);
-    const [videoDuration, setVideoDuration] = useState<number>(0);
     const [watchPercentage, setWatchPercentage] = useState<number>(0);
 
-    const [accordionState, setAccordionState] = useState(false);
 
-
-
-    // useEffect(() => {
-    //     if (educationProgramId) {
-    //         educationProgramLessonService.getByEducationProgramId(educationProgramId).then((result: any) => {
-    //             setEducationProgramLessons(result.data);
-    //             setSelectedLesson(result.data[0])
-
-    //         })
-    //     }
-    // }, [])
-
-
+    useEffect(() => {
+        lessonService.getByEducationProgramId(educationProgramId!).then(result => {
+            setDefaultLesson(result.data.items[0]);
+            setSelectedLessonId(result.data.items[0].id);
+            setLesson(result.data.items[0])
+        })
+    }, [])
     useEffect(() => {
         if (selectedLessonId) {
             lessonService.getById(selectedLessonId).then((result: any) => {
@@ -94,14 +92,20 @@ export default function EducationProgramContent() {
                 if (likedLessonFilter.length > 0) {
                     setIsLikedLesson(true);
                 }
+                else {
+                    setIsLikedLesson(false);
+                }
                 setLessonLikeCount(result.data.count)
             })
+
+            accountLessonService.getByAccountIdAndLessonId(user.id, selectedLessonId).then((result: any) => {
+                setAccountLesson(result.data)
+            });
         }
     }, [selectedLessonId])
 
 
     useEffect(() => {
-
         if (educationProgramId) {
             educationProgramLessonService.getByEducationProgramId(educationProgramId).then((result: any) => {
                 setEducationProgramLessons(result.data);
@@ -110,47 +114,58 @@ export default function EducationProgramContent() {
             educationProgramService.getById(educationProgramId).then((result: any) => {
                 setEducationProgram(result.data)
             })
-
-            accountService.getByEducationProgramIdForLike(educationProgramId, 0, 10).then(result => {
-                setEducationProgramLikers(result.data);
-            })
-
-            accountLessonService.getByAccountId(user.id).then((result: any) => {
-                setAccountLessonList(result.data)
-            })
         }
 
-
-    }, [user.id, lessonLikeCount, educationProgramLikeCount, educationProgramId])
-
-
+    }, [educationProgramId])
 
     useEffect(() => {
+
+        accountService.getByEducationProgramIdForLike(educationProgramId!, 0, 10).then(result => {
+            setEducationProgramLikers(result.data);
+        })
+    }, [educationProgramLikeCount])
+
+    useEffect(() => {
+
+        accountService.getByLessonIdForLike(selectedLessonId, 0, 10).then(result => {
+            setLessonLikers(result.data);
+        })
+    }, [lessonLikeCount])
+
+    useEffect(() => {
+        accountLessonService.getByAccountId(user.id).then((result: any) => {
+            setAccountLessonList(result.data)
+        })
+
         if (educationProgramId) {
             educationProgramLikeService.getByEducationProgramId(educationProgramId).then((result: any) => {
                 const likedEducationProgramFilter = result.data.items?.filter((c: any) => c.accountId === user.id)
                 if (likedEducationProgramFilter) {
-                    console.dir(likedEducationProgramFilter)
                     if (likedEducationProgramFilter.length > 0) {
                         setIsLikedEducationProgram(true);
+                    }
+                    else {
+                        setIsLikedEducationProgram(false);
                     }
                     setEducationProgramLikeCount(result.data.count)
                 }
             })
         }
-    }, [setIsLikedEducationProgram])
+
+    }, [user.id])
+
 
 
     const addFavorite = () => {
         setIsFavorite(true);
-        toast.success("Favorilere ekleme işlemin başarıyla gerçekleşti.");
+        toast.success(ADDED_FAVORITE);
     };
     const removeFavorite = () => {
         setIsFavorite(false);
-        toast.info("Favorilerden çıkarma işlemin başarıyla gerçekleşti.");
+        toast.info(DELETED_FAVORITE);
     };
 
-    function handleImageClick() {
+    const handleImageClick = () => {
         if (isFavorite) {
             removeFavorite();
         } else {
@@ -160,7 +175,7 @@ export default function EducationProgramContent() {
     };
 
 
-    async function handleEducationProgramLikersPaginate(likersPaginateIndex: any) {
+    const handleEducationProgramLikersPaginate = (likersPaginateIndex: any) => {
         if (educationProgramId) {
             accountService.getByEducationProgramIdForLike(educationProgramId, likersPaginateIndex - 1, 10).then(result => {
                 setEducationProgramLikers(result.data);
@@ -168,43 +183,48 @@ export default function EducationProgramContent() {
         }
     }
 
-    async function handleLessonLikersPaginate(likersPaginateIndex: any) {
-        accountService.getByLessonIdForLike("f0ce896c-7258-4f1d-ba4d-08dc2f2c25fb", likersPaginateIndex - 1, 10).then(result => {
+    const handleLessonLikersPaginate = async (likersPaginateIndex: any) => {
+        accountService.getByLessonIdForLike(selectedLessonId, likersPaginateIndex - 1, 10).then(result => {
             setLessonLikers(result.data);
         })
     }
 
-    async function handleEducationProgramLikeFromChild(dataFromLikeButton: any) {
+    const handleEducationProgramLikeFromChild = async (dataFromLikeButton: any) => {
         if (educationProgramId) {
 
             if (dataFromLikeButton) {
-                const addLessonLike: AddEducationProgramLikeRequest = {
+                const addEducationLike: AddEducationProgramLikeRequest = {
                     accountId: user.id,
                     educationProgramId: educationProgramId
                 }
-                await educationProgramLikeService.add(addLessonLike);
+                await educationProgramLikeService.add(addEducationLike);
                 setEducationProgramLikeCount(educationProgramLikeCount + 1);
+
             } else {
                 const deleteEducationProgramLike: DeleteEducationProgramLikeRequest = {
-                    id: user.id,
+                    accountId: user.id,
+                    educationProgramId: educationProgramId
+
                 }
+                console.log(deleteEducationProgramLike)
                 await educationProgramLikeService.deleteByAccountIdAndEducationProgramId(deleteEducationProgramLike);
                 setEducationProgramLikeCount(educationProgramLikeCount - 1);
             }
         }
     }
 
-    async function handleLessonLikeFromChild(dataFromLikeButton: any) {
-        if (dataFromLikeButton && accountLesson) {
+    const handleLessonLikeFromChild = async (dataFromLikeButton: any) => {
+        if (dataFromLikeButton) {
             const addLessonLike: AddLessonLikeRequest = {
                 accountId: user.id,
-                lessonId: accountLesson?.lessonId
+                lessonId: accountLesson!.lessonId
             }
             await lessonLikeService.add(addLessonLike);
             setLessonLikeCount(lessonLikeCount + 1);
         } else {
             const deleteLessonLike: DeleteLessonLikeRequest = {
-                id: user.id
+                accountId: user.id,
+                lessonId: accountLesson!.lessonId
             }
             await lessonLikeService.deleteByAccountIdAndLessonId(deleteLessonLike);
             setLessonLikeCount(lessonLikeCount - 1);
@@ -221,6 +241,8 @@ export default function EducationProgramContent() {
         setOpenDrawer(false);
     };
 
+
+
     const handleUpdateAccountLessonStatus = async () => {
         if (accountLesson) {
             if (watchPercentage >= accountLesson.statusPercent) {
@@ -231,17 +253,47 @@ export default function EducationProgramContent() {
                     statusPercent: watchPercentage
                 };
                 await accountLessonService.update(updateAccountLesson);
+                accountLessonService.getByAccountIdAndLessonId(user.id, selectedLessonId).then((result: any) => {
+                    setAccountLesson(result.data)
+                });
+                accountLessonService.getByAccountId(user.id).then((result: any) => {
+                    setAccountLessonList(result.data)
+                })
+                console.log(calculatedPoints)
             }
         }
     };
 
+
+    const handleAddAccountLessonStatus = async (lessonId: any) => {
+        // const addAccountEducationProgram: AddAccountEducationProgramRequest = {
+        //     accountId: user.id,
+        //     educationProgramId: educationProgramId!,
+        //     statusPercent: 0
+        // }
+        // await accountEducationProgramService.add(addAccountEducationProgram);
+        if (!accountLesson) {
+            const addAccountLesson: AddAccountLessonRequest = {
+                accountId: user.id,
+                lessonId: lessonId,
+                statusPercent: 0
+            };
+
+            await accountLessonService.add(addAccountLesson);
+            accountLessonService.getByAccountIdAndLessonId(user.id, selectedLessonId).then((result: any) => {
+                setAccountLesson(result.data)
+            });
+            accountLessonService.getByAccountId(user.id).then((result: any) => {
+                setAccountLessonList(result.data)
+            })
+        }
+    }
+
+
+
     const handleSelectLesson = async (selectedLessonId: any) => {
         setSelectedLessonId(selectedLessonId)
-        accountLessonService.getByAccountIdAndLessonId(user.id, selectedLessonId).then((result: any) => {
-            setAccountLesson(result.data)
-        });
     };
-
 
     const calculateWatchPercentage = (playedSeconds: number, duration: number) => {
         const percentage = (playedSeconds / duration) * 100;
@@ -249,9 +301,18 @@ export default function EducationProgramContent() {
         setWatchPercentage(formattedPercentage);
     };
 
+    /*ProgressBar */
+    const totalLessonCount = educationProgramLessons?.count || 0;
+    const completedLessonCount = accountLessonList?.items.filter(item => item.statusPercent > 99.2).length || 0;
+    const completionPercentage = totalLessonCount > 0 ? (completedLessonCount / totalLessonCount) * 100 : 0;
+    const totalStatusPercent = accountLessonList?.items.reduce((acc, item) => acc + item.statusPercent, 0) || 0;
+    let calculatedPoints = (totalStatusPercent / (totalLessonCount * 100)) * 100;
+    calculatedPoints = calculatedPoints > 99.2 ? 100 : parseFloat(calculatedPoints.toFixed(1));
+
     useEffect(() => {
-        console.log('İzlenme Yüzdesi:', watchPercentage);
-    }, [watchPercentage]);
+
+    }, [calculatedPoints]);
+
 
     return (
 
@@ -286,7 +347,9 @@ export default function EducationProgramContent() {
                                                                         </div>
                                                                         <br />
                                                                         <div className="lesson2">
-                                                                            Eğitimde yer alan tüm içerikleri tamamladığında (162 / 290)
+                                                                            Eğitimde yer alan tüm içerikleri tamamladığında (
+                                                                            {`${accountLessonList?.items.filter(item => item.statusPercent > 99.2).length || 0}/${educationProgramLessons?.count || 0}`}
+                                                                            )
                                                                         </div>
                                                                         <br />
                                                                         <div className="lesson1">
@@ -294,13 +357,25 @@ export default function EducationProgramContent() {
                                                                         </div>
                                                                         <br />
                                                                         <div className="lesson2">
-                                                                            Eğitimde yer alan tüm içerikleri tamamladığında (162 / 290)
+                                                                            Eğitimde yer alan tüm içerikleri tamamladığında (
+                                                                            {`${accountLessonList?.items.filter(item => item.statusPercent > 99.2).length || 0}/${educationProgramLessons?.count || 0}`}
+                                                                            )
                                                                         </div>
                                                                     </div>
                                                                 </Tooltip>
                                                             }>
-                                                            <span>Bitirmek için 13 günün var</span>
-
+                                                            <div>
+                                                                {calculatedPoints === 100 ? (
+                                                                    <div className="unit-icon">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#3DCB79" viewBox="0 0 256 256"><path d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path></svg>
+                                                                        <span className='tooltip-congrats-text'>Başardın!</span>
+                                                                    </div>
+                                                                ) : (
+                                                                    <span>
+                                                                        Bitirmek için {(educationProgram?.deadline) ? Math.round(((new Date(educationProgram?.deadline)).getTime() - (new Date()).getTime()) / (1000 * 60 * 60 * 24)) : ""} günün var
+                                                                    </span>
+                                                                )}
+                                                            </div>
                                                         </OverlayTrigger>
                                                         <div className="question-icon">
                                                             <OverlayTrigger
@@ -313,7 +388,8 @@ export default function EducationProgramContent() {
                                                                             </div>
                                                                             <br />
                                                                             <div className="lesson2">
-                                                                                Eğitimde yer alan tüm içerikleri tamamladığında (162 / 290)
+                                                                                Eğitimde yer alan tüm içerikleri tamamladığında (
+                                                                                {`${accountLessonList?.items.filter(item => item.statusPercent > 99.2).length || 0}/${educationProgramLessons?.count || 0}`})
                                                                             </div>
                                                                             <br />
                                                                             <div className="lesson1">
@@ -321,7 +397,8 @@ export default function EducationProgramContent() {
                                                                             </div>
                                                                             <br />
                                                                             <div className="lesson2">
-                                                                                Eğitimde yer alan tüm içerikleri tamamladığında (162 / 290)
+                                                                                Eğitimde yer alan tüm içerikleri tamamladığında (
+                                                                                {`${accountLessonList?.items.filter(item => item.statusPercent > 99.2).length || 0}/${educationProgramLessons?.count || 0}`})
                                                                             </div>
                                                                         </div>
                                                                     </Tooltip>
@@ -335,7 +412,7 @@ export default function EducationProgramContent() {
                                             <div className="activity-process col-md-3">
                                                 <div className="activity-score">
                                                     <div className="activity-button">
-                                                        33.5 PUAN
+                                                        {calculatedPoints} PUAN
                                                     </div>
                                                     {
                                                         <LikeButton
@@ -348,17 +425,12 @@ export default function EducationProgramContent() {
                                                             onDataFromLikeButton={handleEducationProgramLikeFromChild}
                                                             likersPaginateIndex={handleEducationProgramLikersPaginate} />
                                                     }
-                                                    <img
-                                                        src={
-                                                            isFavorite
-                                                                ? "https://lms.tobeto.com/tobeto/eep/Styles/assets/css/img/icon/learning-experience-platform/remove-favorite.svg"
-                                                                : "https://lms.tobeto.com/tobeto/eep/Styles/assets/css/img/icon/learning-experience-platform/add-favorite.svg"
-                                                        }
-
+                                                    <Image src={
+                                                        isFavorite
+                                                            ? "https://lms.tobeto.com/tobeto/eep/Styles/assets/css/img/icon/learning-experience-platform/remove-favorite.svg"
+                                                            : "https://lms.tobeto.com/tobeto/eep/Styles/assets/css/img/icon/learning-experience-platform/add-favorite.svg"}
                                                         alt={isFavorite ? "remove-favorite-icon" : "add-favorite-icon"}
                                                         onClick={handleImageClick}
-
-
                                                     />
                                                 </div>
                                             </div>
@@ -369,11 +441,9 @@ export default function EducationProgramContent() {
                                                     placement="top"
                                                     overlay={<Tooltip id="tooltip-top"><div className="tooltip-color">
                                                         Eğitim Tamamlama Oranı
-                                                    </div></Tooltip >}
-                                                >
-                                                    <Progress percent={50} />
+                                                    </div></Tooltip >}>
+                                                    <Progress percent={completionPercentage} />
                                                 </OverlayTrigger>
-
                                             </div>
                                         </div>
                                     </div>
@@ -383,39 +453,42 @@ export default function EducationProgramContent() {
 
                     </div>
                 </div>
-
                 <div className="row">
                     <div className='col-md-5 mt-5'>
                         <div className='test-page'>
-                            {/* <Collapse {...CollapseProps} /> */}
-
                             <Accordion className='accordion-education-program-lesson' defaultActiveKey="0">
                                 <Accordion.Item eventKey="0">
                                     <Accordion.Header>{educationProgram?.name}</Accordion.Header>
                                     {
-
-                                        educationProgramLessons?.items.map((educationProgramLesson) => {
-                                            const lessonId = educationProgramLesson.lessonId;
-                                            const matchingLesson = accountLessonList?.items.find(lesson => lesson.lessonId === lessonId);
-                                            const statusPercent = matchingLesson?.statusPercent || 0;
-                                            return (
-                                                <Accordion.Body className={selectedLessonId === lessonId ? "active-accordion" : ""} onClick={() => handleSelectLesson(lessonId)} key={String(lessonId)}>
-                                                    <div className='lesson-info'>
-                                                        <span >{educationProgramLesson.lessonName}</span>
-                                                        <span style={statusPercent === 0 || statusPercent > 99.2 ? { display: 'none' } : { display: 'block' }}>
-                                                            <div className='unit-icon unit-ongoing'></div>
-                                                        </span>
-                                                        <span className="unit-end" style={statusPercent > 99.5 ? { display: 'flex' } : { display: 'none' }}>
-                                                            <Image src='/assets/Icons/unit-completed.svg' width={14} height={14}></Image>
-                                                        </span>
-                                                    </div>
-
-                                                </Accordion.Body>
-                                            );
-                                        })}
+                                        educationProgramLessons?.items && educationProgramLessons.count > 0 ? (
+                                            educationProgramLessons.items.map((educationProgramLesson) => {
+                                                const lessonId = educationProgramLesson.lessonId;
+                                                const matchingLesson = accountLessonList?.items.find(lesson => lesson.lessonId === lessonId);
+                                                const statusPercent = matchingLesson?.statusPercent || 0;
+                                                return (
+                                                    <Accordion.Body className={selectedLessonId === lessonId ? "active-accordion" : ""} onClick={() => handleSelectLesson(lessonId)} key={String(lessonId)}>
+                                                        <div className='lesson-info'>
+                                                            <span>{educationProgramLesson.lessonName}</span>
+                                                            <span style={statusPercent === 0 || statusPercent > 99.2 ? { display: 'none' } : { display: 'block' }}>
+                                                                <Image src='/assets/Icons/unit-ongoing.svg' width={14} height={14}></Image>
+                                                            </span>
+                                                            <span className="unit-end" style={statusPercent > 99.2 ? { display: 'flex' } : { display: 'none' }}>
+                                                                <Image src='/assets/Icons/unit-completed.svg' width={14} height={14}></Image>
+                                                            </span>
+                                                        </div>
+                                                        <div className='lesson-type-info'>
+                                                            <span>{educationProgramLesson.lessonSubTypeName}</span>
+                                                        </div>
+                                                    </Accordion.Body>
+                                                );
+                                            })
+                                        ) : (
+                                            <Accordion.Body>
+                                                <div>Eğitime atanmış ders bulunmamaktadır.</div>
+                                            </Accordion.Body>)
+                                    }
                                 </Accordion.Item>
                             </Accordion>
-
                         </div>
                     </div>
                     <div className='col-md-7'>
@@ -424,9 +497,10 @@ export default function EducationProgramContent() {
                                 <ReactPlayer
                                     ref={playerRef}
                                     className="lesson-card-video"
-                                    url='/assets/videos/a.m3u8'
+                                    url={lesson?.lessonPath === null || lesson?.lessonPath === undefined ? defaultLesson?.lessonPath : lesson?.lessonPath}
                                     width='100%'
                                     height='100%'
+                                    onStart={() => handleAddAccountLessonStatus(selectedLessonId)}
                                     onPause={() => handleUpdateAccountLessonStatus()}
                                     onProgress={({ playedSeconds, played, loaded }) => {
                                         const duration = playerRef.current?.getDuration() || 0;
@@ -434,20 +508,30 @@ export default function EducationProgramContent() {
                                     }}
                                     controls={true} />
                             </div>}
-                            title={<div className='lesson-title'>{lesson?.name}</div>}
+                            title={<div className='lesson-title'>{lesson?.name || defaultLesson?.name}</div>}
                             text={
                                 <div className='lesson-text d-flex'>
-                                    <span>Video - {lesson?.duration} dk </span>
-                                    <span style={accountLesson?.statusPercent === 0 ? { display: 'block' } : { display: 'none' }}> <FaCircle className='lesson-card-icon-first' /> Başlamadın</span>
-                                    <span style={accountLesson && (accountLesson?.statusPercent === 0 || accountLesson?.statusPercent > 99.5) ? { display: 'none' } : { display: 'block' }}>
-                                        <div className='unit-icon unit-ongoing'></div>
-                                        Devam Ediyor</span>
-                                    <span className="unit-end" style={accountLesson && accountLesson?.statusPercent > 99.2 ? { display: 'flex' } : { display: 'none' }} >
-                                        <div className="unit-icon" >
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#3DCB79" viewBox="0 0 256 256"><path d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path></svg>
-                                        </div>
-                                        Tebrikler, tamamladın!</span>
-                                </div>}
+                                    <span>Video - {lesson?.duration || defaultLesson?.duration} dk </span>
+                                    {accountLesson?.id === undefined || accountLesson?.statusPercent === 0 ? (
+                                        <span style={{ display: 'block' }}>
+                                            <FaCircle className='lesson-card-icon-first' /> Başlamadın
+                                        </span>
+                                    ) : (
+                                        <>
+                                            <span style={accountLesson && (accountLesson?.statusPercent === 0 || accountLesson?.statusPercent > 99.5) ? { display: 'none' } : { display: 'flex' }}>
+                                                <div className='unit-icon unit-ongoing'></div>
+                                                Devam Ediyor
+                                            </span>
+                                            <span className="unit-end" style={accountLesson?.statusPercent > 99.2 ? { display: 'flex' } : { display: 'none' }}>
+                                                <div className="unit-icon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#3DCB79" viewBox="0 0 256 256"><path d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path></svg>
+                                                </div>
+                                                Tebrikler, tamamladın!
+                                            </span>
+                                        </>
+                                    )}
+                                </div>
+                            }
                             button={<Button onClick={showDrawer} className='lesson-card-btn'>DETAY</Button>} />
                     </div>
                 </div>
@@ -460,22 +544,16 @@ export default function EducationProgramContent() {
                     body={
                         <>
                             <div className='education-drawer-content'   >
-
                                 <div className='education-drawer-content-left'>
-
                                     <Image src='https://lms.tobeto.com/tobeto/eep/common_show_picture_cached.aspx?pQS=DiBldjEKnwJCe69nG2MNII%2bkPM%2fmZBEP' />
                                 </div>
                                 <div className='education-drawer-content-middle'>
-
                                     <div className='education-title'>
-
                                         <span>{lesson?.name}</span>
                                     </div>
                                     <div className='education-sub-details'>
-
                                         <div className='tag-blue'>
-
-                                            <span>VİDEO</span>
+                                            <span>{lesson?.lessonSubTypeName.toUpperCase()}</span>
                                         </div>
                                         <div className='course-detail-info'>
                                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#000000" viewBox="0 0 256 256"><path d="M128,40a96,96,0,1,0,96,96A96.11,96.11,0,0,0,128,40Zm0,176a80,80,0,1,1,80-80A80.09,80.09,0,0,1,128,216ZM173.66,90.34a8,8,0,0,1,0,11.32l-40,40a8,8,0,0,1-11.32-11.32l40-40A8,8,0,0,1,173.66,90.34ZM96,16a8,8,0,0,1,8-8h48a8,8,0,0,1,0,16H104A8,8,0,0,1,96,16Z"></path></svg>
@@ -507,12 +585,12 @@ export default function EducationProgramContent() {
                                     </div>
                                     <div className='ed-drawer-sub-content'>
                                         <div className='ed-drawer-text-area'>
-                                            <div className='ed-drawer-course-status-info not-start' style={accountLesson?.statusPercent === 0 ? { display: 'block' } : { display: 'none' }}>
+                                            <div className='ed-drawer-course-status-info not-start' style={!accountLesson || accountLesson?.statusPercent === 0 ? { display: 'block' } : { display: 'none' }}>
                                                 <FaCircle className='lesson-card-icon-first' />
                                                 <span >
                                                     Başlamadın</span>
                                             </div>
-                                            <div className='ed-drawer-course-status-info' style={accountLesson && (accountLesson?.statusPercent === 0 || accountLesson?.statusPercent > 99.5) ? { display: 'none' } : { display: 'flex' }}>
+                                            <div className='ed-drawer-course-status-info' style={accountLesson && (accountLesson?.statusPercent > 0 && accountLesson?.statusPercent < 99.2) ? { display: 'flex' } : { display: 'none' }}>
                                                 <span >
                                                     <div className='unit-icon unit-ongoing'></div>
                                                     Devam Ediyor</span>
@@ -523,7 +601,7 @@ export default function EducationProgramContent() {
                                             </div>
 
 
-                                            <div className='ed-drawer-course-status-info' style={accountLesson && accountLesson?.statusPercent > 99.5 ? { display: 'flex' } : { display: 'none' }}>
+                                            <div className='ed-drawer-course-status-info' style={accountLesson && accountLesson?.statusPercent > 99.2 ? { display: 'flex' } : { display: 'none' }}>
                                                 <span className="unit-end" >
                                                     <div className="unit-icon" >
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#3DCB79" viewBox="0 0 256 256"><path d="M234,80.12A24,24,0,0,0,216,72H160V56a40,40,0,0,0-40-40,8,8,0,0,0-7.16,4.42L75.06,96H32a16,16,0,0,0-16,16v88a16,16,0,0,0,16,16H204a24,24,0,0,0,23.82-21l12-96A24,24,0,0,0,234,80.12ZM32,112H72v88H32ZM223.94,97l-12,96a8,8,0,0,1-7.94,7H88V105.89l36.71-73.43A24,24,0,0,1,144,56V80a8,8,0,0,0,8,8h64a8,8,0,0,1,7.94,9Z"></path></svg>
@@ -546,7 +624,6 @@ export default function EducationProgramContent() {
                                             <path d="M243.31,136,144,36.69A15.86,15.86,0,0,0,132.69,32H40a8,8,0,0,0-8,8v92.69A15.86,15.86,0,0,0,36.69,144L136,243.31a16,16,0,0,0,22.63,0l84.68-84.68a16,16,0,0,0,0-22.63Zm-96,96L48,132.69V48h84.69L232,147.31ZM96,84A12,12,0,1,1,84,72,12,12,0,0,1,96,84Z"></path>
                                         </svg>
                                         <span>Kategori</span>
-                                        {lesson?.lessonCategoryName}
                                     </div>
                                     <div className='education-drawer-categories'>
                                         <span>{lesson?.lessonCategoryName}</span>

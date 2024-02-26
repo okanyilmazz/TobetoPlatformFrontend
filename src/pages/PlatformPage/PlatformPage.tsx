@@ -16,6 +16,7 @@ import GetListExamResponse from '../../models/responses/exam/getListExamResponse
 import examService from '../../services/examService'
 import { userActions } from '../../store/user/userSlice'
 import { useNavigate } from 'react-router-dom'
+import authService from '../../services/authService'
 
 export default function PlatformPage() {
     const [educationPrograms, setEducationPrograms] = useState<Paginate<GetListEducationProgramResponse>>();
@@ -23,6 +24,7 @@ export default function PlatformPage() {
     const [exams, setExams] = useState<Paginate<GetListExamResponse>>();
 
     const userState = useSelector((state: any) => state.user);
+    const user = authService.getUserInfo();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -34,7 +36,7 @@ export default function PlatformPage() {
             return;
         }
 
-        examService.getByAccountId(userState.user.id, 0, 2).then(result => {
+        examService.getByAccountId(user.id, 0, 2).then(result => {
             setExams(result.data);
         });
 
@@ -45,7 +47,9 @@ export default function PlatformPage() {
         announcementProjectService.getAll(0, 100).then(result => {
             setAnnouncementProjects(result.data);
         });
-    }, [userState]);
+
+
+    }, [user.id]);
 
     function formatCustomDate(inputDate: Date) {
         const months = [

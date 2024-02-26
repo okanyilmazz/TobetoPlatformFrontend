@@ -1,7 +1,7 @@
 .radar-labels {
     display: flex;
     flex-direction: column;
-    gap: 13px;
+    gap: 11px;
     margin-top: 20px;
 }
 
@@ -22,11 +22,12 @@
 .radar-labels .label .legend {
     color: #fff;
     font-size: 10px;
-    min-width: 32px;
-    padding: 4px 8px;
     text-align: center;
     margin-right: 8px;
     border-radius: 5px;
+    display: inline-block; /* Kutucukları blok eleman olarak stilleyin */
+    width: 30px; 
+    height: 20px;;
 }
 
 .radar-labels .label .legend.legend8 {

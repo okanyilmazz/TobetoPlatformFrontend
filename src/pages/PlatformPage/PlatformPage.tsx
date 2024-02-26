@@ -114,7 +114,9 @@ export default function PlatformPage() {
                                                 <EducationCard
                                                     title={educationProgram.name}
                                                     date={formatCustomDate(educationProgram.startDate)}
-                                                    id={educationProgram.id} />
+                                                    id={educationProgram.id}
+                                                    thumbnailPath={educationProgram.thumbnailPath}
+                                                     />
                                             ))
                                         }
                                     </div>

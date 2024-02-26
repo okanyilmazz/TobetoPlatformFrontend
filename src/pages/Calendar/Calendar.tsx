@@ -13,30 +13,12 @@ import GetListSessionResponse from '../../models/responses/session/getListSessio
 import SessionService from '../../services/sessionService';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router';
+import GetListUserResponse from '../../models/responses/user/getListUserResponse';
+import userService from '../../services/userService';
 
-const optionsInstructor = [
-  { value: 'Eğitmen Dojo', label: 'Eğitmen Dojo' },
-  { value: 'Roiva Eğitmen', label: 'Roiva Eğitmen' },
-  { value: 'Veli Bahçeci', label: 'Veli Bahçeci' },
-  { value: 'Ahmet Çetinkaya', label: 'Ahmet Çetinkaya' },
-  { value: 'İrem Balcı', label: 'İrem Balcı' },
-  { value: 'Cem Bayraktaroğlu', label: 'Cem Bayraktaroğlu' },
-  { value: 'Denizhan Dursun', label: 'Denizhan Dursun' },
-  { value: 'Halit Enes Kalaycı', label: 'Halit Enes Kalaycı' },
-  { value: 'Gürkan İlişen', label: 'Gürkan İlişen' },
-  { value: 'Kadir Murat Başeren', label: 'Kadir Murat Başeren' },
-  { value: 'Aykut Baştuğ', label: 'Aykut Baştuğ' },
-  { value: 'Mehmet Emin Kortak', label: 'Mehmet Emin Kortak' },
-  { value: 'Engin Demiroğ', label: 'Engin Demiroğ' },
-  { value: 'Serkan Tekin', label: 'Serkan Tekin' },
-  { value: 'Barbaros Ciga', label: 'Barbaros Ciga' },
-  { value: 'Ali Seyhan', label: 'Ali Seyhan' },
-  { value: 'Kader Yavuz', label: 'Kader Yavuz' },
-];
-
-
-type Props = {};
-const Calendar = (props: Props) => {
+const Calendar = () => {
+  const [sessionWithInstructor, setSessionWithInstructor] = useState<Paginate<GetListSessionResponse>>();
+  const [user, setUser] = useState<Paginate<GetListUserResponse>>();
   const [sessions, setSessions] = useState<Paginate<GetListSessionResponse>>();
   const [events, setEvents] = useState<any>([]);
   const [searchText, setSearchText] = useState<string>('');
@@ -46,58 +28,71 @@ const Calendar = (props: Props) => {
   const location = useLocation();
   const pathArray = location.pathname.split('/');
   const lastPathSegment = pathArray[pathArray.length - 1];
+
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        const result = await SessionService.getAll(0,100);
+        console.log("Fetch Sessions started...");
+        const result = await SessionService.getAll(0, 100);
+        console.log("Sessions fetched:", result.data);
         setSessions(result.data);
 
-        let filteredSessions = result.data.items;
+        const resultInstructor = await SessionService.getInstructorList(0, 100);
+        console.log("Instructors fetched:", resultInstructor.data);
+        setSessionWithInstructor(resultInstructor.data);
 
-        if (selectedInstructors.length > 0 && !selectedInstructors.includes(optionsInstructor)) {
-          filteredSessions = filteredSessions.filter((session) =>
-            selectedInstructors.includes(optionsInstructor)
-          );
+        const userListResult = await userService.getInstructorList();
+        console.log("Users fetched:", userListResult.data);
+        setUser(userListResult.data);
+
+        if (resultInstructor.data) {
+          let allSessions = resultInstructor.data.items;
+          let allSession = result.data.items;
+
+
+          // Filtreleme işlemleri
+          let filteredSessions = [...allSessions];
+          if (selectedInstructors.length > 0) {
+            filteredSessions = filteredSessions.filter((session) =>
+              selectedInstructors.some((instructor: any) => instructor.label === session.accountName)
+            );
+          }
+          if (searchText.trim() !== '') {
+            filteredSessions = filteredSessions.filter((session) =>
+              session.occupationClassName.toLowerCase().includes(searchText.toLowerCase())
+            );
+          }
+          const currentDate = moment();
+          if (selectedFilters.includes('eventEnded')) {
+            filteredSessions = filteredSessions.filter(
+              (session) => moment(session.startDate).isBefore(currentDate)
+            );
+          }
+          if (selectedFilters.includes('eventContinue')) {
+            filteredSessions = filteredSessions.filter(
+              (session) => moment(session.startDate).isSameOrAfter(currentDate)
+            );
+          }
+          if (selectedFilters.includes('eventBuyed')) {
+            setEvents([]);
+            return;
+          }
+          if (selectedFilters.includes('eventNotStarted')) {
+            filteredSessions = filteredSessions.filter(
+              (session) => moment(session.startDate).isAfter(currentDate)
+            );
+          }
+          console.log("Filtered Data");
+          console.log(filteredSessions);
+
+          const filteredEvents = filteredSessions.map((session) => ({
+            start: moment(session.startDate).format(),
+            title: session.occupationClassName,
+            id: session.accountName.split(',')[0]
+          }));
+
+          setEvents(filteredEvents);
         }
-
-        if (searchText.trim() !== '') {
-          filteredSessions = filteredSessions.filter((session) =>
-            session.occupationClassName.toLowerCase().includes(searchText.toLowerCase())
-          );
-        }
-        const currentDate = moment();
-
-        if (selectedFilters.includes('eventEnded')) {
-          filteredSessions = filteredSessions.filter(
-            (session) => moment(session.startDate).isBefore(currentDate)
-          );
-        }
-
-        if (selectedFilters.includes('eventContinue')) {
-          filteredSessions = filteredSessions.filter(
-            (session) => moment(session.startDate).isSameOrAfter(currentDate)
-          );
-        }
-
-        if (selectedFilters.includes('eventBuyed')) {
-          setEvents([]);
-          return;
-        }
-
-        if (selectedFilters.includes('eventNotStarted')) {
-          filteredSessions = filteredSessions.filter(
-            (session) => moment(session.startDate).isAfter(currentDate)
-          );
-        }
-
-        const sessionEvents = filteredSessions.map((session) => ({
-          start: moment(session.startDate).format(),
-          title: session.occupationClassName,
-          // instructor: "Engin demiroğ"
-          instructor: session.userId
-        }));
-
-        setEvents(sessionEvents);
       } catch (error) {
         console.error('Error fetching sessions:', error);
       }
@@ -106,7 +101,7 @@ const Calendar = (props: Props) => {
     fetchSessions();
   }, [searchText, selectedInstructors, selectedFilters]);
 
-  const handleFilterChange = (filter: any) => {
+  const handleFilterChange = async (filter: any) => {
     const updatedFilters = selectedFilters.includes(filter)
       ? selectedFilters.filter((item) => item !== filter)
       : [...selectedFilters, filter];
@@ -121,16 +116,15 @@ const Calendar = (props: Props) => {
     calendarApi.unselect();
     setEvents([...events, { title: title, ...selectInfo }]);
   }
-  debugger;
 
-  const optionsInstructor = (sessions?.items || []).map((s) => ({
-    value: s.userId,
-    label: s.userId,
+  const optionsInstructor = (user?.items || []).map((user) => ({
+    value: user.id,
+    label: user.firstName + " " + user.lastName,
   }));
 
   return (
     <div className={authState.isAuthenticated && lastPathSegment?.includes("takvim-anasayfa") ? "calendar-page bg-front-dark" : "calendar-page  bg-front-white"}>
-      {/* Instructor Select */}
+      {/* Eğitmen Seçimi */}
       <div className="container filterCommon">
         <div className='row'>
           <h1 className='education' style={{ color: authState.isAuthenticated && lastPathSegment?.includes("takvim-anasayfa") ? "#fff" : "#000" }} >Eğitim ve Etkinlik Takvimi</h1>
@@ -243,12 +237,14 @@ const Calendar = (props: Props) => {
 };
 
 function renderEventContent(eventInfo: any) {
+  console.log("Event Info", eventInfo)
   return (
     <>
       <b>{eventInfo.timeText}</b>
       <b>{eventInfo.event.title}</b>
-      {/* <i>{eventInfo.event.instructor}</i> */}
+      <b>{eventInfo.event.id}</b>
     </>
+    
   );
 }
 

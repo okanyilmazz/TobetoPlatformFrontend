@@ -18,18 +18,19 @@ class AccountLanguageService extends BaseService<
     UpdateAccountLanguageRequest,
     UpdatedAccountLanguageResponse,
     DeleteAccountLanguageRequest
+
 > {
     constructor() {
         super();
         this.apiUrl = "AccountLanguages";
     }
 
-    getByAccountId(accountId: number): Promise<AxiosResponse<Paginate<GetListAccountLanguageResponse>, any>> {
-        return axiosInstance.get<Paginate<GetListAccountLanguageResponse>>(this.apiUrl + "/GetByAccountId?accountId=" + accountId);
+    getByAccountId(accountId: number): Promise<AxiosResponse<Paginate<GetAccountLanguageResponse>, any>> {
+        return axiosInstance.get<Paginate<GetAccountLanguageResponse>>(this.apiUrl + "/GetByAccountId?accountId=" + accountId);
     }
 
-    getByAccountIdAndLanguageId(accountId: number, LanguageId: number): Promise<AxiosResponse<GetListAccountLanguageResponse, any>> {
-        return axiosInstance.get<GetListAccountLanguageResponse>(this.apiUrl + "/GetByAccountIdAndLanguageId?accountId=" + accountId + "&LanguageId=" + LanguageId);
+    deleteWithModel(request: DeleteAccountLanguageRequest) {
+        return axiosInstance.post(this.apiUrl + "/Delete", request);
     }
 }
 

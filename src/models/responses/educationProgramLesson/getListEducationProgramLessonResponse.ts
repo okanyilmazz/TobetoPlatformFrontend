@@ -5,6 +5,7 @@ export default interface GetListEducationProgramLessonResponse {
     lessonId: Identifier;
     educationProgramId: Identifier;
     lessonName: string;
+    lessonSubTypeName: string;
     educationProgramName: string;
     statusPercent: number;
 }

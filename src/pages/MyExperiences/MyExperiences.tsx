@@ -82,7 +82,6 @@ export default function MyExperiences() {
     }
 
 
-
     useEffect(() => {
         cityService.getAll(0, 100).then((result: any) => {
             setCities(result.data);
@@ -109,7 +108,9 @@ export default function MyExperiences() {
                     <Col md={9} className="experience-page-content formik-form">
                         <Formik
                             initialValues={initialValues}
-                            onSubmit={handleAddWorkExperience}
+                            onSubmit={(values) => {
+                                handleAddWorkExperience(values)
+                            }}
                         >
                             <Form className='login-form'>
                                 <Row>

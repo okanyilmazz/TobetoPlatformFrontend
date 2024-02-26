@@ -11,4 +11,10 @@ export default interface GetLessonResponse {
     startDate: Date;
     endDate: Date;
     duration: number;
+    lessonPath: string;
+    languageId: Identifier;
+    lessonModuleId: Identifier;
+    lessonCategoryId: Identifier;
+    lessonSubTypeId: Identifier;
+    productionCompanyId: Identifier;
 }

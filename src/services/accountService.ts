@@ -9,6 +9,7 @@ import GetListAccountResponse from "../models/responses/account/getListAccountRe
 import UpdatedAccountResponse from "../models/responses/account/updatedAccountResponse";
 import axiosInstance from "../core/interceptors/axiosInterceptor";
 import DeleteAccountRequest from "../models/requests/account/deleteAccountRequest";
+import { Identifier } from "typescript";
 
 
 class AccountService extends BaseService<
@@ -23,7 +24,7 @@ class AccountService extends BaseService<
         super()
         this.apiUrl = "Accounts"
     }
-    getByLessonIdForLike(lessonId: string, pageIndex: number, pageSize: number): Promise<AxiosResponse<Paginate<GetListAccountResponse>, any>> {
+    getByLessonIdForLike(lessonId: Identifier, pageIndex: number, pageSize: number): Promise<AxiosResponse<Paginate<GetListAccountResponse>, any>> {
         return axiosInstance.get<Paginate<GetListAccountResponse>>(this.apiUrl + "/GetByLessonIdForLike?lessonId=" + lessonId + "&PageIndex=" + pageIndex + "&PageSize=" + pageSize)
     }
 

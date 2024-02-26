@@ -39,6 +39,10 @@
     font-weight: 600 !important;
 }
 
+.lesson-card-area .card-body {
+    height: 100px;
+}
+
 .lesson-card-video {
     height: 400px;
     border-radius: 20px 20px 0px 0px;
@@ -67,6 +71,7 @@
 .lesson-text {
     color: #818181;
 }
+
 
 .education-program-content {
     box-shadow: 0 7px 29px rgba(0, 0, 0, .13);
@@ -188,7 +193,7 @@
 .ed-drawer-sub-content .unit-icon,
 .lesson-text .unit-icon {
     width: 13px;
-    height: 13px;
+
     display: inline-block;
     vertical-align: middle;
     background-size: 100% !important;
@@ -198,12 +203,29 @@
 
 .ed-drawer-sub-content .unit-ongoing,
 .lesson-text .unit-ongoing,
+.lesson-info .unit-ongoing,
 .unit-ongoing {
     background: url(/public/assets/Icons/unit-ongoing.svg) no-repeat;
 }
 
+.lesson-text .unit-ongoing,
+.ed-drawer-course-status-info .unit-ongoing {
+    height: 14px;
+    width: 14px;
+}
+
+.lesson-info .unit-ongoing {
+    height: 14px;
+    width: 14px;
+    z-index: 99;
+}
+
 .lesson-text .unit-ongoing {
     margin-left: 15px;
+}
+
+.lesson-text span {
+    align-items: center;
 }
 
 .ed-drawer-course-status-info {
@@ -254,6 +276,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-family: 'Poppins-Medium';
+    font-size: 16px;
+}
+
+
+.accordion-education-program-lesson .lesson-type-info {
+    color: #818181;
+    font-weight: 500;
+    font-size: 12px;
+    font-family: 'Poppins-Regular';
 }
 
 .accordion-education-program-lesson .active-accordion {
@@ -262,10 +294,17 @@
 
 .accordion-education-program-lesson .accordion-item .accordion-header .accordion-button {
     background: transparent !important;
-    padding-left: 5px;
+    padding-left: 25px;
     padding-bottom: 5px;
     font-family: 'Poppins-Bold';
 }
+
+.accordion-education-program-lesson .accordion-item .accordion-header .accordion-button:not(.collapsed)::after,
+.accordion-education-program-lesson .accordion-item .accordion-header .accordion-button::after {
+    position: absolute;
+    left: 0;
+}
+
 
 .accordion-education-program-lesson .accordion-item {
     border: 0;
@@ -460,6 +499,12 @@
     color: #2372ba !important
 }
 
+.date-info-container .date-info .tooltip-congrats-text {
+    margin-left: 10px;
+    color: #3DCB79;
+    font-family: 'Poppins-Bold';
+}
+
 .activity-score {
     display: flex;
     align-items: center;
@@ -533,7 +578,6 @@
 
 .lesson1 {
     text-align: left;
-    font-weight: 700;
 }
 
 .activity-score .education-drawer-like-area .like-button svg {

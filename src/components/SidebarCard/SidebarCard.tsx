@@ -21,7 +21,7 @@ export default function SidebarCard() {
                         <span>Kişisel Bilgilerim</span>
                     </div>
                 </li>
-                <li>
+                <li onClick={() => navigate("/profilim/profilimi-duzenle/deneyimlerim")} className={lastPathSegment === "deneyimlerim" ? 'active-item active-edit' : ''}>
                     <div className='sidebar-icon'>
                         <Image src='/assets/Icons/profile-settings/business.svg' />
                     </div>
@@ -29,7 +29,7 @@ export default function SidebarCard() {
                         <span>Deneyimlerim</span>
                     </div>
                 </li>
-                <li>
+                <li onClick={() => navigate("/profilim/profilimi-duzenle/egitim-hayatim")} className={lastPathSegment === "egitim-hayatim" ? 'active-item active-edit' : ''}>
                     <div className='sidebar-icon'>
                         <Image src='/assets/Icons/profile-settings/book.svg' />
                     </div>

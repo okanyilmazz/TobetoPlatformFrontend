@@ -26,6 +26,7 @@ export default function LoginPageCard() {
                                     if (response.data !== undefined) {
                                         dispatch(authActions.addToken({ token: response.data.token }));
                                         dispatch(userActions.getUserInfo());
+                                        authService.getUserInfo();
                                         navigate("/platform");
                                     }
                                 })

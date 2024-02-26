@@ -156,6 +156,39 @@ export default function Homepage() {
                     </div>
                 </div>
             </div>
+            <div className='success-model container'>
+                <Container>
+                    <Row className='hp-success-model'>
+                        <Col md={7}>
+                            <div>
+                                <Image className='success-model-img' src='https://tobeto.s3.cloud.ngn.com.tr/spider_2_75142468a4.gif'></Image>
+                            </div>
+
+                        </Col>
+                        <Col md={5}>
+                            <div>
+                                <p className='hp-success-model-header'>
+                                    Tobeto 'İşte Başarı
+                                    Modeli'mizi Keşfet!
+                                </p>
+                                <p className='hp-success-model-text'>
+                                    Üyelerimize ücretsiz sunduğumuz, iş bulma ve işte
+                                    başarılı olma sürecinde gerekli 80 tane davranış
+                                    ifadesinden oluşan Tobeto 'İşte Başarı Modeli' ile,
+                                    profesyonellik yetkinliklerini ölç,
+                                    <br></br>
+                                    raporunu gör.
+                                </p>
+                                <Button className='success-model-btn'>
+                                    Hemen Başla
+                                </Button>
+                            </div>
+
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
+
             <div className='container acc'>
                 <Accordion defaultActiveKey="0" className='acc-bg'>
                     <Accordion.Item eventKey="0" >
@@ -275,38 +308,7 @@ export default function Homepage() {
                     </div>
                 </div>
             </div>
-            <div className='success-model'>
-                <Container>
-                    <Row className='hp-success-model'>
-                        <Col md={7}>
-                            <div>
-                                <Image className='success-model-img' src='https://tobeto.s3.cloud.ngn.com.tr/spider_2_75142468a4.gif'></Image>
-                            </div>
 
-                        </Col>
-                        <Col md={5}>
-                            <div>
-                                <p className='hp-success-model-header'>
-                                    Tobeto 'İşte Başarı
-                                    Modeli'mizi Keşfet!
-                                </p>
-                                <p className='hp-success-model-text'>
-                                    Üyelerimize ücretsiz sunduğumuz, iş bulma ve işte
-                                    başarılı olma sürecinde gerekli 80 tane davranış
-                                    ifadesinden oluşan Tobeto 'İşte Başarı Modeli' ile,
-                                    profesyonellik yetkinliklerini ölç,
-                                    <br></br>
-                                    raporunu gör.
-                                </p>
-                                <Button className='success-model-btn'>
-                                    Hemen Başla
-                                </Button>
-                            </div>
-
-                        </Col>
-                    </Row>
-                </Container>
-            </div>
         </div>
 
     )

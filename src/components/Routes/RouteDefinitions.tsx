@@ -25,6 +25,9 @@ import PersonalInformationPage from '../../pages/PersonalInformationPage/Persona
 import AnalysisReport from '../../pages/AnalysisReport/AnalysisReport';
 import SessionsPage from '../../pages/SessionsPage/SessionsPage';
 import AdminPanel from '../../pages/AdminPanel/AdminPanel';
+import EducationalBackgroundPage from '../../pages/EducationalBackgroundPage/EducationalBackgroundPage';
+import MyExperiences from '../../pages/MyExperiences/MyExperiences';
+import AnnouncementsPage from '../../pages/AnnouncementsPage/AnnouncementsPage';
 
 
 
@@ -42,24 +45,39 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/takvim" Component={Calendar} />
             <Route path="/platform" element={<ProtectedRoute><PlatformPage /></ProtectedRoute>} />
             <Route path="/basvuru" Component={ApplicationCard} />
-            <Route path="/profilim" Component={Profile} />
+            <Route path="/profilim" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/blog" Component={Blog} />
             <Route path="/basinda-biz" Component={MediaNews} />
             <Route path="/giris" Component={LoginPage} />
             <Route path="/kayit-ol" Component={SignUp} />
-            <Route path="/kayit-ol" Component={Homepage} />
-            <Route path="/kayit-ol" Component={Codecademy} />
             <Route path="/katalog" Component={CatalogPage} />
             <Route path="/codecademy" Component={Codecademy} />
             <Route path="/platform-katalog" Component={CatalogPage} />
             <Route path="/degerlendirmeler" Component={AssesmentsPage} />
             <Route path="/egitimlerim" Component={EducationsPage} />
-            <Route path="/profilim/profilimi-duzenle/sertifikalarim" Component={CertificatePage} />
-            <Route path="/profilim/profilimi-duzenle/yetkinliklerim" Component={SkillPage} />
-            <Route path="/profilim/profilimi-duzenle/medya-hesaplarim" Component={SocialMediaPage} />
-            <Route path="/profilim/profilimi-duzenle/yabanci-dil" Component={LanguagePage} />
-            <Route path="/profilim/profilimi-duzenle/kisisel-bilgilerim" Component={PersonalInformationPage} />
+            <Route path="/duyurular" Component={AnnouncementsPage} />
+            <Route path="/profilim/profilimi-duzenle/sertifikalarim" element={<ProtectedRoute><CertificatePage /></ProtectedRoute>} />
+            <Route path="/profilim/profilimi-duzenle/yetkinliklerim" element={<ProtectedRoute><SkillPage /></ProtectedRoute>} />
+            <Route path="/profilim/profilimi-duzenle/medya-hesaplarim" element={<ProtectedRoute><SocialMediaPage /></ProtectedRoute>} />
+            <Route path="/profilim/profilimi-duzenle/yabanci-dil" element={<ProtectedRoute><LanguagePage /></ProtectedRoute>} />
+            <Route path="/profilim/profilimi-duzenle/kisisel-bilgilerim" element={<ProtectedRoute><PersonalInformationPage /></ProtectedRoute>} />
+            <Route path="/profilim/profilimi-duzenle/egitim-hayatim" element={<ProtectedRoute><EducationalBackgroundPage /></ProtectedRoute>} />
+            <Route path="/profilim/profilimi-duzenle/deneyimlerim" element={<ProtectedRoute><MyExperiences /></ProtectedRoute>} />
             <Route path="/egitimlerim/egitim-detaylari/:educationProgramId" Component={EducationProgramContent} />
+            <Route path="/profilim/degerlendirmeler/rapor/tobeto-iste-basari-yetkinlikleri/1" element={<ProtectedRoute><AnalysisReport /></ProtectedRoute>} />
+            <Route path="/egitimlerim/egitim-detaylari/:educationProgramId" Component={SessionsPage} />
+            <Route path="/profilim/profilimi-duzenle/deneyimlerim" element={<ProtectedRoute><MyExperiences /></ProtectedRoute>} />
+
+            <Route path="/admin-panel" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
+            <Route path="/admin-panel/ogrenciler" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
+            <Route path="/admin-panel/dersler" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
+            <Route path="/admin-panel/duyurular" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
+            <Route path="/admin-panel/egitimler" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
+            <Route path="/admin-panel/oturumlar" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
+            <Route path="/admin-panel/egitimler" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
+            <Route path="/admin-panel/roller" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
+            <Route path="/admin-panel/kullanicilar" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
+        </Routes >
             <Route path="/profilim/profilimi-duzenle/ayarlar" Component={ProfileSettingsPage} />
 
             <Route path="/text" Component={AnalysisReport} />

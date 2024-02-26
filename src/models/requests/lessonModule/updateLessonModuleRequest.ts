@@ -5,3 +5,9 @@ export default interface UpdateLessonModuleRequest {
     lessonId: Identifier;
     moduleId: Identifier;
 }
+import { Identifier } from "typescript";
+
+export default interface UpdateLessonModuleRequest {
+    id: Identifier;
+    name: string;
+}

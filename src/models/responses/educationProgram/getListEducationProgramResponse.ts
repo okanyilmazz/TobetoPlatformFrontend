@@ -17,4 +17,3 @@ export interface GetListEducationProgramResponse {
     deadline: Date;
     modules: GetListModuleResponse[];
 }
-

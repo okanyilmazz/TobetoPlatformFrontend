@@ -41,8 +41,7 @@
 }
 
 .lesson-card-area .card-body {
-    height: 130px;
-    position: relative;
+    height: 100px;
 }
 
 .lesson-card-video {
@@ -219,16 +218,10 @@
     width: 14px;
 }
 
-
-.lesson-panel .lesson-info {
-    position: absolute;
-    right: 10px;
-    top: 1.3rem;
-}
-
-.lesson-panel .lesson-info span {
+.lesson-info .unit-ongoing {
     height: 14px;
     width: 14px;
+    z-index: 99;
 }
 
 .lesson-text .unit-ongoing {
@@ -285,33 +278,43 @@
     overflow-y: auto;
 }
 
-.lessons-area .ant-collapse-header {
-    padding: 0 !important;
-}
-
-.lessons-area .ant-collapse-header-text {
-    font-family: 'Poppins-Medium' !important;
-    word-break: break-word;
-    word-wrap: break-word;
+.accordion-education-program-lesson .lesson-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Poppins-Medium';
     font-size: 16px;
-    line-height: 18px;
-    color: #000;
-    width: 100%;
 }
 
-.lessons-area .ant-collapse-content-box {
-    padding: 0 !important;
-    padding-left: 20px !important;
-}
 
-.lessons-area .ant-collapse-expand-icon {
-    padding-right: 5px !important;
-}
-
-.lessons-area .collapse-header-title {
+.accordion-education-program-lesson .lesson-type-info {
+    color: #818181;
+    font-weight: 500;
+    font-size: 12px;
     font-family: 'Poppins-Regular';
-    font-weight: 600;
-    font-size: 16px;
+}
+
+.accordion-education-program-lesson .active-accordion {
+    background-color: #F2F2F2;
+}
+
+.accordion-education-program-lesson .accordion-item .accordion-header .accordion-button {
+    background: transparent !important;
+    padding-left: 25px;
+    padding-bottom: 5px;
+    font-family: 'Poppins-Bold';
+}
+
+.accordion-education-program-lesson .accordion-item .accordion-header .accordion-button:not(.collapsed)::after,
+.accordion-education-program-lesson .accordion-item .accordion-header .accordion-button::after {
+    position: absolute;
+    left: 0;
+}
+
+
+.accordion-education-program-lesson .accordion-item {
+    border: 0;
+
 }
 
 .lessons-area .lesson-panel {

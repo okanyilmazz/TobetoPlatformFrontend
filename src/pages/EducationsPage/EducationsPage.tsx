@@ -9,18 +9,17 @@ import { userActions } from '../../store/user/userSlice';
 import educationProgramService from '../../services/educationProgramService';
 import { GetListEducationProgramResponse } from '../../models/responses/educationProgram/getListEducationProgramResponse';
 import GetListProjectResponse from '../../models/responses/project/getListProjectResponse';
-import GetListAccountResponse from '../../models/responses/account/getListAccountResponse';
 import authService from '../../services/authService';
 import accountService from '../../services/accountService';
+import GetAccountResponse from '../../models/responses/account/getAccountResponse';
 import projectService from '../../services/projectService';
 
 const EducationsPage = () => {
-    const [account, setAccount] = useState<GetListAccountResponse>();
+    const [account, setAccount] = useState<GetAccountResponse>();
     const userState = useSelector((state: any) => state.user);
     const user = authService.getUserInfo();
     const dispatch = useDispatch();
     const [educationPrograms, setEducationPrograms] = useState<GetListEducationProgramResponse[]>([]);
-    const [projects, setProjects] = useState<GetListProjectResponse[]>([]);
     const [filteredEducationPrograms, setFilteredEducationPrograms] = useState<GetListEducationProgramResponse[]>([]);
     const [searchText, setSearchText] = useState('');
     const [sortOption, setSortOption] = useState('');
@@ -36,10 +35,10 @@ const EducationsPage = () => {
         });
     };
 
-    const projectOptions = projects.map(project => ({
-        value: project.name,
-        label: project.name
-    }));
+    // const projectOptions = projects.map(project => ({
+    //     value: project.name,
+    //     label: project.name
+    // }));
 
     useEffect(() => {
         if (!userState.user) {
@@ -47,9 +46,9 @@ const EducationsPage = () => {
             return;
         }
 
-        projectService.getAll(0, 5).then((result) => {
-            setProjects(result.data.items);
-        });
+        // projectService.getAll(0, 5).then((result) => {
+        //     setProjects(result.data.items);
+        // });
 
         educationProgramService.getByAccountId(user.id, 0, 100).then(result => {
             const programs = result.data.items.map((program: GetListEducationProgramResponse) => ({
@@ -118,7 +117,7 @@ const EducationsPage = () => {
                                 className="projectSelect"
                                 classNamePrefix="select"
                                 placeholder="Kurum Seçiniz"
-                                options={projectOptions}
+                            // options={projectOptions}
                             />
                         </div>
                         <div className='col-md-3 col-12'>

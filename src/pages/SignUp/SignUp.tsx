@@ -54,7 +54,7 @@ export default function SignUp() {
                 </Col>
                 <Col md={6}>
                     <IstanbulCard2 />
-                </Col>$$
+                </Col>
             </Container>
         </>
     )

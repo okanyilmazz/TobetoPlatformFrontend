@@ -1,6 +1,4 @@
-import Module from "module";
 import { Identifier } from "typescript";
-import GetListModuleResponse from "../module/getListModuleResponse";
 
 export interface GetListEducationProgramResponse {
     id: Identifier;
@@ -15,6 +13,5 @@ export interface GetListEducationProgramResponse {
     price: number;
     startDate: Date;
     deadline: Date;
-    modules: GetListModuleResponse[];
 }
 

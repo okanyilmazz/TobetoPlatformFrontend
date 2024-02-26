@@ -34,6 +34,7 @@ const Calendar = () => {
       try {
         console.log("Fetch Sessions started...");
         const result = await SessionService.getAll(0, 100);
+        console.log("Sessions fetched:", result.data);
         setSessions(result.data);
 
         const resultInstructor = await SessionService.getInstructorList(0, 100);
@@ -243,7 +244,7 @@ function renderEventContent(eventInfo: any) {
       <b>{eventInfo.event.title}</b>
       <b>{eventInfo.event.id}</b>
     </>
-
+    
   );
 }
 

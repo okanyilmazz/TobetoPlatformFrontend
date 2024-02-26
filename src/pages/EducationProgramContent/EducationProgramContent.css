@@ -16,9 +16,8 @@
 }
 
 .lesson-card-btn {
-    position: absolute;
-    top: 25%;
-    right: 20px;
+    margin-left: 450px;
+    margin-top: -110px;
     width: 150px;
     height: 40px;
     background-color: white !important;
@@ -38,11 +37,6 @@
     color: #9a36ff !important;
     font-size: 17px !important;
     font-weight: 600 !important;
-}
-
-.lesson-card-area .card-body {
-    height: 130px;
-    position: relative;
 }
 
 .lesson-card-video {
@@ -68,13 +62,11 @@
 .lesson-title {
     font-weight: 600;
     font-size: medium;
-    width: 70%;
 }
 
 .lesson-text {
     color: #818181;
 }
-
 
 .education-program-content {
     box-shadow: 0 7px 29px rgba(0, 0, 0, .13);
@@ -137,7 +129,7 @@
 
 .education-drawer-content-middle .education-sub-details {
     display: grid;
-    grid-template-columns: 20% repeat(2, 60px);
+    grid-template-columns: 50px repeat(2, 60px);
     grid-template-rows: 30px;
     align-items: center;
     column-gap: 10px;
@@ -153,8 +145,6 @@
     align-items: center;
     justify-content: center;
     font-size: 12px;
-    width: max-content;
-    padding: 10px;
 }
 
 .education-drawer-content-middle .education-sub-details .course-detail-info span {
@@ -198,7 +188,7 @@
 .ed-drawer-sub-content .unit-icon,
 .lesson-text .unit-icon {
     width: 13px;
-
+    height: 13px;
     display: inline-block;
     vertical-align: middle;
     background-size: 100% !important;
@@ -208,35 +198,12 @@
 
 .ed-drawer-sub-content .unit-ongoing,
 .lesson-text .unit-ongoing,
-.lesson-info .unit-ongoing,
 .unit-ongoing {
     background: url(/public/assets/Icons/unit-ongoing.svg) no-repeat;
 }
 
-.lesson-text .unit-ongoing,
-.ed-drawer-course-status-info .unit-ongoing {
-    height: 14px;
-    width: 14px;
-}
-
-
-.lesson-panel .lesson-info {
-    position: absolute;
-    right: 10px;
-    top: 1.3rem;
-}
-
-.lesson-panel .lesson-info span {
-    height: 14px;
-    width: 14px;
-}
-
 .lesson-text .unit-ongoing {
     margin-left: 15px;
-}
-
-.lesson-text span {
-    align-items: center;
 }
 
 .ed-drawer-course-status-info {
@@ -278,56 +245,45 @@
     color: #3DCB79;
 }
 
-/*Lesson Area*/
 
-.lessons-area {
-    max-height: 500px;
-    overflow-y: auto;
+.accordion-education-program-lesson {
+    border-color: transparent;
 }
 
-.lessons-area .ant-collapse-header {
-    padding: 0 !important;
+.accordion-education-program-lesson .lesson-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.lessons-area .ant-collapse-header-text {
-    font-family: 'Poppins-Medium' !important;
-    word-break: break-word;
-    word-wrap: break-word;
-    font-size: 16px;
-    line-height: 18px;
-    color: #000;
-    width: 100%;
+.accordion-education-program-lesson .active-accordion {
+    background-color: #F2F2F2;
 }
 
-.lessons-area .ant-collapse-content-box {
-    padding: 0 !important;
-    padding-left: 20px !important;
+.accordion-education-program-lesson .accordion-item .accordion-header .accordion-button {
+    background: transparent !important;
+    padding-left: 5px;
+    padding-bottom: 5px;
+    font-family: 'Poppins-Bold';
 }
 
-.lessons-area .ant-collapse-expand-icon {
-    padding-right: 5px !important;
+.accordion-education-program-lesson .accordion-item {
+    border: 0;
+
 }
 
-.lessons-area .collapse-header-title {
-    font-family: 'Poppins-Regular';
-    font-weight: 600;
-    font-size: 16px;
+.accordion-education-program-lesson .accordion-body {
+    padding: 5px;
+    height: 50px;
+    align-items: center;
 }
 
-.lessons-area .lesson-panel {
-    padding: 5px 10px;
-    position: relative;
+.accordion-education-program-lesson .accordion-body:hover {
+    cursor: pointer;
 }
 
-.lesson-panel.active {
-    background-color: #F2F2F2
-}
-
-.lessons-area .lesson-type-info {
-    color: #818181;
-    font-weight: 500;
-    font-size: 12px;
-    font-family: 'Poppins-Regular';
+.accordion-education-program-lesson .accordion-button:focus {
+    box-shadow: none;
 }
 
 /*DRAWER LIKE AREA */
@@ -495,7 +451,6 @@
     font-size: 18px;
     font-weight: 600;
     color: #000;
-    font-family: 'Poppins-Medium';
 }
 
 .date-info {
@@ -503,12 +458,6 @@
     font-weight: 700;
     display: flex;
     color: #2372ba !important
-}
-
-.date-info-container .date-info .tooltip-congrats-text {
-    margin-left: 10px;
-    color: #3DCB79;
-    font-family: 'Poppins-Bold';
 }
 
 .activity-score {
@@ -584,6 +533,7 @@
 
 .lesson1 {
     text-align: left;
+    font-weight: 700;
 }
 
 .activity-score .education-drawer-like-area .like-button svg {

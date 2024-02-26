@@ -26,7 +26,6 @@ import GetAddressResponse from '../../models/responses/address/getAddressRespons
 import UpdateUserRequest from '../../models/requests/user/updateUserRequest';
 import userService from '../../services/userService';
 import "./PersonalInformationPage.css"
-import AddAddressRequest from '../../models/requests/address/addAddressRequest';
 export default function PersonalInformationPage() {
 
     const location = useLocation();
@@ -67,7 +66,7 @@ export default function PersonalInformationPage() {
             setAccount(result.data);
         });
 
-        addressService.getByAccountId(user.id).then((result) => {
+        addressService.getById(user.id).then((result) => {
             setAccountAddress(result.data)
         });
     }, [user.id])
@@ -122,7 +121,7 @@ export default function PersonalInformationPage() {
 
 
     const updatePersonalInformation = async (values: any) => {
-        console.log(accountAddress)
+
         if (phoneNumberState && accountAddress) {
             const updateAddress: UpdateAddressRequest = {
                 id: accountAddress?.id,
@@ -154,17 +153,6 @@ export default function PersonalInformationPage() {
             }
             await userService.update(updateUser);
         }
-        else {
-            const addAddress: AddAddressRequest = {
-                accountId: user.id,
-                cityId: selectedCityId,
-                countryId: selectedCountryId,
-                districtId: selectedDistrictId,
-                addressDetail: values.addressDetail
-            }
-            await addressService.add(addAddress);
-        }
-
     }
     return (
         <div className='personal-information-page container'>
@@ -191,7 +179,6 @@ export default function PersonalInformationPage() {
                             enableReinitialize
                             initialValues={initialValues}
                             onSubmit={(values) => {
-                                console.log(values)
                                 updatePersonalInformation(values);
                             }}>
                             <Form className="login-form">

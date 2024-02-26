@@ -6,6 +6,7 @@ import Footer from './layouts/Footer/Footer';
 import Navi from './layouts/Navi/Navi';
 import { useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
+import EducationProgramContent from './pages/EducationProgramContent/EducationProgramContent';
 
 
 
@@ -25,7 +26,6 @@ function App() {
           lastPathSegment !== "blog" &&
           lastPathSegment !== "basinda-biz" &&
           lastPathSegment !== "takvim-anasayfa" &&
-          lastPathSegment !== "codecademy" &&
           lastPathSegment !== ""
         ) ||
         lastPathSegment?.includes("giris") ||

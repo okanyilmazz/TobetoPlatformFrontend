@@ -5,5 +5,4 @@ export default interface GetListAccountLessonResponse {
     accountId: Identifier;
     lessonId: Identifier;
     statusPercent: number;
-    lessonPath: string;
 }

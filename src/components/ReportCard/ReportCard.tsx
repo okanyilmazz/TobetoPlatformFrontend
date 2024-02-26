@@ -4,8 +4,8 @@ import './ReportCard.css';
 
 export default function ReportCard() {
     return (
-        <div className='row report-card'>
-            <div className="report-card-content py-8 px-6">
+        <div className='row'>
+            <div className="report-card py-8 px-6">
                 <div className=" report-container rounded-end  border-4 border-start ">
                     <div className=" report d-flex justify-content-between ">
                         <h1 className='report-title'>Yeni dünyaya hazırlanıyorum </h1>

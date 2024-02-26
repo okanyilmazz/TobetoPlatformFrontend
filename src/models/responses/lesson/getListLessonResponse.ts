@@ -3,7 +3,6 @@ import { Identifier } from "typescript";
 export default interface GetListLessonResponse {
     id: Identifier;
     languageName: string;
-    lessonPath: string;
     lessonModuleName: string;
     lessonCategoryName: string;
     lessonSubTypeName: string;

@@ -26,7 +26,6 @@ export default function Navi() {
                         lastPathSegment !== "kurumlar-icin" &&
                         lastPathSegment !== "bireyler-icin" &&
                         lastPathSegment !== "takvim-anasayfa" &&
-                        lastPathSegment !== "codecademy" &&
                         lastPathSegment !== ""
                     )
                 ) ? 'none' : 'block'
@@ -41,7 +40,6 @@ export default function Navi() {
                             lastPathSegment !== "blog" &&
                             lastPathSegment !== "basinda-biz" &&
                             lastPathSegment !== "takvim-anasayfa" &&
-                            lastPathSegment !== "codecademy" &&
                             lastPathSegment !== ""
                         ) ? 'header' : 'header bg-front-dark'}>
 
@@ -113,7 +111,6 @@ export default function Navi() {
                             && lastPathSegment !== "kurumlar-icin"
                             && lastPathSegment !== "bireyler-icin"
                             && lastPathSegment !== "takvim-anasayfa"
-                            && lastPathSegment !== "codecademy"
                             && lastPathSegment !== ""
                         )
 

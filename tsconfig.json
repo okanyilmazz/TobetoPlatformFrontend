@@ -20,5 +20,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-"include": ["./package.json", "./src/**/*.*", "./path/to/uppy-utils.d.ts", "src/models/responses/educationProgramModule/updatedEducationProgramModuleResponsets"],
+"include": ["./package.json", "./src/**/*.*", "./path/to/uppy-utils.d.ts"],
 }

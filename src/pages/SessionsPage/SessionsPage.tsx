@@ -41,7 +41,10 @@ export default function SessionsPage() {
     const formattedEndDate = formatDate(endDate); // Bitiş tarihini istediğiniz formata dönüştürün
 
 
+
+
     const items: CollapseProps['items'] = [
+
         {
             key: '1',
             label: (
@@ -90,6 +93,7 @@ export default function SessionsPage() {
                         <br />
                         <span className='video-number'>
                             916_6887_1-23.10.2023 16:30:00
+
                         </span>
                         <button className='session-video-recording'>
                             <span>KAYDI AÇ</span>

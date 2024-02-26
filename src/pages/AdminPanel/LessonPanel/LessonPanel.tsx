@@ -11,15 +11,37 @@ import { Form, Formik } from 'formik'
 import { Button, Col, Row } from 'react-bootstrap';
 import TobetoSelect from '../../../utilities/customFormControls/TobetoSelect';
 import TobetoTextInput from '../../../utilities/customFormControls/TobetoTextInput';
+import AddLessonRequest from '../../../models/requests/lesson/addLessonRequest';
+import UpdateLessonRequest from '../../../models/requests/lesson/updateLessonRequest';
+import DeleteLessonRequest from '../../../models/requests/lesson/deleteLessonRequest';
+import languageService from '../../../services/languageService';
+import GetListLanguageResponse from '../../../models/responses/language/getListLanguageResponse';
+import GetListLessonModuleResponse from '../../../models/responses/lessonModule/getListLessonModuleResponse';
+import GetListLessonCategoryResponse from '../../../models/responses/lessonCategory/getListLessonCategoryResponse';
+import lessonCategoryService from '../../../services/lessonCategoryService';
+import GetListLessonSubTypeResponse from '../../../models/responses/lessonSubType/getListLessonSubTypeResponse';
+import lessonSubTypeService from '../../../services/lessonSubTypeService';
+import GetListProductionCompanyResponse from '../../../models/responses/productionCompany/getListProductionCompanyResponse';
+import productionCompanyService from '../../../services/productionCompanyService';
+import lessonModuleService from '../../../services/lessonModuleService';
+import GetLessonResponse from '../../../models/responses/lesson/getLessonResponse';
 
 
 export default function LessonPanel() {
 
     const [lessons, setLessons] = useState<Paginate<GetListLessonResponse>>();
     const [filteredLessons, setFilteredLessons] = useState<Paginate<GetListLessonResponse>>();
-    const [showModal, setShowModal] = useState(false); // Modalın gösterilip gösterilmeyeceğini tutan bir durum
+    const [showModal, setShowModal] = useState(false);
     const [addClick, setAddClick] = useState<boolean>(false)
     const [updateClick, setUpdateClick] = useState<boolean>(false)
+    const [selectedLessonId, setSelectedLessonId] = useState<any>()
+    const [languages, setLanguages] = useState<Paginate<GetListLanguageResponse>>();
+    const [lessonModules, setLessonModules] = useState<Paginate<GetListLessonModuleResponse>>();
+    const [lessonCategories, setLessonCategories] = useState<Paginate<GetListLessonCategoryResponse>>();
+    const [lessonSubTypes, setLessonSubTypes] = useState<Paginate<GetListLessonSubTypeResponse>>();
+    const [productionCompanies, setProductionCompanies] = useState<Paginate<GetListProductionCompanyResponse>>();
+    const [selectedLesson, setSelectedLesson] = useState<GetLessonResponse>();
+
 
 
 
@@ -28,9 +50,10 @@ export default function LessonPanel() {
         setAddClick(true)
     };
 
-    const handleUpdatedClick = () => {
+    const handleUpdatedClick = (selectedLessonId: any) => {
         setShowModal(true);
         setUpdateClick(true);
+        setSelectedLessonId(selectedLessonId);
     };
 
     const closeModal = () => {
@@ -41,11 +64,40 @@ export default function LessonPanel() {
 
 
     useEffect(() => {
+
         lessonService.getAll(0, 100).then(result => {
             setLessons(result.data);
-            setFilteredLessons(result.data); // Orijinal eğitim programlarını sakla
+            setFilteredLessons(result.data);
         });
+
+        languageService.getAll(0, 100).then(result => {
+            setLanguages(result.data);
+        });
+
+        lessonCategoryService.getAll(0, 100).then(result => {
+            setLessonCategories(result.data)
+        })
+
+        lessonSubTypeService.getAll(0, 100).then(result => {
+            setLessonSubTypes(result.data)
+        })
+
+        productionCompanyService.getAll(0, 100).then(result => {
+            setProductionCompanies(result.data)
+        })
+
+        lessonModuleService.getAll(0, 100).then(result => {
+            setLessonModules(result.data)
+        })
+
     }, []);
+
+    useEffect(() => {
+        lessonService.getById(selectedLessonId).then(result => {
+            setSelectedLesson(result.data)
+        })
+    }, [selectedLessonId])
+
 
     const handleInputFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchText = e.target.value.toLowerCase();
@@ -67,11 +119,85 @@ export default function LessonPanel() {
                 };
                 setLessons(filteredItems);
             } else {
-                setLessons(filteredLessons); // Orijinal eğitim programlarını geri yükle
+                setLessons(filteredLessons);
             }
         }
     };
 
+
+    const initialValues = {
+        languageId: selectedLesson?.languageId,
+        lessonModuleId: selectedLesson?.lessonModuleId,
+        lessonCategoryId: selectedLesson?.lessonCategoryId,
+        lessonSubTypeId: selectedLesson?.lessonSubTypeId,
+        productionCompanyId: selectedLesson?.productionCompanyId,
+        name: selectedLesson?.name,
+        startDate: selectedLesson?.startDate,
+        endDate: selectedLesson?.endDate,
+        duration: selectedLesson?.duration,
+        lessonPath: selectedLesson?.lessonPath,
+    }
+    console.log("initial" + initialValues);
+    console.log("selected" + selectedLesson);
+
+
+    const getLesson = () => {
+        lessonService.getAll(0, 100).then(result => {
+            setLessons(result.data);
+        })
+    }
+
+    const handleAddLesson = async (lesson: any) => {
+        console.log(lesson);
+
+        const addLesson: AddLessonRequest = {
+            languageId: lesson.languageId,
+            lessonModuleId: lesson.lessonModuleId,
+            lessonCategoryId: lesson.lessonCategoryId,
+            lessonSubTypeId: lesson.lessonSubTypeId,
+            productionCompanyId: lesson.productionCompanyId,
+            name: lesson.name,
+            startDate: lesson.startDate,
+            endDate: lesson.endDate,
+            duration: lesson.duration,
+            lessonPath: lesson.lessonPath
+        }
+
+        await lessonService.add(addLesson);
+        getLesson();
+        closeModal()
+    }
+
+    const handleUpdateLesson = async (lesson: any) => {
+        console.log(lesson);
+
+        const updateLesson: UpdateLessonRequest = {
+            id: selectedLessonId,
+            languageId: lesson.languageId,
+            lessonModuleId: lesson.lessonModuleId,
+            lessonCategoryId: lesson.lessonCategoryId,
+            lessonSubTypeId: lesson.lessonSubTypeId,
+            productionCompanyId: lesson.productionCompanyId,
+            name: lesson.name,
+            startDate: lesson.startDate,
+            endDate: lesson.endDate,
+            duration: lesson.duration,
+            lessonPath: lesson.lessonPath
+
+        }
+        console.log(updateLesson);
+        await lessonService.update(updateLesson)
+        getLesson();
+        closeModal()
+    }
+
+    const handleDeleteLesson = async (lesson: any) => {
+        const deleteLesson: DeleteLessonRequest = {
+            id: lesson
+        }
+        await lessonService.delete(deleteLesson);
+        getLesson();
+    }
 
 
 
@@ -109,10 +235,10 @@ export default function LessonPanel() {
                                         <td className='td-icons '>
 
                                             <Tooltip placement="top" title={"Silme"}>
-                                                <span className="trash-icon"></span>
+                                                <span onClick={() => handleDeleteLesson(lesson.id)} className="trash-icon"></span>
                                             </Tooltip>
                                             <Tooltip placement="top" title="Düzenleme">
-                                                <RiPencilFill onClick={handleUpdatedClick} className='edit-icon' />
+                                                <RiPencilFill onClick={() => handleUpdatedClick(lesson.id)} className='edit-icon' />
                                             </Tooltip>
                                         </td>
                                     </tr>
@@ -136,154 +262,320 @@ export default function LessonPanel() {
                     updateClick ? "Ders Güncelleme" : "Ders Ekleme"
                 }
                 body={
-                    <div className="formik-form">
-                        <Formik
-                            initialValues={{
-                                title: "",
+                    <>
+                        <div className="lesson-add-form formik-form" style={addClick ? { display: 'block' } : { display: 'none' }}>
+                            <Formik
+                                initialValues={initialValues}
+                                onSubmit={(values) => {
+                                    handleAddLesson(values)
+                                }}>
+                                <Form className="update-modal-form" >
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">İsim</span>
 
-                            }}
-                            onSubmit={(values) => {
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="name"
+                                                placeholderTextColor="#fff" />
+                                        </Col>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Süre (sn)</span>
 
-                            }}>
-                            <Form className="update-modal-form" >
-                                <Row >
-                                    <Col md={6}>
-                                        <span className="input-area-title">İsim</span>
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="duration"
+                                                placeholderTextColor="#fff"
+                                                type="number" />
 
-                                        <TobetoTextInput
-                                            className="mb-4"
-                                            name="name"
-                                            placeholderTextColor="#fff" />
-                                    </Col>
-                                    <Col md={6}>
-                                        <span className="input-area-title">Süre (sn)</span>
+                                        </Col>
+                                    </Row>
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">Ders Dili</span>
 
-                                        <TobetoTextInput
-                                            className="mb-4"
-                                            name="duration"
-                                            placeholderTextColor="#fff"
-                                            type="number" />
+                                            <TobetoSelect
+                                                name="languageId"
+                                                className="mb-4"
+                                                component="select">
+                                                <option value="SocialMedia">Seçiniz*</option>
+                                                {languages?.items.map((language) => (
+                                                    <option value={String(language.id)}>
+                                                        {language.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Modül</span>
 
-                                    </Col>
-                                </Row>
-                                <Row >
-                                    <Col md={6}>
-                                        <span className="input-area-title">Ders Dili</span>
+                                            <TobetoSelect
+                                                name="lessonModuleId"
+                                                className="mb-4"
+                                                component="select">
+                                                <option value="SocialMedia">Seçiniz </option>
+                                                {lessonModules?.items.map((lessonModule) => (
+                                                    <option value={String(lessonModule.id)}>
+                                                        {lessonModule.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+                                    </Row>
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title"> Alt Tip</span>
 
-                                        <TobetoSelect
-                                            name="languageId"
-                                            className="mb-4"
-                                            component="select">
-                                            <option value="SocialMedia">Seçiniz*</option>
-                                            {lessons?.items.map((lesson) => (
-                                                <option value={String(lesson.id)}>
-                                                    {/* {lesson.} */}
-                                                </option>
-                                            ))}
-                                        </TobetoSelect>
-                                    </Col>
-                                    <Col md={6}>
-                                        <span className="input-area-title">Modül</span>
+                                            <TobetoSelect
+                                                name="lessonSubTypeId"
+                                                className="mb-4"
+                                                component="select">
+                                                <option value="SocialMedia">Seçiniz*</option>
+                                                {lessonSubTypes?.items.map((lessonSubType) => (
+                                                    <option value={String(lessonSubType.id)}>
+                                                        {lessonSubType.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Kategori</span>
 
-                                        <TobetoSelect
-                                            name="lessonModuleId"
-                                            className="mb-4"
-                                            component="select">
-                                            <option value="SocialMedia">Seçiniz </option>
-                                            {lessons?.items.map((lesson) => (
-                                                <option value={String(lesson.id)}>
-                                                    {lesson.lessonModuleName}
-                                                </option>
-                                            ))}
-                                        </TobetoSelect>
-                                    </Col>
-                                </Row>
-                                <Row >
-                                    <Col md={6}>
-                                        <span className="input-area-title"> Alt Tip</span>
+                                            <TobetoSelect
+                                                name="lessonCategoryId"
+                                                className="mb-4"
+                                                component="select">
+                                                <option value="SocialMedia">Seçiniz*</option>
+                                                {lessonCategories?.items.map((lessonCategory) => (
+                                                    <option value={String(lessonCategory.id)}>
+                                                        {lessonCategory.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+                                    </Row>
 
-                                        <TobetoSelect
-                                            name="lessonSubTypeId"
-                                            className="mb-4"
-                                            component="select">
-                                            <option value="SocialMedia">Seçiniz*</option>
-                                            {lessons?.items.map((lesson) => (
-                                                <option value={String(lesson.id)}>
-                                                    {lesson.lessonSubTypeName}
-                                                </option>
-                                            ))}
-                                        </TobetoSelect>
-                                    </Col>
-                                    <Col md={6}>
-                                        <span className="input-area-title">Kategori</span>
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">Ders Yolu</span>
 
-                                        <TobetoSelect
-                                            name="lessonCategoryId"
-                                            className="mb-4"
-                                            component="select">
-                                            <option value="SocialMedia">Seçiniz*</option>
-                                            {lessons?.items.map((lesson) => (
-                                                <option value={String(lesson.id)}>
-                                                    {lesson.lessonCategoryName}
-                                                </option>
-                                            ))}
-                                        </TobetoSelect>
-                                    </Col>
-                                </Row>
-                                <Row >
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="lessonPath"
+                                                placeholderTextColor="#fff" />
+                                        </Col>
 
-                                    <Col md={6}>
-                                        <span className="input-area-title">Üretici Firma</span>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Üretici Firma</span>
 
-                                        <TobetoSelect
-                                            name="productionCompanyId"
-                                            className="mb-4"
-                                            component="select">
-                                            <option value="SocialMedia">Seçiniz*</option>
-                                            {lessons?.items.map((lesson) => (
-                                                <option value={String(lesson.id)}>
-                                                    {lesson.productionCompanyName}
-                                                </option>
-                                            ))}
-                                        </TobetoSelect>
-                                    </Col>
-                                    <Col md={6}>
-                                        <span className="input-area-title">Başlangıç Tarihi</span>
+                                            <TobetoSelect
+                                                name="productionCompanyId"
+                                                className="mb-4"
+                                                component="select">
+                                                <option value="SocialMedia">Seçiniz*</option>
+                                                {productionCompanies?.items.map((productionCompany) => (
+                                                    <option value={String(productionCompany.id)}>
+                                                        {productionCompany.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
 
-                                        <TobetoTextInput
-                                            className="mb-4"
-                                            name="startDate"
-                                            type="date"
-                                            placeholderTextColor="#fff" />
-                                    </Col>
-                                </Row>
-                                <Row >
+                                    </Row>
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">Başlangıç Tarihi</span>
 
-                                    <Col md={6}>
-                                        <span className="input-area-title">Bitiş Tarihi</span>
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="startDate"
+                                                type="date"
+                                                placeholderTextColor="#fff" />
+                                        </Col>
 
-                                        <TobetoTextInput
-                                            className="mb-4"
-                                            name="endDate"
-                                            type="date"
-                                            placeholderTextColor="#fff" />
+                                        <Col md={6}>
+                                            <span className="input-area-title">Bitiş Tarihi</span>
 
-                                    </Col>
-                                </Row>
-                                <div className='form-buttons'>
-                                    <Button className="mb-4" type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >
-                                        Güncelle
-                                    </Button>
-                                    <Button className="mb-4" type="submit" style={addClick ? { display: 'block' } : { display: 'none' }}   >
-                                        Kaydet
-                                    </Button>
-                                    <Button className="mb-4" onClick={() => closeModal()}>
-                                        Kapat
-                                    </Button>
-                                </div>
-                            </Form>
-                        </Formik>
-                    </div>
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="endDate"
+                                                type="date"
+                                                placeholderTextColor="#fff" />
+
+                                        </Col>
+                                    </Row>
+                                    <div className='form-buttons'>
+                                        <Button className="mb-4" type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >
+                                            Güncelle
+                                        </Button>
+                                        <Button className="mb-4" type="submit" style={addClick ? { display: 'block' } : { display: 'none' }}   >
+                                            Kaydet
+                                        </Button>
+                                        <Button className="mb-4" onClick={() => closeModal()}>
+                                            Kapat
+                                        </Button>
+                                    </div>
+                                </Form>
+                            </Formik>
+                        </div>
+
+                        <div className="lesson-update-form formik-form" style={updateClick ? { display: 'block' } : { display: 'none' }}>
+                            <Formik
+                                initialValues={initialValues}
+                                onSubmit={(values) => {
+                                    handleUpdateLesson(values)
+                                }}>
+                                <Form className="update-modal-form" >
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">İsim</span>
+
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="name"
+                                                placeholderTextColor="#fff" />
+                                        </Col>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Süre (sn)</span>
+
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="duration"
+                                                placeholderTextColor="#fff"
+                                                type="number" />
+
+                                        </Col>
+                                    </Row>
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">Ders Dili</span>
+
+                                            <TobetoSelect
+                                                name="languageId"
+                                                className="mb-4"
+                                                component="select">
+                                                <option value="SocialMedia">Seçiniz*</option>
+                                                {languages?.items.map((language) => (
+                                                    <option value={String(language.id)}>
+                                                        {language.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Modül</span>
+
+                                            <TobetoSelect
+                                                name="lessonModuleId"
+                                                className="mb-4"
+                                                component="select">
+                                                <option value="SocialMedia">Seçiniz </option>
+                                                {lessonModules?.items.map((lessonModule) => (
+                                                    <option value={String(lessonModule.id)}>
+                                                        {lessonModule.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+                                    </Row>
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title"> Alt Tip</span>
+
+                                            <TobetoSelect
+                                                name="lessonSubTypeId"
+                                                className="mb-4"
+                                                component="select">
+                                                <option value="SocialMedia">Seçiniz*</option>
+                                                {lessonSubTypes?.items.map((lessonSubType) => (
+                                                    <option value={String(lessonSubType.id)}>
+                                                        {lessonSubType.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Kategori</span>
+
+                                            <TobetoSelect
+                                                name="lessonCategoryId"
+                                                className="mb-4"
+                                                component="select">
+                                                <option value="SocialMedia">Seçiniz*</option>
+                                                {lessonCategories?.items.map((lessonCategory) => (
+                                                    <option value={String(lessonCategory.id)}>
+                                                        {lessonCategory.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+                                    </Row>
+
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">Ders Yolu</span>
+
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="lessonPath"
+                                                placeholderTextColor="#fff" />
+                                        </Col>
+
+                                        <Col md={6}>
+                                            <span className="input-area-title">Üretici Firma</span>
+
+                                            <TobetoSelect
+                                                name="productionCompanyId"
+                                                className="mb-4"
+                                                component="select">
+                                                <option value="SocialMedia">Seçiniz*</option>
+                                                {productionCompanies?.items.map((productionCompany) => (
+                                                    <option value={String(productionCompany.id)}>
+                                                        {productionCompany.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+
+                                    </Row>
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">Başlangıç Tarihi</span>
+
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="startDate"
+                                                type="date"
+                                                placeholderTextColor="#fff" />
+                                        </Col>
+
+                                        <Col md={6}>
+                                            <span className="input-area-title">Bitiş Tarihi</span>
+
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="endDate"
+                                                type="date"
+                                                placeholderTextColor="#fff" />
+
+                                        </Col>
+                                    </Row>
+                                    <div className='form-buttons'>
+                                        <Button className="mb-4" type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >
+                                            Güncelle
+                                        </Button>
+                                        <Button className="mb-4" type="submit" style={addClick ? { display: 'block' } : { display: 'none' }}   >
+                                            Kaydet
+                                        </Button>
+                                        <Button className="mb-4" onClick={() => closeModal()}>
+                                            Kapat
+                                        </Button>
+                                    </div>
+                                </Form>
+                            </Formik>
+                        </div>
+                    </>
+
                 }
             />
         </div >

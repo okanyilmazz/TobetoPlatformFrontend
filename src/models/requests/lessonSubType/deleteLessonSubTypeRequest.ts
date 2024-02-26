@@ -1,5 +1,5 @@
 import { Identifier } from "typescript";
 
-export default interface DeleteLessonModuleRequest {
+export default interface DeleteLessonSubTypeRequest {
     id: Identifier;
 }

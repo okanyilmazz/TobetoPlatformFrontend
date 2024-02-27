@@ -133,8 +133,10 @@ export default function Profile() {
     })
 
     if (userState.user) {
-      accountActivityMapService.getByAccountId(userState.user.id)
+      accountActivityMapService.getByAccountId(user.id)
         .then(result => {
+          console.log("result.data")
+          console.log(result.data)
           setActivityMap(result.data);
         })
         .catch(error => {

@@ -7,6 +7,7 @@ import { Card, Image } from 'semantic-ui-react';
 import GradientLine from '../../components/GradientLine/GradientLine';
 import { useNavigate } from 'react-router-dom';
 
+
 export default function Homepage() {
     const navigate = useNavigate();
     const [subjectButtonStyle, setSubjectButtonStyle] = useState({
@@ -19,6 +20,10 @@ export default function Homepage() {
         backgroundColor: 'black'
     });
     const [buttonClicked, setButtonClicked] = useState(null);
+
+    const handleClick = () => {
+        navigate('/kayit-ol');
+    };
 
     const handleButtonClick = (buttonName: any) => {
         setButtonClicked(buttonName);
@@ -61,7 +66,7 @@ export default function Homepage() {
                                     <span className='word2'>hızda</span>
                                 </div>
                             </span>
-                            <Button className='mt-4 tobeto-card-btn' onClick={() => navigate("kayit-ol")}>Ücretsiz Üye Ol</Button>
+                            <Button className='mt-4 tobeto-card-btn' onClick={handleClick} >Ücretsiz Üye Ol</Button>
                         </div>
                         <div className='content-right'>
                             <Image src="https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FBANNER-12.4b21c70e.png&w=640&q=75" fluid size='small' />
@@ -73,7 +78,8 @@ export default function Homepage() {
                     <IstanbulCard title={
                         <span>Aradığın
                             <span className='quote' id='left-quote'>"</span>iş<span className='quote' id='right-quote'>"</span>
-                            Burada!</span>} />
+                            Burada!</span>}
+                        onClick={handleClick} />
                 </div>
             </div>
             <GradientLine />

@@ -15,6 +15,10 @@ export const ForIndividuals = () => {
 
   const navigate = useNavigate();
 
+  const handleClick = () => {
+    navigate('/kayit-ol');
+  };
+
   useEffect(() => {
     occupationService.getAll(0, 100).then(result => {
       setOccupations(result.data);
@@ -31,7 +35,10 @@ export const ForIndividuals = () => {
 
         <div className="offset-md-2 row col-md-8 col-8 ik-cards">
           <IstanbulCard title={
-            <span>Aradığın  <span className='quote' id='left-quote'>"</span>iş<span className='quote' id='right-quote'>"</span> Burada!</span>} />
+            <span>Aradığın  <span className='quote' id='left-quote'>"</span>iş<span className='quote' id='right-quote'>"</span> Burada!</span>}
+            onClick={handleClick} />
+
+
         </div>
 
         <div className="container  for-individuals-content-top">

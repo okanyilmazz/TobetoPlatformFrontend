@@ -28,6 +28,7 @@ import AdminPanel from '../../pages/AdminPanel/AdminPanel';
 import EducationalBackgroundPage from '../../pages/EducationalBackgroundPage/EducationalBackgroundPage';
 import MyExperiences from '../../pages/MyExperiences/MyExperiences';
 import AnnouncementsPage from '../../pages/AnnouncementsPage/AnnouncementsPage';
+import SettingsPage from '../../pages/SettingsPage/SettingsPage';
 
 
 

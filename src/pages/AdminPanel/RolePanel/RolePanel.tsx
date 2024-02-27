@@ -11,28 +11,31 @@ import TobetoSelect from '../../../utilities/customFormControls/TobetoSelect';
 import TobetoTextInput from '../../../utilities/customFormControls/TobetoTextInput';
 import GetListOperationClaimResponse from '../../../models/responses/operationClaim/getListOperationClaimResponse';
 import operationClaimService from '../../../services/operationClaimService';
-
+import AddOperationClaimRequest from '../../../models/requests/operationClaim/addOperationClaimRequest';
+import authService from '../../../services/authService';
+import UpdateOperationClaimRequest from '../../../models/requests/operationClaim/updateOperationClaimRequest';
+import DeleteOperationClaimRequest from '../../../models/requests/operationClaim/deleteOperationClaimRequest';
 
 
 export default function RolePanel() {
-
     const [operationClaims, setOperationClaims] = useState<Paginate<GetListOperationClaimResponse>>();
     const [filteredOperationClaim, setFilteredOperationClaim] = useState<Paginate<GetListOperationClaimResponse>>();
     const [showModal, setShowModal] = useState(false);
-
+    const user = authService.getUserInfo();
     const [addClick, setAddClick] = useState<boolean>(false)
     const [updateClick, setUpdateClick] = useState<boolean>(false)
-
-
+    const [selectedRoleId, setSelectedRoleId] = useState<any>()
 
     const handleAddClick = () => {
         setShowModal(true);
         setAddClick(true)
     };
 
-    const handleUpdatedClick = () => {
+    const handleUpdatedClick = (selectedRoleId: any) => {
         setShowModal(true);
         setUpdateClick(true);
+        setSelectedRoleId(selectedRoleId)
+
     };
 
     const closeModal = () => {
@@ -40,11 +43,14 @@ export default function RolePanel() {
         setAddClick(false);
         setShowModal(false)
     }
+
+
     useEffect(() => {
         operationClaimService.getAll(0, 100).then(result => {
             setOperationClaims(result.data);
             setFilteredOperationClaim(result.data);
-        });
+        }
+        );
     }, []);
 
     const handleInputFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,6 +77,49 @@ export default function RolePanel() {
             }
         }
     };
+
+
+    const initialValues = {
+        name: "",
+    };
+
+    const getRole = () => {
+        operationClaimService.getAll(0, 100).then((result) => {
+            setOperationClaims(result.data);
+        })
+    }
+
+
+    const handleAddRole = async (role: any) => {
+        const addRole: AddOperationClaimRequest = {
+            name: role.name
+        }
+
+        await operationClaimService.add(addRole);
+        getRole();
+        closeModal()
+    }
+
+    const handleUpdateRole = async (role: any) => {
+        const updateRole: UpdateOperationClaimRequest = {
+            id: selectedRoleId,
+            name: role.name
+        }
+
+        await operationClaimService.update(updateRole);
+        getRole();
+        closeModal()
+
+    }
+
+    const handleDeleteRole = async (role: any) => {
+        const deleteRole: DeleteOperationClaimRequest = {
+            id: role
+        }
+
+        await operationClaimService.delete(deleteRole);
+        getRole();
+    }
 
 
     return (
@@ -100,10 +149,10 @@ export default function RolePanel() {
                                     <td className='td-icons '>
 
                                         <Tooltip placement="top" title={"Silme"}>
-                                            <span className="trash-icon"></span>
+                                            <span onClick={() => handleDeleteRole(operationClaim.id)} className="trash-icon"  ></span>
                                         </Tooltip>
                                         <Tooltip placement="top" title="Düzenleme">
-                                            <RiPencilFill onClick={handleUpdatedClick} className='edit-icon' />
+                                            <RiPencilFill onClick={() => handleUpdatedClick(operationClaim.id)} className='edit-icon' />
                                         </Tooltip>
 
                                     </td>
@@ -127,42 +176,80 @@ export default function RolePanel() {
                     updateClick ? "Rol Güncelleme" : "Rol Ekleme"
                 }
                 body={
-                    <div className="formik-form">
-                        <Formik
-                            initialValues={{
-                                title: "",
+                    <>
+                        <div className=" role-add-form  formik-form" style={addClick ? { display: 'block' } : { display: 'none' }}>
+                            <Formik
+                                initialValues={initialValues}
+                                onSubmit={(values) => {
+                                    handleAddRole(values)
+                                }}>
 
-                            }}
-                            onSubmit={(values) => {
+                                <Form className="update-modal-form" >
+                                    <Row >
 
-                            }}>
-                            <Form className="update-modal-form" >
-                                <Row >
+                                        <Col md={8} className=' offset-2 mb-3'>
+                                            <span className="input-area-title">Rol </span>
 
-                                    <Col md={8} className=' offset-2 mb-3'>
-                                        <span className="input-area-title">Rol </span>
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="name"
+                                                placeholderTextColor="#fff" />
 
-                                        <TobetoTextInput
-                                            className="mb-4"
-                                            name="endDate"
-                                            placeholderTextColor="#fff" />
+                                        </Col>
+                                    </Row>
+                                    <div className='form-buttons'>
+                                        <Button className="mb-4" type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >
+                                            Güncelle
+                                        </Button>
+                                        <Button className="mb-4" type="submit" style={addClick ? { display: 'block' } : { display: 'none' }}   >
+                                            Kaydet
+                                        </Button>
+                                        <Button className="mb-4" onClick={() => closeModal()}>
+                                            Kapat
+                                        </Button>
+                                    </div>
+                                </Form>
+                            </Formik>
+                        </div>
 
-                                    </Col>
-                                </Row>
-                                <div className='form-buttons'>
-                                    <Button className="mb-4" type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >
-                                        Güncelle
-                                    </Button>
-                                    <Button className="mb-4" type="submit" style={addClick ? { display: 'block' } : { display: 'none' }}   >
-                                        Kaydet
-                                    </Button>
-                                    <Button className="mb-4" onClick={() => closeModal()}>
-                                        Kapat
-                                    </Button>
-                                </div>
-                            </Form>
-                        </Formik>
-                    </div>
+
+                        <div className=" role-update-form  formik-form" style={updateClick ? { display: 'block' } : { display: 'none' }}>
+                            <Formik
+                                initialValues={initialValues}
+                                onSubmit={(values) => {
+                                    handleUpdateRole(values)
+                                    console.log(values);
+                                }}>
+
+                                <Form className="update-modal-form" >
+                                    <Row >
+
+                                        <Col md={8} className=' offset-2 mb-3'>
+                                            <span className="input-area-title">Rol </span>
+
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="name"
+                                                placeholderTextColor="#fff" />
+
+                                        </Col>
+                                    </Row>
+                                    <div className='form-buttons'>
+                                        <Button className="mb-4" type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >
+                                            Güncelle
+                                        </Button>
+                                        <Button className="mb-4" type="submit" style={addClick ? { display: 'block' } : { display: 'none' }}   >
+                                            Kaydet
+                                        </Button>
+                                        <Button className="mb-4" onClick={() => closeModal()}>
+                                            Kapat
+                                        </Button>
+                                    </div>
+                                </Form>
+                            </Formik>
+                        </div>
+                    </>
+
                 }
             />
         </div >

@@ -1,4 +1,4 @@
-import { Button, Card, Image } from 'semantic-ui-react'
+import { Card, Image } from 'semantic-ui-react'
 import "./IstanbulCard.css"
 
 export default function IstanbulCard(props: any) {
@@ -17,7 +17,7 @@ export default function IstanbulCard(props: any) {
                     </div>
                 </div>
                 <div className="content-bottom">
-                    <Button>Başvur</Button>
+                    <button onClick={props.onClick}>Başvur</button>
                 </div>
             </div>
         </Card>

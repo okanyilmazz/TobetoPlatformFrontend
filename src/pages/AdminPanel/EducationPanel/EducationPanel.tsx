@@ -11,6 +11,16 @@ import { Form, Formik } from 'formik'
 import { Button, Col, Row } from 'react-bootstrap';
 import TobetoSelect from '../../../utilities/customFormControls/TobetoSelect';
 import TobetoTextInput from '../../../utilities/customFormControls/TobetoTextInput';
+import { GetEducationProgramResponse } from '../../../models/responses/educationProgram/getEducationProgramResponse';
+import AddEducationProgramRequest from '../../../models/requests/educationProgram/addEducationProgramRequest';
+import UpdateEducationProgramRequest from '../../../models/requests/educationProgram/updateEducationProgramRequest';
+import DeleteEducationProgramRequest from '../../../models/requests/educationProgram/deleteEducationProgramRequest';
+import GetListEducationProgramDevelopmentResponse from '../../../models/responses/educationProgramDevelopment/getListEducationProgramDevelopmentResponse';
+import educationProgramDevelopmentService from '../../../services/educationProgramDevelopmentService';
+import { GetListEducationProgramLevelResponse } from '../../../models/responses/educationProgramLevel/getListEducationProgramLevelResponse';
+import educationProgramLevelService from '../../../services/educationProgramLevelService';
+import GetListBadgeResponse from '../../../models/responses/badge/getListBadgeResponse';
+import badgeService from '../../../services/badgeService';
 
 export default function EducationPanel() {
     const [educationPrograms, setEducationPrograms] = useState<Paginate<GetListEducationProgramResponse>>();
@@ -19,7 +29,12 @@ export default function EducationPanel() {
 
     const [addClick, setAddClick] = useState<boolean>(false)
     const [updateClick, setUpdateClick] = useState<boolean>(false)
+    const [selectedEducationProgram, setSelectedEducationProgram] = useState<GetEducationProgramResponse>();
+    const [selectedEducationProgramId, setSelectedEducationProgramId] = useState<any>()
 
+    const [educationProgramDevelopments, setEducationProgramDevelopments] = useState<Paginate<GetListEducationProgramDevelopmentResponse>>();
+    const [educationProgramLevels, setEducationProgramLevels] = useState<Paginate<GetListEducationProgramLevelResponse>>();
+    const [badges, setBadges] = useState<Paginate<GetListBadgeResponse>>();
 
 
     const handleAddClick = () => {
@@ -27,9 +42,10 @@ export default function EducationPanel() {
         setAddClick(true)
     };
 
-    const handleUpdatedClick = () => {
+    const handleUpdatedClick = (selectedEducationProgramId: any) => {
         setShowModal(true);
         setUpdateClick(true);
+        setSelectedEducationProgramId(selectedEducationProgramId)
     };
 
     const closeModal = () => {
@@ -39,11 +55,26 @@ export default function EducationPanel() {
     }
 
     useEffect(() => {
+
         educationProgramService.getAll(0, 100).then(result => {
             setEducationPrograms(result.data);
             setOriginalEducationPrograms(result.data);
         });
+
+        educationProgramDevelopmentService.getAll(0, 100).then(result => {
+            setEducationProgramDevelopments(result.data)
+        })
+
+        educationProgramLevelService.getAll(0, 100).then(result => {
+            setEducationProgramLevels(result.data)
+        })
+
+        badgeService.getAll(0, 100).then(result => {
+            setBadges(result.data)
+        })
+
     }, []);
+
 
     const handleInputFilter = (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchText = e.target.value.toLowerCase();
@@ -70,6 +101,102 @@ export default function EducationPanel() {
         }
     };
 
+    useEffect(() => {
+        educationProgramService.getById(selectedEducationProgramId).then(result => {
+            setSelectedEducationProgram(result.data)
+        })
+    }, [selectedEducationProgramId])
+
+
+    const updateInitialValues = {
+        educationProgramLevelId: selectedEducationProgram?.educationProgramLevelId,
+        educationProgramDevelopmentId: selectedEducationProgram?.educationProgramDevelopmentId,
+        badgeId: selectedEducationProgram?.badgeId,
+        name: selectedEducationProgram?.name,
+        description: selectedEducationProgram?.description,
+        thumbnailPath: selectedEducationProgram?.thumbnailPath,
+        duration: selectedEducationProgram?.duration,
+        authorizedPerson: selectedEducationProgram?.authorizedPerson,
+        price: selectedEducationProgram?.price,
+        startDate: selectedEducationProgram?.startDate,
+        deadline: selectedEducationProgram?.deadline,
+    }
+
+    const addInitialValues = {
+        educationProgramLevelId: "",
+        educationProgramDevelopmentId: "",
+        badgeId: "",
+        name: "",
+        description: "",
+        thumbnailPath: "",
+        duration: "",
+        authorizedPerson: "",
+        price: "",
+        startDate: "",
+        deadline: "",
+    }
+
+    const getEducation = () => {
+        educationProgramService.getAll(0, 100).then(result => {
+            setEducationPrograms(result.data);
+        })
+    }
+
+    const handleAddEducationProgram = async (educationProgram: any) => {
+
+        const addEducationProgram: AddEducationProgramRequest = {
+            educationProgramLevelId: educationProgram.educationProgramLevelId,
+            educationProgramDevelopmentId: educationProgram.educationProgramDevelopmentId,
+            badgeId: educationProgram.badgeId,
+            name: educationProgram.name,
+            description: educationProgram.description,
+            thumbnailPath: educationProgram.thumbnailPath,
+            duration: educationProgram.duration,
+            authorizedPerson: educationProgram.authorizedPerson,
+            price: educationProgram.price,
+            startDate: educationProgram.startDate,
+            deadline: educationProgram.deadline,
+        }
+
+        await educationProgramService.add(addEducationProgram);
+        getEducation();
+        closeModal()
+    }
+
+    const handleUpdateEducationProgram = async (educationProgram: any) => {
+        console.log(educationProgram);
+
+        const updateEducationProgram: UpdateEducationProgramRequest = {
+            id: selectedEducationProgramId,
+            educationProgramLevelId: educationProgram.educationProgramLevelId,
+            educationProgramDevelopmentId: educationProgram.educationProgramDevelopmentId,
+            badgeId: educationProgram.badgeId,
+            name: educationProgram.name,
+            description: educationProgram.description,
+            thumbnailPath: educationProgram.thumbnailPath,
+            duration: educationProgram.duration,
+            authorizedPerson: educationProgram.authorizedPerson,
+            price: educationProgram.price,
+            startDate: educationProgram.startDate,
+            deadline: educationProgram.deadline,
+        }
+
+        console.log(updateEducationProgram);
+
+        await educationProgramService.update(updateEducationProgram);
+        getEducation();
+        closeModal()
+    }
+
+    const handleDeleteEducationProgram = async (educationProgram: any) => {
+        const deleteEducationProgram: DeleteEducationProgramRequest = {
+            id: educationProgram
+        }
+        await educationProgramService.delete(deleteEducationProgram);
+        getEducation();
+    }
+
+
 
     return (
         <div className='container'>
@@ -90,7 +217,6 @@ export default function EducationPanel() {
                                 <th className="education-start-date">Başlangıç Tarihi</th>
                                 <th className='education-end-date'>Bitiş Tarihi</th>
                                 <th className='education-price'>Eğitim Ücreti</th>
-                                <th className='education-count'>Öğrenci Sayısı</th>
                                 <th className='td-icons text-center'>İşlem</th>
                             </tr>
                         </thead>
@@ -102,14 +228,13 @@ export default function EducationPanel() {
                                     <td className="education-start-date">{new Date(educationProgram.startDate).toLocaleDateString()}</td>
                                     <td className='education-end-date'>{new Date(educationProgram.deadline).toLocaleDateString()}</td>
                                     <td className='education-price'>{educationProgram.price}</td>
-                                    <td className='education-price'>{educationProgram.price}</td>
                                     <td className='td-icons '>
 
                                         <Tooltip placement="top" title={"Silme"}>
-                                            <span className="trash-icon"></span>
+                                            <span onClick={() => handleDeleteEducationProgram(educationProgram.id)} className="trash-icon"></span>
                                         </Tooltip>
                                         <Tooltip placement="top" title="Düzenleme">
-                                            <RiPencilFill onClick={handleUpdatedClick} className='edit-icon' />
+                                            <RiPencilFill onClick={() => handleUpdatedClick(educationProgram.id)} className='edit-icon' />
                                         </Tooltip>
                                     </td>
                                 </tr>
@@ -133,162 +258,318 @@ export default function EducationPanel() {
                     updateClick ? "Eğitim Programı Güncelleme" : "Eğitim Programı Ekleme"
                 }
                 body={
-                    <div className="formik-form">
-                        <Formik
-                            initialValues={{
-                                title: "",
+                    <>
+                        <div className="education-add-form formik-form" style={addClick ? { display: 'block' } : { display: 'none' }}>
+                            <Formik
+                                initialValues={addInitialValues}
+                                onSubmit={(values) => {
+                                    handleAddEducationProgram(values)
+                                }}>
+                                <Form className="update-modal-form" >
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">Eğitim Adı </span>
 
-                            }}
-                            onSubmit={(values) => {
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="name"
+                                                placeholderTextColor="#fff"
+                                            />
+                                        </Col>
 
-                            }}>
-                            <Form className="update-modal-form" >
-                                <Row >
-                                    <Col md={6}>
-                                        <span className="input-area-title">Eğitim Adı </span>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Açıklama </span>
 
-                                        <TobetoTextInput
-                                            className="mb-4"
-                                            name="title"
-                                            placeholderTextColor="#fff"
-                                        />
-                                    </Col>
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="description"
+                                                placeholderTextColor="#fff"
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">ThumbnailPath</span>
 
-                                    <Col md={6}>
-                                        <span className="input-area-title">Açıklama </span>
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="thumbnailPath"
+                                                placeholderTextColor="#fff"
+                                            />
+                                        </Col>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Süre (sn)</span>
 
-                                        <TobetoTextInput
-                                            className="mb-4"
-                                            name="description"
-                                            placeholderTextColor="#fff"
-                                        />
-                                    </Col>
-                                </Row>
-                                <Row >
-                                    <Col md={6}>
-                                        <span className="input-area-title">ThumbnailPath</span>
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="duration"
+                                                placeholderTextColor="#fff"
+                                                type="number"
 
-                                        <TobetoTextInput
-                                            className="mb-4"
-                                            name="thumbnailPath"
-                                            placeholderTextColor="#fff"
-                                        />
-                                    </Col>
-                                    <Col md={6}>
-                                        <span className="input-area-title">Süre (sn)</span>
+                                            />
 
-                                        <TobetoTextInput
-                                            className="mb-4"
-                                            name="duration"
-                                            placeholderTextColor="#fff"
-                                        />
+                                        </Col>
+                                    </Row>
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">Yükleyen Kişi</span>
 
-                                    </Col>
-                                </Row>
-                                <Row >
-                                    <Col md={6}>
-                                        <span className="input-area-title">Yükleyen Kişi</span>
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="authorizedPerson"
+                                                placeholderTextColor="#fff" />
+                                        </Col>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Ücret</span>
 
-                                        <TobetoTextInput
-                                            className="mb-4"
-                                            name="authorizedPerson"
-                                            placeholderTextColor="#fff" />
-                                    </Col>
-                                    <Col md={6}>
-                                        <span className="input-area-title">Ücret</span>
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="price"
+                                                placeholderTextColor="#fff" />
 
-                                        <TobetoTextInput
-                                            className="mb-4"
-                                            name="price"
-                                            placeholderTextColor="#fff" />
+                                        </Col>
+                                    </Row>
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">Başlangıç Tarihi</span>
 
-                                    </Col>
-                                </Row>
-                                <Row >
-                                    <Col md={6}>
-                                        <span className="input-area-title">Başlangıç Tarihi</span>
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="startDate"
+                                                type="date"
+                                                placeholderTextColor="#fff" />
+                                        </Col>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Bitiş Tarihi</span>
 
-                                        <TobetoTextInput
-                                            className="mb-4"
-                                            name="startDate"
-                                            type="date"
-                                            placeholderTextColor="#fff" />
-                                    </Col>
-                                    <Col md={6}>
-                                        <span className="input-area-title">Bitiş Tarihi</span>
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="deadline"
+                                                type="date"
+                                                placeholderTextColor="#fff" />
 
-                                        <TobetoTextInput
-                                            className="mb-4"
-                                            name="deadline"
-                                            type="date"
-                                            placeholderTextColor="#fff" />
+                                        </Col>
+                                    </Row>
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">Seviye</span>
 
-                                    </Col>
-                                </Row>
-                                <Row >
-                                    <Col md={6}>
-                                        <span className="input-area-title">Seviye</span>
+                                            <TobetoSelect
+                                                name="educationProgramLevelId"
+                                                className="mb-4"
+                                                component="select">
+                                                <option value="SocialMedia">Seçiniz*</option>
+                                                {educationProgramLevels?.items.map((educationProgramLevel) => (
+                                                    <option value={String(educationProgramLevel.id)}>
+                                                        {educationProgramLevel.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Eğitimler</span>
 
-                                        <TobetoSelect
-                                            name="educationProgramLevelId"
-                                            className="mb-4"
-                                            component="select">
-                                            <option value="SocialMedia">Seçiniz*</option>
-                                            {educationPrograms?.items.map((educationProgram) => (
-                                                <option value={String(educationProgram.id)}>
-                                                    {/* {educationProgram.educationProgramLevelId} */}
-                                                </option>
-                                            ))}
-                                        </TobetoSelect>
-                                    </Col>
-                                    <Col md={6}>
-                                        <span className="input-area-title">Eğitimler</span>
+                                            <TobetoSelect
+                                                name="educationProgramDevelopmentId"
+                                                className="mb-4"
+                                                component="select">
+                                                <option value="SocialMedia">Seçiniz*</option>
+                                                {educationProgramDevelopments?.items.map((educationProgramDevelopment) => (
+                                                    <option value={String(educationProgramDevelopment.id)}>
+                                                        {educationProgramDevelopment.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+                                    </Row>
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">Rozet</span>
 
-                                        <TobetoSelect
-                                            name="educationProgramDevelopmentId"
-                                            className="mb-4"
-                                            component="select">
-                                            <option value="SocialMedia">Seçiniz*</option>
-                                            {educationPrograms?.items.map((educationProgram) => (
-                                                <option value={String(educationProgram.id)}>
-                                                    {/* {educationProgram.educationProgramDevelopmentId} */}
-                                                </option>
-                                            ))}
-                                        </TobetoSelect>
-                                    </Col>
-                                </Row>
-                                <Row >
-                                    <Col md={6}>
-                                        <span className="input-area-title">Rozet</span>
+                                            <TobetoSelect
+                                                name="badgeId"
+                                                className="mb-4"
+                                                component="select">
+                                                <option value="SocialMedia">Seçiniz*</option>
+                                                {badges?.items.map((badge) => (
+                                                    <option value={String(badge.id)}>
+                                                        {badge.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
 
-                                        <TobetoSelect
-                                            name="badgeId"
-                                            className="mb-4"
-                                            component="select">
-                                            <option value="SocialMedia">Seçiniz*</option>
-                                            {educationPrograms?.items.map((educationProgram) => (
-                                                <option value={String(educationProgram.id)}>
-                                                    {/* {educationProgram.badgeId} */}
-                                                </option>
-                                            ))}
-                                        </TobetoSelect>
-                                    </Col>
+                                    </Row>
+                                    <div className='form-buttons'>
+                                        <Button className="mb-4" type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >
+                                            Güncelle
+                                        </Button>
+                                        <Button className="mb-4" type="submit" style={addClick ? { display: 'block' } : { display: 'none' }}   >
+                                            Kaydet
+                                        </Button>
+                                        <Button className="mb-4" onClick={() => closeModal()}>
+                                            Kapat
+                                        </Button>
+                                    </div>
+                                </Form>
+                            </Formik>
+                        </div>
 
-                                </Row>
-                                <div className='form-buttons'>
-                                    <Button className="mb-4" type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >
-                                        Güncelle
-                                    </Button>
-                                    <Button className="mb-4" type="submit" style={addClick ? { display: 'block' } : { display: 'none' }}   >
-                                        Kaydet
-                                    </Button>
-                                    <Button className="mb-4" onClick={() => closeModal()}>
-                                        Kapat
-                                    </Button>
-                                </div>
-                            </Form>
-                        </Formik>
-                    </div>
+                        <div className="education-update-form formik-form" style={updateClick ? { display: 'block' } : { display: 'none' }}>
+                            <Formik
+                                initialValues={updateInitialValues}
+                                onSubmit={(values) => {
+                                    handleUpdateEducationProgram(values)
+                                }}>
+                                <Form className="update-modal-form" >
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">Eğitim Adı </span>
+
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="name"
+                                                placeholderTextColor="#fff"
+                                            />
+                                        </Col>
+
+                                        <Col md={6}>
+                                            <span className="input-area-title">Açıklama </span>
+
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="description"
+                                                placeholderTextColor="#fff"
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">ThumbnailPath</span>
+
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="thumbnailPath"
+                                                placeholderTextColor="#fff"
+                                            />
+                                        </Col>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Süre (sn)</span>
+
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="duration"
+                                                placeholderTextColor="#fff"
+                                            />
+
+                                        </Col>
+                                    </Row>
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">Yükleyen Kişi</span>
+
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="authorizedPerson"
+                                                placeholderTextColor="#fff" />
+                                        </Col>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Ücret</span>
+
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="price"
+                                                placeholderTextColor="#fff" />
+
+                                        </Col>
+                                    </Row>
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">Başlangıç Tarihi</span>
+
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="startDate"
+                                                type="date"
+                                                placeholderTextColor="#fff" />
+                                        </Col>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Bitiş Tarihi</span>
+
+                                            <TobetoTextInput
+                                                className="mb-4"
+                                                name="deadline"
+                                                type="date"
+                                                placeholderTextColor="#fff" />
+
+                                        </Col>
+                                    </Row>
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">Seviye</span>
+
+                                            <TobetoSelect
+                                                name="educationProgramLevelId"
+                                                className="mb-4"
+                                                component="select">
+                                                <option value="Level">Seçiniz*</option>
+                                                {educationProgramLevels?.items.map((educationProgramLevel) => (
+                                                    <option value={String(educationProgramLevel.id)}>
+                                                        {educationProgramLevel.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Eğitimler</span>
+
+                                            <TobetoSelect
+                                                name="educationProgramDevelopmentId"
+                                                className="mb-4"
+                                                component="select">
+                                                <option value="EducationProgramDevelopment">Seçiniz*</option>
+                                                {educationProgramDevelopments?.items.map((educationProgramDevelopment) => (
+                                                    <option value={String(educationProgramDevelopment.id)}>
+                                                        {educationProgramDevelopment.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+                                    </Row>
+                                    <Row >
+                                        <Col md={6}>
+                                            <span className="input-area-title">Rozet</span>
+
+                                            <TobetoSelect
+                                                name="badgeId"
+                                                className="mb-4"
+                                                component="select">
+                                                <option value="Badge">Seçiniz*</option>
+                                                {badges?.items.map((badge) => (
+                                                    <option value={String(badge.id)}>
+                                                        {badge.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+
+                                    </Row>
+                                    <div className='form-buttons'>
+                                        <Button className="mb-4" type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >
+                                            Güncelle
+                                        </Button>
+                                        <Button className="mb-4" type="submit" style={addClick ? { display: 'block' } : { display: 'none' }}   >
+                                            Kaydet
+                                        </Button>
+                                        <Button className="mb-4" onClick={() => closeModal()}>
+                                            Kapat
+                                        </Button>
+                                    </div>
+                                </Form>
+                            </Formik>
+                        </div>
+
+                    </>
                 }
 
             />

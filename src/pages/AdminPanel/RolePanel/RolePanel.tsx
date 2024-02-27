@@ -43,6 +43,8 @@ export default function RolePanel() {
         setAddClick(false);
         setShowModal(false)
     }
+
+
     useEffect(() => {
         operationClaimService.getAll(0, 100).then(result => {
             setOperationClaims(result.data);

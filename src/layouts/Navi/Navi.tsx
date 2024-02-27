@@ -26,6 +26,7 @@ export default function Navi() {
                         lastPathSegment !== "kurumlar-icin" &&
                         lastPathSegment !== "bireyler-icin" &&
                         lastPathSegment !== "takvim-anasayfa" &&
+                        lastPathSegment !== "codecademy" &&
                         lastPathSegment !== ""
                     )
                 ) ? 'none' : 'block'
@@ -40,6 +41,7 @@ export default function Navi() {
                             lastPathSegment !== "blog" &&
                             lastPathSegment !== "basinda-biz" &&
                             lastPathSegment !== "takvim-anasayfa" &&
+                            lastPathSegment !== "codecademy" &&
                             lastPathSegment !== ""
                         ) ? 'header' : 'header bg-front-dark'}>
 
@@ -54,7 +56,7 @@ export default function Navi() {
                             <p>Aradığın <span >"</span>İş<span >"</span> Burada!</p>
                         </div>
                         <div >
-                            <Button className='btn' onClick={() => { navigate("/istanbul-kodluyor") }}> Başvur</Button>
+                            <Button className='btn' onClick={() => { navigate("/kayit-ol") }}> Başvur</Button>
                         </div>
                     </div>
                 </div>
@@ -111,6 +113,7 @@ export default function Navi() {
                             && lastPathSegment !== "kurumlar-icin"
                             && lastPathSegment !== "bireyler-icin"
                             && lastPathSegment !== "takvim-anasayfa"
+                            && lastPathSegment !== "codecademy"
                             && lastPathSegment !== ""
                         )
 

@@ -16,8 +16,6 @@
 }
 
 .lesson-card-btn {
-    margin-left: 450px;
-    margin-top: -110px;
     width: 150px;
     height: 40px;
     background-color: white !important;
@@ -25,6 +23,9 @@
     color: #9a36ff !important;
     font-size: 17px !important;
     font-weight: 600 !important;
+    position: absolute;
+    top: 20px;
+    right: 10px;
 }
 
 .lesson-card-btn-3 {
@@ -37,6 +38,18 @@
     color: #9a36ff !important;
     font-size: 17px !important;
     font-weight: 600 !important;
+}
+
+.lesson-card-area .card-body {
+    position: relative;
+}
+
+.lesson-card-area .lesson-card-content img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
 }
 
 .lesson-card-video {
@@ -53,11 +66,13 @@
 
 .lesson-card-title {
     margin-top: 20px;
+    width: 75%;
 }
 
 .lesson-card-text {
     margin-top: 20px;
 }
+
 
 .lesson-title {
     font-weight: 600;
@@ -67,6 +82,7 @@
 .lesson-text {
     color: #818181;
 }
+
 
 .education-program-content {
     box-shadow: 0 7px 29px rgba(0, 0, 0, .13);
@@ -129,7 +145,7 @@
 
 .education-drawer-content-middle .education-sub-details {
     display: grid;
-    grid-template-columns: 50px repeat(2, 60px);
+    grid-template-columns: max-content repeat(2, 60px);
     grid-template-rows: 30px;
     align-items: center;
     column-gap: 10px;
@@ -145,6 +161,8 @@
     align-items: center;
     justify-content: center;
     font-size: 12px;
+    width: max-content;
+    padding: 0 5px;
 }
 
 .education-drawer-content-middle .education-sub-details .course-detail-info span {
@@ -188,7 +206,7 @@
 .ed-drawer-sub-content .unit-icon,
 .lesson-text .unit-icon {
     width: 13px;
-    height: 13px;
+
     display: inline-block;
     vertical-align: middle;
     background-size: 100% !important;
@@ -198,12 +216,29 @@
 
 .ed-drawer-sub-content .unit-ongoing,
 .lesson-text .unit-ongoing,
+.lesson-info .unit-ongoing,
 .unit-ongoing {
     background: url(/public/assets/Icons/unit-ongoing.svg) no-repeat;
 }
 
+.lesson-text .unit-ongoing,
+.ed-drawer-course-status-info .unit-ongoing {
+    height: 14px;
+    width: 14px;
+}
+
+.lesson-info .unit-ongoing {
+    height: 14px;
+    width: 14px;
+    z-index: 99;
+}
+
 .lesson-text .unit-ongoing {
     margin-left: 15px;
+}
+
+.lesson-text span {
+    align-items: center;
 }
 
 .ed-drawer-course-status-info {
@@ -254,6 +289,25 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-family: 'Poppins-Medium';
+    font-size: 16px;
+    position: relative;
+    width: 98%;
+}
+
+.accordion-education-program-lesson .lesson-info .unit-end,
+.accordion-education-program-lesson .lesson-info .unit-ongoing {
+    position: absolute;
+    right: 0;
+    top: 50%;
+}
+
+
+.accordion-education-program-lesson .lesson-type-info {
+    color: #818181;
+    font-weight: 500;
+    font-size: 12px;
+    font-family: 'Poppins-Regular';
 }
 
 .accordion-education-program-lesson .active-accordion {
@@ -262,10 +316,17 @@
 
 .accordion-education-program-lesson .accordion-item .accordion-header .accordion-button {
     background: transparent !important;
-    padding-left: 5px;
+    padding-left: 25px;
     padding-bottom: 5px;
     font-family: 'Poppins-Bold';
 }
+
+.accordion-education-program-lesson .accordion-item .accordion-header .accordion-button:not(.collapsed)::after,
+.accordion-education-program-lesson .accordion-item .accordion-header .accordion-button::after {
+    position: absolute;
+    left: 0;
+}
+
 
 .accordion-education-program-lesson .accordion-item {
     border: 0;
@@ -274,7 +335,7 @@
 
 .accordion-education-program-lesson .accordion-body {
     padding: 5px;
-    height: 50px;
+    height: max-content;
     align-items: center;
 }
 
@@ -460,10 +521,17 @@
     color: #2372ba !important
 }
 
+.date-info-container .date-info .tooltip-congrats-text {
+    margin-left: 10px;
+    color: #3DCB79;
+    font-family: 'Poppins-Bold';
+}
+
 .activity-score {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 20px;
 }
 
 
@@ -533,7 +601,6 @@
 
 .lesson1 {
     text-align: left;
-    font-weight: 700;
 }
 
 .activity-score .education-drawer-like-area .like-button svg {

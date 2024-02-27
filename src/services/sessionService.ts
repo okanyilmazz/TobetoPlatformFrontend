@@ -24,8 +24,12 @@ class SessionService extends BaseService<
         this.apiUrl = "Sessions"
     }
 
-    getInstructorList(pageIndex:number,pageSize:number): Promise<AxiosResponse<Paginate<GetListSessionResponse>, any>> {
-        return axiosInstance.get<Paginate<GetListSessionResponse>>(this.apiUrl + "/GetListWithInstructor?PageIndex="+pageIndex+"&PageSize="+pageSize);
+    getInstructorList(pageIndex: number, pageSize: number): Promise<AxiosResponse<Paginate<GetListSessionResponse>, any>> {
+        return axiosInstance.get<Paginate<GetListSessionResponse>>(this.apiUrl + "/GetListWithInstructor?PageIndex=" + pageIndex + "&PageSize=" + pageSize);
+    }
+
+    getByLessonId(lessonId: string): Promise<AxiosResponse<Paginate<GetListSessionResponse>, any>> {
+        return axiosInstance.get<Paginate<GetListSessionResponse>>(this.apiUrl + "/GetByLessonId?lessonId=" + lessonId);
     }
 }
 

@@ -23,6 +23,39 @@ export default function MyExperiences() {
         "work-description": ""
     };
 
+    const getWorkExperience = () => {
+        workExperienceService.getByAccountId(user.id).then((result) => {
+            console.log(result.data);
+            setWorkExperiences(result.data);
+        })
+    }
+
+    const deleteWorkExperience = async (workExperience: any) => {
+        const deleteWorkExperience: DeleteWorkExperienceRequest = {
+            id: workExperience.id,
+        }
+
+        await workExperienceService.delete(deleteWorkExperience);
+        getWorkExperience();;
+    }
+
+    const handleAddWorkExperience = async (workExperience: any) => {
+        const addWorkExperience: AddWorkExperienceRequest = {
+            accountId: user.id,
+            cityId: workExperience.cityId,
+            industry: workExperience.industry,
+            companyName: workExperience.companyName,
+            department: workExperience.department,
+            description: workExperience.description,
+            startDate: workExperience.startDate,
+            endDate: workExperience.endDate,
+        }
+        console.log(addWorkExperience);
+
+        await workExperienceService.add(addWorkExperience);
+        getWorkExperience();
+    }
+
     const dispatch = useDispatch();
     const userState = useSelector((state: any) => state.user);
     const [cities, setCities] = useState<Paginate<GetListCityResponse>>();
@@ -52,11 +85,15 @@ export default function MyExperiences() {
                 <Row>
                     <Col md={3}>
                         sdgjhldlsfaşlkzc
+                        <SidebarCard />
                     </Col>
 
                     <Col md={9} className="experience-page formik-form">
                         <Formik
                             initialValues={initialValues}
+                            onSubmit={(values) => {
+                                handleAddWorkExperience(values)
+                            }}
                             onSubmit={handleSubmit}
                         >
                             <Form className='login-form'>

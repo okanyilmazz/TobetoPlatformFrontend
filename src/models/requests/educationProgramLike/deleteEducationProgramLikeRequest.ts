@@ -1,5 +1,6 @@
 import { Identifier } from "typescript";
 
 export default interface DeleteEducationProgramLikeRequest {
-    id: Identifier;
+    accountId: Identifier;
+    educationProgramId: string;
 }

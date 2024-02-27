@@ -11,4 +11,6 @@ export default interface AddedLessonResponse {
     startDate: Date;
     endDate: Date;
     duration: number;
+    lessonPath: string;
+
 }

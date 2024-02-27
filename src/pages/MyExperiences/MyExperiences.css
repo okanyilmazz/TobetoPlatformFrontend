@@ -1,3 +1,11 @@
+
+.formik-form button {
+    background-color: #93f;
+    padding: 6px 12px;
+    border-radius: 999px;
+    width: 100%;
+}
+
 .experience-page-content {
     margin-top: 36px !important;
     padding-left: 20px !important;
@@ -23,90 +31,54 @@
 .grade-date {
     display: flex;
     color: rgba(153, 51, 255, .66);
+
     font-size: 14px;
-    font-weight: 500;
-    display: flex;
-    gap: 8px;
-}
-
-.grade-details {
-    display: flex;
-    gap: 1.5em;
-    justify-content: flex-start;
-    margin-top: 0.5em;
-    align-items: baseline;
-    position: relative;
-}
-
-.grade-details-col {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
-    min-width: 25%;
-}
-
-.grade-details-header {
-    color: #828282 !important;
+    font-weight: bold;
+    border-color: #93f;
+  }
+  
+  .formik-form button:hover {
+    background-color: #822bd9;
+    border-color: #822bd9;
+  }
+  
+  .formik-form .field input:focus {
+    border-color: #c9f !important;
+    box-shadow: 0 0 0 0.25rem rgba(153, 51, 255, .25);
+    outline: 0;
+  }
+  
+  .formik-form .field input {
+    width: 100%;
+    border: solid #e7e5e4;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    border-radius: 5px;
+    padding: 1rem 1.5rem;
+    font-family: 'Poppins-Regular';
     font-size: 16px;
-    font-weight: 500;
-}
 
-.grade-details-content {
-    color: #171717 !important;
-    font-size: 16px;
-    font-weight: 500;
-    text-transform: capitalize;
-    word-break: break-word;
-}
-
-.grade-delete {
-    display: flex;
-    align-items: flex-end;
-    position: absolute;
-    right: -31px;
-    top: 75%;
-}
-
-.grade-delete:after {
-    display: flex;
-    border-radius: 50%;
-    justify-content: center;
-    align-items: center;
-}
-
-.grade-delete:after {
-    content: url("https://tobeto.com/trash.svg");
-    background-color: #fc6d6d;
-    width: 24px;
-    height: 24px;
-    padding-top: 3px;
-}
-
-.grade-info {
-    display: flex;
-    align-items: flex-end;
-    position: absolute;
-    right: -31px;
-    top: 5%;
-}
-
-.grade-info:after {
-    content: url("https://tobeto.com/_next/static/media/alert-circle.bd20fb51.svg");
-    display: flex;
-    background-color: #ac59ff;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    justify-content: center;
-    padding-top: 3px;
-}
-
-.user-modal-description .modal-title {
-    color: #828282 !important;
-    font-size: 16px;
-    font-weight: 500;
-}
+    font-weight: 400;
+    line-height: 1.25;
+  }
+  
+  .formik-form .field select {
+    width: 100%;
+    border: solid #e7e5e4;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    border-radius: 5px;
+    padding: 1rem 1.5rem;
+    font-family: 'Poppins-Regular';
+    font-size: .875rem;
+    font-weight: 400;
+    line-height: 1.25;
+  }
+  
+  .formik-form .field select:focus { 
+    border-color: #c9f !important;
+    box-shadow: 0 0 0 0.25rem rgba(153, 51, 255, .25);
+    outline: 0;
+  }
+  
 
 .user-modal-footer-button button {
     background-color: #93f;
@@ -128,3 +100,4 @@
     margin-top: -10px !important;
     margin-bottom:10px;
 }
+

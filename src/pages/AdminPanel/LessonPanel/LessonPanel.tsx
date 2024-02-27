@@ -210,6 +210,7 @@ export default function LessonPanel() {
 
 
 
+
     return (
         <div className='container'>
             <div className="row lesson-panel-content">
@@ -330,7 +331,7 @@ export default function LessonPanel() {
                                                 ))}
                                             </TobetoSelect>
                                         </Col>
-                                    </Row>
+                                    </Row >
                                     <Row >
                                         <Col md={6}>
                                             <span className="input-area-title"> Alt Tip</span>
@@ -362,7 +363,7 @@ export default function LessonPanel() {
                                                 ))}
                                             </TobetoSelect>
                                         </Col>
-                                    </Row>
+                                    </Row >
 
                                     <Row >
                                         <Col md={6}>
@@ -424,9 +425,9 @@ export default function LessonPanel() {
                                             Kapat
                                         </Button>
                                     </div>
-                                </Form>
-                            </Formik>
-                        </div>
+                                </Form >
+                            </Formik >
+                        </div >
 
                         <div className="lesson-update-form formik-form" style={updateClick ? { display: 'block' } : { display: 'none' }}>
                             <Formik

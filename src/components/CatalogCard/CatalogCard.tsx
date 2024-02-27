@@ -4,11 +4,17 @@ import { IoTimeOutline } from "react-icons/io5";
 import Card from 'react-bootstrap/Card';
 import './CatalogCard.css'
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const CatalogCard = (props: any) => {
+    const authState = useSelector((state: any) => state.auth);
     const navigate = useNavigate();
     const handleClick = () => {
-        navigate(`/education-program-details/${props.id}`);
+        if (authState.isAuthenticated) {
+            navigate(`/education-program-details/${props.id}`);
+        } else {
+            navigate('/giris');
+        }
     };
     return (
         <div className="row">

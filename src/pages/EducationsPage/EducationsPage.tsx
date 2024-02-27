@@ -1,26 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './EducationsPage.css';
 import { IoSearch } from 'react-icons/io5';
 import Select from 'react-select';
 import { Tab, Tabs } from 'react-bootstrap';
 import EducationCard from '../../components/EducationCard/EducationCard';
-import { useDispatch, useSelector } from 'react-redux';
-import { userActions } from '../../store/user/userSlice';
+import { useSelector } from 'react-redux';
 import educationProgramService from '../../services/educationProgramService';
 import { GetListEducationProgramResponse } from '../../models/responses/educationProgram/getListEducationProgramResponse';
 import GetListProjectResponse from '../../models/responses/project/getListProjectResponse';
 import authService from '../../services/authService';
-import accountService from '../../services/accountService';
-import GetAccountResponse from '../../models/responses/account/getAccountResponse';
 import projectService from '../../services/projectService';
+import GetListAccountEducationProgramResponse from '../../models/responses/accountEducationProgram/getAccountListEducationProgramResponse';
 
 const EducationsPage = () => {
-    const [account, setAccount] = useState<GetAccountResponse>();
     const userState = useSelector((state: any) => state.user);
     const user = authService.getUserInfo();
-    const dispatch = useDispatch();
     const [educationPrograms, setEducationPrograms] = useState<GetListEducationProgramResponse[]>([]);
+    const [accounteducationprograms, setaccounteducationprograms] = useState<GetListAccountEducationProgramResponse[]>([]);
     const [filteredEducationPrograms, setFilteredEducationPrograms] = useState<GetListEducationProgramResponse[]>([]);
+    const [projects, setProjects] = useState<GetListProjectResponse[]>([]);
     const [searchText, setSearchText] = useState('');
     const [sortOption, setSortOption] = useState('');
     const [institutionOption, setInstitutionOption] = useState<string[]>([]);
@@ -35,22 +33,18 @@ const EducationsPage = () => {
         });
     };
 
-    // const projectOptions = projects.map(project => ({
-    //     value: project.name,
-    //     label: project.name
-    // }));
+    const projectOptions = projects.map(project => ({
+        value: project.name,
+        label: project.name
+    }));
 
     useEffect(() => {
-        if (!userState.user) {
-            dispatch(userActions.getUserInfo());
-            return;
-        }
+        projectService.getAll(0, 5).then((result) => {
+            setProjects(result.data.items);
+        });
 
-        // projectService.getAll(0, 5).then((result) => {
-        //     setProjects(result.data.items);
-        // });
-
-        educationProgramService.getByAccountId(user.id, 0, 100).then(result => {
+        educationProgramService.getByAccountId(user.id, 0, 100).then((result:any) => {
+            console.log(result.data)
             const programs = result.data.items.map((program: GetListEducationProgramResponse) => ({
                 ...program,
                 startDate: new Date(program.startDate)
@@ -59,7 +53,7 @@ const EducationsPage = () => {
             setFilteredEducationPrograms(programs);
         });
 
-    }, [userState]);
+    }, [user.id]);
 
     useEffect(() => {
         let filteredPrograms = educationPrograms.filter(program =>
@@ -117,7 +111,7 @@ const EducationsPage = () => {
                                 className="projectSelect"
                                 classNamePrefix="select"
                                 placeholder="Kurum Seçiniz"
-                            // options={projectOptions}
+                                options={projectOptions}
                             />
                         </div>
                         <div className='col-md-3 col-12'>

@@ -27,10 +27,6 @@ class AccountUniversityService extends BaseService<
     getByAccountId(accountId: number, pageIndex: number, pageSize: number): Promise<AxiosResponse<Paginate<GetListAccountUniversityResponse>, any>> {
         return axiosInstance.get<Paginate<GetListAccountUniversityResponse>>(this.apiUrl + "/GetByAccountId?accountId=" + accountId + "&PageIndex=" + pageIndex + "&PageSize=" + pageSize);
     }
-
-    deleteWithModel(request: DeleteAccountUniversityRequest) {
-        return axiosInstance.post(this.apiUrl + "/Delete", request);
-    }
 }
 
 export default new AccountUniversityService();

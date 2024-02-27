@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import LessonCard from '../../components/LessonCard/LessonCard'
-import { Progress } from 'antd'
+import { Collapse, Progress } from 'antd'
 import { FaCircle } from "react-icons/fa";
 import Button from 'react-bootstrap/Button';
 import './EducationProgramContent.css'
@@ -15,7 +15,7 @@ import AddLessonLikeRequest from '../../models/requests/lessonLike/addLessonLike
 import DeleteLessonLikeRequest from '../../models/requests/lessonLike/deleteLessonLikeRequest';
 import { Link, useParams } from 'react-router-dom';
 import LikeButton from '../../components/LikeButton/LikeButton';
-import { Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Accordion, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import EducationDrawer from '../../components/EducationDrawer/EducationDrawer';
 import AddEducationProgramLikeRequest from '../../models/requests/educationProgramLike/addEducationProgramLikeRequest';
 import DeleteEducationProgramLikeRequest from '../../models/requests/educationProgramLike/deleteEducationProgramLikeRequest';
@@ -65,7 +65,7 @@ export default function EducationProgramContent() {
     const [homeworks, setHomeworks] = useState<Paginate<GetListHomeworkResponse>>();
 
 
-    const [allLessons, setAllLessons] = useState<GetListLessonResponse[]>();
+    const [educationProgramLessons, setEducationProgramLessons] = useState<Paginate<GetListEducationProgramLessonResponse>>();
 
     const [lessonLikers, setLessonLikers] = useState<Paginate<GetListAccountResponse>>()
     const [educationProgramLikers, setEducationProgramLikers] = useState<Paginate<GetListAccountResponse>>()
@@ -73,6 +73,7 @@ export default function EducationProgramContent() {
     const [isFavorite, setIsFavorite] = useState(false);
     const user = authService.getUserInfo()
     const [openDrawer, setOpenDrawer] = useState(false);
+
 
     /*Video */
 
@@ -91,19 +92,17 @@ export default function EducationProgramContent() {
     }, [])
     useEffect(() => {
         if (selectedLessonId) {
-            console.log("girdiiiiiiiiiiii")
+            lessonService.getById(selectedLessonId).then((result: any) => {
+                setLesson(result.data)
+            })
+
             accountService.getByLessonIdForLike(selectedLessonId, 0, 10).then(result => {
                 setLessonLikers(result.data);
             })
 
             lessonLikeService.getByLessonId(selectedLessonId).then(result => {
-                const likedLessonFilter = result.data?.items?.filter((c: any) => c.accountId === user.id)
-                console.dir("likedLessonFilter")
-                console.dir(likedLessonFilter)
-
-                if (likedLessonFilter && likedLessonFilter.length > 0) {
-
-
+                const likedLessonFilter = result.data.items.filter((c: any) => c.accountId === user.id)
+                if (likedLessonFilter.length > 0) {
                     setIsLikedLesson(true);
                 }
                 else {
@@ -127,11 +126,15 @@ export default function EducationProgramContent() {
                 setHomeworks(result.data);
             })
         }
-    }, [selectedLessonId, user.id])
+    }, [selectedLessonId])
 
 
     useEffect(() => {
         if (educationProgramId) {
+            educationProgramLessonService.getByEducationProgramId(educationProgramId).then((result: any) => {
+                setEducationProgramLessons(result.data);
+            })
+
             educationProgramService.getById(educationProgramId).then((result: any) => {
                 setEducationProgram(result.data)
             })
@@ -317,7 +320,6 @@ export default function EducationProgramContent() {
 
 
     const handleSelectLesson = async (selectedLessonId: any) => {
-        console.log("girdi")
         setSelectedLessonId(selectedLessonId)
     };
 

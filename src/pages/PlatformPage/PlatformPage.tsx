@@ -124,7 +124,10 @@ export default function PlatformPage() {
                                             ))
                                         }
                                     </div>
-                                    <ShowMoreButton />
+                                    <div onClick={() => navigate("/egitimlerim")}  >
+
+                                        <ShowMoreButton />
+                                    </div>
                                 </Tab>
                                 <Tab eventKey="announcements" title="Duyuru ve Haberlerim">
                                     <div className='tab-announcement-content'>

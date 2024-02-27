@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Col, Container, Row, Button } from 'react-bootstrap';
-import { Formik, Form, FormikValues } from "formik";
+import { Formik, Form } from "formik";
+import * as Yup from 'yup'; 
 import TobetoTextInput from "../../utilities/customFormControls/TobetoTextInput";
 import TobetoSelect from "../../utilities/customFormControls/TobetoSelect";
 import { GetListCityResponse } from "../../models/responses/city/getListCityResponse";
 import accountService from "../../services/accountService";
-import { userActions } from "../../store/user/userSlice";
-import { useDispatch, useSelector } from "react-redux";
 import { Paginate } from "../../models/paginate";
 import cityService from "../../services/cityService";
 import GetAccountResponse from "../../models/responses/account/getAccountResponse";
@@ -28,15 +27,12 @@ export default function MyExperiences() {
     const [workExperiences, setWorkExperiences] = useState<Paginate<GetListWorkExperienceResponse>>();
     const user = authService.getUserInfo();
     const [showDeleteCard, setShowDeleteCard] = useState(false);
-
     const [showModal, setShowModal] = useState(false);
 
 
     const closeModal = () => {
         setShowModal(false)
     }
-
-
 
     const initialValues = {
         cityId: "",
@@ -47,6 +43,21 @@ export default function MyExperiences() {
         startDate: "",
         endDate: "",
     };
+
+    const validationSchema = Yup.object().shape({
+        companyName: Yup.string()
+            .required('Doldurulması zorunlu alan*')
+            .min(5, 'En az 5 karakter girmelisiniz'),
+        department: Yup.string()
+            .required('Doldurulması zorunlu alan*')
+            .min(5, 'En az 5 karakter girmelisiniz'),
+        industry: Yup.string()
+            .required('Doldurulması zorunlu alan*')
+            .min(5, 'En az 5 karakter girmelisiniz'),
+        cityId: Yup.string().required('Doldurulması zorunlu alan*'),
+        startDate: Yup.date().required('Doldurulması zorunlu alan*'),
+        endDate: Yup.date().required('Doldurulması zorunlu alan*'),
+    });
 
     const getWorkExperience = () => {
         workExperienceService.getByAccountId(user.id).then((result) => {
@@ -61,6 +72,7 @@ export default function MyExperiences() {
         }
 
         await workExperienceService.delete(deleteWorkExperience);
+        setShowDeleteCard(false);
         getWorkExperience();;
     }
 
@@ -108,79 +120,74 @@ export default function MyExperiences() {
                     <Col md={9} className="experience-page-content formik-form">
                         <Formik
                             initialValues={initialValues}
+                            validationSchema={validationSchema}
                             onSubmit={(values) => {
                                 handleAddWorkExperience(values)
                             }}
                         >
-                            <Form className='login-form'>
-                                <Row>
-                                    <Col md={6}>
-                                        <div>
-                                            <span className="mb-5">Kurum Adı*</span>
-                                            <TobetoTextInput
-                                                className="mb-4"
-                                                name="companyName"
-                                                placeholder="Kampüs 365"
-                                                placeholderTextColor="#fff" />
-
-
-                                            <span className="mb-5">Sektör*</span>
-                                            <TobetoTextInput
-                                                className="mb-4"
-                                                name="industry"
-                                                placeholder="Yazılım" />
-
-
-                                            <span className="mb-5">İş Başlangıcı*</span>
-                                            <TobetoTextInput
-                                                className="mb-4"
-                                                name="startDate"
-                                                type="date"
-
-                                                placeholder="gg.aa.yyyy" />
-
-                                        </div>
-                                    </Col>
-                                    <Col md={6}>
-                                        <div>
-                                            <span className="mb-5">Pozisyon*</span>
-                                            <TobetoTextInput
-                                                className="mb-4"
-                                                name="department"
-                                                placeholder="Front-End-Developer" />
-
-                                            <span className="mb-5">İl Seçiniz*</span>
-                                            <TobetoSelect
-                                                className="mb-4"
-                                                name="cityId"
-                                                placeholder="İl Seçiniz"
-                                                component="select">
-                                                <option value="Şehir">İl Seçiniz</option>
-                                                {cities?.items.map((city, index) => (
-                                                    <option key={index} value={String(city.id)}>
-                                                        {city.name}
-                                                    </option>
-                                                ))}
-                                            </TobetoSelect>
-
-                                            <span className="mb-5">İş Bitişi*</span>
-                                            <TobetoTextInput
-                                                className="mb-4"
-                                                type="date"
-                                                name="endDate"
-                                                placeholder="gg.aa.yyyy" />
-                                        </div>
-                                    </Col>
-                                    <Col md={12}>
-                                        <span className="mb-5">İş Açıklaması*</span>
-                                        <TobetoTextArea
-                                            className="mb-4 form-control"
-                                            name="work-description"
-                                            rows={5} />
-                                        <Button className="mb-4" type="submit">Kaydet</Button>
-                                    </Col>
-                                </Row>
-                            </Form>
+                            {({ errors, touched }) => (
+                                <Form className='login-form'>
+                                    <Row>
+                                        <Col md={6}>
+                                            <div>
+                                                <span className="mb-5">Kurum Adı*</span>
+                                                <TobetoTextInput
+                                                    className="mb-4"
+                                                    name="companyName"
+                                                    placeholder="Kampüs 365"
+                                                    placeholderTextColor="#fff" />
+                                                <span className="mb-5">Sektör*</span>
+                                                <TobetoTextInput
+                                                    className="mb-4"
+                                                    name="industry"
+                                                    placeholder="Yazılım" />
+                                                <span className="mb-5">İş Başlangıcı*</span>
+                                                <TobetoTextInput
+                                                    className="mb-4"
+                                                    name="startDate"
+                                                    type="date"
+                                                    placeholder="gg.aa.yyyy" />
+                                            </div>
+                                        </Col>
+                                        <Col md={6}>
+                                            <div>
+                                                <span className="mb-5">Pozisyon*</span>
+                                                <TobetoTextInput
+                                                    className="mb-4"
+                                                    name="department"
+                                                    placeholder="Front-End-Developer" />
+                                                <span className="mb-5">Şehir Seçiniz*</span>
+                                                <TobetoSelect
+                                                    className="mb-4"
+                                                    name="cityId"
+                                                    placeholder="İl Seçiniz"
+                                                    component="select">
+                                                    <option value="Şehir">İl Seçiniz</option>
+                                                    {cities?.items.map((city, index) => (
+                                                        <option key={index} value={String(city.id)}>
+                                                            {city.name}
+                                                        </option>
+                                                    ))}
+                                                </TobetoSelect>
+                                                <span className="mb-5">İş Bitişi*</span>
+                                                <TobetoTextInput
+                                                    className="mb-4"
+                                                    type="date"
+                                                    name="endDate"
+                                                    placeholder="gg.aa.yyyy" />
+                                            </div>
+                                        </Col>
+                                        <Col md={12}>
+                                            <span className="mb-5">İş Açıklaması*</span>
+                                            <TobetoTextArea
+                                                className="mb-4 form-control"
+                                                name="work-description"
+                                                rows={5} />
+                                            <Button className="mb-4" type="submit">Kaydet</Button>
+                                        </Col>
+                                    </Row>
+                                </Form>
+                            )}
                         </Formik>
                         {workExperiences?.items.map((workExperience, index) => (
 
@@ -212,22 +219,11 @@ export default function MyExperiences() {
                                         <div className="grade-details-header">Şehir</div>
                                         <div className="grade-details-content"> İstanbul</div>
                                     </div>
-
-
                                     <div>
                                         <span className="grade-delete" onClick={() => setShowDeleteCard(true)}>
-                                            {showDeleteCard && (
-                                                <DeleteCard
-                                                    id={index}
-                                                    delete={() => deleteWorkExperience(workExperience)}
-                                                />
-                                            )}
                                         </span>
 
-
-                                        <span className="grade-info" onClick={() => setShowModal(true)}   >
-
-                                        </span>
+                                        <span className="grade-info" onClick={() => setShowModal(true)}></span>
                                     </div>
                                 </div>
 
@@ -254,7 +250,14 @@ export default function MyExperiences() {
                                         </div>
                                     }
                                 />
-
+                                {showDeleteCard && (
+                                    <DeleteCard
+                                        show={showDeleteCard}
+                                        handleClose={() => setShowDeleteCard(false)}
+                                        handleDelete={() => deleteWorkExperience(workExperience)}
+                                        body="deneyimi"
+                                    />
+                                )}
                             </div>
                         ))}
                     </Col>

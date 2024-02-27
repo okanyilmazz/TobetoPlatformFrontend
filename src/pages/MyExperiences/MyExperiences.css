@@ -1,9 +1,9 @@
 .experience-page-content {
     margin-top: 36px !important;
+    padding-left: 20px !important;
 }
 
 .grade-delete-btn img {
-    /* margin-top: -40px; */
     background-color: #fc6d6d !important;
     border: none;
     border-radius: 50px !important;
@@ -122,4 +122,9 @@
     border-radius: 12px;
     display: flex;
     margin-left: 400px;
+}
+
+.ui.pointing.label {
+    margin-top: -10px !important;
+    margin-bottom:10px;
 }

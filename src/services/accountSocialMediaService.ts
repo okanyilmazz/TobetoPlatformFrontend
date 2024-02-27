@@ -29,9 +29,6 @@ class AccountSocialMediaService extends BaseService<
         return axiosInstance.get<Paginate<GetListAccountSocialMediaResponse>>(this.apiUrl + "/GetByAccountId?accountId=" + accountId + "&PageIndex=" + pageIndex + "&PageSize=" + pageSize);
     }
 
-    deleteWithModel(request: DeleteAccountSkillRequest) {
-        return axiosInstance.post(this.apiUrl + "/Delete", request);
-    }
 }
 
 export default new AccountSocialMediaService();

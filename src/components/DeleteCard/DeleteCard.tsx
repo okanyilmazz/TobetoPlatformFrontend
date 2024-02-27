@@ -1,17 +1,18 @@
-import { useState } from 'react';
+import React, { useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import './DeleteCard.css'
+import './DeleteCard.css';
 
 function DeleteCard(props: any) {
-  const [show, setShow] = useState(true);
+  console.log(props);
+  
+  const { show, handleClose, handleDelete, title, body } = props;
 
-  const handleClose = () => setShow(false);
-
-  const handleDelete = () => {
-    setShow(false);
-    props.delete();
-  };
+  useEffect(() => {
+    if (!show) {
+      handleClose();
+    }
+  }, [show, handleClose]);
 
   return (
     <Modal
@@ -24,11 +25,11 @@ function DeleteCard(props: any) {
       <Modal.Body className="bg-light">
         <div className='deletecard-title'>
           <Modal.Header closeButton className="border-0">
-            <Modal.Title className='deletecard'>{props.title}</Modal.Title>
+            <Modal.Title className='deletecard'>{title}</Modal.Title>
           </Modal.Header>
         </div>
         <Modal.Body className="border-0 deletecard-body">
-          Seçilen {props.body} silmek istediğinize emin misiniz?
+          Seçilen {body} silmek istediğinize emin misiniz?
         </Modal.Body>
         <Modal.Body className="border-0 deletecard-const">
           Bu işlem geri alınamaz.
@@ -44,4 +45,4 @@ function DeleteCard(props: any) {
   );
 }
 
-export default DeleteCard;  
+export default DeleteCard;

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import "./SocialMediaPage.css"
 import { Button, Col, FormControl, Image, InputGroup, Row } from 'react-bootstrap'
 import { Form, Formik } from 'formik'
+import * as Yup from 'yup'; // Yup eklemeyi unutmayın
 import TobetoTextInput from '../../utilities/customFormControls/TobetoTextInput'
 import TobetoSelect from '../../utilities/customFormControls/TobetoSelect'
 import GetListAccountSocialMediaResponse from '../../models/responses/accountSocialMedia/getListAccountSocialMediaResponse'
@@ -18,6 +19,9 @@ import authService from '../../services/authService'
 import { useLocation } from 'react-router-dom'
 import socialMediaService from '../../services/socialMediaService'
 import SidebarCard from '../../components/SidebarCard/SidebarCard'
+import ProfileToaster from '../../components/ProfileToaster/ProfileToaster'
+import DeleteCard from '../../components/DeleteCard/DeleteCard'
+
 export default function SocialMediaPage() {
     const location = useLocation();
     const pathArray = location.pathname.split('/');
@@ -28,6 +32,7 @@ export default function SocialMediaPage() {
     const [socialMedias, setSocialMedias] = useState<Paginate<GetListSocialMediaResponse>>();
     const [accountSocialMedias, setAccountSocialMedias] = useState<Paginate<GetListAccountSocialMediaResponse>>();
     const [showAccountSocialMediaUpdateModal, setShowAccountSocialMediaUpdateModal] = useState(false)
+    const [showDeleteCard, setShowDeleteCard] = useState(false);
 
     useEffect(() => {
         socialMediaService.getAll(0, 5).then((result) => {
@@ -45,11 +50,18 @@ export default function SocialMediaPage() {
         url: ""
     }
 
+    const validationSchema = Yup.object().shape({
+        socialMediaId: Yup.string().required('Doldurulması zorunlu alan*'),
+        url: Yup.string().required('Doldurulması zorunlu alan*')
+    });
+
     const handleDeleteAccountSocialMedia = async (accountSocialMedia: any) => {
         const deleteAccountSocialMedia: DeleteAccountSocialMediaRequest = {
             id: accountSocialMedia.id
         }
         await accountSocialMediaService.delete(deleteAccountSocialMedia);
+        ProfileToaster({ name: "Sosyal medya adresiniz başarıyla kaldırıldı" })
+        setShowDeleteCard(false);
         getAccountSocialMedia();
     }
 
@@ -62,14 +74,24 @@ export default function SocialMediaPage() {
         setSelectedAccountSocialMedia(accountSocialMedia);
     }
 
-    const handleAddAccountSocialMedia = async (accountSocialMedia: any) => {
-        const addAccountSocialMedia: AddAccountSocialMediaRequest = {
-            accountId: user.id,
-            socialMediaId: accountSocialMedia.socialMediaId,
-            url: accountSocialMedia.url
+    const isDuplicateSocialMedia = (newSocialMediaId:any, accountSocialMedias:any) => {
+        return accountSocialMedias.items.some((accountSocialMedia:any) => accountSocialMedia.socialMediaId === newSocialMediaId);
+    };
+
+    const handleAddAccountSocialMedia = async (accountSocialMedia:any) => {
+        const { socialMediaId } = accountSocialMedia;
+    
+        if (!isDuplicateSocialMedia(socialMediaId, accountSocialMedias)) {
+            const addAccountSocialMedia: AddAccountSocialMediaRequest = {
+                accountId: user.id,
+                socialMediaId,
+                url: accountSocialMedia.url
+            }
+            await accountSocialMediaService.add(addAccountSocialMedia);
+            getAccountSocialMedia();
+        } else {
+            ProfileToaster({ name: "Bu sosyal medya zaten eklendi" })
         }
-        await accountSocialMediaService.add(addAccountSocialMedia);
-        getAccountSocialMedia();
     }
 
     const handleUpdateAccountSocialMedia = async (accountSocialMedia: any) => {
@@ -82,7 +104,7 @@ export default function SocialMediaPage() {
             }
             await accountSocialMediaService.update(updateAccountSocialMedia);
             getAccountSocialMedia();
-            toast.success("Sosyal medya güncellendi");
+            ProfileToaster({ name: "Sosyal medya adresiniz başarıyla güncellendi" })
             setShowAccountSocialMediaUpdateModal(false);
         }
     }
@@ -104,6 +126,7 @@ export default function SocialMediaPage() {
                 <div className="formik-form">
                     <Formik
                         initialValues={socialMediaInitialValues}
+                        validationSchema={validationSchema}
                         onSubmit={(values) => {
                             handleAddAccountSocialMedia(values)
                         }}>
@@ -114,7 +137,7 @@ export default function SocialMediaPage() {
                                         name="socialMediaId"
                                         className="mb-4"
                                         component="select">
-                                        <option value="SocialMedia">Seçiniz*</option>
+                                        <option value="">Seçiniz*</option>
                                         {socialMedias?.items.map((socialMedia, index) => (
                                             <option key={index} value={String(socialMedia.id)}>
                                                 {socialMedia.name}
@@ -148,7 +171,7 @@ export default function SocialMediaPage() {
                                             </InputGroup.Text>
                                             <FormControl className="social-media-form" disabled value={accountSocialMedia.url} />
                                             <InputGroup.Text id="social-media-icon">
-                                                <Button className="social-media-delete-btn" onClick={() => handleDeleteAccountSocialMedia(accountSocialMedia)}>
+                                                <Button className="social-media-delete-btn" onClick={() => setShowDeleteCard(true)}>
                                                     <Image src="/assets/Icons/profile-settings/trash.svg" width={24} height={24} alt="Delete" />
                                                 </Button>
                                                 <Button className="social-media-edit-btn" onClick={() => handleOpenAccountSocialMediaUpdateModal(accountSocialMedia)}>
@@ -170,6 +193,7 @@ export default function SocialMediaPage() {
                                                         socialMediaId: selectedAccountSocialMedia?.socialMediaId,
                                                         url: selectedAccountSocialMedia?.url
                                                     }}
+                                                    validationSchema={validationSchema}
                                                     onSubmit={(values) => {
                                                         handleUpdateAccountSocialMedia(values)
                                                     }}>
@@ -180,7 +204,7 @@ export default function SocialMediaPage() {
                                                                     name="socialMediaId"
                                                                     className="mb-4"
                                                                     component="select">
-                                                                    <option value="SocialMedia">Seçiniz*</option>
+                                                                    <option value="">Seçiniz*</option>
                                                                     {socialMedias?.items.map((socialMedia, index) => (
                                                                         <option key={index} value={String(socialMedia.id)}>
                                                                             {socialMedia.name}
@@ -209,13 +233,23 @@ export default function SocialMediaPage() {
                                             </div>
                                         }
                                         footerShow={false} />
+                                    {showDeleteCard && (
+                                        <DeleteCard
+                                            show={showDeleteCard}
+                                            handleClose={() => setShowDeleteCard(false)}
+                                            handleDelete={() => handleDeleteAccountSocialMedia(accountSocialMedia)}
+                                            body="sosyal medyayı"
+                                        />
+                                    )}
                                 </>
+
                             ))}
                             <p style={accountSocialMedias?.count === 3 ? { display: 'contents' } : { display: 'none' }} className="social-media-span-text">En fazla 3 adet medya seçimi yapılabilir.</p>
                         </Col>
                     </Row>
                 </div>
             </div>
+
         </div>
     )
 }

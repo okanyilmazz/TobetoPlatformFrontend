@@ -125,7 +125,9 @@ export default function LessonPanel() {
     };
 
 
-    const initialValues = {
+
+    const updateInitialValues = {
+
         languageId: selectedLesson?.languageId,
         lessonModuleId: selectedLesson?.lessonModuleId,
         lessonCategoryId: selectedLesson?.lessonCategoryId,
@@ -137,8 +139,19 @@ export default function LessonPanel() {
         duration: selectedLesson?.duration,
         lessonPath: selectedLesson?.lessonPath,
     }
-    console.log("initial" + initialValues);
-    console.log("selected" + selectedLesson);
+
+    const addInitialValues = {
+        languageId: "",
+        lessonModuleId: "",
+        lessonCategoryId: "",
+        lessonSubTypeId: "",
+        productionCompanyId: "",
+        name: "",
+        startDate: "",
+        endDate: "",
+        duration: "",
+        lessonPath: "",
+    }
 
 
     const getLesson = () => {
@@ -265,7 +278,8 @@ export default function LessonPanel() {
                     <>
                         <div className="lesson-add-form formik-form" style={addClick ? { display: 'block' } : { display: 'none' }}>
                             <Formik
-                                initialValues={initialValues}
+
+                                initialValues={addInitialValues}
                                 onSubmit={(values) => {
                                     handleAddLesson(values)
                                 }}>
@@ -421,7 +435,8 @@ export default function LessonPanel() {
 
                         <div className="lesson-update-form formik-form" style={updateClick ? { display: 'block' } : { display: 'none' }}>
                             <Formik
-                                initialValues={initialValues}
+                                initialValues={updateInitialValues}
+
                                 onSubmit={(values) => {
                                     handleUpdateLesson(values)
                                 }}>
@@ -454,7 +469,7 @@ export default function LessonPanel() {
                                                 name="languageId"
                                                 className="mb-4"
                                                 component="select">
-                                                <option value="SocialMedia">Seçiniz*</option>
+                                                <option value="Language">Seçiniz*</option>
                                                 {languages?.items.map((language) => (
                                                     <option value={String(language.id)}>
                                                         {language.name}
@@ -469,7 +484,9 @@ export default function LessonPanel() {
                                                 name="lessonModuleId"
                                                 className="mb-4"
                                                 component="select">
-                                                <option value="SocialMedia">Seçiniz </option>
+
+                                                <option value="Module">Seçiniz </option>
+
                                                 {lessonModules?.items.map((lessonModule) => (
                                                     <option value={String(lessonModule.id)}>
                                                         {lessonModule.name}
@@ -486,7 +503,8 @@ export default function LessonPanel() {
                                                 name="lessonSubTypeId"
                                                 className="mb-4"
                                                 component="select">
-                                                <option value="SocialMedia">Seçiniz*</option>
+
+                                                <option value="SubType">Seçiniz*</option>
                                                 {lessonSubTypes?.items.map((lessonSubType) => (
                                                     <option value={String(lessonSubType.id)}>
                                                         {lessonSubType.name}
@@ -501,7 +519,9 @@ export default function LessonPanel() {
                                                 name="lessonCategoryId"
                                                 className="mb-4"
                                                 component="select">
-                                                <option value="SocialMedia">Seçiniz*</option>
+
+                                                <option value="Category">Seçiniz*</option>
+
                                                 {lessonCategories?.items.map((lessonCategory) => (
                                                     <option value={String(lessonCategory.id)}>
                                                         {lessonCategory.name}
@@ -528,7 +548,9 @@ export default function LessonPanel() {
                                                 name="productionCompanyId"
                                                 className="mb-4"
                                                 component="select">
-                                                <option value="SocialMedia">Seçiniz*</option>
+
+                                                <option value="ProductionCompany">Seçiniz*</option>
+
                                                 {productionCompanies?.items.map((productionCompany) => (
                                                     <option value={String(productionCompany.id)}>
                                                         {productionCompany.name}

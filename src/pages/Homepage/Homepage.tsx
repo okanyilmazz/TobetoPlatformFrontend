@@ -5,9 +5,10 @@ import TrainingCard from '../../components/TrainingCard/TrainingCard'
 import IstanbulCard from '../../components/IstanbulCard/IstanbulCard';
 import { Card, Image } from 'semantic-ui-react';
 import GradientLine from '../../components/GradientLine/GradientLine';
+import { useNavigate } from 'react-router-dom';
 
 export default function Homepage() {
-
+    const navigate = useNavigate();
     const [subjectButtonStyle, setSubjectButtonStyle] = useState({
         color: 'black',
         backgroundColor: '#fff'
@@ -60,7 +61,7 @@ export default function Homepage() {
                                     <span className='word2'>hızda</span>
                                 </div>
                             </span>
-                            <Button className='mt-4 tobeto-card-btn'>Ücretsiz Üye Ol</Button>
+                            <Button className='mt-4 tobeto-card-btn' onClick={() => navigate("kayit-ol")}>Ücretsiz Üye Ol</Button>
                         </div>
                         <div className='content-right'>
                             <Image src="https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FBANNER-12.4b21c70e.png&w=640&q=75" fluid size='small' />

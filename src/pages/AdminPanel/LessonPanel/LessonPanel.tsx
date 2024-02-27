@@ -125,7 +125,9 @@ export default function LessonPanel() {
     };
 
 
+
     const updateInitialValues = {
+
         languageId: selectedLesson?.languageId,
         lessonModuleId: selectedLesson?.lessonModuleId,
         lessonCategoryId: selectedLesson?.lessonCategoryId,
@@ -137,6 +139,7 @@ export default function LessonPanel() {
         duration: selectedLesson?.duration,
         lessonPath: selectedLesson?.lessonPath,
     }
+
     const addInitialValues = {
         languageId: "",
         lessonModuleId: "",
@@ -149,6 +152,7 @@ export default function LessonPanel() {
         duration: "",
         lessonPath: "",
     }
+
 
     const getLesson = () => {
         lessonService.getAll(0, 100).then(result => {
@@ -274,6 +278,7 @@ export default function LessonPanel() {
                     <>
                         <div className="lesson-add-form formik-form" style={addClick ? { display: 'block' } : { display: 'none' }}>
                             <Formik
+
                                 initialValues={addInitialValues}
                                 onSubmit={(values) => {
                                     handleAddLesson(values)
@@ -431,6 +436,7 @@ export default function LessonPanel() {
                         <div className="lesson-update-form formik-form" style={updateClick ? { display: 'block' } : { display: 'none' }}>
                             <Formik
                                 initialValues={updateInitialValues}
+
                                 onSubmit={(values) => {
                                     handleUpdateLesson(values)
                                 }}>
@@ -478,7 +484,9 @@ export default function LessonPanel() {
                                                 name="lessonModuleId"
                                                 className="mb-4"
                                                 component="select">
+
                                                 <option value="Module">Seçiniz </option>
+
                                                 {lessonModules?.items.map((lessonModule) => (
                                                     <option value={String(lessonModule.id)}>
                                                         {lessonModule.name}
@@ -495,6 +503,7 @@ export default function LessonPanel() {
                                                 name="lessonSubTypeId"
                                                 className="mb-4"
                                                 component="select">
+
                                                 <option value="SubType">Seçiniz*</option>
                                                 {lessonSubTypes?.items.map((lessonSubType) => (
                                                     <option value={String(lessonSubType.id)}>
@@ -510,7 +519,9 @@ export default function LessonPanel() {
                                                 name="lessonCategoryId"
                                                 className="mb-4"
                                                 component="select">
+
                                                 <option value="Category">Seçiniz*</option>
+
                                                 {lessonCategories?.items.map((lessonCategory) => (
                                                     <option value={String(lessonCategory.id)}>
                                                         {lessonCategory.name}
@@ -537,7 +548,9 @@ export default function LessonPanel() {
                                                 name="productionCompanyId"
                                                 className="mb-4"
                                                 component="select">
+
                                                 <option value="ProductionCompany">Seçiniz*</option>
+
                                                 {productionCompanies?.items.map((productionCompany) => (
                                                     <option value={String(productionCompany.id)}>
                                                         {productionCompany.name}
@@ -584,6 +597,7 @@ export default function LessonPanel() {
                             </Formik>
                         </div>
                     </>
+
                 }
             />
         </div >

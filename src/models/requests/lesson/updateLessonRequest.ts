@@ -11,4 +11,6 @@ export default interface UpdateLessonRequest {
     startDate: Date;
     endDate: Date;
     duration: number;
+    lessonPath: string;
+
 }

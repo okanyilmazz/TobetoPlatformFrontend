@@ -7,6 +7,7 @@ export default interface AddLessonRequest {
     lessonSubTypeId: Identifier;
     productionCompanyId: Identifier;
     name: string;
+    lessonPath: string;
     startDate: Date;
     endDate: Date;
     duration: number;

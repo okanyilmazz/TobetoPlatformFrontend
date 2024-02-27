@@ -118,6 +118,7 @@ export default function AssesmentsPage() {
                                         show={subjectStates[exam.name] || false}
                                         onHide={() => handleClose(exam.name)}
                                         title={exam.name}
+
                                         body={
                                             <>
                                                 {filteredResults && filteredResults.length > 0 ? (
@@ -140,7 +141,7 @@ export default function AssesmentsPage() {
                                                 ) : (
                                                     <div className="exam-details-box">
                                                         <p>
-                                                            Bu sınav 25 sorudan oluşmakta olup sınav süresi 30 dakikadır. Sınav çoktan seçmeli test şeklinde olup sınavı
+                                                            Bu sınav {exam.questionCount} sorudan oluşmakta olup sınav süresi {exam.duration} dakikadır. Sınavın türü {exam.questionTypeNames.join(', ')} şeklinde olup sınavı
                                                             yarıda bıraktığınız taktirde çözdüğünüz kısım kadarıyla değerlendirileceksiniz.
                                                         </p>
                                                         <br />
@@ -151,6 +152,7 @@ export default function AssesmentsPage() {
                                                 )}
                                             </>
                                         }
+                                        footerShow={true}
                                         footer={
                                             <Button className='cart-slim-close-button' variant="modal-button" onClick={() => handleClose(exam.name)}>
                                                 Kapat

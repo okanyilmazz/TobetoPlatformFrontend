@@ -28,10 +28,6 @@ class AccountLanguageService extends BaseService<
     getByAccountId(accountId: number): Promise<AxiosResponse<Paginate<GetAccountLanguageResponse>, any>> {
         return axiosInstance.get<Paginate<GetAccountLanguageResponse>>(this.apiUrl + "/GetByAccountLanguageId?id=" + accountId);
     }
-
-    deleteWithModel(request: DeleteAccountLanguageRequest) {
-        return axiosInstance.post(this.apiUrl + "/Delete", request);
-    }
 }
 
 export default new AccountLanguageService();

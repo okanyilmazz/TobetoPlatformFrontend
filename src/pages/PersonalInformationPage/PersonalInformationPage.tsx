@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import './PersonalInformationPage.css'
+import { useEffect, useState } from 'react';
+import './PersonalInformationPage.css';
 import { useLocation } from 'react-router-dom';
 import { DEFAULT_PROFILE_PHOTO } from '../../environment/environment';
 import { Form, Formik } from 'formik';
@@ -13,7 +13,6 @@ import TobetoSelect from '../../utilities/customFormControls/TobetoSelect';
 import countryService from '../../services/countryService';
 import cityService from '../../services/cityService';
 import districtService from '../../services/districtService';
-import GetListDistrictResponse from '../../models/responses/district/getListDistrictResponse';
 import authService from '../../services/authService';
 import SidebarCard from '../../components/SidebarCard/SidebarCard';
 import accountService from '../../services/accountService';
@@ -25,8 +24,12 @@ import addressService from '../../services/addressService';
 import GetAddressResponse from '../../models/responses/address/getAddressResponse';
 import UpdateUserRequest from '../../models/requests/user/updateUserRequest';
 import userService from '../../services/userService';
-import "./PersonalInformationPage.css"
+import "./PersonalInformationPage.css";
 import AddAddressRequest from '../../models/requests/address/addAddressRequest';
+import ProfileToaster from '../../components/ProfileToaster/ProfileToaster';
+import * as Yup from 'yup';
+import GetListDistrictResponse from '../../models/responses/district/getListDistrictResponse';
+
 export default function PersonalInformationPage() {
 
     const location = useLocation();
@@ -111,7 +114,7 @@ export default function PersonalInformationPage() {
         email: account?.email || "",
         birthDate: formatDate(account?.birthDate),
         country: accountAddress?.countryId,
-        city: accountAddress?.cityId,
+        city: accountAddress?.cityId || "",
         district: accountAddress?.districtId,
         addressDetail: accountAddress?.addressDetail || "",
         about: account?.description || "",
@@ -119,7 +122,13 @@ export default function PersonalInformationPage() {
         phoneNumber: account?.phoneNumber || ""
     };
 
-
+    const validationSchema = Yup.object().shape({
+        firstName: Yup.string().required('Doldurulması zorunlu alan'),
+        lastName: Yup.string().required('Doldurulması zorunlu alan'),
+        phoneNumber: Yup.string().required('Doldurulması zorunlu alan'),
+        birthDate: Yup.string().required('Doldurulması zorunlu alan'),
+        nationalId: Yup.string().required('Doldurulması zorunlu alan'),
+    });
 
     const updatePersonalInformation = async (values: any) => {
         console.log(accountAddress)
@@ -153,6 +162,7 @@ export default function PersonalInformationPage() {
                 password: ""
             }
             await userService.update(updateUser);
+            ProfileToaster({ name: "Bilgileriniz başarıyla güncellendi." });
         }
         else {
             const addAddress: AddAddressRequest = {
@@ -166,6 +176,7 @@ export default function PersonalInformationPage() {
         }
 
     }
+
     return (
         <div className='personal-information-page container'>
 
@@ -190,6 +201,7 @@ export default function PersonalInformationPage() {
                         <Formik
                             enableReinitialize
                             initialValues={initialValues}
+                            validationSchema={validationSchema}
                             onSubmit={(values) => {
                                 console.log(values)
                                 updatePersonalInformation(values);
@@ -199,14 +211,14 @@ export default function PersonalInformationPage() {
                                     <Col md={6}>
                                         <span className="input-area-title">Adınız*</span>
                                         <TobetoTextInput
-                                            className=""
+                                            className="mb-3"
                                             type="text"
                                             name="firstName" />
                                     </Col>
                                     <Col md={6}>
                                         <span className="input-area-title">Soyadınız</span>
                                         <TobetoTextInput
-                                            className="mb-4"
+                                            className="mb-3"
                                             name="lastName"
                                             type="text" />
                                     </Col>
@@ -226,7 +238,7 @@ export default function PersonalInformationPage() {
                                     <Col md={6}>
                                         <span className="input-area-title">Doğum Tarihiniz*</span>
                                         <TobetoTextInput
-                                            className="mb-4"
+                                            className="mb-3"
                                             name="birthDate"
                                             type="date" />
                                     </Col>
@@ -243,7 +255,8 @@ export default function PersonalInformationPage() {
                                         <TobetoTextInput
                                             className="mb-4"
                                             name="email"
-                                            type="eposta" />
+                                            type="eposta"
+                                            disabled={true} />
                                     </Col>
                                     <span className='id-required-info'> <i>*Aboneliklerde fatura için doldurulması zorunlu alan</i> </span>
                                 </Row>
@@ -275,16 +288,16 @@ export default function PersonalInformationPage() {
                                             name="city"
                                             className="mb-4"
                                             component="select"
-                                            onChange={(event: any) => { handleCities(event) }}>
-
-                                            <option value="Ülke">İl Seçiniz</option>
-
+                                            onChange={(event: any) => { handleCities(event) }}
+                                        >
+                                            <option value="İl">İl Seçiniz</option>
                                             {cities?.items.map((city, index) => (
                                                 <option key={index} value={String(city.id)}>
                                                     {city.name}
                                                 </option>
                                             ))}
                                         </TobetoSelect>
+
                                     </Col>
                                     <Col md={6}>
                                         <span className="input-area-title">İlçe</span>

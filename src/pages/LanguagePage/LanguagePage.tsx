@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import "./LanguagePage.css";
 import DeleteCard from '../../components/DeleteCard/DeleteCard';
@@ -11,14 +11,15 @@ import GetListLanguageResponse from '../../models/responses/language/getListLang
 import GetListLanguageLevelResponse from '../../models/responses/languageLevel/getListLanguageLevelResponse';
 import { useLocation } from 'react-router-dom';
 import authService from '../../services/authService';
-import DeleteLanguageRequest from '../../models/requests/language/deleteLanguageRequest';
 import SidebarCard from '../../components/SidebarCard/SidebarCard';
 import accountLanguageService from '../../services/accountLanguageService';
 import GetListAccountLanguageResponse from '../../models/responses/accountLanguage/getListAccountLanguageResponse';
+import AddAccountLanguageRequest from '../../models/requests/accountLanguage/addAccountLanguageRequest';
+import DeleteAccountLanguageRequest from '../../models/requests/accountLanguage/deleteAccountLanguageRequest';
 
 const validationSchema = Yup.object().shape({
-    /* language: Yup.string().required('Dil Seçimi Zorunludur'),
-    level: Yup.string().required('Seviye Seçimi Zorunludur'), */
+    language: Yup.string().required('Doldurulması zorunlu alan*'),
+    level: Yup.string().required('Doldurulması zorunlu alan*'),
 });
 
 export default function LanguagePage() {
@@ -31,7 +32,7 @@ export default function LanguagePage() {
     const [languageLevels, setLanguageLevels] = useState<Paginate<GetListLanguageLevelResponse>>();
     const [accountLanguage, setAccountLanguage] = useState<Paginate<GetListAccountLanguageResponse>>();
     const [showDeleteCard, setShowDeleteCard] = useState(false);
-    const [accountLanguageRequests, setAccountLanguageRequests] = useState<any>();
+    const [selectedLanguage, setSelectedLanguage] = useState<GetListAccountLanguageResponse | null>(null);
 
     useEffect(() => {
         languageService.getAll(0, 10).then((result) => {
@@ -42,19 +43,57 @@ export default function LanguagePage() {
             setLanguageLevels(result.data)
         });
 
-        accountLanguageService.getAll(0, 10).then((result) => {
-            setAccountLanguage(result.data)
-        });
+        accountLanguageService.getByAccountId(user.id).then((result) => {
+            console.log(result.data);
+            setAccountLanguage(result.data);
+        })
 
     }, [])
 
-    const handleShowDeleteCardClick = () => {
+    const getAccountLanguage = () => {
+        accountLanguageService.getByAccountId(user.id).then((result) => {
+            setAccountLanguage(result.data);
+            console.log(result.data);
+        })
+    }
+
+    const addAccountLanguage = async (values: any) => {
+        const selectedLanguageName = languages?.items.find(language => language.id === values.language)?.name;
+        const selectedLevelName = languageLevels?.items.find(level => level.id === values.level)?.name;
+
+        const isAlreadyAdded = accountLanguage?.items.some(item => item.languageName === selectedLanguageName && item.languageLevelName === selectedLevelName);
+
+        if (!isAlreadyAdded) {
+            const addAccountLangauge: AddAccountLanguageRequest = {
+                accountId: user.id,
+                languageId: values.language,
+                languageLevelId: values.level,
+            }
+            await accountLanguageService.add(addAccountLangauge)
+            getAccountLanguage();
+            ProfileToaster({ name: "Yabancı dil bilgisi eklendi" });
+        } else {
+            ProfileToaster({ name: "Bu dil zaten mevcut" });
+        }
+    }
+
+    const deleteAccountLanguage = async () => {
+        if (selectedLanguage) {
+            const deleteAccountLanguage: DeleteAccountLanguageRequest = {
+                id: selectedLanguage.id
+            }
+            await accountLanguageService.delete(deleteAccountLanguage)
+            getAccountLanguage();
+            setShowDeleteCard(false);
+            ProfileToaster({ name: "Yabancı dil kaldırıldı" });
+        }
+    }
+
+    const handleShowDeleteCardClick = (language: GetListAccountLanguageResponse) => {
+        setSelectedLanguage(language);
         setShowDeleteCard(true);
     };
 
-    const handleDeleteConfirmation = () => {
-        setShowDeleteCard(false);
-    };
 
     return (
         <div className='language-page container'>
@@ -69,58 +108,66 @@ export default function LanguagePage() {
                         level: '',
                     }}
                     validationSchema={validationSchema}
-                    onSubmit={async (values, { resetForm }) => {
-                        if (values.language && values.level) {
-                           /*  await accountLanguageService.add({
-                                languageId: values.language,
-                                levelId: values.level
-                            }); */
-                            ProfileToaster({ name: "Yabancı dil bilgisi eklendi." });
-                            resetForm();
-                        }
-                    }}
-                >
+                    onSubmit={(values, { resetForm }) => {
+                        addAccountLanguage(values);
+                        resetForm();
+                    }}                >
                     {({ errors, touched }) => (
                         <Form>
-                            <div className='pe-language'>
-                                <Field as="select" size="lg" id='pe-language-select' name="language" className={touched.language && errors.language ? 'form-control is-invalid' : 'form-control'}>
-                                    <option value="" disabled selected>Dil Seçiniz</option>
-                                    {languages?.items.map((language, index) => (
-                                        <option key={index} value={String(language.id)}>
-                                            {language.name}
-                                        </option>
-                                    ))}
-                                </Field>
-                                {touched.language && errors.language && <div className="invalid-feedback">{errors.language}</div>}
-                                <Field as="select" size="lg" id='pe-language-select' name="level" className={touched.level && errors.level ? 'form-control is-invalid' : 'form-control'}>
-                                    <option value="" disabled selected>Seviye Seçiniz</option>
-                                    {languageLevels?.items.map((languageLevel, index) => (
-                                        <option key={index} value={String(languageLevel.id)}>
-                                            {languageLevel.name}
-                                        </option>
-                                    ))}
-                                </Field>
-                                {touched.level && errors.level && <div className="invalid-feedback">{errors.level}</div>}
+                            <div className='pe-language-container'>
+                                <div className='pe-language'>
+                                    <div className="pe-language-select">
+                                        <Field as="select" size="lg" id='pe-language-select' name="language" className={touched.language && errors.language ? 'form-control is-invalid' : 'form-control'}>
+                                            <option value="" disabled selected>Dil Seçiniz</option>
+                                            {languages?.items.map((language, index) => (
+                                                <option key={index} value={String(language.id)}>
+                                                    {language.name}
+                                                </option>
+                                            ))}
+                                        </Field>
+                                        <ErrorMessage name="language" component="div" className="pe-invalid-feedback" />
+                                    </div>
+                                </div>
+                                <div className='pe-language'>
+                                    <div className="pe-language-select">
+                                        <Field as="select" size="lg" id='pe-language-select' name="level" className={touched.level && errors.level ? 'form-control is-invalid' : 'form-control'}>
+                                            <option value="" disabled selected>Seviye Seçiniz</option>
+                                            {languageLevels?.items.map((languageLevel, index) => (
+                                                <option key={index} value={String(languageLevel.id)}>
+                                                    {languageLevel.name}
+                                                </option>
+                                            ))}
+                                        </Field>
+                                        <ErrorMessage name="level" component="div" className="pe-invalid-feedback" />
+                                    </div>
+                                </div>
                             </div>
                             <button type="submit" className="py-2 pe-language-button">Kaydet</button>
-                            <div className='pe-result'>
-                                {accountLanguage && accountLanguage.items.map((accountLanguage, index) => (
-                                    <div className="pe-container" key={index}>
-                                        <div className="pe-edit-language">
-                                            <div>
-                                                <span>{accountLanguage.languageName}</span>
-                                                <p>{accountLanguage.languageLevelName}</p>
-                                            </div>
-                                            <button className="pe-delete-button" onClick={() => { handleShowDeleteCardClick(); ProfileToaster({ name: "Yabancı dil bilgisi kaldırıldı." }); }}></button>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            {showDeleteCard && <DeleteCard handleDeleteConfirmation={handleDeleteConfirmation} />}
                         </Form>
                     )}
                 </Formik>
+                <div className='pe-result'>
+                    {accountLanguage && accountLanguage.items.map((accountLanguage, index) => (
+                        <div className="pe-container" key={index}>
+                            <div className="pe-edit-language">
+                                <div>
+                                    <span>{accountLanguage.languageName}</span>
+                                    <p>{accountLanguage.languageLevelName}</p>
+                                </div>
+                                <button className="pe-delete-button" onClick={() => { handleShowDeleteCardClick(accountLanguage); }}></button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </div>
+            {showDeleteCard && (
+                <DeleteCard
+                    show={showDeleteCard}
+                    handleClose={() => setShowDeleteCard(false)}
+                    handleDelete={() => deleteAccountLanguage()}
+                    body="yabancı dili"
+                />
+            )}
         </div>
     )
 }

@@ -29,6 +29,9 @@ import EducationalBackgroundPage from '../../pages/EducationalBackgroundPage/Edu
 import MyExperiences from '../../pages/MyExperiences/MyExperiences';
 import AnnouncementsPage from '../../pages/AnnouncementsPage/AnnouncementsPage';
 import SettingsPage from '../../pages/SettingsPage/SettingsPage';
+import ResetPassword from '../../pages/ResetPassword/ResetPassword';
+import NotFound from '../../pages/NotFound/NotFound';
+import ForgotPassword from '../../pages/ForgotPassword/ForgotPassword';
 
 
 
@@ -38,6 +41,7 @@ type Props = {}
 const RouteDefinitions = (props: Props) => {
     return (
         <Routes>
+            <Route path="*" Component={NotFound} />
             <Route path="/" Component={Homepage} />
             <Route path="/hakkimizda" Component={AboutUs} />
             <Route path="/kurumlar-icin" Component={ForInstitutionsPage} />
@@ -70,7 +74,6 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/egitimlerim/egitim-detaylari/:educationProgramId" Component={SessionsPage} />
             <Route path="/profilim/profilimi-duzenle/deneyimlerim" element={<ProtectedRoute><MyExperiences /></ProtectedRoute>} />
             <Route path="/profilim/profilimi-duzenle/ayarlar" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
-
             <Route path="/admin-panel" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
             <Route path="/admin-panel/ogrenciler" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
             <Route path="/admin-panel/dersler" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
@@ -80,20 +83,11 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/admin-panel/egitimler" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
             <Route path="/admin-panel/roller" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
             <Route path="/admin-panel/kullanicilar" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
+            <Route path="/sifremi-unuttum" Component={ForgotPassword} />
+            <Route path="/reset-password/:userId/:resetToken" Component={ResetPassword} />
 
-            <Route path="/profilim/degerlendirmeler/rapor/tobeto-iste-basari-modeli/1" element={<ProtectedRoute><AnalysisReport /></ProtectedRoute>} />
-            <Route path="/text3" Component={SessionsPage} />
-            <Route path="/admin-panel" Component={AdminPanel} />
-            <Route path="/admin-panel/ogrenciler" Component={AdminPanel} />
-            <Route path="/admin-panel/dersler" Component={AdminPanel} />
-            <Route path="/admin-panel/duyurular" Component={AdminPanel} />
-            <Route path="/admin-panel/egitimler" Component={AdminPanel} />
-            <Route path="/admin-panel/oturumlar" Component={AdminPanel} />
-            <Route path="/admin-panel/egitimler" Component={AdminPanel} />
-            <Route path="/admin-panel/roller" Component={AdminPanel} />
-            <Route path="/admin-panel/kullanicilar" Component={AdminPanel} />
 
-        </Routes>
+        </Routes >
     )
 }
 export default RouteDefinitions;

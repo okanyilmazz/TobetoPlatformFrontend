@@ -210,6 +210,8 @@ const Footer = () => {
             lastPathSegment === "kurumlar-icin" ||
             lastPathSegment === "" ||
             lastPathSegment === "bireyler-icin" ||
+            lastPathSegment === "sifremi-unuttum" ||
+
             lastPathSegment === "takvim-anasayfa" ? { display: 'none' } : { display: 'block' }}>
         <div className="footer-container">
           <div className="row">

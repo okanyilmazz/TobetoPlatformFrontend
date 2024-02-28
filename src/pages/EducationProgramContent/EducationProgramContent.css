@@ -77,6 +77,7 @@
 .lesson-title {
     font-weight: 600;
     font-size: medium;
+    width: 70%;
 }
 
 .lesson-text {
@@ -280,9 +281,11 @@
     color: #3DCB79;
 }
 
+/*Lesson Area*/
 
-.accordion-education-program-lesson {
-    border-color: transparent;
+.lessons-area {
+    max-height: 500px;
+    overflow-y: auto;
 }
 
 .accordion-education-program-lesson .lesson-info {
@@ -339,12 +342,15 @@
     align-items: center;
 }
 
-.accordion-education-program-lesson .accordion-body:hover {
-    cursor: pointer;
+.lesson-panel.active {
+    background-color: #F2F2F2
 }
 
-.accordion-education-program-lesson .accordion-button:focus {
-    box-shadow: none;
+.lessons-area .lesson-type-info {
+    color: #818181;
+    font-weight: 500;
+    font-size: 12px;
+    font-family: 'Poppins-Regular';
 }
 
 /*DRAWER LIKE AREA */
@@ -512,6 +518,7 @@
     font-size: 18px;
     font-weight: 600;
     color: #000;
+    font-family: 'Poppins-Medium';
 }
 
 .date-info {

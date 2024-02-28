@@ -14,15 +14,25 @@ const Footer = () => {
         style={
           lastPathSegment === "platform" ||
             lastPathSegment === "egitimlerim" ||
-            pathArray.includes("egitim-detaylari") ||
-            pathArray.includes("profilimi-duzenle") ||
-            pathArray.includes("admin-panel") ||
+            lastPathSegment === "sertifikalarim" ||
+            lastPathSegment === "yetkinliklerim" ||
+            lastPathSegment === "medya-hesaplarim" ||
+            lastPathSegment === "yabanci-dil" ||
+            lastPathSegment === "kisisel-bilgilerim" ||
+            lastPathSegment.includes("egitim-detaylari") ||
+            lastPathSegment === "admin-panel" ||
+            lastPathSegment === "ogrenciler" ||
+            lastPathSegment === "dersler" ||
+            lastPathSegment === "duyurular" ||
+            lastPathSegment === "egitimler" ||
+            lastPathSegment === "roller" ||
+            lastPathSegment === "kullanıcılar" ||
             lastPathSegment === "degerlendirmeler" ||
             lastPathSegment === "platform-katalog" ||
             lastPathSegment === "basvuru" ||
             lastPathSegment === "takvim" ||
             lastPathSegment === "1" ||
-            lastPathSegment === "egitim-hayatim" ||
+            lastPathSegment.includes("egitim-detaylari") ||
             lastPathSegment === "profilim" ? { display: 'none' } : { display: 'block' }}>
 
 

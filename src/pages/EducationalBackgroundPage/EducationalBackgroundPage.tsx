@@ -1,31 +1,30 @@
-import React from 'react'
-import './EducationalBackgroundPage.css'
-import { Button, Col, Row, } from 'react-bootstrap'
-import { useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
+import './EducationalBackgroundPage.css';
+import { Button, Col, Row } from 'react-bootstrap';
+import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Formik, Form } from "formik";
 import DeleteCard from '../../components/DeleteCard/DeleteCard';
 import { Paginate } from '../../models/paginate';
 import TobetoSelect from '../../utilities/customFormControls/TobetoSelect';
 import authService from '../../services/authService';
-import GetListAccountResponse from '../../models/responses/account/getListAccountResponse';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import SidebarCard from '../../components/SidebarCard/SidebarCard';
-import GetListUniversityResponse from '../../models/responses/university/getListUniversityResponse';
 import universityService from '../../services/universityService';
-import DatePicker from "react-datepicker";
-import { GetListDegreeTypeResponse } from '../../models/responses/degreeType/getListDegreeTypeResponse';
 import degreeTypeService from '../../services/degreeTypeService';
-import GetListUniversityDepartmentResponse from '../../models/responses/universityDepartment/getListUniversityDepartmentResponse';
 import universityDepartmentService from '../../services/universityDepartmentService';
-import AddAccountUniversityRequest from '../../models/requests/accountUniversity/addAccountUniversityRequest';
 import accountUniversityService from '../../services/accountUniversityService';
-import GetListAccountUniversityResponse from '../../models/responses/accountUniversity/getListAccountUniversityResponse';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import * as Yup from 'yup';
 import DeleteAccountUniversityRequest from '../../models/requests/accountUniversity/deleteAccountUniversityRequest';
-
+import AddAccountUniversityRequest from '../../models/requests/accountUniversity/addAccountUniversityRequest';
+import GetListUniversityResponse from '../../models/responses/university/getListUniversityResponse';
+import GetListUniversityDepartmentResponse from '../../models/responses/universityDepartment/getListUniversityDepartmentResponse';
+import GetListAccountUniversityResponse from '../../models/responses/accountUniversity/getListAccountUniversityResponse';
+import { GetListDegreeTypeResponse } from '../../models/responses/degreeType/getListDegreeTypeResponse';
 
 export default function EducationalBackgroundPage() {
-
     const userState = useSelector((state: any) => state.user);
     const [showDeleteCard, setShowDeleteCard] = useState(false);
     const location = useLocation();
@@ -43,6 +42,12 @@ export default function EducationalBackgroundPage() {
     const [startDate, setStartDate] = useState<any>();
     const [endDate, setEndDate] = useState<any>();
 
+    const validationSchema = Yup.object().shape({
+        educationLevel: Yup.string().required('Doldurulması zorunlu alan*'),
+        university: Yup.string().required('Doldurulması zorunlu alan*'),
+        universityDepartment: Yup.string().required('Doldurulması zorunlu alan*'),
+    });
+
     const initialValues = {
         educationLevel: "",
         university: "",
@@ -51,62 +56,6 @@ export default function EducationalBackgroundPage() {
         endDate: "",
         isEducationActive: false
     };
-
-    const getAccountUniversity = () => {
-        accountUniversityService.getByAccountId(user.id, 0, 3).then((result) => {
-            setAccountUniversities(result.data);
-            console.log(result.data);
-
-        })
-    }
-
-    const addAccountUniversity = async (values: any) => {
-        if (startDate && endDate) {
-            const addAccountUniversity: AddAccountUniversityRequest = {
-
-                degreeTypeId: values.educationLevel,
-                accountId: user.id,
-                endDate: String(endDate.getFullYear()),
-                startDate: String(startDate.getFullYear()),
-                universityId: values.university,
-                universityDepartmentId: values.universityDepartment,
-                isEducationActive: isChecked
-            }
-            console.log(addAccountUniversity)
-            await accountUniversityService.add(addAccountUniversity)
-            getAccountUniversity();
-        }
-    }
-
-    const deleteAccountUniversity = async (accountUniversity: any) => {
-        const deleteAccountUniversity: DeleteAccountUniversityRequest = {
-            id: accountUniversity.id
-        }
-        await accountUniversityService.delete(deleteAccountUniversity)
-        getAccountUniversity();
-    }
-
-    const handleStartDateChange = (date: any) => {
-        setStartDate(date);
-    };
-
-    const handleEndDateChange = (date: any) => {
-        setEndDate(date);
-    };
-
-
-
-    function changeColor(event: any) {
-        const checkbox = event.target;
-        const checkmark = checkbox.nextElementSibling;
-        if (checkbox.checked) {
-            checkmark.style.backgroundColor = "#9933ff";
-        } else {
-            checkmark.style.backgroundColor = "#ffffff";
-        }
-        setIsChecked(!isChecked);
-
-    }
 
     useEffect(() => {
         universityService.getAll(0, 5).then((result) => {
@@ -122,12 +71,10 @@ export default function EducationalBackgroundPage() {
         });
 
         accountUniversityService.getByAccountId(user.id, 0, 5).then((result) => {
-            console.log(result.data);
             setAccountUniversities(result.data);
-        })
+        });
 
-    }, [])
-
+    }, []);
 
     const handleUniversities = (event: any) => {
         setSelectedUniversityId(event.target.value)
@@ -137,13 +84,59 @@ export default function EducationalBackgroundPage() {
         setSelectedDegreeTypeId(event.target.value)
     }
 
-
     const handleUniversityDepartments = (event: any) => {
         setselectedUniversityDepartmenteId(event.target.value)
-
     }
-    useEffect(() => {
-    }, [selectedUniversityDepartmenteId, selectedDegreeTypeId, selectedUniversityId]);
+
+    const handleStartDateChange = (date: any) => {
+        setStartDate(date);
+    };
+
+    const handleEndDateChange = (date: any) => {
+        setEndDate(date);
+    };
+
+    function changeColor(event: any) {
+        const checkbox = event.target;
+        const checkmark = checkbox.nextElementSibling;
+        if (checkbox.checked) {
+            checkmark.style.backgroundColor = "#9933ff";
+        } else {
+            checkmark.style.backgroundColor = "#ffffff";
+        }
+        setIsChecked(!isChecked);
+    }
+
+    const addAccountUniversity = async (values: any) => {
+        if (startDate && endDate) {
+            const addAccountUniversity: AddAccountUniversityRequest = {
+                degreeTypeId: values.educationLevel,
+                accountId: user.id,
+                endDate: String(endDate.getFullYear()),
+                startDate: String(startDate.getFullYear()),
+                universityId: values.university,
+                universityDepartmentId: values.universityDepartment,
+                isEducationActive: isChecked
+            }
+            await accountUniversityService.add(addAccountUniversity);
+            getAccountUniversity();
+        }
+    }
+
+    const deleteAccountUniversity = async (accountUniversity: any) => {
+        const deleteAccountUniversity: DeleteAccountUniversityRequest = {
+            id: accountUniversity.id
+        }
+        await accountUniversityService.delete(deleteAccountUniversity);
+        setShowDeleteCard(false);
+        getAccountUniversity();
+    }
+
+    const getAccountUniversity = () => {
+        accountUniversityService.getByAccountId(user.id, 0, 3).then((result) => {
+            setAccountUniversities(result.data);
+        })
+    }
 
     return (
         <div className='education-background-page container'>
@@ -155,102 +148,102 @@ export default function EducationalBackgroundPage() {
                     <div className="col-md-12 formik-form mt-5">
                         <Formik
                             initialValues={initialValues}
+                            validationSchema={validationSchema}
                             onSubmit={(values) => { addAccountUniversity(values) }}
                         >
-                            <Form className="login-form">
-                                <Row>
-                                    <Col md={6}>
-                                        <span className="input-area-title">Eğitim Durumu*</span>
-                                        <TobetoSelect
-                                            name="educationLevel"
-                                            className="mb-4"
-                                            component="select"
-                                            onChange={(event: any) => { handleDegreeTypes(event) }}
-                                            value={selectedDegreeTypeId}
-                                        >
-
-                                            <option value="educationLevel">Seviye Seçiniz</option>
-                                            {degreeTypes?.items.map((degreeType, index) => (
-                                                <option key={index} value={String(degreeType.id)}>
-                                                    {degreeType.name}
-                                                </option>
-                                            ))}
-                                        </TobetoSelect>
-                                    </Col>
-                                    <Col md={6}>
-                                        <span className="input-area-title">Üniversite*</span>
-                                        <TobetoSelect
-                                            name="university"
-                                            className="mb-4"
-                                            component="select"
-                                            onChange={(event: any) => { handleUniversities(event) }}
-                                            value={selectedUniversityId}
-                                        >
-                                            <option value="university">Üniversite Seçiniz</option>
-                                            {universities?.items.map((university, index) => (
-                                                <option key={index} value={String(university.id)}>
-                                                    {university.name}
-                                                </option>
-                                            ))}
-                                        </TobetoSelect>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col md={6}>
-                                        <span className="input-area-title">Bölüm*</span>
-                                        <TobetoSelect
-                                            name="universityDepartment"
-                                            className="mb-4"
-                                            component="select"
-                                            onChange={(event: any) => { handleUniversityDepartments(event) }}
-                                            value={String(selectedUniversityDepartmenteId)}
-
-                                        >
-                                            <option value="universityDepartment">Bölüm Seçiniz</option>
-                                            {universityDepartments?.items.map((universityDepartment, index) => (
-                                                <option key={index} value={String(universityDepartment.id)}>
-                                                    {universityDepartment.name}
-                                                </option>
-                                            ))}
-                                        </TobetoSelect>
-                                    </Col>
-                                    <Col md={6}>
-                                        <span className="input-area-title-date">Başlangıç Yılı*</span>
-                                        <DatePicker
-                                            name="startDate"
-                                            className='formik-form react-datepicker-ignore-onclickoutside'
-                                            selected={startDate}
-                                            onChange={handleStartDateChange}
-                                            showYearPicker
-                                            dateFormat="yyyy"
-                                        />
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col md={6}>
-                                        <span className="input-area-title">Mezuniyet Yılı*</span>
-                                        <DatePicker
-                                            name="endDate"
-                                            className='formik-form react-datepicker-ignore-onclickoutside'
-                                            selected={endDate}
-                                            onChange={handleEndDateChange}
-                                            showYearPicker
-                                            dateFormat="yyyy"
-                                        />
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <label className="-education-custom-checkbox mt-3">
-                                        <input type="checkbox" onChange={changeColor} checked={isChecked} />
-                                        <span className="education-checkmark"></span>
-                                        <span className='education-check-text '>Devam Ediyorum</span>
-                                    </label>
-
-                                </Row>
-                                <Button className="mb-4 mt-5" type="submit">
-                                    Kaydet
-                                </Button>
-                            </Form>
+                            {({ errors, touched }) => (
+                                <Form className="login-form">
+                                    <Row>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Eğitim Durumu*</span>
+                                            <TobetoSelect
+                                                name="educationLevel"
+                                                className="mb-4"
+                                                component="select"
+                                                onChange={(event: any) => { handleDegreeTypes(event) }}
+                                                value={selectedDegreeTypeId}
+                                            >
+                                                <option value="educationLevel">Seviye Seçiniz</option>
+                                                {degreeTypes?.items.map((degreeType, index) => (
+                                                    <option key={index} value={String(degreeType.id)}>
+                                                        {degreeType.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Üniversite*</span>
+                                            <TobetoSelect
+                                                name="university"
+                                                className="mb-4"
+                                                component="select"
+                                                onChange={(event: any) => { handleUniversities(event) }}
+                                                value={selectedUniversityId}
+                                            >
+                                                <option value="university">Üniversite Seçiniz</option>
+                                                {universities?.items.map((university, index) => (
+                                                    <option key={index} value={String(university.id)}>
+                                                        {university.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Bölüm*</span>
+                                            <TobetoSelect
+                                                name="universityDepartment"
+                                                className="mb-4"
+                                                component="select"
+                                                onChange={(event: any) => { handleUniversityDepartments(event) }}
+                                                value={String(selectedUniversityDepartmenteId)}
+                                            >
+                                                <option value="universityDepartment">Bölüm Seçiniz</option>
+                                                {universityDepartments?.items.map((universityDepartment, index) => (
+                                                    <option key={index} value={String(universityDepartment.id)}>
+                                                        {universityDepartment.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+                                        <Col md={6}>
+                                            <span className="input-area-title-date">Başlangıç Yılı*</span>
+                                            <DatePicker
+                                                name="startDate"
+                                                className='formik-form react-datepicker-ignore-onclickoutside'
+                                                selected={startDate}
+                                                onChange={handleStartDateChange}
+                                                showYearPicker
+                                                dateFormat="yyyy"
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col md={6}>
+                                            <span className="input-area-title">Mezuniyet Yılı*</span>
+                                            <DatePicker
+                                                name="endDate"
+                                                className='formik-form react-datepicker-ignore-onclickoutside'
+                                                selected={endDate}
+                                                onChange={handleEndDateChange}
+                                                showYearPicker
+                                                dateFormat="yyyy"
+                                            />
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <label className="-education-custom-checkbox mt-3">
+                                            <input type="checkbox" onChange={changeColor} checked={isChecked} />
+                                            <span className="education-checkmark"></span>
+                                            <span className='education-check-text '>Devam Ediyorum</span>
+                                        </label>
+                                    </Row>
+                                    <Button className="mb-4 mt-5" type="submit">
+                                        Kaydet
+                                    </Button>
+                                </Form>
+                            )}
                         </Formik>
                         {accountUniversities?.items.map((accountUniversity, index) => (
                             <div className='edu-back-shadow'>
@@ -263,7 +256,6 @@ export default function EducationalBackgroundPage() {
                                 </Row>
                                 <Row>
                                     <div className='edu-back-first'>
-
                                         <div className='educational-back-uni'>
                                             <div>
                                                 <span className='educational-back-uni-header'>Üniversite</span>
@@ -272,7 +264,6 @@ export default function EducationalBackgroundPage() {
                                                 <span className='educational-back-uni-content'>{accountUniversity.universityName}</span>
                                             </div>
                                         </div>
-
                                         <div className='educational-back-uni'>
                                             <div>
                                                 <span className='educational-back-uni-head'>Bölüm</span>
@@ -283,13 +274,16 @@ export default function EducationalBackgroundPage() {
                                         </div>
                                         <button className="edu-delete-btn" onClick={() => setShowDeleteCard(true)} >
                                             <img src="https://tobeto.com/trash.svg" alt="Delete" />
-                                            {showDeleteCard && (
-                                                <DeleteCard
-                                                    delete={() => deleteAccountUniversity(accountUniversity)}
-                                                />
-                                            )}
                                         </button>
                                     </div>
+                                    {showDeleteCard && (
+                                        <DeleteCard
+                                            show={showDeleteCard}
+                                            handleClose={() => setShowDeleteCard(false)}
+                                            handleDelete={() => deleteAccountUniversity(accountUniversity)}
+                                            body="eğitimi"
+                                        />
+                                    )}
                                 </Row>
                             </div>
                         ))}
@@ -297,9 +291,5 @@ export default function EducationalBackgroundPage() {
                 </Row>
             </div >
         </div >
-
-
-
-
     )
 }

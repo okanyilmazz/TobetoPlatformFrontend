@@ -13,13 +13,14 @@ import CreatableSelect from 'react-select/creatable';
 import AddAccountSkillRequest from '../../models/requests/accountSkill/addAccountSkillRequest';
 import authService from '../../services/authService';
 import SidebarCard from '../../components/SidebarCard/SidebarCard';
+
+
 export default function SkillPage() {
     const user = authService.getUserInfo();
 
     const [skills, setSkills] = useState<Paginate<GetListSkillResponse>>();
-    const [accountSkillRequests, setAccountSkillRequests] = useState<any>();
+    const [accountSkillRequests, setAccountSkillRequests] = useState<any[]>([]);
     const [accountSkill, setAccountSkill] = useState<Paginate<GetListAccountSkillResponse>>();
-
 
     useEffect(() => {
         skillService.getAll(0, 25).then((result) => {
@@ -39,11 +40,11 @@ export default function SkillPage() {
     const handleAddAccountSkill = async () => {
         if (accountSkillRequests.length > 0) {
             await accountSkillService.addRange(accountSkillRequests);
-            ProfileToaster({ name: "Yetenek eklendi." })
+            ProfileToaster({ name: "Yetenek eklendi" })
             getAccountSkill();
         }
         else {
-            toast.warning("Herhangi bir yetenek seçmediniz!")
+            ProfileToaster({ name: "Herhangi bir yetenek seçmediniz" });
         }
     }
 
@@ -53,7 +54,9 @@ export default function SkillPage() {
             accountId: accountSkill.accountId,
             skillId: accountSkill.skillId
         };
-        await accountSkillService.deleteWithModel(deleteAccountSkill)
+        await accountSkillService.delete(deleteAccountSkill)
+        ProfileToaster({ name: "Yetenek kaldırıldı" });
+
         getAccountSkill();
     }
 
@@ -63,9 +66,9 @@ export default function SkillPage() {
                 accountId: user.id,
                 skillId: option.value
             }));
-            setAccountSkillRequests(requests)
+            setAccountSkillRequests(requests);
         } else {
-            setAccountSkillRequests(null)
+            setAccountSkillRequests([]);
         }
     };
 

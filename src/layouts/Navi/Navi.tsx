@@ -56,7 +56,7 @@ export default function Navi() {
                             <p>Aradığın <span >"</span>İş<span >"</span> Burada!</p>
                         </div>
                         <div >
-                            <Button className='btn' onClick={() => { navigate("/istanbul-kodluyor") }}> Başvur</Button>
+                            <Button className='btn' onClick={() => { navigate("/kayit-ol") }}> Başvur</Button>
                         </div>
                     </div>
                 </div>

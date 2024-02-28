@@ -1,6 +1,5 @@
 import { Identifier } from "typescript";
 
-export default interface DeleteWorkExperienceRequest {
+export default interface DeleteModuleRequest {
     id: Identifier;
-
 }

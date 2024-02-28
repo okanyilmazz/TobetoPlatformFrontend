@@ -141,6 +141,7 @@ export default function AnnouncementsPage() {
             );
         }
 
+        // Ters filtreleme: "Hepsini Göster" butonuna tıklandığında okunmamış duyuruları göster
         if (isClicked && readAnnouncementIds.length > 0) {
             filteredItems = filteredItems.filter(entity =>
                 !readAnnouncementIds.includes(entity.id.toString())

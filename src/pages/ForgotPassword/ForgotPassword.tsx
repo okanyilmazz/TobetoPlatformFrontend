@@ -1,43 +1,50 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Formik, Form } from 'formik';
 import { Button, Col, Row } from 'react-bootstrap';
 import TobetoTextInput from '../../utilities/customFormControls/TobetoTextInput';
-import { Paginate } from '../../models/paginate';
 import userService from '../../services/userService';
-import authService from '../../services/authService';
 import GetUserResponse from '../../models/responses/user/getUserResponse';
-import "./ForgetPassword.css";
+import authService from '../../services/authService';
+import { toast } from 'react-toastify';
+import './ForgotPassword.css'
+import * as Yup from 'yup';
+export default function ForgotPassword() {
 
-export default function ForgetPassword() {
+    const [user, setUser] = useState<GetUserResponse>();
 
-    const [users, setUsers] = useState<GetUserResponse>();
-    const user = authService.getUserInfo();
-
-    useEffect(() => {
-        userService.getById(user.id).then(result => {
-            setUsers(result.data)
+    const handleCheckUser = async (email: any) => {
+        userService.getByMail(email).then(result => {
+            setUser(result.data)
         })
-    }, [])
+        if (user) {
+            const result = await authService.passwordReset(user.email)
+            if (result.data) {
+
+                const passwordResetCheck = await authService.passwordReset(email);
+                if (passwordResetCheck) toast.success("Şifre sıfırlama maili gönderildi.")
+            }
+        }
+    }
 
     const initialValues = {
-        firstName: "",
-        lastName: "",
-        email: "",
-        password: "",
+        email: ""
     };
+
+    const validationSchema = Yup.object({
+        email: Yup.string().required('Email adresi boş geçilemez.')
+    })
 
     return (
         <div className="row">
             <div className="container text-center">
-
-
-                <div className='forget-password-page col-md-6'>
+                <div className='forgot-password-page col-md-6'>
                     <h1>Şifre Sıfırlama</h1>
                     <Formik
+                        validationSchema={validationSchema}
                         enableReinitialize
                         initialValues={initialValues}
                         onSubmit={(values) => {
-
+                            handleCheckUser(values.email)
                         }}>
                         <Form className="login-form text-center">
                             <Row>
@@ -45,12 +52,11 @@ export default function ForgetPassword() {
                                     <TobetoTextInput
                                         className="text-center"
                                         type="text"
-                                        name="firstName"
-                                    />
+                                        name="email"
+                                        placeholder="example@gmail.com" />
                                 </Col>
                             </Row>
-
-                            <Button className="mb-4 forget-button   " type="submit">
+                            <Button className="mb-4 forgot-button   " type="submit">
                                 Gönder
                             </Button>
                         </Form>

@@ -8,14 +8,25 @@ import { useSelector } from 'react-redux';
 import educationProgramService from '../../services/educationProgramService';
 import { GetListEducationProgramResponse } from '../../models/responses/educationProgram/getListEducationProgramResponse';
 import GetListProjectResponse from '../../models/responses/project/getListProjectResponse';
+import GetListAccountResponse from '../../models/responses/account/getListAccountResponse';
 import authService from '../../services/authService';
+import accountService from '../../services/accountService';
+import GetAccountResponse from '../../models/responses/account/getAccountResponse';
 import projectService from '../../services/projectService';
+import GetListAccountEducationProgramResponse from '../../models/responses/accountEducationProgram/getAccountListEducationProgramResponse';
 import GetListAccountEducationProgramResponse from '../../models/responses/accountEducationProgram/getAccountListEducationProgramResponse';
 
 const EducationsPage = () => {
+    const [account, setAccount] = useState<GetListAccountResponse>();
+
     const userState = useSelector((state: any) => state.user);
     const user = authService.getUserInfo();
     const [educationPrograms, setEducationPrograms] = useState<GetListEducationProgramResponse[]>([]);
+
+    const [projects, setProjects] = useState<GetListProjectResponse[]>([]);
+
+    const [accounteducationprograms, setaccounteducationprograms] = useState<GetListAccountEducationProgramResponse[]>([]);
+
     const [accounteducationprograms, setaccounteducationprograms] = useState<GetListAccountEducationProgramResponse[]>([]);
     const [filteredEducationPrograms, setFilteredEducationPrograms] = useState<GetListEducationProgramResponse[]>([]);
     const [projects, setProjects] = useState<GetListProjectResponse[]>([]);
@@ -37,12 +48,23 @@ const EducationsPage = () => {
         value: project.name,
         label: project.name
     }));
+    const projectOptions = projects.map(project => ({
+        value: project.name,
+        label: project.name
+    }));
 
     useEffect(() => {
+        if (!userState.user) {
+            dispatch(userActions.getUserInfo());
+            return;
+        }
+
         projectService.getAll(0, 5).then((result) => {
             setProjects(result.data.items);
         });
 
+        educationProgramService.getByAccountId(user.id, 0, 100).then((result:any) => {
+            console.log(result.data)
         educationProgramService.getByAccountId(user.id, 0, 100).then((result:any) => {
             console.log(result.data)
             const programs = result.data.items.map((program: GetListEducationProgramResponse) => ({
@@ -53,6 +75,7 @@ const EducationsPage = () => {
             setFilteredEducationPrograms(programs);
         });
 
+    }, [user.id]);
     }, [user.id]);
 
     useEffect(() => {

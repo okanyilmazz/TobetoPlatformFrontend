@@ -29,6 +29,9 @@ import EducationalBackgroundPage from '../../pages/EducationalBackgroundPage/Edu
 import MyExperiences from '../../pages/MyExperiences/MyExperiences';
 import AnnouncementsPage from '../../pages/AnnouncementsPage/AnnouncementsPage';
 import SettingsPage from '../../pages/SettingsPage/SettingsPage';
+import ResetPassword from '../../pages/ResetPassword/ResetPassword';
+import NotFound from '../../pages/NotFound/NotFound';
+import ForgotPassword from '../../pages/ForgotPassword/ForgotPassword';
 
 
 
@@ -38,6 +41,7 @@ type Props = {}
 const RouteDefinitions = (props: Props) => {
     return (
         <Routes>
+            <Route path="*" Component={NotFound} />
             <Route path="/" Component={Homepage} />
             <Route path="/hakkimizda" Component={AboutUs} />
             <Route path="/kurumlar-icin" Component={ForInstitutionsPage} />
@@ -46,6 +50,7 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/takvim" Component={Calendar} />
             <Route path="/platform" element={<ProtectedRoute><PlatformPage /></ProtectedRoute>} />
             <Route path="/basvuru" Component={ApplicationCard} />
+            <Route path="/profilim" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/profilim" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/profilim" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/blog" Component={Blog} />

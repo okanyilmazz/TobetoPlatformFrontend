@@ -176,6 +176,7 @@
 }
 
 .certificates-section span {
+  font-family: "Poppins-Bold";
   font-weight: 600;
   font-size: 18px;
   color: #323232;
@@ -226,14 +227,14 @@
 }
 
 /* heatmap */
-.activityMapContent {
+.activity-map-content {
   background: #fff;
   box-shadow: 0 7px 29px rgba(0, 0, 0, 0.13);
   border-radius: 12px;
   margin-top: 1em;
 }
 
-.activityMapContent hr {
+.activity-map-content hr {
   margin: 0.5rem 0;
   color: rgba(153, 51, 255, 0.4);
   border: 0;
@@ -241,13 +242,14 @@
   opacity: 0.4;
 }
 
-.activityMapContent span {
+.activity-map-content span {
   font-weight: 600;
   font-size: 18px;
   color: #323232;
+  font-family: "Poppins-Bold";
 }
 
-.activityMapPadding {
+.activity-map-padding {
   padding: 30px;
 }
 
@@ -625,7 +627,7 @@
   color: #fff;
 }
 
-.abilities-text {}
+
 
 .profile-card .languages-content {
   display: flex;

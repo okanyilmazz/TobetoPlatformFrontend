@@ -6,11 +6,13 @@ import tokenService from "../core/services/tokenService";
 import { jwtDecode } from "jwt-decode";
 import RegisterRequest from "../models/requests/auth/registerRequest";
 import RegisterResponse from "../models/responses/auth/registerResponse";
+import ChangePasswordRequest from "../models/requests/auth/changePasswordRequest";
 
 interface TokenDetails {
     'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier': string;
     email: string;
     'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name': string;
+    'http://schemas.microsoft.com/ws/2008/06/identity/claims/role': string;
 }
 
 class AuthService {
@@ -30,11 +32,11 @@ class AuthService {
         }
 
         const tokenDetails: TokenDetails = jwtDecode(token);
-
         const {
             'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier': userId,
             email,
-            'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name': name
+            'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name': name,
+            'http://schemas.microsoft.com/ws/2008/06/identity/claims/role': role
         } = tokenDetails;
 
         let nameParts = name.split(' ');
@@ -47,10 +49,20 @@ class AuthService {
             firstName: firstname,
             lastName: lastname,
             email: email,
+            role: role
         };
 
         return user;
     }
+
+    changePassword(changePasswordRequest: ChangePasswordRequest): Promise<AxiosResponse<boolean, any>> {
+        return axiosInstance.post<boolean>("Auth/ChangePassword", changePasswordRequest);
+    }
+
+    passwordReset(email: string): Promise<AxiosResponse<boolean, any>> {
+        return axiosInstance.get<boolean>("Auth/PasswordReset?email=" + email);
+    }
+
 
 }
 

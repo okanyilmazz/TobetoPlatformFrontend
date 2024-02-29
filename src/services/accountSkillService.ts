@@ -31,10 +31,6 @@ class AccountSkillService extends BaseService<
     getByAccountId(accountId: number, pageIndex: number, pageSize: number): Promise<AxiosResponse<Paginate<GetListAccountSkillResponse>, any>> {
         return axiosInstance.get<Paginate<GetListAccountSkillResponse>>(this.apiUrl + "/GetByAccountId?accountId=" + accountId + "&PageIndex=" + pageIndex + "&PageSize=" + pageSize);
     }
-
-    deleteWithModel(request: DeleteAccountSkillRequest) {
-        return axiosInstance.post(this.apiUrl + "/Delete", request);
-    }
 }
 
 export default new AccountSkillService();

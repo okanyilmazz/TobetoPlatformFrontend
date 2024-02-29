@@ -32,6 +32,9 @@ import GetAccountLanguageResponse from '../../models/responses/accountLanguage/g
 import GetListSkillResponse from '../../models/responses/skill/getListSkillResponse';
 import accountSkillService from '../../services/accountSkillService';
 import GetListAccountSkillResponse from '../../models/responses/accountSkill/getListAccountSkillResponse';
+import GetListAccountActivityMapResponse from '../../models/responses/accountActivityMap/getListAccountActivityMapResponse';
+import accountActivityMapService from '../../services/accountActivityMapService';
+import GetAccountActivityMapResponse from '../../models/responses/accountActivityMap/getAccountActivityMapResponse';
 
 
 
@@ -47,6 +50,7 @@ export default function Profile() {
 
   const [accountLanguages, setAccountLanguages] = useState<Paginate<GetListAccountLanguageResponse>>();
   const [accountSkills, setAccountSkills] = useState<Paginate<GetListAccountSkillResponse>>();
+  const [heatMapDatas, setHeatMapDatas] = useState<Paginate<GetListAccountActivityMapResponse>>();
 
 
 
@@ -71,12 +75,25 @@ export default function Profile() {
     }, 2500);
   };
 
+  function convertDateFormat(inputDate: any) {
+    const dateString = String(inputDate);
+    const parts = dateString.split(/[.:\/\s]/);
 
+    const day = parts[0].padStart(2, '0');
+    const month = parts[1].padStart(2, '0');
+    const year = parts[2];
+
+    return `${year}/${month}/${day}`;
+  }
 
   const heatMapRows = () => {
+    heatMapDatas?.items.map((daka: any) => {
+      console.log(convertDateFormat(daka.dateTime));
+    })
+
     return (
       <HeatMap
-        value={heatmapData}
+        value={heatMapDatas?.items.map((data: any) => ({ date: convertDateFormat(data.dateTime), count: data.count }))}
         monthLabels={[]}
         weekLabels={[]}
         rectProps={{
@@ -85,7 +102,7 @@ export default function Profile() {
         width={800}
         rectSize={11}
         startDate={startDate}
-        endDate={endDate}
+        endDate={new Date(new Date('2024/01/01').setDate(new Date('2024/01/01').getDate() + 369))}
         rectRender={(props: any, data: any,) => {
           if (!data || !data.count || data.count === 0)
             return <Tooltip placement="top" content={`Herhangi bir aktiviteniz yok : ${0}`}>
@@ -108,35 +125,19 @@ export default function Profile() {
         style={{ color: '#ad001d' }}
         panelColors={{
           0: '#cacaca',
-          1: '#b6f', //1-9
-          10: '#93f', //10-19
-          20: '#5c1f99', //20-29
-          30: '#361259', //30 ve Ã¼zeri
+          1: '#b6f',
+          10: '#93f',
+          20: '#5c1f99',
+          30: '#361259',
 
         }}
 
       />
     )
   }
-  const heatmapData = [
 
-    { date: '2023/01/11', count: 2 },
-    { date: '2023/04/12', count: 2 },
-    { date: '2023/05/01', count: 5 },
-    { date: '2023/05/02', count: 5 },
-    { date: '2023/05/03', count: 1 },
-    { date: '2023/05/04', count: 11 },
-    { date: '2023/06/08', count: 4 },
-    { date: '2023/07/07', count: 30 },
-    { date: '2023/8/12', count: 5 },
-    { date: '2023/9/12', count: 13 },
-    { date: '2023/10/12', count: 8 },
-    { date: '2023/11/12', count: 3 },
-    { date: '2023/12/2', count: 3 }
-  ];
-
-  const startDate = new Date('2023/01/01');
-  const endDate = new Date(new Date(startDate).setDate(startDate.getDate() + 370));
+  const startDate = new Date('2024/01/01');
+  const endDate = convertDateFormat(new Date());
   const [heatmapWidth, setHeatmapWidth] = useState(window.innerWidth - 20);
   const handleResize = () => {
     setHeatmapWidth(window.innerWidth - 20);
@@ -152,6 +153,12 @@ export default function Profile() {
 
 
   useEffect(() => {
+    accountActivityMapService.getByAccountId(user.id).then((result: any) => {
+      setHeatMapDatas(result.data);
+    })
+  }, [])
+
+  useEffect(() => {
     if (!userState.user) {
       dispatch(userActions.getUserInfo())
 
@@ -163,17 +170,13 @@ export default function Profile() {
     });
 
     certificateService.getByAccountId(userState.user.id, 0, 5).then(result => {
-      console.log("girdi")
-
       setCertificates(result.data)
     });
     examResultService.getByAccountId(user.id).then(result => {
       setExamResults(result.data)
-
     })
     accountService.getById(userState.user.id).then(result => {
       setAccount(result.data);
-      console.log(result.data)
     });
 
     socialMediaService.getByAccountId(userState.user.id, 0, 10).then(result => {
@@ -182,7 +185,6 @@ export default function Profile() {
 
     accountBadgeService.getByAccountId(user.id).then(result => {
       setAccountBadges(result.data);
-
     });
 
     accountLanguageService.getByAccountId(user.id).then(result => {
@@ -191,7 +193,6 @@ export default function Profile() {
 
     accountSkillService.getByAccountId(user.id, 0, 10).then(result => {
       setAccountSkills(result.data);
-      console.dir(result.data)
     })
   }, [userState]);
 
@@ -201,7 +202,7 @@ export default function Profile() {
   return (
     <div className='profile-card'>
       <div className='container '>
-        <div className='row'>
+        <div className='row '>
           <div className='d-flex justify-content-end dropdown-profile '>
             <Link to="/profilim/profilimi-duzenle/kisisel-bilgilerim">
               <span className='cv-edit-icon'></span>
@@ -489,7 +490,6 @@ export default function Profile() {
                         <div className='circle'>
                         </div>
                       </div>
-                      {/* <p>Henüz bir eğitim ve deneyim bilgisi eklemedin. Eklemek için buraya tıklayın.</p> */}
                     </div>
                   </div>
                 }
@@ -497,7 +497,6 @@ export default function Profile() {
             </div>
           </div>
           <div className='col-md-4 col-12'>
-            {/* Soldakiler buraya */}
 
           </div>
 

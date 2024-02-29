@@ -3,17 +3,18 @@
 }
 
 .pe-language {
-    display: flex;
+    display: grid;
+}
+
+.pe-language-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     margin-top: 50px;
+    gap: 10px; 
 }
 
-#pe-language-select {
-    margin-right: 10px;
-}
-
-#pe-language-select-level {
-    margin-Left: 40px;
-    width: 350px;
+.pe-general{
+    margin-right: 100px;
 }
 
 .pe-language-button {
@@ -94,4 +95,19 @@
     width: 25px;
     height: 25px;
     border: none;
+}
+
+.pe-invalid-feedback{
+    display: flex; 
+    margin-top: 0.25rem; 
+    color: #dc3545; 
+}
+
+#pe-language-select {
+    margin-right: 10px;
+}
+
+#pe-language-select-level {
+    margin-Left: 40px;
+    width: 350px;
 }

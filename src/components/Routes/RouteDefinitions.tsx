@@ -29,6 +29,10 @@ import EducationalBackgroundPage from '../../pages/EducationalBackgroundPage/Edu
 import MyExperiences from '../../pages/MyExperiences/MyExperiences';
 import AnnouncementsPage from '../../pages/AnnouncementsPage/AnnouncementsPage';
 import SettingsPage from '../../pages/SettingsPage/SettingsPage';
+import ResetPassword from '../../pages/ResetPassword/ResetPassword';
+import NotFound from '../../pages/NotFound/NotFound';
+import ForgotPassword from '../../pages/ForgotPassword/ForgotPassword';
+import AdminProtectedRoute from './AdminProtectedRoute';
 
 
 
@@ -38,6 +42,7 @@ type Props = {}
 const RouteDefinitions = (props: Props) => {
     return (
         <Routes>
+            <Route path="*" Component={NotFound} />
             <Route path="/" Component={Homepage} />
             <Route path="/hakkimizda" Component={AboutUs} />
             <Route path="/kurumlar-icin" Component={ForInstitutionsPage} />
@@ -46,6 +51,7 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/takvim" Component={Calendar} />
             <Route path="/platform" element={<ProtectedRoute><PlatformPage /></ProtectedRoute>} />
             <Route path="/basvuru" Component={ApplicationCard} />
+            <Route path="/profilim" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/profilim" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/blog" Component={Blog} />
             <Route path="/basinda-biz" Component={MediaNews} />
@@ -68,16 +74,21 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/profilim/degerlendirmeler/rapor/tobeto-iste-basari-yetkinlikleri/1" element={<ProtectedRoute><AnalysisReport /></ProtectedRoute>} />
             <Route path="/egitimlerim/egitim-detaylari/:educationProgramId" Component={SessionsPage} />
             <Route path="/profilim/profilimi-duzenle/deneyimlerim" element={<ProtectedRoute><MyExperiences /></ProtectedRoute>} />
+            <Route path="/profilim/profilimi-duzenle/ayarlar" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
 
-            <Route path="/admin-panel" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
-            <Route path="/admin-panel/ogrenciler" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
-            <Route path="/admin-panel/dersler" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
-            <Route path="/admin-panel/duyurular" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
-            <Route path="/admin-panel/egitimler" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
-            <Route path="/admin-panel/oturumlar" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
-            <Route path="/admin-panel/egitimler" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
-            <Route path="/admin-panel/roller" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
-            <Route path="/admin-panel/kullanicilar" element={<ProtectedRoute><AdminPanel /></ProtectedRoute>} />
+            <Route path="/admin-panel" element={<AdminProtectedRoute><AdminPanel /></AdminProtectedRoute>} />
+            <Route path="/admin-panel/ogrenciler" element={<AdminProtectedRoute><AdminPanel /></AdminProtectedRoute>} />
+            <Route path="/admin-panel/dersler" element={<AdminProtectedRoute><AdminPanel /></AdminProtectedRoute>} />
+            <Route path="/admin-panel/duyurular" element={<AdminProtectedRoute><AdminPanel /></AdminProtectedRoute>} />
+            <Route path="/admin-panel/egitimler" element={<AdminProtectedRoute><AdminPanel /></AdminProtectedRoute>} />
+            <Route path="/admin-panel/oturumlar" element={<AdminProtectedRoute><AdminPanel /></AdminProtectedRoute>} />
+            <Route path="/admin-panel/egitimler" element={<AdminProtectedRoute><AdminPanel /></AdminProtectedRoute>} />
+            <Route path="/admin-panel/roller" element={<AdminProtectedRoute><AdminPanel /></AdminProtectedRoute>} />
+            <Route path="/admin-panel/kullanicilar" element={<AdminProtectedRoute><AdminPanel /></AdminProtectedRoute>} />
+            <Route path="/sifremi-unuttum" Component={ForgotPassword} />
+            <Route path="/reset-password/:userId/:resetToken" Component={ResetPassword} />
+
+
         </Routes >
     )
 }

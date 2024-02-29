@@ -14,15 +14,27 @@ const Footer = () => {
         style={
           lastPathSegment === "platform" ||
             lastPathSegment === "egitimlerim" ||
-            pathArray.includes("egitim-detaylari") ||
-            pathArray.includes("profilimi-duzenle") ||
-            pathArray.includes("admin-panel") ||
+            lastPathSegment === "sertifikalarim" ||
+            lastPathSegment === "yetkinliklerim" ||
+            lastPathSegment === "medya-hesaplarim" ||
+            lastPathSegment === "yabanci-dil" ||
+            lastPathSegment === "kisisel-bilgilerim" ||
+            lastPathSegment.includes("egitim-detaylari") ||
+            lastPathSegment === "admin-panel" ||
+            lastPathSegment === "ogrenciler" ||
+            lastPathSegment === "dersler" ||
+            lastPathSegment === "duyurular" ||
+            lastPathSegment === "egitimler" ||
+            lastPathSegment === "roller" ||
+            lastPathSegment === "kullanıcılar" ||
             lastPathSegment === "degerlendirmeler" ||
             lastPathSegment === "platform-katalog" ||
             lastPathSegment === "basvuru" ||
             lastPathSegment === "takvim" ||
             lastPathSegment === "1" ||
-            lastPathSegment === "egitim-hayatim" ||
+            pathArray.includes("egitim-detaylari") ||
+            pathArray.includes("reset-password") ||
+
             lastPathSegment === "profilim" ? { display: 'none' } : { display: 'block' }}>
 
 
@@ -188,7 +200,7 @@ const Footer = () => {
         </MDBContainer>
 
       </MDBFooter>
-      <div className="footer-info"
+      <div className="fontFooter small"
         style={
           lastPathSegment === "katalog" ||
             lastPathSegment === "codecademy" ||
@@ -200,6 +212,10 @@ const Footer = () => {
             lastPathSegment === "kurumlar-icin" ||
             lastPathSegment === "" ||
             lastPathSegment === "bireyler-icin" ||
+            lastPathSegment === "sifremi-unuttum" ||
+
+
+
             lastPathSegment === "takvim-anasayfa" ? { display: 'none' } : { display: 'block' }}>
         <div className="footer-container">
           <div className="row">

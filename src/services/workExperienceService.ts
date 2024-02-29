@@ -2,13 +2,13 @@ import { AxiosResponse } from "axios";
 import { BaseService } from "../core/services/baseService";
 import { Paginate } from "../models/paginate";
 import AddWorkExperienceRequest from "../models/requests/workExperience/addWorkExperienceRequest";
-import DeleteWorkExperienceRequest from "../models/requests/workExperience/deleteWorkExperienceRequest";
 import UpdateWorkExperienceRequest from "../models/requests/workExperience/updateWorkExperienceRequest";
 import AddedWorkExperienceResponse from "../models/responses/workExperience/addedWorkExperienceResponse";
 import GetListWorkExperienceResponse from "../models/responses/workExperience/getListWorkExperienceResponse";
 import GetWorkExperienceResponse from "../models/responses/workExperience/getWorkExperienceResponse";
 import UpdatedWorkExperienceResponse from "../models/responses/workExperience/updatedWorkExperienceResponse";
 import axiosInstance from "../core/interceptors/axiosInterceptor";
+import DeleteWorkExperienceRequest from "../models/requests/workExperience/deleteWorkExperienceRequest";
 
 class WorkExperienceService extends BaseService<
     Paginate<GetListWorkExperienceResponse>,

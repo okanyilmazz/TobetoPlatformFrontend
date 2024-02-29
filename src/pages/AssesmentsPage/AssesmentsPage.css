@@ -183,7 +183,7 @@
     padding: 1.5em;
     color: #93f;
     font-weight: 600;
-    font-size: 2em;
+    font-size: 24px;
     text-align: center;
 }
 
@@ -357,4 +357,119 @@
     font-size: 1.25em;
     padding-top: 40px;
     font: 20px Poppins-Regular;
+}
+
+.footer-modal-button {
+    display: flex;
+    justify-content: space-around;
+}
+
+.assesments-modal .modal-dialog .modal-content {
+    top: 20vh;
+    width: 50vw;
+    right: 10vw;
+}
+
+.assesments-modal .modal-dialog .modal-content .modal-body {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.exam-modal-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* .exam-modal-header .exam-question-count {
+    margin-left: 24px;
+    background-color: #93f;
+    color: white;
+    padding: 12px 48px;
+    border-radius: 50px;
+}
+
+.exam-modal-header .exam-question-time {
+    margin-right: 24px;
+    background-color: #93f;
+    color: white;
+    padding: 12px 48px;
+    border-radius: 50px;
+} */
+
+.exam-modal-header span {
+    background-color: #93f;
+    color: white;
+    padding: 12px 48px;
+    border-radius: 50px;
+
+}
+
+.assesments-exam-modal .modal-dialog .modal-content {
+    top: 10vh;
+    width: 50vw;
+    right: 10vw;
+    height: max-content;
+}
+
+.exam-modal-description p {
+    font-size: 16px;
+    margin-top: 24px;
+    text-align: center;
+    font-weight: 900;
+}
+
+.exam-modal-description .exam-modal-question {
+    margin-top: 36px;
+    margin-bottom: 24px;
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 12px 24px;
+    border-radius: 12px;
+}
+
+
+
+.assesment-paginate .ui.pagination.menu {
+    width: 100% !important;
+    display: grid !important;
+    grid-template-columns: 4% 96% !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+.assesment-paginate .ui.pagination.menu a:first-child,
+.assesment-paginate .ui.pagination.menu a:last-child {
+    display: block !important;
+    background-color: #93f;
+    border-radius: 24px !important;
+    color: #fff !important;
+}
+
+.ui.pagination.menu a:last-child {
+    justify-self: end !important;
+}
+
+.ui.pagination.menu a {
+    display: none !important;
+    background-color: red;
+}
+
+
+.answer-active {
+    background-color: #93f !important;
+    color: #fff;
+}
+
+
+.assesment-paginate .pagination {
+    display: flex !important;
+    justify-content: space-between !important;
+}
+
+.assesment-paginate .pagination .paginate-button {
+    background-color: #7a29cc;
+    padding: 12px 24px;
+    border: 1px solid transparent;
+    color: #fff;
 }

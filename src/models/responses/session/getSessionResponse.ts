@@ -8,4 +8,7 @@ export default interface GetSessionResponse {
     startDate: Date;
     endDate: Date;
     recordPath: string;
+    lessonId: Identifier;
+    accountId: Identifier;
+    occupationClassId: Identifier;
 }

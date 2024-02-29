@@ -16,15 +16,20 @@ import ResetTokenUserRequest from '../../models/requests/user/resetTokenRequest'
 export default function ResetPassword() {
     const { userId, resetToken } = useParams();
     const navigate = useNavigate();
+    console.log(userId)
+    console.log(resetToken)
 
     useEffect(() => {
         if (userId && resetToken) {
             const resetTokenUserRequest: ResetTokenUserRequest = {
-                id: userId,
+                userId: userId,
                 resetToken: resetToken
             }
+            console.log(resetTokenUserRequest)
 
             userService.getByResetToken(resetTokenUserRequest).then((result: any) => {
+                console.log(result.data)
+
                 if (!result.data) navigate("/giris");
             })
         }

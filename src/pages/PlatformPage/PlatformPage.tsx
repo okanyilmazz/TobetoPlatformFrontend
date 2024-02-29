@@ -11,10 +11,9 @@ import GetListAnnouncementProjectResponse from '../../models/responses/announcem
 import educationProgramService from '../../services/educationProgramService'
 import announcementProjectService from '../../services/announcementProjectService'
 import ShowMoreButton from '../../components/ShowMoreButton/ShowMoreButton'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import GetListExamResponse from '../../models/responses/exam/getListExamResponse'
 import examService from '../../services/examService'
-import { userActions } from '../../store/user/userSlice'
 import { useNavigate } from 'react-router-dom'
 import authService from '../../services/authService'
 
@@ -25,23 +24,19 @@ export default function PlatformPage() {
 
     const userState = useSelector((state: any) => state.user);
     const user = authService.getUserInfo();
-    const dispatch = useDispatch();
+
     const navigate = useNavigate();
 
 
     useEffect(() => {
 
-        if (!userState.user) {
-            dispatch(userActions.getUserInfo());
-            return;
-        }
-
         examService.getByAccountId(user.id, 0, 2).then(result => {
             setExams(result.data);
         });
 
-        educationProgramService.getAll(0, 100).then(result => {
+        educationProgramService.getAll(0, 100).then((result: any) => {
             setEducationPrograms(result.data);
+            console.log(result.data)
         });
 
         announcementProjectService.getAll(0, 100).then(result => {
@@ -115,12 +110,13 @@ export default function PlatformPage() {
                                     <div className='tab-education-content'>
                                         {
                                             educationPrograms?.items.map((educationProgram) => (
+
                                                 <EducationCard
                                                     title={educationProgram.name}
                                                     date={formatCustomDate(educationProgram.startDate)}
                                                     id={educationProgram.id}
                                                     thumbnailPath={educationProgram.thumbnailPath}
-                                                     />
+                                                />
                                             ))
                                         }
                                     </div>

@@ -32,7 +32,9 @@ const Footer = () => {
             lastPathSegment === "basvuru" ||
             lastPathSegment === "takvim" ||
             lastPathSegment === "1" ||
-            lastPathSegment.includes("egitim-detaylari") ||
+            pathArray.includes("egitim-detaylari") ||
+            pathArray.includes("reset-password") ||
+
             lastPathSegment === "profilim" ? { display: 'none' } : { display: 'block' }}>
 
 
@@ -198,7 +200,7 @@ const Footer = () => {
         </MDBContainer>
 
       </MDBFooter>
-      <div className="footer-info"
+      <div className="fontFooter small"
         style={
           lastPathSegment === "katalog" ||
             lastPathSegment === "codecademy" ||
@@ -211,6 +213,8 @@ const Footer = () => {
             lastPathSegment === "" ||
             lastPathSegment === "bireyler-icin" ||
             lastPathSegment === "sifremi-unuttum" ||
+
+
 
             lastPathSegment === "takvim-anasayfa" ? { display: 'none' } : { display: 'block' }}>
         <div className="footer-container">

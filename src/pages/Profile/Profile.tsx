@@ -32,8 +32,9 @@ import GetAccountLanguageResponse from '../../models/responses/accountLanguage/g
 import GetListSkillResponse from '../../models/responses/skill/getListSkillResponse';
 import accountSkillService from '../../services/accountSkillService';
 import GetListAccountSkillResponse from '../../models/responses/accountSkill/getListAccountSkillResponse';
-import accountActivityMapService from '../../services/accountActivityMapService';
 import GetListAccountActivityMapResponse from '../../models/responses/accountActivityMap/getListAccountActivityMapResponse';
+import accountActivityMapService from '../../services/accountActivityMapService';
+import GetAccountActivityMapResponse from '../../models/responses/accountActivityMap/getAccountActivityMapResponse';
 
 
 
@@ -49,7 +50,8 @@ export default function Profile() {
 
   const [accountLanguages, setAccountLanguages] = useState<Paginate<GetListAccountLanguageResponse>>();
   const [accountSkills, setAccountSkills] = useState<Paginate<GetListAccountSkillResponse>>();
-  const [activityMap, setActivityMap] = useState<Paginate<GetListAccountActivityMapResponse>>();
+  const [heatMapDatas, setHeatMapDatas] = useState<Paginate<GetListAccountActivityMapResponse>>();
+
 
 
   const [checked, setChecked] = useState<boolean>(false);
@@ -73,8 +75,69 @@ export default function Profile() {
     }, 2500);
   };
 
-  const startDate = new Date('2023/01/01');
-  const endDate = new Date(new Date(startDate).setDate(startDate.getDate() + 370));
+  function convertDateFormat(inputDate: any) {
+    const dateString = String(inputDate);
+    const parts = dateString.split(/[.:\/\s]/);
+
+    const day = parts[0].padStart(2, '0');
+    const month = parts[1].padStart(2, '0');
+    const year = parts[2];
+
+    return `${year}/${month}/${day}`;
+  }
+
+  const heatMapRows = () => {
+    heatMapDatas?.items.map((daka: any) => {
+      console.log(convertDateFormat(daka.dateTime));
+    })
+
+    return (
+      <HeatMap
+        value={heatMapDatas?.items.map((data: any) => ({ date: convertDateFormat(data.dateTime), count: data.count }))}
+        monthLabels={[]}
+        weekLabels={[]}
+        rectProps={{
+          rx: 7,
+        }}
+        width={800}
+        rectSize={11}
+        startDate={startDate}
+        endDate={new Date(new Date('2024/01/01').setDate(new Date('2024/01/01').getDate() + 369))}
+        rectRender={(props: any, data: any,) => {
+          if (!data || !data.count || data.count === 0)
+            return <Tooltip placement="top" content={`Herhangi bir aktiviteniz yok : ${0}`}>
+              <rect {...props}></rect>
+            </Tooltip>
+          else
+            return (
+              <Tooltip
+                placement="top"
+                content={`${data.date
+                  .split('/')
+                  .reverse()
+                  .map((part: any) => part.padStart(2, '0'))
+                  .join('/')} : ${data.count + ' adet aktivite'}`}
+              >
+                <rect {...props}></rect>
+              </Tooltip>
+            );
+        }}
+        style={{ color: '#ad001d' }}
+        panelColors={{
+          0: '#cacaca',
+          1: '#b6f',
+          10: '#93f',
+          20: '#5c1f99',
+          30: '#361259',
+
+        }}
+
+      />
+    )
+  }
+
+  const startDate = new Date('2024/01/01');
+  const endDate = convertDateFormat(new Date());
   const [heatmapWidth, setHeatmapWidth] = useState(window.innerWidth - 20);
   const handleResize = () => {
     setHeatmapWidth(window.innerWidth - 20);
@@ -90,6 +153,12 @@ export default function Profile() {
 
 
   useEffect(() => {
+    accountActivityMapService.getByAccountId(user.id).then((result: any) => {
+      setHeatMapDatas(result.data);
+    })
+  }, [])
+
+  useEffect(() => {
     if (!userState.user) {
       dispatch(userActions.getUserInfo())
 
@@ -101,17 +170,13 @@ export default function Profile() {
     });
 
     certificateService.getByAccountId(userState.user.id, 0, 5).then(result => {
-      console.log("girdi")
-
       setCertificates(result.data)
     });
     examResultService.getByAccountId(user.id).then(result => {
       setExamResults(result.data)
-
     })
     accountService.getById(userState.user.id).then(result => {
       setAccount(result.data);
-      console.log(result.data)
     });
 
     socialMediaService.getByAccountId(userState.user.id, 0, 10).then(result => {
@@ -120,7 +185,6 @@ export default function Profile() {
 
     accountBadgeService.getByAccountId(user.id).then(result => {
       setAccountBadges(result.data);
-
     });
 
     accountLanguageService.getByAccountId(user.id).then(result => {
@@ -129,20 +193,7 @@ export default function Profile() {
 
     accountSkillService.getByAccountId(user.id, 0, 10).then(result => {
       setAccountSkills(result.data);
-      console.dir(result.data)
     })
-
-    if (userState.user) {
-      accountActivityMapService.getByAccountId(user.id)
-        .then(result => {
-          console.log("result.data")
-          console.log(result.data)
-          setActivityMap(result.data);
-        })
-        .catch(error => {
-          console.error('Aktivite haritası alınamadı:', error);
-        });
-    }
   }, [userState]);
 
   const options = { year: 'numeric', month: 'long', day: 'numeric' } as const;
@@ -151,7 +202,7 @@ export default function Profile() {
   return (
     <div className='profile-card'>
       <div className='container '>
-        <div className='row'>
+        <div className='row '>
           <div className='d-flex justify-content-end dropdown-profile '>
             <Link to="/profilim/profilimi-duzenle/kisisel-bilgilerim">
               <span className='cv-edit-icon'></span>
@@ -411,48 +462,17 @@ export default function Profile() {
             </div>
 
             <div className='col-md-12'>
-              <div className='activity-map-container'>
-                <div className="activity-map-content activity-map-padding">
-                  <div className="activity-map-header">
+              <div className="ActivityMapContainer">
+                <div className="activityMapContent activityMapPadding">
+                  <div className="ActivityMapHeader">
                     <span>Aktivite Haritam</span>
                     <hr />
                   </div>
-                  <div className="abc-heatmap">
-                    <HeatMap
-                      value={activityMap?.items.map(data => ({ date: data.date, count: data.activityCount }))}
 
-                      monthLabels={[]}
-                      weekLabels={[]}
-                      rectProps={{
-                        rx: 7,
-                      }}
-                      width={720}
-                      rectSize={11}
-                      startDate={new Date('2023/01/01')}
-                      endDate={new Date(new Date('2023/01/01').setDate(new Date('2023/01/01').getDate() + 369))}
-                      rectRender={(props: any, data: any) => (
-                        <Tooltip
-                          placement="top"
-                          content={
-                            data.count !== undefined
-                              ? `${data.date.split('/').reverse().map((part: string) => part.padStart(2, '0')).join('/')} : ${data.count + ' adet aktivite'
-                              }`
-                              : 'Herhangi bir aktiviteniz yok : 0'
-                          }
-                        >
-                          {data.count !== undefined && <rect {...props}></rect>}
-                        </Tooltip>
-                      )}
-                      style={{ color: '#ad001d' }}
-                      panelColors={{
-                        0: '#cacaca',
-                        1: '#b6f', //1-9
-                        10: '#93f', //10-19
-                        20: '#5c1f99', //20-29
-                        30: '#361259', //30 ve üzeri
-                      }}
-                    />
+                  <div className='abc-heatmap'>
+                    {heatMapRows()}
                   </div>
+
                 </div>
               </div>
             </div>
@@ -470,7 +490,6 @@ export default function Profile() {
                         <div className='circle'>
                         </div>
                       </div>
-                      {/* <p>Henüz bir eğitim ve deneyim bilgisi eklemedin. Eklemek için buraya tıklayın.</p> */}
                     </div>
                   </div>
                 }
@@ -478,7 +497,6 @@ export default function Profile() {
             </div>
           </div>
           <div className='col-md-4 col-12'>
-            {/* Soldakiler buraya */}
 
           </div>
 

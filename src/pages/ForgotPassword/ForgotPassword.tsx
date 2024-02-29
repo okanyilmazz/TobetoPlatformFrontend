@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Formik, Form } from 'formik';
 import { Button, Col, Row } from 'react-bootstrap';
 import TobetoTextInput from '../../utilities/customFormControls/TobetoTextInput';
@@ -16,15 +16,24 @@ export default function ForgotPassword() {
         userService.getByMail(email).then(result => {
             setUser(result.data)
         })
-        if (user) {
-            const result = await authService.passwordReset(user.email)
-            if (result.data) {
-
-                const passwordResetCheck = await authService.passwordReset(email);
-                if (passwordResetCheck) toast.success("Şifre sıfırlama maili gönderildi.")
-            }
-        }
     }
+
+
+    useEffect(() => {
+        const handlePasswordReset = async () => {
+            if (user) {
+                const result = await authService.passwordReset(user.email);
+                if (result.data) {
+                    const passwordResetCheck = await authService.passwordReset(user.email);
+                    if (passwordResetCheck) {
+                        toast.success("Şifre sıfırlama maili gönderildi.");
+                    }
+                }
+            }
+        };
+
+        handlePasswordReset();
+    }, [user]);
 
     const initialValues = {
         email: ""

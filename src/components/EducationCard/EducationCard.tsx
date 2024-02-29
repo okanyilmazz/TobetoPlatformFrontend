@@ -11,7 +11,7 @@ export default function EducationCard(props: any) {
             <div className='content'>
                 {
                     <Card className='education-card'>
-                        <Card.Img variant="top" src="{props.thumbnailPath}" />
+                        <Card.Img variant="top" src={props.thumbnailPath} />
                         <Card.Body>
                             <Card.Title>{props.title}</Card.Title>
                             <Card.Text>

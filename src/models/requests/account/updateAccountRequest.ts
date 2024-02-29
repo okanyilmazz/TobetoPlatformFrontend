@@ -7,4 +7,5 @@ export default interface UpdateAccountRequest {
     description: string;
     birthDate: Date;
     profilePhotoPath: string;
+    occupationClassId: string;
 }

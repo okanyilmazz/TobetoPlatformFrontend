@@ -16,6 +16,7 @@ import GetListAnnouncementTypeResponse from '../../../models/responses/announcem
 import announcementTypeService from '../../../services/announcementTypeService';
 import DeleteAnnouncementRequest from '../../../models/requests/announcement/deleteAnnouncementRequest';
 import UpdateAnnouncementRequest from '../../../models/requests/announcement/updateAnnouncementRequest';
+import AdminPanelSideBarCard from '../../../components/AdminPanelSideBarCard/AdminPanelSideBarCard';
 
 
 
@@ -162,213 +163,214 @@ export default function AnnouncementPanel() {
 
     return (
         <div className='container'>
-            <div className="row announcement-panel-content">
+            <div className="row announcement-panel  ">
 
-                <div className="search">
-                    <div className="input-container">
-                        <input type="text" id="search" onChange={handleInputFilter} placeholder="Arama" />
-                        <IoSearch className="search-icon" />
+
+                <AdminPanelSideBarCard />
+                <div className=" announcement-panel-content col-md-9  ">
+
+
+                    <div className="search">
+                        <div className="input-container">
+                            <input type="text" id="search" onChange={handleInputFilter} placeholder="Arama" />
+                            <IoSearch className="search-icon" />
+                        </div>
                     </div>
+
+                    <div className="table-responsive-sm">
+                        <table className="mt-8 corpTable table table-hover">
+                            <thead>
+                                <tr>
+                                    <th className='announcement-name'>Duyuru İsmi</th>
+                                    <th className="announcement-created-date">Oluşturulma Tarihi</th>
+                                    <th className='announcement-type'>Türü</th>
+                                    <th className='text-center'>İşlem</th>
+                                </tr>
+                            </thead>
+
+                            <tbody className='announcement-panel-table-body' >
+
+                                {
+                                    announcements?.items.map((announcement) => (
+                                        <tr>
+                                            <td className='announcement-name'>{announcement.title}</td>
+                                            <td className="announcement-created-date">{new Date(announcement.announcementDate).toLocaleDateString()}</td>
+
+                                            <td className='announcement-type'>{announcement.announcementTypeName}</td>
+                                            <td className='td-icons '>
+
+                                                <Tooltip placement="top" title={"Silme"} >
+                                                    <span className="trash-icon" onClick={() => handleDeleteAnnouncement(announcement)}></span>
+                                                </Tooltip>
+                                                <Tooltip placement="top" title="Düzenleme">
+                                                    <RiPencilFill onClick={() => handleUpdatedClick(announcement.id)} className='edit-icon' />
+                                                </Tooltip>
+                                            </td>
+                                        </tr>
+                                    ))
+                                }
+                                <tr >
+                                    <td className='text-center' onClick={handleAddClick} colSpan={5}>
+                                        <span>Yeni anons ekle</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                    </div>
+
                 </div>
 
-                <div className="table-responsive-sm">
-                    <table className="mt-8 corpTable table table-hover">
-                        <thead>
-                            <tr>
-                                <th className='announcement-name'>Duyuru İsmi</th>
-                                <th className="announcement-created-date">Oluşturulma Tarihi</th>
-                                <th className='announcement-type'>Türü</th>
-                                <th className='text-center'>İşlem</th>
-                            </tr>
-                        </thead>
+                <Modals
+                    className="announcement-modal"
+                    show={showModal}
+                    onHide={() => closeModal()}
+                    header={true}
+                    title={
+                        updateClick ? "Anons Güncelleme" : "Anons Ekleme"
+                    }
+                    body={
+                        <>
 
-                        <tbody className='announcement-panel-table-body' >
+                            <div className="formik-form" style={addClick ? { display: 'block' } : { display: 'none' }}>
+                                <Formik
+                                    initialValues={addAnnouncementInitialValues}
+                                    onSubmit={(values) => {
+                                        handleAddAnnouncement(values);
+                                    }}>
 
-                            {
-                                announcements?.items.map((announcement) => (
-                                    <tr>
-                                        <td className='announcement-name'>{announcement.title}</td>
-                                        <td className="announcement-created-date">{new Date(announcement.announcementDate).toLocaleDateString()}</td>
+                                    <Form className="update-modal-form" >
+                                        <Row >
+                                            <Col md={6}>
+                                                <span className="input-area-title">Anons Türü</span>
 
-                                        <td className='announcement-type'>{announcement.announcementTypeName}</td>
-                                        <td className='td-icons '>
+                                                <TobetoSelect
+                                                    name="announcementTypeId"
+                                                    className="mb-4"
+                                                    component="select">
+                                                    <option value="Announcement">Seçiniz*</option>
+                                                    {announcementTypes?.items.map((announcementType) => (
+                                                        <option value={String(announcementType.id)}>
+                                                            {announcementType.name}
+                                                        </option>
+                                                    ))}
+                                                </TobetoSelect>
+                                            </Col>
+                                            <Col md={6}>
+                                                <span className="input-area-title">Anons Başlığı  </span>
 
-                                            <Tooltip placement="top" title={"Silme"} >
-                                                <span className="trash-icon" onClick={() => handleDeleteAnnouncement(announcement)}></span>
-                                            </Tooltip>
-                                            <Tooltip placement="top" title="Düzenleme">
-                                                <RiPencilFill onClick={() => handleUpdatedClick(announcement.id)} className='edit-icon' />
-                                            </Tooltip>
-                                        </td>
-                                    </tr>
-                                ))
-                            }
-                            <tr >
-                                <td className='text-center' onClick={handleAddClick} colSpan={5}>
-                                    <span>Yeni anons ekle</span>
-                                </td>
-                            </tr>
-                        </tbody>
+                                                <TobetoTextInput
+                                                    className="mb-4"
+                                                    name="title"
+                                                    placeholderTextColor="#fff" />
+                                            </Col>
+                                        </Row>
+                                        <Row >
+                                            <Col md={6}>
+                                                <span className="input-area-title">Anons Açıklaması</span>
 
-                    </table>
-                </div>
+                                                <TobetoTextInput
+                                                    className="mb-4"
+                                                    name="description"
+                                                    placeholderTextColor="#fff" />
+                                            </Col>
+                                            <Col md={6}>
+                                                <span className="input-area-title">Anons Tarihi</span>
 
+                                                <TobetoTextInput
+                                                    className="mb-4"
+                                                    name="announcementDate"
+                                                    type="date"
+                                                />
+                                            </Col>
+                                        </Row>
+                                        <div className='form-buttons'>
+                                            <Button className="mb-4" onClick={handleAnnouncementUpdateModal} type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >
+                                                Güncelle
+                                            </Button>
+                                            <Button onClick={() => closeModal()} className="mb-4" type="submit" style={addClick ? { display: 'block' } : { display: 'none' }}   >
+                                                Kaydet
+                                            </Button>
+                                            <Button className="mb-4" onClick={() => closeModal()}>
+                                                Kapat
+                                            </Button>
+                                        </div>
+                                    </Form>
+
+
+                                </Formik>
+                            </div>
+
+                            <div className="formik-form" style={updateClick ? { display: 'block' } : { display: 'none' }}>
+                                <Formik
+                                    initialValues={updateAnnouncementInitialValues}
+                                    onSubmit={(values) => {
+                                        handleUpdateAnnouncement(values);
+                                    }}>
+
+                                    <Form className="update-modal-form" >
+                                        <Row >
+                                            <Col md={6}>
+                                                <span className="input-area-title">Anons Türü</span>
+
+                                                <TobetoSelect
+                                                    name="announcementTypeId"
+                                                    className="mb-4"
+                                                    component="select">
+                                                    <option value="Announcement">Seçiniz*</option>
+                                                    {announcementTypes?.items.map((announcementType) => (
+                                                        <option value={String(announcementType.id)}>
+                                                            {announcementType.name}
+                                                        </option>
+                                                    ))}
+                                                </TobetoSelect>
+                                            </Col>
+                                            <Col md={6}>
+                                                <span className="input-area-title">Anons Başlığı  </span>
+
+                                                <TobetoTextInput
+                                                    className="mb-4"
+                                                    name="title"
+                                                    placeholderTextColor="#fff" />
+                                            </Col>
+                                        </Row>
+                                        <Row >
+                                            <Col md={6}>
+                                                <span className="input-area-title">Anons Açıklaması</span>
+
+                                                <TobetoTextInput
+                                                    className="mb-4"
+                                                    name="description"
+                                                    placeholderTextColor="#fff" />
+                                            </Col>
+                                            <Col md={6}>
+                                                <span className="input-area-title">Anons Tarihi</span>
+
+                                                <TobetoTextInput
+                                                    className="mb-4"
+                                                    name="announcementDate"
+                                                    type="date"
+                                                />
+                                            </Col>
+                                        </Row>
+                                        <div className='form-buttons'>
+                                            <Button className="mb-4" onClick={handleAnnouncementUpdateModal} type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >
+                                                Güncelle
+                                            </Button>
+                                            <Button onClick={() => closeModal()} className="mb-4" type="submit" style={addClick ? { display: 'block' } : { display: 'none' }}   >
+                                                Kaydet
+                                            </Button>
+                                            <Button className="mb-4" onClick={() => closeModal()}>
+                                                Kapat
+                                            </Button>
+                                        </div>
+                                    </Form>
+                                </Formik>
+                            </div>
+                        </>
+                    }
+                />
             </div>
-
-            <Modals
-                className="announcement-modal"
-                show={showModal}
-                onHide={() => closeModal()}
-                header={true}
-                title={
-                    updateClick ? "Anons Güncelleme" : "Anons Ekleme"
-                }
-                body={
-                    <>
-
-                        <div className="formik-form" style={addClick ? { display: 'block' } : { display: 'none' }}>
-                            <Formik
-                                initialValues={addAnnouncementInitialValues}
-                                onSubmit={(values) => {
-                                    handleAddAnnouncement(values);
-                                }}>
-
-                                <Form className="update-modal-form" >
-                                    <Row >
-                                        <Col md={6}>
-                                            <span className="input-area-title">Anons Türü</span>
-
-                                            <TobetoSelect
-                                                name="announcementTypeId"
-                                                className="mb-4"
-                                                component="select">
-                                                <option value="Announcement">Seçiniz*</option>
-                                                {announcementTypes?.items.map((announcementType) => (
-                                                    <option value={String(announcementType.id)}>
-                                                        {announcementType.name}
-                                                    </option>
-                                                ))}
-                                            </TobetoSelect>
-                                        </Col>
-                                        <Col md={6}>
-                                            <span className="input-area-title">Anons Başlığı  </span>
-
-                                            <TobetoTextInput
-                                                className="mb-4"
-                                                name="title"
-                                                placeholderTextColor="#fff" />
-                                        </Col>
-                                    </Row>
-                                    <Row >
-                                        <Col md={6}>
-                                            <span className="input-area-title">Anons Açıklaması</span>
-
-                                            <TobetoTextInput
-                                                className="mb-4"
-                                                name="description"
-                                                placeholderTextColor="#fff" />
-                                        </Col>
-                                        <Col md={6}>
-                                            <span className="input-area-title">Anons Tarihi</span>
-
-                                            <TobetoTextInput
-                                                className="mb-4"
-                                                name="announcementDate"
-                                                type="date"
-                                            />
-                                        </Col>
-                                    </Row>
-                                    <div className='form-buttons'>
-                                        <Button className="mb-4" onClick={handleAnnouncementUpdateModal} type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >
-                                            Güncelle
-                                        </Button>
-                                        <Button onClick={() => closeModal()} className="mb-4" type="submit" style={addClick ? { display: 'block' } : { display: 'none' }}   >
-                                            Kaydet
-                                        </Button>
-                                        <Button className="mb-4" onClick={() => closeModal()}>
-                                            Kapat
-                                        </Button>
-                                    </div>
-                                </Form>
-
-
-                            </Formik>
-                        </div>
-
-                        <div className="formik-form" style={updateClick ? { display: 'block' } : { display: 'none' }}>
-                            <Formik
-                                initialValues={updateAnnouncementInitialValues}
-                                onSubmit={(values) => {
-                                    handleUpdateAnnouncement(values);
-                                }}>
-
-                                <Form className="update-modal-form" >
-                                    <Row >
-                                        <Col md={6}>
-                                            <span className="input-area-title">Anons Türü</span>
-
-                                            <TobetoSelect
-                                                name="announcementTypeId"
-                                                className="mb-4"
-                                                component="select">
-                                                <option value="Announcement">Seçiniz*</option>
-                                                {announcementTypes?.items.map((announcementType) => (
-                                                    <option value={String(announcementType.id)}>
-                                                        {announcementType.name}
-                                                    </option>
-                                                ))}
-                                            </TobetoSelect>
-                                        </Col>
-                                        <Col md={6}>
-                                            <span className="input-area-title">Anons Başlığı  </span>
-
-                                            <TobetoTextInput
-                                                className="mb-4"
-                                                name="title"
-                                                placeholderTextColor="#fff" />
-                                        </Col>
-                                    </Row>
-                                    <Row >
-                                        <Col md={6}>
-                                            <span className="input-area-title">Anons Açıklaması</span>
-
-                                            <TobetoTextInput
-                                                className="mb-4"
-                                                name="description"
-                                                placeholderTextColor="#fff" />
-                                        </Col>
-                                        <Col md={6}>
-                                            <span className="input-area-title">Anons Tarihi</span>
-
-                                            <TobetoTextInput
-                                                className="mb-4"
-                                                name="announcementDate"
-                                                type="date"
-                                            />
-                                        </Col>
-                                    </Row>
-                                    <div className='form-buttons'>
-                                        <Button className="mb-4" onClick={handleAnnouncementUpdateModal} type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >
-                                            Güncelle
-                                        </Button>
-                                        <Button onClick={() => closeModal()} className="mb-4" type="submit" style={addClick ? { display: 'block' } : { display: 'none' }}   >
-                                            Kaydet
-                                        </Button>
-                                        <Button className="mb-4" onClick={() => closeModal()}>
-                                            Kapat
-                                        </Button>
-                                    </div>
-                                </Form>
-
-
-                            </Formik>
-                        </div>
-
-                    </>
-                }
-            />
-
         </div >
-
     )
 }

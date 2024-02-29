@@ -35,8 +35,6 @@ import ForgotPassword from '../../pages/ForgotPassword/ForgotPassword';
 import AdminProtectedRoute from './AdminProtectedRoute';
 
 
-
-
 type Props = {}
 
 const RouteDefinitions = (props: Props) => {

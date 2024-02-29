@@ -1,6 +1,7 @@
 import { Identifier } from "typescript";
 
 export default interface UpdatedUserOperationClaimResponse {
-    userId : Identifier;
-    operationClaimId : Identifier;
+    id: Identifier;
+    userId: Identifier;
+    operationClaimId: Identifier;
 }

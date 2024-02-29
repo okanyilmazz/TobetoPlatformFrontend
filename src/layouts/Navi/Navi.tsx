@@ -4,6 +4,7 @@ import { Image, Dropdown, DropdownItem, DropdownMenu, Menu, MenuItem, Button } f
 import SignedIn from '../SignedIn/SignedIn';
 import { useSelector } from 'react-redux';
 import SignedOut from '../SignedOut/SignedOut';
+import authService from '../../services/authService';
 
 export default function Navi() {
 
@@ -12,6 +13,7 @@ export default function Navi() {
     const lastPathSegment = pathArray[pathArray.length - 1];
     const navigate = useNavigate();
     const authState = useSelector((state: any) => state.auth);
+    const user = authService.getUserInfo();
 
     return (
         <>
@@ -132,7 +134,7 @@ export default function Navi() {
                             <MenuItem className={lastPathSegment === "platform-katalog" ? 'active-item' : ''} as={Link} to="/platform-katalog" name='Katalog' />
                             <MenuItem className={lastPathSegment === "takvim" ? 'active-item' : ''} as={Link} to="/takvim" name='Takvim' />
                             <MenuItem name='İstanbul Kodluyor' />
-                            <MenuItem className={lastPathSegment === "admin-panel" ? 'active-item' : ''} as={Link} to="/admin-panel" name='Admin Panel' />
+                            <MenuItem className={pathArray.includes("admin-panel") ? 'active-item' : ''} as={Link} to="/admin-panel/kullanicilar" name='Admin Panel' />
                         </div>
                         <SignedIn />
                     </Menu>

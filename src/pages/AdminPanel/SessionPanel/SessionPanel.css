@@ -117,20 +117,19 @@
 
 .session-panel-table-body .edit-icon {
     margin-left: 8px;
-
     margin-bottom: 8px;
     border-radius: 4px;
     background-color: #fff;
     box-shadow: 0 7px 29px rgba(0, 0, 0, .13);
-
+    width: 24px !important;
+    height: 24px !important;
 }
 
 .session-modal .modal-dialog .modal-content {
-    /* top: 18vh;
-    height: 350px;
-    width: 1000px;
-    right: 13vw; */
     margin-top: 30vh;
     width: 35vw;
+}
 
+.session-panel {
+    margin-top: 36px !important;
 }

@@ -1,6 +1,6 @@
 import { Identifier } from "typescript";
 
 export default interface ResetTokenUserRequest {
-    id: string;
+    userId: string;
     resetToken: string;
 }

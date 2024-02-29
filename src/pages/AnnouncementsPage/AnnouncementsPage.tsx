@@ -12,6 +12,7 @@ import AddAnnouncementReadRequest from '../../models/requests/announcementRead/a
 import authService from '../../services/authService';
 import announcementReadService from '../../services/announcementReadService';
 import GetListAnnouncementReadResponse from '../../models/responses/announcementRead/getListAnnouncementReadResponse';
+import GetListAnnouncementResponse from '../../models/responses/announcement/getListAnnouncementResponse';
 
 
 export default function AnnouncementsPage() {
@@ -28,6 +29,7 @@ export default function AnnouncementsPage() {
     const [readAnnouncementIds, setReadAnnouncementIds] = useState<string[]>([]);
     const [announcementReads, setAnnouncementReads] = useState<Paginate<GetListAnnouncementReadResponse>>();
     const user = authService.getUserInfo();
+    const [announcements, setAnnouncements] = useState<Paginate<GetListAnnouncementResponse> | null>(null);
 
 
 

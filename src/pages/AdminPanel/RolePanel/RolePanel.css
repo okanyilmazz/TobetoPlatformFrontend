@@ -95,7 +95,6 @@
     margin-bottom: 36px;
 }
 
-
 .role-panel-content .search input {
     box-shadow: 0 0 10px rgba(0, 0, 0, .25);
     background: #fff;
@@ -106,7 +105,6 @@
     font-size: 16px;
     padding-right: 50px;
     width: 100%;
-
 }
 
 .role-panel-content .search-icon {
@@ -120,17 +118,19 @@
 
 .role-panel-table-body .edit-icon {
     margin-left: 8px;
-
     margin-bottom: 8px;
     border-radius: 4px;
     background-color: #fff;
     box-shadow: 0 7px 29px rgba(0, 0, 0, .13);
-
+    width: 24px !important;
+    height: 24px !important;
 }
-
-.role-panel-content .table-responsive-sm {}
 
 .role-modal .modal-dialog .modal-content {
     margin-top: 30vh;
     width: 30vw;
+}
+
+.role-panel {
+    margin-top: 36px !important;
 }

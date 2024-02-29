@@ -12,6 +12,7 @@ interface TokenDetails {
     'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier': string;
     email: string;
     'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name': string;
+    'http://schemas.microsoft.com/ws/2008/06/identity/claims/role': string;
 }
 
 class AuthService {
@@ -31,11 +32,11 @@ class AuthService {
         }
 
         const tokenDetails: TokenDetails = jwtDecode(token);
-
         const {
             'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier': userId,
             email,
-            'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name': name
+            'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name': name,
+            'http://schemas.microsoft.com/ws/2008/06/identity/claims/role': role
         } = tokenDetails;
 
         let nameParts = name.split(' ');
@@ -48,6 +49,7 @@ class AuthService {
             firstName: firstname,
             lastName: lastname,
             email: email,
+            role: role
         };
 
         return user;
@@ -59,7 +61,6 @@ class AuthService {
 
     passwordReset(email: string): Promise<AxiosResponse<boolean, any>> {
         return axiosInstance.get<boolean>("Auth/PasswordReset?email=" + email);
-
     }
 
 

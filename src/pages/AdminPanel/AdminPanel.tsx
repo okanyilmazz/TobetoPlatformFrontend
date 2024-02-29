@@ -18,10 +18,10 @@ import UserPanel from './UserPanel/UserPanel';
 export default function AdminPanel() {
 
     const navigate = useNavigate();
-    const location = useLocation();
     const userState = useSelector((state: any) => state.user);
 
 
+    const location = useLocation();
     const pathArray = location.pathname.split('/');
     const lastPathSegment = pathArray[pathArray.length - 1];
 
@@ -32,77 +32,11 @@ export default function AdminPanel() {
                 <section >
                 </section>
 
-                <div className="sidebar-card col-md-3">
-                    <ul>
-                        <li onClick={() => navigate("/admin-panel/kullanicilar")} className={lastPathSegment === "kullanicilar" ? 'active-item active-edit' : ''}>
-                            <div className='sidebar-icon'>
-                                <Image src='/assets/Icons/users.svg' />
-
-                            </div>
-                            <div className='sidebar-text'>
-                                <span>Kullanıcılar</span>
-                            </div>
-                        </li>
-                        <li onClick={() => navigate("/admin-panel/ogrenciler")} className={lastPathSegment === "ogrenciler" ? 'active-item active-edit' : ''}>
-                            <div className='sidebar-icon'>
-                                <Image src='/assets/Icons/profile-settings/user.svg' />
-                            </div>
-                            <div className='sidebar-text'>
-                                <span>Öğrenciler</span>
-                            </div>
-                        </li>
-                        <li onClick={() => navigate("/admin-panel/dersler")} className={lastPathSegment === "dersler" ? 'active-item active-edit' : ''}>
-                            <div className='sidebar-icon'>
-                                <Image src='/assets/Icons/profile-settings/book.svg' />
-                            </div>
-                            <div className='sidebar-text'>
-                                <span>Dersler</span>
-                            </div>
-                        </li>
-                        <li onClick={() => navigate("/admin-panel/duyurular")} className={lastPathSegment === "duyurular" ? 'active-item active-edit' : ''}>
-                            <div className='sidebar-icon'>
-                                <TfiEmail />
-                            </div>
-                            <div className='sidebar-text'>
-                                <span>Duyurular</span>
-                            </div>
-                        </li>
-                        <li onClick={() => navigate("/admin-panel/egitimler")} className={lastPathSegment === "egitimler" ? 'active-item active-edit' : ''}>
-                            <div className='sidebar-icon'>
-                                <MdOutlineCastForEducation />
-
-                            </div>
-                            <div className='sidebar-text'>
-                                <span>Eğitim Programları</span>
-                            </div>
-                        </li>
-                        <li onClick={() => navigate("/admin-panel/oturumlar")} className={lastPathSegment === "oturumlar" ? 'active-item active-edit' : ''}>
-                            <div className='sidebar-icon'>
-                                <Image src='/assets/Icons/session.png' width={24} height={24} />
 
 
-                            </div>
-                            <div className='sidebar-text'>
-                                <span>Oturumlar</span>
-                            </div>
-                        </li>
-                        <li onClick={() => navigate("/admin-panel/roller")} className={lastPathSegment === "roller" ? 'active-item active-edit' : ''}>
-                            <div className='sidebar-icon'>
-                                <FaRankingStar />
-
-                            </div>
-                            <div className='sidebar-text'>
-                                <span>Roller</span>
-                            </div>
-                        </li>
-
-
-                    </ul>
-                </div>
-
-                <div className="col-md-9" style={lastPathSegment === "kullanicilar" ? { display: 'block' } : { display: 'none' }}>
+                {/* <div className="col-md-9" style={lastPathSegment === "kullanicilar" ? { display: 'block' } : { display: 'none' }}>
                     <UserPanel />
-                </div>
+                </div> */}
                 <div className="col-md-9" style={lastPathSegment === "ogrenciler" ? { display: 'block' } : { display: 'none' }}>
                     <StudentPanel />
                 </div>

@@ -14,7 +14,7 @@ function App() {
   const location = useLocation();
   const pathArray = location.pathname.split('/');
   const lastPathSegment = pathArray[pathArray.length - 1];
-  console.log(pathArray.includes("sifremi-unuttum"));
+
   return (
     <div className={
       authState.isAuthenticated &&
@@ -31,6 +31,7 @@ function App() {
         ) ||
         lastPathSegment?.includes("giris") ||
         pathArray?.includes("sifremi-unuttum") ||
+        pathArray?.includes("reset-password") ||
         lastPathSegment?.includes("kayit-ol") ? "App bg-front-white" : "App bg-front-dark"}
 
 

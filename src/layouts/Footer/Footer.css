@@ -31,12 +31,9 @@
 }
 
 /*Footer2*/
-.footer-info {
+.fontFooter.small {
   background-color: #93ff;
-  padding-top: 18px;
-  padding-bottom: 18px;
-  margin-top: 60px;
-
+  margin-top: 40rem !important;
 }
 
 

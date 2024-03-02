@@ -5,4 +5,5 @@ export default interface GetListUserResponse {
     firstName: string;
     lastName: string;
     email: string;
+    roleName: string;
 }

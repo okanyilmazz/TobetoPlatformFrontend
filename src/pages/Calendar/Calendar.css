@@ -1,5 +1,4 @@
 /* Instructor filter  */
-
 .filterCommon {
     color: white;
     margin-top: 8rem;
@@ -29,13 +28,15 @@
 
 .inputEducation {
     background-color: #282828;
-    color: white;
     width: 520px;
     padding: 9px;
     border-color: #2f2f2f;
-    font-weight: bold;
 }
 
+.inputEducation::placeholder {
+    color: #999;
+    font-size: 18px;
+}
 
 .instructorList header {
     margin-bottom: 10px;
@@ -79,13 +80,13 @@
 }
 
 .fc .fc-daygrid-event {
-    height: 47px;
+    height: 60px;
     display: grid;
     font-style: normal !important;
     padding-left: 45px;
     background-color: #5c6dc180;
     border: 1px solid white;
-    font-size: 14px;
+    font-size: 12px;
     font-style: normal !important;
     color: white
 }
@@ -163,24 +164,24 @@
 }
 
 .fc-day {
-    background-color: #2f2f2f;
     /* başlıklar */
+    background-color: #2f2f2f;
 }
 
 .fc-daygrid-day {
-    background-color: #2f2f2f !important;
     /* hücrelerin rengi 1-2-3 */
+    background-color: #2f2f2f !important;
 }
 
 .fc .fc-col-header-cell-cushion,
 .fc .fc-toolbar-title {
-    color: #828282 !important;
     /* gün rengi - pzt-salı */
+    color: #828282 !important;
     font-weight: 500 !important;
 }
 
 .fc .fc-daygrid-day {
-    height: 132px !important;
+    height: 155px !important;
 }
 
 .dark-calendar .fc-button-group button {
@@ -209,7 +210,7 @@
 }
 
 .fc .fc-button {
-    /* sağ sol  hafta gün */
+    /* sağ sol hafta gün */
     background-color: #2f2f2f;
     border: 1px solid white;
     opacity: 0.7;
@@ -233,7 +234,6 @@
 
 .fc .fc-button-primary:not(:disabled).fc-button-active,
 .fc .fc-button-primary:not(:disabled):active {
-    /* ay */
     background-color: #2f2f2f;
     border-color: white;
     color: white;

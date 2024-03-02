@@ -8,6 +8,7 @@ import UpdatedExamResultResponse from "../models/responses/examResult/updatedExa
 import UpdateExamResultRequest from "../models/requests/examResult/updateExamResultRequest";
 import { AxiosResponse } from "axios";
 import axiosInstance from "../core/interceptors/axiosInterceptor";
+import DeleteExamResultRequest from "../models/requests/examResult/deleteExamResultRequest";
 
 class ExamResultService extends BaseService<
   Paginate<GetListExamResultResponse>,
@@ -15,7 +16,9 @@ class ExamResultService extends BaseService<
   AddExamResultRequest,
   AddedExamResultResponse,
   UpdatedExamResultResponse,
-  UpdateExamResultRequest
+  UpdateExamResultRequest,
+  DeleteExamResultRequest
+
 > {
   constructor() {
     super();

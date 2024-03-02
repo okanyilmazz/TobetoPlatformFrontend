@@ -26,6 +26,7 @@ export default function LoginPageCard() {
                                     if (response.data !== undefined) {
                                         dispatch(authActions.addToken({ token: response.data.token }));
                                         dispatch(userActions.getUserInfo());
+                                        authService.getUserInfo();
                                         navigate("/platform");
                                     }
                                 })
@@ -34,7 +35,7 @@ export default function LoginPageCard() {
                                 <TobetoTextInput className="mb-4" name="email" placeholder="E-Posta" placeholderTextColor="#fff" />
                                 <TobetoTextInput className="mb-4" name="password" type="password" placeholder="Şifre" />
                                 <Button className="mb-4" type="submit">Giriş Yap</Button>
-                                <Button className='transparent-button'>Şifremi Unuttum</Button>
+                                <Button className='transparent-button' onClick={() => navigate('/sifremi-unuttum')}>Şifremi Unuttum</Button>
                                 <p>
                                     Henüz üye değil misin?{" "}
                                     <span className='register-button' onClick={() => navigate('/kayit-ol')}>

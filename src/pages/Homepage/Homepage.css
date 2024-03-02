@@ -439,3 +439,57 @@
 }
 
 /*Partners Area*/
+.success-model {
+    background: #2f2f2f !important;
+    border-radius: 25px;
+    width: 1140px;
+    height: 721px;
+    justify-content: center !important;
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: 100%;
+    margin-top: 11rem !important;
+}
+
+.success-model-img {
+    width: 641px;
+    height: 641px;
+    vertical-align: middle;
+    margin-top: 40px;
+}
+
+.hp-success-model-header {
+    margin-top: 200px !important;
+    width: 451px;
+    height: 72px;
+    color: white;
+    font-size: 30px;
+    font-family: 'Poppins-Bold';
+
+}
+
+.hp-success-model-text {
+    color: white;
+    font-size: 16px;
+    font-family: 'Poppins-Regular';
+    margin-top: 1.5rem !important;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+}
+
+.hp-success-model .success-model-btn {
+    color: #fff;
+    background-color: #93f;
+    border-color: #93f;
+    border-radius: 25px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-family: 'Poppins-Bold';
+    margin-top: 20px;
+}
+
+.hp-success-model .success-model-btn:hover {
+    color: #fff;
+    background-color: #822bd9;
+    border-color: #822bd9;
+}

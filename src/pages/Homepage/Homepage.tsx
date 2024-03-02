@@ -1,15 +1,15 @@
 import { useState } from 'react'
-import { Button, Accordion } from 'react-bootstrap';
+import { Button, Accordion, Container, Row, Col } from 'react-bootstrap';
 import './Homepage.css'
 import TrainingCard from '../../components/TrainingCard/TrainingCard'
 import IstanbulCard from '../../components/IstanbulCard/IstanbulCard';
 import { Card, Image } from 'semantic-ui-react';
 import GradientLine from '../../components/GradientLine/GradientLine';
-
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Homepage() {
-
+    const navigate = useNavigate();
     const [subjectButtonStyle, setSubjectButtonStyle] = useState({
         color: 'black',
         backgroundColor: '#fff'
@@ -20,6 +20,10 @@ export default function Homepage() {
         backgroundColor: 'black'
     });
     const [buttonClicked, setButtonClicked] = useState(null);
+
+    const handleClick = () => {
+        navigate('/kayit-ol');
+    };
 
     const handleButtonClick = (buttonName: any) => {
         setButtonClicked(buttonName);
@@ -62,7 +66,7 @@ export default function Homepage() {
                                     <span className='word2'>hızda</span>
                                 </div>
                             </span>
-                            <Button className='mt-4 tobeto-card-btn'>Ücretsiz Üye Ol</Button>
+                            <Button className='mt-4 tobeto-card-btn' onClick={handleClick} >Ücretsiz Üye Ol</Button>
                         </div>
                         <div className='content-right'>
                             <Image src="https://tobeto.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2FBANNER-12.4b21c70e.png&w=640&q=75" fluid size='small' />
@@ -74,7 +78,8 @@ export default function Homepage() {
                     <IstanbulCard title={
                         <span>Aradığın
                             <span className='quote' id='left-quote'>"</span>iş<span className='quote' id='right-quote'>"</span>
-                            Burada!</span>} />
+                            Burada!</span>}
+                        onClick={handleClick} />
                 </div>
             </div>
             <GradientLine />
@@ -158,6 +163,39 @@ export default function Homepage() {
                     </div>
                 </div>
             </div>
+            <div className='success-model container'>
+                <Container>
+                    <Row className='hp-success-model'>
+                        <Col md={7}>
+                            <div>
+                                <Image className='success-model-img' src='https://tobeto.s3.cloud.ngn.com.tr/spider_2_75142468a4.gif'></Image>
+                            </div>
+
+                        </Col>
+                        <Col md={5}>
+                            <div>
+                                <p className='hp-success-model-header'>
+                                    Tobeto 'İşte Başarı
+                                    Modeli'mizi Keşfet!
+                                </p>
+                                <p className='hp-success-model-text'>
+                                    Üyelerimize ücretsiz sunduğumuz, iş bulma ve işte
+                                    başarılı olma sürecinde gerekli 80 tane davranış
+                                    ifadesinden oluşan Tobeto 'İşte Başarı Modeli' ile,
+                                    profesyonellik yetkinliklerini ölç,
+                                    <br></br>
+                                    raporunu gör.
+                                </p>
+                                <Button className='success-model-btn'>
+                                    Hemen Başla
+                                </Button>
+                            </div>
+
+                        </Col>
+                    </Row>
+                </Container>
+            </div>
+
             <div className='container acc'>
                 <Accordion defaultActiveKey="0" className='acc-bg'>
                     <Accordion.Item eventKey="0" >
@@ -277,6 +315,7 @@ export default function Homepage() {
                     </div>
                 </div>
             </div>
+
         </div>
 
     )

@@ -6,8 +6,6 @@ import PlatformPage from '../../pages/PlatformPage/PlatformPage'
 import ApplicationCard from '../../components/ApplicationCard/ApplicationCard'
 import { ForIndividuals } from '../../pages/ForIndividuals/ForIndividuals';
 import Calendar from '../../pages/Calendar/Calendar';
-
-
 import Profile from '../../pages/Profile/Profile';
 import LoginPage from '../../pages/LoginPage/LoginPage';
 import ProtectedRoute from './ProtectedRoute';
@@ -16,9 +14,27 @@ import SignUp from '../../pages/SignUp/SignUp';
 import Blog from '../../pages/Blog/Blog';
 import MediaNews from '../../pages/MediaNews/MediaNews';
 import Codecademy from '../../pages/Codecademy/Codecademy';
-import ProfileSettingsPage from '../../pages/ProfileSettingsPage/ProfileSettingsPage';
 import AssesmentsPage from '../../pages/AssesmentsPage/AssesmentsPage';
 import EducationsPage from '../../pages/EducationsPage/EducationsPage';
+import EducationProgramContent from '../../pages/EducationProgramContent/EducationProgramContent';
+import CertificatePage from '../../pages/CertificatePage/CertificatePage';
+import SkillPage from '../../pages/SkillPage/SkillPage';
+import SocialMediaPage from '../../pages/SocialMediaPage/SocialMediaPage';
+import LanguagePage from '../../pages/LanguagePage/LanguagePage';
+import PersonalInformationPage from '../../pages/PersonalInformationPage/PersonalInformationPage';
+import AnalysisReport from '../../pages/AnalysisReport/AnalysisReport';
+import SessionsPage from '../../pages/SessionsPage/SessionsPage';
+import AdminPanel from '../../pages/AdminPanel/AdminPanel';
+import EducationalBackgroundPage from '../../pages/EducationalBackgroundPage/EducationalBackgroundPage';
+import MyExperiences from '../../pages/MyExperiences/MyExperiences';
+import AnnouncementsPage from '../../pages/AnnouncementsPage/AnnouncementsPage';
+import SettingsPage from '../../pages/SettingsPage/SettingsPage';
+import ResetPassword from '../../pages/ResetPassword/ResetPassword';
+import NotFound from '../../pages/NotFound/NotFound';
+import ForgotPassword from '../../pages/ForgotPassword/ForgotPassword';
+import AdminProtectedRoute from './AdminProtectedRoute';
+
+
 
 
 type Props = {}
@@ -26,6 +42,7 @@ type Props = {}
 const RouteDefinitions = (props: Props) => {
     return (
         <Routes>
+            <Route path="*" Component={NotFound} />
             <Route path="/" Component={Homepage} />
             <Route path="/hakkimizda" Component={AboutUs} />
             <Route path="/kurumlar-icin" Component={ForInstitutionsPage} />
@@ -34,7 +51,8 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/takvim" Component={Calendar} />
             <Route path="/platform" element={<ProtectedRoute><PlatformPage /></ProtectedRoute>} />
             <Route path="/basvuru" Component={ApplicationCard} />
-            <Route path="/profilim" Component={Profile} />
+            <Route path="/profilim" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+            <Route path="/profilim" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/blog" Component={Blog} />
             <Route path="/basinda-biz" Component={MediaNews} />
             <Route path="/giris" Component={LoginPage} />
@@ -44,20 +62,34 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/platform-katalog" Component={CatalogPage} />
             <Route path="/degerlendirmeler" Component={AssesmentsPage} />
             <Route path="/egitimlerim" Component={EducationsPage} />
-            <Route path="/profilim/profilimi-duzenle/sertifikalarim" Component={ProfileSettingsPage} />
-            <Route path="/profilim/profilimi-duzenle/yetkinliklerim" Component={ProfileSettingsPage} />
-            <Route path="/profilim/profilimi-duzenle/medya-hesaplarim" Component={ProfileSettingsPage} />
-            <Route path="/profilim/profilimi-duzenle/yabanci-dil" Component={ProfileSettingsPage} />
-            <Route path="/profilim/profilimi-duzenle/kisisel-bilgilerim" Component={ProfileSettingsPage} />
+            <Route path="/duyurular" Component={AnnouncementsPage} />
+            <Route path="/profilim/profilimi-duzenle/sertifikalarim" element={<ProtectedRoute><CertificatePage /></ProtectedRoute>} />
+            <Route path="/profilim/profilimi-duzenle/yetkinliklerim" element={<ProtectedRoute><SkillPage /></ProtectedRoute>} />
+            <Route path="/profilim/profilimi-duzenle/medya-hesaplarim" element={<ProtectedRoute><SocialMediaPage /></ProtectedRoute>} />
+            <Route path="/profilim/profilimi-duzenle/yabanci-dil" element={<ProtectedRoute><LanguagePage /></ProtectedRoute>} />
+            <Route path="/profilim/profilimi-duzenle/kisisel-bilgilerim" element={<ProtectedRoute><PersonalInformationPage /></ProtectedRoute>} />
+            <Route path="/profilim/profilimi-duzenle/egitim-hayatim" element={<ProtectedRoute><EducationalBackgroundPage /></ProtectedRoute>} />
+            <Route path="/profilim/profilimi-duzenle/deneyimlerim" element={<ProtectedRoute><MyExperiences /></ProtectedRoute>} />
+            <Route path="/egitimlerim/egitim-detaylari/:educationProgramId" Component={EducationProgramContent} />
+            <Route path="/profilim/degerlendirmeler/rapor/tobeto-iste-basari-yetkinlikleri/1" element={<ProtectedRoute><AnalysisReport /></ProtectedRoute>} />
+            <Route path="/egitimlerim/egitim-detaylari/:educationProgramId" Component={SessionsPage} />
+            <Route path="/profilim/profilimi-duzenle/deneyimlerim" element={<ProtectedRoute><MyExperiences /></ProtectedRoute>} />
+            <Route path="/profilim/profilimi-duzenle/ayarlar" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+
+            <Route path="/admin-panel" element={<AdminProtectedRoute><AdminPanel /></AdminProtectedRoute>} />
+            <Route path="/admin-panel/ogrenciler" element={<AdminProtectedRoute><AdminPanel /></AdminProtectedRoute>} />
+            <Route path="/admin-panel/dersler" element={<AdminProtectedRoute><AdminPanel /></AdminProtectedRoute>} />
+            <Route path="/admin-panel/duyurular" element={<AdminProtectedRoute><AdminPanel /></AdminProtectedRoute>} />
+            <Route path="/admin-panel/egitimler" element={<AdminProtectedRoute><AdminPanel /></AdminProtectedRoute>} />
+            <Route path="/admin-panel/oturumlar" element={<AdminProtectedRoute><AdminPanel /></AdminProtectedRoute>} />
+            <Route path="/admin-panel/egitimler" element={<AdminProtectedRoute><AdminPanel /></AdminProtectedRoute>} />
+            <Route path="/admin-panel/roller" element={<AdminProtectedRoute><AdminPanel /></AdminProtectedRoute>} />
+            <Route path="/admin-panel/kullanicilar" element={<AdminProtectedRoute><AdminPanel /></AdminProtectedRoute>} />
+            <Route path="/sifremi-unuttum" Component={ForgotPassword} />
+            <Route path="/reset-password/:userId/:resetToken" Component={ResetPassword} />
 
 
-
-
-
-
-
-
-        </Routes>
+        </Routes >
     )
 }
 export default RouteDefinitions;

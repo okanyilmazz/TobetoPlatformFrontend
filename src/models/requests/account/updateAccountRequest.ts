@@ -1,7 +1,6 @@
 import { Identifier } from 'typescript';
 export default interface UpdateAccountRequest {
     id: Identifier;
-    addressId: Identifier;
     userId: Identifier;
     phoneNumber: string;
     nationalId: string;
@@ -9,4 +8,3 @@ export default interface UpdateAccountRequest {
     birthDate: Date;
     profilePhotoPath: string;
 }
-

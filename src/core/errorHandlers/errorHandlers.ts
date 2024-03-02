@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify'
-import { BUSINESS_ERROR, VALIDATION_ERROR } from "./errorTypes";
+import { AUTH_ERROR, BUSINESS_ERROR, VALIDATION_ERROR } from "./errorTypes";
 
 export const handleError = (error: any) => {
     if (error.code && error.code == "ERR_NETWORK") {
@@ -15,8 +15,11 @@ export const handleError = (error: any) => {
             case VALIDATION_ERROR:
                 handleValidationError(error.response.data);
                 break;
+            case AUTH_ERROR:
+                handleAuthError(error.response.data);
+                break;
             default:
-                handleDefault(error);
+                // handleDefault(error);
                 break;
         }
     }
@@ -30,7 +33,10 @@ export const handleValidationError = (error: any) => {
         toast.error(`${key}: ${error.errors[key]}`);
     });
 };
-export const handleDefault = (error: any) => {
-    toast.error("Bilinmedik hata...");
-    console.log("Bilinmedik hata..");
-};
+export const handleAuthError = (error: any) => {
+    toast.error(error.detail);
+}
+// export const handleDefault = (error: any) => {
+//     toast.error("Bilinmedik hata...");
+//     console.log("Bilinmedik hata..");
+// };

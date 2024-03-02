@@ -11,10 +11,11 @@ import GetListAnnouncementProjectResponse from '../../models/responses/announcem
 import educationProgramService from '../../services/educationProgramService'
 import announcementProjectService from '../../services/announcementProjectService'
 import ShowMoreButton from '../../components/ShowMoreButton/ShowMoreButton'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import GetListExamResponse from '../../models/responses/exam/getListExamResponse'
 import examService from '../../services/examService'
-import { userActions } from '../../store/user/userSlice'
+import { useNavigate } from 'react-router-dom'
+import authService from '../../services/authService'
 
 export default function PlatformPage() {
     const [educationPrograms, setEducationPrograms] = useState<Paginate<GetListEducationProgramResponse>>();
@@ -22,27 +23,28 @@ export default function PlatformPage() {
     const [exams, setExams] = useState<Paginate<GetListExamResponse>>();
 
     const userState = useSelector((state: any) => state.user);
-    const dispatch = useDispatch();
+    const user = authService.getUserInfo();
+
+    const navigate = useNavigate();
+
 
     useEffect(() => {
 
-        if (!userState.user) {
-            dispatch(userActions.getUserInfo());
-            return;
-        }
-
-        examService.getByAccountId(userState.user.id, 0, 2).then(result => {
+        examService.getByAccountId(user.id, 0, 2).then(result => {
             setExams(result.data);
         });
 
-        educationProgramService.getAll(0, 100).then(result => {
+        educationProgramService.getAll(0, 100).then((result: any) => {
             setEducationPrograms(result.data);
+            console.log(result.data)
         });
 
         announcementProjectService.getAll(0, 100).then(result => {
             setAnnouncementProjects(result.data);
         });
-    }, [userState]);
+
+
+    }, [user.id]);
 
     function formatCustomDate(inputDate: Date) {
         const months = [
@@ -108,28 +110,43 @@ export default function PlatformPage() {
                                     <div className='tab-education-content'>
                                         {
                                             educationPrograms?.items.map((educationProgram) => (
+
                                                 <EducationCard
                                                     title={educationProgram.name}
                                                     date={formatCustomDate(educationProgram.startDate)}
-                                                    id={educationProgram.id} />
-                                            ))
-                                        }
-                                    </div>
-                                    <ShowMoreButton />
-                                </Tab>
-                                <Tab eventKey="announcements" title="Duyuru ve Haberlerim">
-                                    <div className='tab-announcement-content'>
-                                        {
-                                            announcementProjects?.items.map((announcementProject) => (
-                                                <AnnouncementCard
-                                                    projectName={announcementProject.project.name}
-                                                    announcementName={announcementProject.announcement.title}
-                                                    announcementDate={formatCustomDate(announcementProject.announcement.announcementDate)}
+                                                    id={educationProgram.id}
+                                                    thumbnailPath={educationProgram.thumbnailPath}
                                                 />
                                             ))
                                         }
                                     </div>
-                                    <ShowMoreButton />
+                                    <div onClick={() => navigate("/egitimlerim")}  >
+
+                                        <ShowMoreButton />
+                                    </div>
+                                </Tab>
+                                <Tab eventKey="announcements" title="Duyuru ve Haberlerim">
+                                    <div className='tab-announcement-content'>
+                                        {
+                                            announcementProjects?.items.slice(0, 3).map((announcementProject) => (
+                                                <AnnouncementCard
+                                                    announcementTypeName={announcementProject.announcement.announcementTypeName}
+                                                    projectName={announcementProject.project.name}
+                                                    announcementName={announcementProject.announcement.title}
+                                                    announcementDate={formatCustomDate(announcementProject.announcement.announcementDate)}
+                                                    announcementDescription={
+                                                        announcementProject.announcement.description.split('\n').filter(line => line.trim() !== '').map((paragraph, index) => (
+                                                            <p key={index}>{paragraph}</p>
+                                                        ))
+                                                    }
+                                                />
+                                            ))
+                                        }
+                                    </div>
+                                    <div onClick={() => navigate("/duyurular")}  >
+
+                                        <ShowMoreButton />
+                                    </div>
                                 </Tab>
                                 <Tab eventKey="surveys" title="Anketlerim">
                                     <div className='tab-application-content'>

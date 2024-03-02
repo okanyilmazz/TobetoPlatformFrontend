@@ -9,7 +9,7 @@ import GetListExamResultResponse from '../../models/responses/examResult/getList
 import examResultService from '../../services/examResultService';
 import { userActions } from '../../store/user/userSlice';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import Modals from '../../components/Modal/Modal';
+import Modals from '../../components/Modal/Modals';
 import { Link } from 'react-router-dom';
 
 export default function AssesmentsPage() {
@@ -140,7 +140,7 @@ export default function AssesmentsPage() {
                                                 ) : (
                                                     <div className="exam-details-box">
                                                         <p>
-                                                            Bu sınav 25 sorudan oluşmakta olup sınav süresi 30 dakikadır. Sınav çoktan seçmeli test şeklinde olup sınavı
+                                                            Bu sınav {exam.questionCount} sorudan oluşmakta olup sınav süresi {exam.duration} dakikadır. Sınavın türü {exam.questionTypeNames.join(', ')} şeklinde olup sınavı
                                                             yarıda bıraktığınız taktirde çözdüğünüz kısım kadarıyla değerlendirileceksiniz.
                                                         </p>
                                                         <br />
@@ -151,6 +151,7 @@ export default function AssesmentsPage() {
                                                 )}
                                             </>
                                         }
+                                        footerShow={true}
                                         footer={
                                             <Button className='cart-slim-close-button' variant="modal-button" onClick={() => handleClose(exam.name)}>
                                                 Kapat

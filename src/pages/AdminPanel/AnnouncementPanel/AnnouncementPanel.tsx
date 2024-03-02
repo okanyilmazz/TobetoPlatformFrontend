@@ -219,7 +219,7 @@ export default function AnnouncementPanel() {
                                                     <span className="trash-icon" onClick={() => handleDeleteAnnouncement(announcement)}></span>
                                                 </Tooltip>
                                                 <Tooltip placement="top" title="Düzenleme">
-                                                    <RiPencilFill onClick={() => handleUpdatedClick(announcement.id)} className='edit-icon' />
+                                                    <RiPencilFill onClick={() => handleUpdatedClick(announcement.id)} className='admin-edit-icon' />
                                                 </Tooltip>
                                             </td>
                                         </tr>

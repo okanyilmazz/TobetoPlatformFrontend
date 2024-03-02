@@ -13,4 +13,6 @@ export default interface GetAccountResponse {
     birthDate: Date;
     profilePhotoPath: string;
     email: string;
+    occupationClassName: string;
+    occupationClassId: string;
 }

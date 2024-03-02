@@ -461,45 +461,6 @@ export default function Profile() {
               />
             </div>
 
-
-            <div className='col-md-12'>
-              <ProfileCard
-                title={"Tobeto Seviye Testlerim"}
-                content={
-                  <div className='row'>
-                    {examResults?.items.map((examResult) => (
-                      <div className="col-md-6">
-                        <div className="exam-cart">
-                          <div className="exam-cart-top">
-                            <p className='exam-name'>{examResult.examName}</p>
-                            <p className='profile-exam-time'>{new Date(examResult.createdDate).toLocaleDateString('tr-TR')}</p>
-                          </div>
-                          <div className="bottom">
-                            <p className='exam-result'>{examResult.result}</p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                }
-              />
-              <ProfileCard
-                title={
-                  "Yetkinlik Rozetlerim"
-                }
-                content={
-                  <div className="profile-badge-container">
-                    {accountBadges?.items.map((accountBadge) => (
-                      <div className="profile-badge">
-                        <img src={String(accountBadge.badgeThumbnail)} alt="" />
-                      </div>
-                    ))}
-                  </div>
-
-                }
-              />
-            </div>
-
             <div className='col-md-12'>
               <div className="ActivityMapContainer">
                 <div className="activityMapContent activityMapPadding">

@@ -4,6 +4,5 @@ export default interface GetListUserOperationClaimResponse {
     id: Identifier;
     userId: Identifier;
     operationClaimId: Identifier;
-    firstName: string;
-    lastName: string;
+    operationClaimName: string;
 }

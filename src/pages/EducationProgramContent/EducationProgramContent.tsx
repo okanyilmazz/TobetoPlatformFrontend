@@ -40,6 +40,8 @@ import sessionService from '../../services/sessionService';
 import GetListSessionResponse from '../../models/responses/session/getListSessionResponse';
 import homeworkService from '../../services/homeworkService';
 import GetListHomeworkResponse from '../../models/responses/homework/getListHomeworkResponse';
+import AddAccountBadgeRequest from '../../models/requests/accountBadge/addAccountBadgeRequest';
+import accountBadgeService from '../../services/accountBadgeService';
 
 export default function EducationProgramContent() {
 
@@ -330,10 +332,26 @@ export default function EducationProgramContent() {
         setWatchPercentage(formattedPercentage);
     };
 
+    const handleAddAccountBadge = async () => {
+        const badgeId = educationProgram?.badgeId;
+        var result = await accountBadgeService.getByAccountAndBadgeId(user.id, badgeId!)
+        console.log(result);
+
+        if (!result.data) {
+            const addAccountBadgeRequest: AddAccountBadgeRequest = {
+                accountId: user.id,
+                badgeId: badgeId!
+            }
+            // await accountBadgeService.add(addAccountBadgeRequest)
+        }
+    }
+
     /*ProgressBar */
     const totalLessonCount = educationProgramLessons?.count || 0;
     const completedLessonCount = accountLessonList?.items.filter(item => item.statusPercent > 99.2).length || 0;
     const completionPercentage = totalLessonCount > 0 ? (completedLessonCount / totalLessonCount) * 100 : 0;
+
+    if (completionPercentage > 99.2) { handleAddAccountBadge() }
 
     const totalStatusPercent = accountLessonList?.items.reduce((acc, item) => acc + item.statusPercent, 0) || 0;
     let calculatedPoints = (totalStatusPercent / (totalLessonCount * 100)) * 100;

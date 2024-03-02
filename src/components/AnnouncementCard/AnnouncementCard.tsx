@@ -12,7 +12,7 @@ export default function AnnouncementCard(props: any) {
     };
 
     return (
-        <div className={`announcement-card-content row ${read ? 'read' : ''}`}>
+        <div className={`announcement-card-content  ${read ? 'read' : ''}`}>
             <div className='content col-md-4'>
                 <div className='announcement-header'>
                     <span>{props.announcementTypeName}</span>
@@ -23,7 +23,7 @@ export default function AnnouncementCard(props: any) {
                 </div>
                 <div className='announcement-footer'>
                     <span>{props.announcementDate}</span>
-                    <span onClick={() => { setModalShow(true); handleRead(); }}>Devamını Oku</span> {/* Devamını Oku'ya tıklandığında modalı açmak ve duyuruyu okundu olarak işaretlemek için */}
+                    <span onClick={() => { setModalShow(true); handleRead(); }}>Devamını Oku</span>
                 </div>
             </div>
             <Modals

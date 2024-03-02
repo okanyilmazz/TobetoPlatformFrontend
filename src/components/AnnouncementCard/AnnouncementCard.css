@@ -53,3 +53,7 @@
     content: url(https://tobeto.com/_next/static/media/noty-date.c4b4d342.svg);
     margin-right: 6px;
 }
+
+.announcement-footer span:last-child {
+    cursor: pointer;
+}

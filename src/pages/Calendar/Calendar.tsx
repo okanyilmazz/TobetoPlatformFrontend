@@ -135,7 +135,7 @@ const Calendar = () => {
               type="text"
               id="search-event"
               className="inputEducation"
-              placeholder="Eğitim arayın..."
+              placeholder="Eğitim arayın... "
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />

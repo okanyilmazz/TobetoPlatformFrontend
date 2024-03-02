@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './SettingsPage.css'
 import SidebarCard from '../../components/SidebarCard/SidebarCard'
 import { Form, Formik } from 'formik'
@@ -10,11 +10,17 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { authActions } from '../../store/auth/authSlice'
 import * as Yup from 'yup';
+import { PASSWORDS_DO_NOT_MATCH, PASSWORD_IS_CHANGED, REQUIRED_MESSAGE } from '../../environment/messages'
+import ProfileToaster from '../../components/ProfileToaster/ProfileToaster'
+import DeleteCard from '../../components/DeleteCard/DeleteCard'
+import userService from '../../services/userService'
 
 export default function SettingsPage() {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     const user = authService.getUserInfo();
+    const [showDeleteCard, setShowDeleteCard] = useState(false);
 
     const handleChangePassword = async (values: any) => {
         const changePasswordRequest: ChangePasswordRequest = {
@@ -24,23 +30,29 @@ export default function SettingsPage() {
         }
         const result = await authService.changePassword(changePasswordRequest)
         if (result.data) {
-            dispatch(authActions.removeToken());
-            navigate("/giris");
-            toast.success("Şifreniz başarıyla değiştirildi.")
+            ProfileToaster({ name: PASSWORD_IS_CHANGED });
         }
     }
 
     const validationSchema = Yup.object({
-        newPassword: Yup.string().required('Şifre alanı boş geçilemez.'),
-        oldPassword: Yup.string().required('Şifre alanı boş geçilemez.'),
-        confirmPassword: Yup.string().required('Şifre alanı boş geçilemez.')
+        newPassword: Yup.string().required(REQUIRED_MESSAGE),
+        oldPassword: Yup.string().required(REQUIRED_MESSAGE),
+        confirmPassword: Yup.string().required(REQUIRED_MESSAGE)
     })
+
+    const handleDeleteUser = async () => {
+        userService.delete(user);
+        setShowDeleteCard(false);
+        dispatch((authActions.removeToken()));
+        navigate("/giris");
+    }
     return (
         <div className='settings-p container' >
             <div className='side-bar-card'>
                 <SidebarCard />
             </div>
             <Formik
+                validationSchema={validationSchema}
                 initialValues={{
                     oldPassword: '',
                     newPassword: '',
@@ -48,9 +60,8 @@ export default function SettingsPage() {
                 }}
                 onSubmit={(values) => {
                     if (values.newPassword === values.confirmPassword) handleChangePassword(values)
-                    else toast.error("Şifreler uyuşmamaktadır.");
-                }}
-            >
+                    else ProfileToaster({ name: PASSWORDS_DO_NOT_MATCH });
+                }}>
                 <Form className="login-form">
                     <div className="settings-container row mt-5 col-md-12">
                         <div className="pswrd-row row  mb-2">
@@ -73,13 +84,20 @@ export default function SettingsPage() {
                                 </button>
                             </div>
                             <div className='col-md-6 col-12'>
-                                <button className="btn btn-danger mb-2 w-100">Üyeliği Sonlandır
+                                <button type='button' onClick={handleDeleteUser} className="btn btn-danger mb-2 w-100">Üyeliği Sonlandır
                                 </button>
                             </div>
                         </div>
                     </div>
                 </Form>
             </Formik>
+            {showDeleteCard && (
+                <DeleteCard
+                    show={showDeleteCard}
+                    handleClose={() => setShowDeleteCard(false)}
+                    handleDelete={handleDeleteUser}
+                    body="hesabını" />
+            )}
         </div>
     )
 }

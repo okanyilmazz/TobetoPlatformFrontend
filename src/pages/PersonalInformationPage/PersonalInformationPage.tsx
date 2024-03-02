@@ -29,12 +29,10 @@ import AddAddressRequest from '../../models/requests/address/addAddressRequest';
 import ProfileToaster from '../../components/ProfileToaster/ProfileToaster';
 import * as Yup from 'yup';
 import GetListDistrictResponse from '../../models/responses/district/getListDistrictResponse';
+import { INFO_IS_CHANGED, REQUIRED_MESSAGE } from '../../environment/messages';
 
 export default function PersonalInformationPage() {
 
-    const location = useLocation();
-    const pathArray = location.pathname.split('/');
-    const lastPathSegment = pathArray[pathArray.length - 1];
     const user = authService.getUserInfo();
 
     const [countries, setCountries] = useState<Paginate<GetListCountryResponse>>();
@@ -123,11 +121,11 @@ export default function PersonalInformationPage() {
     };
 
     const validationSchema = Yup.object().shape({
-        firstName: Yup.string().required('Doldurulması zorunlu alan'),
-        lastName: Yup.string().required('Doldurulması zorunlu alan'),
-        phoneNumber: Yup.string().required('Doldurulması zorunlu alan'),
-        birthDate: Yup.string().required('Doldurulması zorunlu alan'),
-        nationalId: Yup.string().required('Doldurulması zorunlu alan'),
+        firstName: Yup.string().required(REQUIRED_MESSAGE),
+        lastName: Yup.string().required(REQUIRED_MESSAGE),
+        phoneNumber: Yup.string().required(REQUIRED_MESSAGE),
+        birthDate: Yup.string().required(REQUIRED_MESSAGE),
+        nationalId: Yup.string().required(REQUIRED_MESSAGE),
     });
 
     const updatePersonalInformation = async (values: any) => {
@@ -162,7 +160,7 @@ export default function PersonalInformationPage() {
                 password: ""
             }
             await userService.update(updateUser);
-            ProfileToaster({ name: "Bilgileriniz başarıyla güncellendi." });
+            ProfileToaster({ name: INFO_IS_CHANGED });
         }
         else {
             const addAddress: AddAddressRequest = {
@@ -203,6 +201,7 @@ export default function PersonalInformationPage() {
                             initialValues={initialValues}
                             validationSchema={validationSchema}
                             onSubmit={(values) => {
+                                console.log("girdi")
                                 console.log(values)
                                 updatePersonalInformation(values);
                             }}>

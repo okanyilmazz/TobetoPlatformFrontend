@@ -16,10 +16,11 @@ import accountLanguageService from '../../services/accountLanguageService';
 import GetListAccountLanguageResponse from '../../models/responses/accountLanguage/getListAccountLanguageResponse';
 import AddAccountLanguageRequest from '../../models/requests/accountLanguage/addAccountLanguageRequest';
 import DeleteAccountLanguageRequest from '../../models/requests/accountLanguage/deleteAccountLanguageRequest';
+import { AVAILABLE_ACCOUNT_LANGUAGE, ADDED_ACCOUNT_LANGUAGE, REQUIRED_MESSAGE, DELETED_ACCOUNT_LANGUAGE } from '../../environment/messages';
 
 const validationSchema = Yup.object().shape({
-    language: Yup.string().required('Doldurulması zorunlu alan*'),
-    level: Yup.string().required('Doldurulması zorunlu alan*'),
+    language: Yup.string().required(REQUIRED_MESSAGE),
+    level: Yup.string().required(REQUIRED_MESSAGE),
 });
 
 export default function LanguagePage() {
@@ -51,6 +52,7 @@ export default function LanguagePage() {
     }, [])
 
     const getAccountLanguage = () => {
+
         accountLanguageService.getByAccountId(user.id).then((result) => {
             setAccountLanguage(result.data);
             console.log(result.data);
@@ -71,9 +73,9 @@ export default function LanguagePage() {
             }
             await accountLanguageService.add(addAccountLangauge)
             getAccountLanguage();
-            ProfileToaster({ name: "Yabancı dil bilgisi eklendi" });
+            ProfileToaster({ name: ADDED_ACCOUNT_LANGUAGE });
         } else {
-            ProfileToaster({ name: "Bu dil zaten mevcut" });
+            ProfileToaster({ name: AVAILABLE_ACCOUNT_LANGUAGE });
         }
     }
 
@@ -85,7 +87,7 @@ export default function LanguagePage() {
             await accountLanguageService.delete(deleteAccountLanguage)
             getAccountLanguage();
             setShowDeleteCard(false);
-            ProfileToaster({ name: "Yabancı dil kaldırıldı" });
+            ProfileToaster({ name: DELETED_ACCOUNT_LANGUAGE });
         }
     }
 

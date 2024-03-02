@@ -7,4 +7,5 @@ export default interface GetListCertificateResponse {
     description: string;
     folderPath: string;
     file: File;
+    createdDate: Date;
 }

@@ -2,10 +2,6 @@ import { Identifier } from 'typescript';
 
 export default interface GetListAccountResponse {
     id: Identifier;
-    cityId: Identifier;
-    districtId: Identifier;
-    countryId: Identifier;
-    addressId: Identifier;
     firstName: string;
     lastName: string;
     phoneNumber: string;
@@ -14,5 +10,7 @@ export default interface GetListAccountResponse {
     birthDate: Date;
     profilePhotoPath: string;
     email: string;
-    addressDetail: string
+    occupationClassName: string
+    occupationClassId: string
+
 }

@@ -15,7 +15,7 @@ export const PASSWORD_IS_CHANGED = "Şifreniz başarıyla güncellendi.";
 
 
 export const INFO_IS_CHANGED = "Bilgileriniz başarıyla güncellendi.";
-
+export const NOT_PERMISSION = "Yetkiniz yok.";
 
 
 

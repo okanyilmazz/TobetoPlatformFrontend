@@ -68,7 +68,7 @@ const ProfileRadarChart: React.FC<{ competenceResult: GetListCompetenceResultRes
             legend: {
                 display: false,
             },
-            datalabels: { 
+            datalabels: {
                 display: false,
             },
         },
@@ -121,7 +121,7 @@ const ProfileRadar: React.FC = () => {
             return;
         }
 
-        competenceResultService.getByAccountId(user.id,0,8).then(result=>{
+        competenceResultService.getByAccountId(user.id, 0, 8).then(result => {
             setCompetenceResult(result.data.items);
             setLoading(false);
         })

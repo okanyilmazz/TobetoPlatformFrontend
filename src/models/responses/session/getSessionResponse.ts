@@ -5,6 +5,7 @@ export default interface GetSessionResponse {
     accountName: string;
     occupationClassName: string;
     lessonName: string;
+    lessonId: Identifier;
     startDate: Date;
     endDate: Date;
     recordPath: string;

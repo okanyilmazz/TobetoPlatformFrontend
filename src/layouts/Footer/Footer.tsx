@@ -14,12 +14,8 @@ const Footer = () => {
         style={
           lastPathSegment === "platform" ||
             lastPathSegment === "egitimlerim" ||
-            lastPathSegment === "sertifikalarim" ||
-            lastPathSegment === "yetkinliklerim" ||
-            lastPathSegment === "medya-hesaplarim" ||
-            lastPathSegment === "yabanci-dil" ||
-            lastPathSegment === "kisisel-bilgilerim" ||
-            lastPathSegment.includes("egitim-detaylari") ||
+            pathArray.includes("profilimi-duzenle") ||
+            pathArray.includes("egitim-detaylari") ||
             lastPathSegment === "admin-panel" ||
             lastPathSegment === "ogrenciler" ||
             lastPathSegment === "dersler" ||

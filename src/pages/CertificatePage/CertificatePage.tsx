@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import SidebarCard from '../../components/SidebarCard/SidebarCard';
 import DeleteCertificateRequest from '../../models/requests/certificate/deleteCertificateRequest';
 import DeleteCard from '../../components/DeleteCard/DeleteCard';
+import { formatDate } from '@fullcalendar/core';
 
 export default function CertificatePage() {
     const userState = useSelector((state: any) => state.user);
@@ -32,6 +33,7 @@ export default function CertificatePage() {
         }
     };
 
+
     const uppy = new Uppy({
         autoProceed: false,
         restrictions: {
@@ -44,6 +46,16 @@ export default function CertificatePage() {
     useEffect(() => {
         getCertificates();
     }, []);
+
+    function formatDateString(inputDate: any) {
+        const date = new Date(inputDate);
+
+        const day = String(date.getDate()).padStart(2, '0');
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const year = date.getFullYear();
+
+        return `${day}/${month}/${year}`;
+    }
 
     useEffect(() => {
         uppy.on('complete', async (response) => {
@@ -79,40 +91,40 @@ export default function CertificatePage() {
         setShowDeleteCard(true);
     };
 
-    function downloadCertificate(certificate:any) {
-        // Base64 verisini Blob'a dönüştürme
-        function b64toBlob(b64Data:any, contentType = '', sliceSize = 512) {
-            const byteCharacters = atob(b64Data);
-            const byteArrays = [];
-            
-            for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-                const slice = byteCharacters.slice(offset, offset + sliceSize);
-                const byteNumbers = new Array(slice.length);
-                for (let i = 0; i < slice.length; i++) {
-                    byteNumbers[i] = slice.charCodeAt(i);
-                }
-                const byteArray = new Uint8Array(byteNumbers);
-                byteArrays.push(byteArray);
-            }
-            
-            return new Blob(byteArrays, { type: contentType });
-        }
-    
-        // Base64 verisini Blob'a dönüştür
-        const blob = b64toBlob(certificate.base64);
-        
-        // Blob'dan URL oluştur
-        const url = URL.createObjectURL(blob);
-        
-        // URL üzerinden dosyayı indir
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `${certificate.name}.pdf`; // Dosya adını belirt
-        link.click();
-        
-        // URL'yi serbest bırak
-        URL.revokeObjectURL(url);
-    }
+    // function downloadCertificate(certificate: any) {
+    //     // Base64 verisini Blob'a dönüştürme
+    //     function b64toBlob(b64Data: any, contentType = '', sliceSize = 512) {
+    //         const byteCharacters = atob(b64Data);
+    //         const byteArrays = [];
+
+    //         for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+    //             const slice = byteCharacters.slice(offset, offset + sliceSize);
+    //             const byteNumbers = new Array(slice.length);
+    //             for (let i = 0; i < slice.length; i++) {
+    //                 byteNumbers[i] = slice.charCodeAt(i);
+    //             }
+    //             const byteArray = new Uint8Array(byteNumbers);
+    //             byteArrays.push(byteArray);
+    //         }
+
+    //         return new Blob(byteArrays, { type: contentType });
+    //     }
+
+    //     // Base64 verisini Blob'a dönüştür
+    //     const blob = b64toBlob(certificate.base64);
+
+    //     // Blob'dan URL oluştur
+    //     const url = URL.createObjectURL(blob);
+
+    //     // URL üzerinden dosyayı indir
+    //     const link = document.createElement('a');
+    //     link.href = url;
+    //     link.download = `${certificate.name}.pdf`; // Dosya adını belirt
+    //     link.click();
+
+    //     // URL'yi serbest bırak
+    //     URL.revokeObjectURL(url);
+    // }
 
     return (
         <div className='certificate-page container'>
@@ -160,7 +172,7 @@ export default function CertificatePage() {
                                         <Tooltip placement="top" title={certificate.description.includes("pdf") ? "PDF" : "PNG"}>
                                             <td className={certificate.description.includes("pdf") ? "pdf_icon text-center" : "png_icon text-center"}></td>
                                         </Tooltip>
-                                        <td className='certificate-date'>17.02.2024</td>
+                                        <td className='certificate-date'>{formatDateString(new Date(certificate.createdDate))}</td>
                                         <td className='td-icons'>
                                             <Tooltip placement="top" title={"İndirme"}>
                                                 <span className="file-icon"></span>

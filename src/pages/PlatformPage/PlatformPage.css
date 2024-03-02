@@ -122,8 +122,9 @@
 
 .tab-education-content,
 .tab-announcement-content {
+    justify-items: center;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
 
 }
 

@@ -13,6 +13,14 @@ import userService from '../../../services/userService';
 import TobetoTextInput from '../../../utilities/customFormControls/TobetoTextInput';
 import operationClaimService from '../../../services/operationClaimService';
 import GetListOperationClaimResponse from '../../../models/responses/operationClaim/getListOperationClaimResponse';
+import SidebarCard from '../../../components/SidebarCard/SidebarCard';
+import AdminPanelSideBarCard from '../../../components/AdminPanelSideBarCard/AdminPanelSideBarCard';
+import GetUserResponse from '../../../models/responses/user/getUserResponse';
+import userOperationClaimService from '../../../services/userOperationClaimService';
+import authService from '../../../services/authService';
+import UpdateUserOperationClaimRequest from '../../../models/requests/userOperationClaim/updateUserOperationClaimRequest';
+import GetUserOperationClaimResponse from '../../../models/responses/userOperationClaim/getUserOperationClaimResponse';
+import GetListUserOperationClaimResponse from '../../../models/responses/userOperationClaim/getListUserOperationClaimResponse';
 
 export default function UserPanel() {
     const [showModal, setShowModal] = useState(false);
@@ -21,6 +29,12 @@ export default function UserPanel() {
     const [addClick, setAddClick] = useState<boolean>(false)
     const [updateClick, setUpdateClick] = useState<boolean>(false)
     const [operationClaims, setOperationClaims] = useState<Paginate<GetListOperationClaimResponse>>();
+    const [selectedUser, setSelectedUser] = useState<GetUserResponse>();
+    const user = authService.getUserInfo();
+    const [selectedUserOperationClaimId, setSelectedUserOperationClaimId] = useState<any>();
+    const [userOperationClaims, setUserOperationClaims] = useState<Paginate<GetListUserOperationClaimResponse>>();
+    const [selectedOperationClaimId, setSelectedOperationClaimId] = useState<any>();
+
 
 
 
@@ -29,9 +43,13 @@ export default function UserPanel() {
         setAddClick(true)
     };
 
-    const handleUpdatedClick = () => {
+    const handleUpdatedClick = (selectedUserId: any) => {
         setShowModal(true);
         setUpdateClick(true);
+
+        userService.getById(selectedUserId).then((result: any) => {
+            setSelectedUser(result.data)
+        })
     };
 
     const closeModal = () => {
@@ -48,8 +66,12 @@ export default function UserPanel() {
         operationClaimService.getAll(0, 100).then((result: any) => {
             setOperationClaims(result.data)
         })
-    }, [])
+        userOperationClaimService.getAll(0, 100).then((result: any) => {
+            setUserOperationClaims(result.data);
+        })
 
+
+    }, [updateClick])
 
 
 
@@ -79,110 +101,156 @@ export default function UserPanel() {
     };
 
 
+    const handleUserOperationClaimUpdate = async (userOperationClaim: any) => {
+
+        const updateUserOperationClaim: UpdateUserOperationClaimRequest = {
+            id: selectedUserOperationClaimId!,
+            operationClaimId: userOperationClaim.role,
+            userId: user.id
+        }
+        await userOperationClaimService.update(updateUserOperationClaim)
+        closeModal();
+    }
+
+
+    const handleSelectedUserOperationClaimId = (event: any) => {
+        setSelectedUserOperationClaimId(event.target.value);
+    }
+
+    const handleSelectedOperationClaimId = (event: any) => {
+        setSelectedOperationClaimId(event.target.value);
+    }
+
+
     return (
         <div className='container'>
-            <div className="row student-panel-content">
-                <div className="search ">
-                    <div className="input-container">
-                        <input type="text" id="search" onChange={handleInputFilter} placeholder="Arama" />
+            <div className="row user-panel">
 
-                        <IoSearch className="search-icon" />
+                <AdminPanelSideBarCard />
+                <div className=" col-md-9   student-panel-content">
+                    <div className="search ">
+                        <div className="input-container">
+                            <input type="text" id="search" onChange={handleInputFilter} placeholder="Arama" />
+
+                            <IoSearch className="search-icon" />
+                        </div>
+                    </div>
+
+                    <div className="table-responsive-sm">
+                        <table className="mt-8 corpTable table table-hover">
+                            <thead>
+                                <tr>
+                                    <th >Ad Soyad</th>
+                                    <th >Rol</th>
+                                    <th >E-mail</th>
+                                    <th className='text-center' >İşlem</th>
+                                </tr>
+                            </thead>
+
+                            <tbody className='student-panel-table-body'>
+                                {
+
+                                    users?.items.map((user) => (
+                                        <tr key={String(user.id)}>
+                                            <td className='student-id'>{user.firstName + " " + user.lastName}</td>
+                                            <td className='student-id'>
+                                                <div>
+                                                    <select
+                                                        name="operationClaimId"
+                                                        className="user-panel-select"
+                                                        onChange={(event: any) => handleSelectedUserOperationClaimId(event)}
+                                                    >
+                                                        <option value="operationClaimId">Seçiniz*</option>
+                                                        {
+                                                            userOperationClaims?.items.filter(operation => operation.userId === user.id).map((userOperationClaim) => (
+                                                                <option key={String(userOperationClaim.id)} value={String(userOperationClaim.id)}>
+                                                                    {String(userOperationClaim.operationClaimName)}
+                                                                </option>
+                                                            ))
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td className='student-id'>{user.email}</td>
+                                            <td className='td-icons '>
+                                                <Tooltip placement="top" title={"Silme"}>
+                                                    <span className="trash-icon"></span>
+                                                </Tooltip>
+                                                <Tooltip placement="top" title="Düzenleme">
+                                                    <RiPencilFill onClick={() => handleUpdatedClick(user.id)} className='edit-icon' />
+                                                </Tooltip>
+                                            </td>
+                                        </tr>
+                                    ))
+
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+                <Modals
+                    className="user-modal"
+                    show={showModal}
+                    onHide={() => closeModal()}
+                    header={true}
+                    title={
+                        updateClick ? "Rol Atama" : ""
+                    }
+                    body={
+                        <div className="formik-form">
+                            <Formik
+                                enableReinitialize
+                                initialValues={{
+                                    name: selectedUser?.email,
+                                    role: null
+                                }}
+                                onSubmit={(values) => {
+                                    console.log(values)
 
-                <div className="table-responsive-sm">
-                    <table className="mt-8 corpTable table table-hover">
-                        <thead>
-                            <tr>
-                                <th >Ad Soyad</th>
-                                <th >Rol</th>
-                                <th >E-mail</th>
-                                <th className='text-center' >İşlem</th>
-                            </tr>
-                        </thead>
-
-                        <tbody className='student-panel-table-body' >
-                            {
-                                users?.items.map((user) => (
-                                    <tr >
-                                        <td className='student-id'>{user.firstName + " " + user.lastName}</td>
-                                        <td className='student-id'>{user.roleName}</td>
-                                        <td className='student-id'>{user.email}</td>
-
-                                        <td className='td-icons '>
-
-                                            <Tooltip placement="top" title={"Silme"}>
-                                                <span className="trash-icon"></span>
-                                            </Tooltip>
-                                            <Tooltip placement="top" title="Düzenleme">
-                                                <RiPencilFill onClick={handleUpdatedClick} className='edit-icon' />
-                                            </Tooltip>
-                                        </td>
-                                    </tr>
-                                ))
-                            }
-
-                        </tbody>
-                    </table>
-                </div>
+                                    handleUserOperationClaimUpdate(values)
+                                }}>
+                                <Form className="update-modal-form" >
+                                    <Row >
+                                        <Col md={4}>
+                                            <TobetoSelect
+                                                name="role"
+                                                onChange={(event: any) => handleSelectedOperationClaimId(event)}
+                                                className="mb-4"
+                                                component="select">
+                                                <option value="Role">Rol Seçiniz</option>
+                                                {operationClaims?.items.map((operationClaim) => (
+                                                    <option value={String(operationClaim.id)}>
+                                                        {operationClaim.name}
+                                                    </option>
+                                                ))}
+                                            </TobetoSelect>
+                                        </Col>
+                                        <Col md={8}>
+                                            <TobetoTextInput
+                                                disabled
+                                                className="mb-4"
+                                                name="name"
+                                                value="Ad Soyad"
+                                                placeholderTextColor="#fff" />
+                                        </Col>
+                                    </Row>
+                                    <div className='form-buttons'>
+                                        <Button className="mb-4" type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >
+                                            Güncelle
+                                        </Button>
+                                        <Button className="mb-4" type="submit" style={addClick ? { display: 'block' } : { display: 'none' }}   >
+                                            Kaydet
+                                        </Button>
+                                        <Button className="mb-4" onClick={() => closeModal()}>
+                                            Kapat
+                                        </Button>
+                                    </div>
+                                </Form>
+                            </Formik>
+                        </div>
+                    }
+                />
             </div>
-            <Modals
-                className="user-modal"
-                show={showModal}
-                onHide={() => closeModal()}
-                header={true}
-                title={
-                    updateClick ? "Rol Atama" : ""
-                }
-                body={
-                    <div className="formik-form">
-                        <Formik
-                            initialValues={{
-                                title: "",
-                            }}
-                            onSubmit={(values) => {
-
-                            }}>
-                            <Form className="update-modal-form" >
-                                <Row >
-                                    <Col md={4}>
-                                        <TobetoSelect
-                                            name="socialMediaId"
-                                            className="mb-4"
-                                            component="select">
-                                            <option value="SocialMedia">Rol Seçiniz</option>
-                                            {operationClaims?.items.map((operationClaim) => (
-                                                <option value={String(operationClaim.id)}>
-                                                    {operationClaim.name}
-                                                </option>
-                                            ))}
-                                        </TobetoSelect>
-                                    </Col>
-                                    <Col md={8}>
-                                        <TobetoTextInput
-                                            disabled
-                                            className="mb-4"
-                                            name="url"
-                                            value="Ad Soyad"
-                                            placeholderTextColor="#fff" />
-                                    </Col>
-                                </Row>
-                                <div className='form-buttons'>
-                                    <Button className="mb-4" type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >
-                                        Güncelle
-                                    </Button>
-                                    <Button className="mb-4" type="submit" style={addClick ? { display: 'block' } : { display: 'none' }}   >
-                                        Kaydet
-                                    </Button>
-                                    <Button className="mb-4" onClick={() => closeModal()}>
-                                        Kapat
-                                    </Button>
-                                </div>
-                            </Form>
-                        </Formik>
-                    </div>
-                }
-            />
         </div>
     )
 }

@@ -9,6 +9,7 @@ import UpdatedAccountBadgeResponse from "../models/responses/accountBadge/update
 import { AxiosResponse } from "axios";
 import axiosInstance from "../core/interceptors/axiosInterceptor";
 import DeleteAccountBadgeRequest from "../models/requests/accountBadge/deleteAccountBadgeRequest";
+import { Identifier } from "typescript";
 
 class AccountBadgeService extends BaseService<
   Paginate<GetListAccountBadgeResponse>,
@@ -26,6 +27,10 @@ class AccountBadgeService extends BaseService<
 
   getByAccountId(accountId: number): Promise<AxiosResponse<Paginate<GetListAccountBadgeResponse>, any>> {
     return axiosInstance.get<Paginate<GetListAccountBadgeResponse>>(this.apiUrl + "/GetByAccountId?id=" + accountId);
+  }
+
+  getByAccountAndBadgeId(accountId: Identifier, badgeId: Identifier): Promise<AxiosResponse<GetListAccountBadgeResponse, any>> {
+    return axiosInstance.get<GetListAccountBadgeResponse>(this.apiUrl + "/GetByAccountAndBadgeId?accountId=" + accountId + "&badgeId=" + badgeId);
   }
 }
 

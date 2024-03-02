@@ -149,6 +149,7 @@ export default function PersonalInformationPage() {
                 nationalId: values.nationalId,
                 phoneNumber: phoneNumberState,
                 profilePhotoPath: "",
+
             }
             await accountService.update(updateAccount);
 

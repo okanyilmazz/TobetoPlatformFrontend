@@ -238,7 +238,7 @@ export default function EducationPanel() {
                                                 <span onClick={() => handleDeleteEducationProgram(educationProgram.id)} className="trash-icon"></span>
                                             </Tooltip>
                                             <Tooltip placement="top" title="Düzenleme">
-                                                <RiPencilFill onClick={() => handleUpdatedClick(educationProgram.id)} className='edit-icon' />
+                                                <RiPencilFill onClick={() => handleUpdatedClick(educationProgram.id)} className='admin-edit-icon' />
                                             </Tooltip>
                                         </td>
                                     </tr>

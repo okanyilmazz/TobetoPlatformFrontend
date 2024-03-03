@@ -23,7 +23,7 @@ export default function AdminPanelSideBarCard() {
                         <span>Kullanıcılar</span>
                     </div>
                 </li>
-                <li onClick={() => navigate("/admin-panel/ogrenciler")} style={{ display: "none" }} className={lastPathSegment === "ogrenciler" ? 'active-item active-edit' : ''}>
+                <li onClick={() => navigate("/admin-panel/ogrenciler")} className={lastPathSegment === "ogrenciler" ? 'active-item active-edit' : ''}>
                     <div className='sidebar-icon'>
                         <Image src='/assets/Icons/profile-settings/user.svg' />
                     </div>

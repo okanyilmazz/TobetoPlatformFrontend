@@ -6,5 +6,4 @@ export default interface UpdateSessionRequest {
     startDate: Date;
     endDate: Date;
     recordPath: string;
-    occupationClassId: Identifier;
 }

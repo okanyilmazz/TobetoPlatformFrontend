@@ -26,7 +26,7 @@ class AccountLanguageService extends BaseService<
     }
 
     getByAccountId(accountId: number): Promise<AxiosResponse<Paginate<GetAccountLanguageResponse>, any>> {
-        return axiosInstance.get<Paginate<GetAccountLanguageResponse>>(this.apiUrl + "/GetByAccountLanguageId?id=" + accountId);
+        return axiosInstance.get<Paginate<GetAccountLanguageResponse>>(this.apiUrl + "/GetByAccountId?accountId=" + accountId);
     }
 }
 

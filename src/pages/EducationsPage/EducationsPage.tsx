@@ -10,8 +10,6 @@ import { GetListEducationProgramResponse } from '../../models/responses/educatio
 import GetListProjectResponse from '../../models/responses/project/getListProjectResponse';
 import authService from '../../services/authService';
 
-import accountService from '../../services/accountService';
-import GetAccountResponse from '../../models/responses/account/getAccountResponse';
 import projectService from '../../services/projectService';
 import { userActions } from '../../store/user/userSlice';
 
@@ -22,7 +20,6 @@ const EducationsPage = () => {
     const [educationPrograms, setEducationPrograms] = useState<GetListEducationProgramResponse[]>([]);
 
 
-    const [accounteducationprograms, setaccounteducationprograms] = useState<GetListAccountEducationProgramResponse[]>([]);
     const [filteredEducationPrograms, setFilteredEducationPrograms] = useState<GetListEducationProgramResponse[]>([]);
     const [projects, setProjects] = useState<GetListProjectResponse[]>([]);
     const [searchText, setSearchText] = useState('');
@@ -42,7 +39,7 @@ const EducationsPage = () => {
     const projectOptions = projects.map(project => ({
         value: project.name,
         label: project.name
-
+    }));
 
     useEffect(() => {
         if (!userState.user) {
@@ -55,9 +52,6 @@ const EducationsPage = () => {
         });
 
         educationProgramService.getByAccountId(user.id, 0, 100).then((result: any) => {
-        educationProgramService.getByAccountId(user.id, 0, 100).then((result:any) => {
-            console.log(result.data)
-        educationProgramService.getByAccountId(user.id, 0, 100).then((result:any) => {
             console.log(result.data)
             const programs = result.data.items.map((program: GetListEducationProgramResponse) => ({
                 ...program,

@@ -14,12 +14,8 @@ const Footer = () => {
         style={
           lastPathSegment === "platform" ||
             lastPathSegment === "egitimlerim" ||
-            lastPathSegment === "sertifikalarim" ||
-            lastPathSegment === "yetkinliklerim" ||
-            lastPathSegment === "medya-hesaplarim" ||
-            lastPathSegment === "yabanci-dil" ||
-            lastPathSegment === "kisisel-bilgilerim" ||
-            lastPathSegment.includes("egitim-detaylari") ||
+            pathArray.includes("profilimi-duzenle") ||
+            pathArray.includes("egitim-detaylari") ||
             lastPathSegment === "admin-panel" ||
             lastPathSegment === "ogrenciler" ||
             lastPathSegment === "dersler" ||
@@ -227,7 +223,7 @@ const Footer = () => {
             <div className="footer-tobeto-contact col-6 col-lg-8 my-4">
               <div className="footer-contact">
                 <button className="footer-tobeto-contact-button">
-                  <a href="#" >Bize Ulaşın</a>
+                  <a href="https://tobeto.com/iletisim" >Bize Ulaşın</a>
                 </button>
 
 

@@ -17,6 +17,10 @@ import announcementTypeService from '../../../services/announcementTypeService';
 import DeleteAnnouncementRequest from '../../../models/requests/announcement/deleteAnnouncementRequest';
 import UpdateAnnouncementRequest from '../../../models/requests/announcement/updateAnnouncementRequest';
 import AdminPanelSideBarCard from '../../../components/AdminPanelSideBarCard/AdminPanelSideBarCard';
+import projectService from '../../../services/projectService';
+import GetListProjectResponse from '../../../models/responses/project/getListProjectResponse';
+import announcementProjectService from '../../../services/announcementProjectService';
+import AddAnnouncementProjectRequest from '../../../models/requests/announcementProject/addAnnouncementProjectRequest';
 
 
 
@@ -33,6 +37,7 @@ export default function AnnouncementPanel() {
     const [showAnnouncementUpdateModal, setshowAnnouncementUpdateModal] = useState(false)
     const [selectedAnnouncementId, setSelectedAnnouncementId] = useState<any>()
 
+    const [projects, setProjects] = useState<Paginate<GetListProjectResponse> | null>(null);
 
 
 
@@ -71,6 +76,9 @@ export default function AnnouncementPanel() {
 
         });
 
+        projectService.getAll(0, 100).then(result => {
+            setProjects(result.data);
+        })
     }, []);
 
 
@@ -120,7 +128,8 @@ export default function AnnouncementPanel() {
         announcementTypeId: "",
         announcementDate: "",
         title: "",
-        description: ""
+        description: "",
+        projectId: "",
     }
 
 
@@ -139,7 +148,16 @@ export default function AnnouncementPanel() {
             announcementDate: announcement.announcementDate,
             announcementTypeId: announcement.announcementTypeId
         }
-        await announcementService.add(addAnnouncement);
+        var result = await announcementService.add(addAnnouncement);
+        console.log(result);
+
+        const addAnnouncementProject: AddAnnouncementProjectRequest = {
+
+            announcementId: result.data.id,
+            projectId: announcement.projectId
+        }
+
+        await announcementProjectService.add(addAnnouncementProject)
         getAnnouncement();
         closeModal()
     }
@@ -164,8 +182,6 @@ export default function AnnouncementPanel() {
     return (
         <div className='container'>
             <div className="row announcement-panel  ">
-
-
                 <AdminPanelSideBarCard />
                 <div className=" announcement-panel-content col-md-9  ">
 
@@ -203,7 +219,7 @@ export default function AnnouncementPanel() {
                                                     <span className="trash-icon" onClick={() => handleDeleteAnnouncement(announcement)}></span>
                                                 </Tooltip>
                                                 <Tooltip placement="top" title="Düzenleme">
-                                                    <RiPencilFill onClick={() => handleUpdatedClick(announcement.id)} className='edit-icon' />
+                                                    <RiPencilFill onClick={() => handleUpdatedClick(announcement.id)} className='admin-edit-icon' />
                                                 </Tooltip>
                                             </td>
                                         </tr>
@@ -211,7 +227,7 @@ export default function AnnouncementPanel() {
                                 }
                                 <tr >
                                     <td className='text-center' onClick={handleAddClick} colSpan={5}>
-                                        <span>Yeni anons ekle</span>
+                                        <span>Yeni duyuru ekle</span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -242,7 +258,7 @@ export default function AnnouncementPanel() {
                                     <Form className="update-modal-form" >
                                         <Row >
                                             <Col md={6}>
-                                                <span className="input-area-title">Anons Türü</span>
+                                                <span className="input-area-title">Duyuru Türü</span>
 
                                                 <TobetoSelect
                                                     name="announcementTypeId"
@@ -257,7 +273,7 @@ export default function AnnouncementPanel() {
                                                 </TobetoSelect>
                                             </Col>
                                             <Col md={6}>
-                                                <span className="input-area-title">Anons Başlığı  </span>
+                                                <span className="input-area-title">Duyuru Başlığı  </span>
 
                                                 <TobetoTextInput
                                                     className="mb-4"
@@ -267,7 +283,7 @@ export default function AnnouncementPanel() {
                                         </Row>
                                         <Row >
                                             <Col md={6}>
-                                                <span className="input-area-title">Anons Açıklaması</span>
+                                                <span className="input-area-title">Duyuru Açıklaması</span>
 
                                                 <TobetoTextInput
                                                     className="mb-4"
@@ -275,7 +291,7 @@ export default function AnnouncementPanel() {
                                                     placeholderTextColor="#fff" />
                                             </Col>
                                             <Col md={6}>
-                                                <span className="input-area-title">Anons Tarihi</span>
+                                                <span className="input-area-title">Duyuru Tarihi</span>
 
                                                 <TobetoTextInput
                                                     className="mb-4"
@@ -283,6 +299,23 @@ export default function AnnouncementPanel() {
                                                     type="date"
                                                 />
                                             </Col>
+                                        </Row>
+                                        <Row >
+                                            <Col md={6}>
+                                                <span className="input-area-title">Duyuru Projesi</span>
+                                                <TobetoSelect
+                                                    name="projectId"
+                                                    className="mb-4"
+                                                    component="select">
+                                                    <option value="Project">Seçiniz*</option>
+                                                    {projects?.items.map((project, index) => (
+                                                        <option key={index} value={String(project.id)}>
+                                                            {project.name}
+                                                        </option>
+                                                    ))}
+                                                </TobetoSelect>
+                                            </Col>
+
                                         </Row>
                                         <div className='form-buttons'>
                                             <Button className="mb-4" onClick={handleAnnouncementUpdateModal} type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >
@@ -311,7 +344,7 @@ export default function AnnouncementPanel() {
                                     <Form className="update-modal-form" >
                                         <Row >
                                             <Col md={6}>
-                                                <span className="input-area-title">Anons Türü</span>
+                                                <span className="input-area-title">Duyuru Türü</span>
 
                                                 <TobetoSelect
                                                     name="announcementTypeId"
@@ -326,7 +359,7 @@ export default function AnnouncementPanel() {
                                                 </TobetoSelect>
                                             </Col>
                                             <Col md={6}>
-                                                <span className="input-area-title">Anons Başlığı  </span>
+                                                <span className="input-area-title">Duyuru Başlığı  </span>
 
                                                 <TobetoTextInput
                                                     className="mb-4"
@@ -336,7 +369,7 @@ export default function AnnouncementPanel() {
                                         </Row>
                                         <Row >
                                             <Col md={6}>
-                                                <span className="input-area-title">Anons Açıklaması</span>
+                                                <span className="input-area-title">Duyuru Açıklaması</span>
 
                                                 <TobetoTextInput
                                                     className="mb-4"
@@ -344,7 +377,7 @@ export default function AnnouncementPanel() {
                                                     placeholderTextColor="#fff" />
                                             </Col>
                                             <Col md={6}>
-                                                <span className="input-area-title">Anons Tarihi</span>
+                                                <span className="input-area-title">Duyuru Tarihi</span>
 
                                                 <TobetoTextInput
                                                     className="mb-4"
@@ -352,6 +385,24 @@ export default function AnnouncementPanel() {
                                                     type="date"
                                                 />
                                             </Col>
+                                        </Row>
+
+                                        <Row >
+                                            <Col md={6}>
+                                                <span className="input-area-title">Duyuru Projesi</span>
+                                                <TobetoSelect
+                                                    name="projectId"
+                                                    className="mb-4"
+                                                    component="select">
+                                                    <option value="Project">Seçiniz*</option>
+                                                    {projects?.items.map((project, index) => (
+                                                        <option key={index} value={String(project.id)}>
+                                                            {project.name}
+                                                        </option>
+                                                    ))}
+                                                </TobetoSelect>
+                                            </Col>
+
                                         </Row>
                                         <div className='form-buttons'>
                                             <Button className="mb-4" onClick={handleAnnouncementUpdateModal} type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >

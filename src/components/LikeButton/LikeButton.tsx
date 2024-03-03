@@ -6,7 +6,6 @@ import GetListAccountResponse from '../../models/responses/account/getListAccoun
 export default function LikeButton(props: any) {
     const [isLiked, setIsLiked] = useState(props.isLiked);
     const [isLikersModalOpen, setIsLikersModalOpen] = useState(false);
-
     const handleLike = async () => {
 
         if (isLiked) {

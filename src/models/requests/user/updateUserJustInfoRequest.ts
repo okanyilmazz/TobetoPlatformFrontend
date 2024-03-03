@@ -1,9 +1,8 @@
 import { Identifier } from "typescript";
 
-export default interface UpdateUserRequest {
+export default interface UpdateUserJustInfoRequest {
     id: Identifier;
     firstName: string;
     lastName: string;
     email: string;
-    password: string;
 }

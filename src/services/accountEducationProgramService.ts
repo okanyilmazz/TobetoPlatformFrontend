@@ -9,6 +9,7 @@ import AddedAccountEducationProgramResponse from "../models/responses/accountEdu
 import GetAccountEducationProgramResponse from "../models/responses/accountEducationProgram/getAccountEducationProgramResponse";
 import UpdatedAccountEducationProgramResponse from "../models/responses/accountEducationProgram/updatedAccountEducationProgramResponse";
 import GetListAccountEducationProgramResponse from "../models/responses/accountEducationProgram/getAccountListEducationProgramResponse";
+import { Identifier } from "typescript";
 
 
 class AccountEducationProgramService extends BaseService<
@@ -27,6 +28,10 @@ class AccountEducationProgramService extends BaseService<
 
     getByAccountId(accountId: number): Promise<AxiosResponse<Paginate<GetListAccountEducationProgramResponse>, any>> {
         return axiosInstance.get<Paginate<GetListAccountEducationProgramResponse>>(this.apiUrl + "/GetByAccountId?id=" + accountId);
+    }
+
+    getByAccountIdAndEducationProgramId(accountId: number, educationProgramId: Identifier): Promise<AxiosResponse<GetListAccountEducationProgramResponse, any>> {
+        return axiosInstance.get<GetListAccountEducationProgramResponse>(this.apiUrl + "/GetByAccountIdAndEducationProgramId?accountId=" + accountId + "&educationProgramId=" + educationProgramId);
     }
 }
 

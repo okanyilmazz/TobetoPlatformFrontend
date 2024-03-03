@@ -5,5 +5,4 @@ export default interface AddSessionRequest {
     startDate: Date;
     endDate: Date;
     recordPath: string;
-    occupationClassId: Identifier;
 }

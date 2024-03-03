@@ -122,9 +122,17 @@
 
 .tab-education-content,
 .tab-announcement-content {
+    justify-items: center;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+}
 
+.tab-announcement-content {
+    grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+}
+
+.tab-education-content {
+
+    grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
 }
 
 .platform-tab-menu .tab-menu {

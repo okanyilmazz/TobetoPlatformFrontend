@@ -32,21 +32,19 @@ const Calendar = () => {
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        console.log("Fetch Sessions started...");
         const result = await SessionService.getAll(0, 100);
         setSessions(result.data);
 
         const resultInstructor = await SessionService.getInstructorList(0, 100);
-        console.log("Instructors fetched:", resultInstructor.data);
         setSessionWithInstructor(resultInstructor.data);
 
         const userListResult = await userService.getInstructorList();
-        console.log("Users fetched:", userListResult.data);
         setUser(userListResult.data);
 
         if (resultInstructor.data) {
           let allSessions = resultInstructor.data.items;
           let allSession = result.data.items;
+
 
 
           // Filtreleme işlemleri
@@ -81,9 +79,6 @@ const Calendar = () => {
               (session) => moment(session.startDate).isAfter(currentDate)
             );
           }
-          console.log("Filtered Data");
-          console.log(filteredSessions);
-
           const filteredEvents = filteredSessions.map((session) => ({
             start: moment(session.startDate).format(),
             title: session.occupationClassName,
@@ -236,7 +231,6 @@ const Calendar = () => {
 };
 
 function renderEventContent(eventInfo: any) {
-  console.log("Event Info", eventInfo)
   return (
     <>
       <b>{eventInfo.timeText}</b>

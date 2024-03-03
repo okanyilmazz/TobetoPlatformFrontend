@@ -12,32 +12,22 @@ import AddAccountSessionRequest from '../../models/requests/accountSession/addAc
 import authService from '../../services/authService';
 import GetListAccountSessionResponse from '../../models/responses/accountSession/getListAccountSessionResponse';
 import { Paginate } from '../../models/paginate';
-import sessionService from '../../services/sessionService';
 
 export default function SessionsPage(props: any) {
     const user = authService.getUserInfo();
-    const [drawerVisible, setDrawerVisible] = useState(false); // Drawer'ın görünürlüğünü saklayacak state
-    const [accountSessions, setAccountSessions] = useState<Paginate<GetListAccountSessionResponse>>(); // Drawer'ın görünürlüğünü saklayacak state
-
-    const [completedStatusCount, setCompletedStatusCount] = useState<number>(); // Drawer'ın görünürlüğünü saklayacak state
-
-
-
-    // Öğretmen adlarına tıklandığında drawer'ı açacak fonksiyon
+    const [drawerVisible, setDrawerVisible] = useState(false);
+    const [accountSessions, setAccountSessions] = useState<Paginate<GetListAccountSessionResponse>>();
     const handleTeacherClick = () => {
-        setDrawerVisible(true); // Drawer'ı görünür yap
+        setDrawerVisible(true);
     };
 
-    // Drawer'ı kapatmak için fonksiyon
     const handleCloseDrawer = () => {
-        setDrawerVisible(false); // Drawer'ı görünmez yap
+        setDrawerVisible(false);
     };
 
 
 
     const handleAddAccountSession = async (sessionId: any) => {
-
-
         const addAccount: AddAccountSessionRequest = {
             sessionId: sessionId,
             accountId: user.id,
@@ -47,30 +37,17 @@ export default function SessionsPage(props: any) {
         getSessionJoinInfo();
     }
 
-
-
-
     useEffect(() => {
         getSessionJoinInfo();
-        // getLessonSessions();
     }, [])
 
-
-    // const getLessonSessions = () => {
-    //     sessionService.getByLessonId(props.selectedId).then((result: any) => {
-    //         setSessionTotalCount(result.data);
-    //     })
-    // }
     const getSessionJoinInfo = () => {
         accountSessionService.getByAccountId(user.id).then((result: any) => {
             setAccountSessions(result.data);
             const trueStatusCount = result.data?.items.filter((session: any) => session.status === true).length;
             props.onDataFromSessionPage(trueStatusCount);
         })
-
-
     }
-
 
     const formatDate = (date: Date): string => {
         const parsedDate = date instanceof Date ? date : new Date(date);
@@ -85,7 +62,6 @@ export default function SessionsPage(props: any) {
         const formattedDate = new Intl.DateTimeFormat('tr-TR', options).format(parsedDate);
         return formattedDate;
     };
-
 
 
     const items =
@@ -162,7 +138,6 @@ export default function SessionsPage(props: any) {
 
 
     return (
-
         <div className="unit-detail-session-row LXP-Collapse">
             <div className="session-title">
                 Oturumlar

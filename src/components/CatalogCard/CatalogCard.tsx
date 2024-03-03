@@ -11,7 +11,7 @@ const CatalogCard = (props: any) => {
     const navigate = useNavigate();
     const handleClick = () => {
         if (authState.isAuthenticated) {
-            navigate(`/education-program-details/${props.id}`);
+            navigate("/egitimlerim/egitim-detaylari/" + props.id)
         } else {
             navigate('/giris');
         }

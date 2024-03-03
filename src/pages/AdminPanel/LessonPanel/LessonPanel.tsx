@@ -26,6 +26,11 @@ import productionCompanyService from '../../../services/productionCompanyService
 import lessonModuleService from '../../../services/lessonModuleService';
 import GetLessonResponse from '../../../models/responses/lesson/getLessonResponse';
 import AdminPanelSideBarCard from '../../../components/AdminPanelSideBarCard/AdminPanelSideBarCard';
+import AddEducationProgramLessonRequest from '../../../models/requests/educationProgramLesson/addEducationProgramLessonRequest';
+import educationProgramLessonService from '../../../services/educationProgramLessonService';
+import { GetListEducationProgramResponse } from '../../../models/responses/educationProgram/getListEducationProgramResponse';
+import educationProgramService from '../../../services/educationProgramService';
+import UpdateEducationProgramLessonRequest from '../../../models/requests/educationProgramLesson/updateEducationProgramLessonRequest';
 
 
 
@@ -43,6 +48,7 @@ export default function LessonPanel() {
     const [lessonSubTypes, setLessonSubTypes] = useState<Paginate<GetListLessonSubTypeResponse>>();
     const [productionCompanies, setProductionCompanies] = useState<Paginate<GetListProductionCompanyResponse>>();
     const [selectedLesson, setSelectedLesson] = useState<GetLessonResponse>();
+    const [educationPrograms, setEducationPrograms] = useState<Paginate<GetListEducationProgramResponse>>();
 
 
     const handleAddClick = () => {
@@ -89,6 +95,11 @@ export default function LessonPanel() {
         lessonModuleService.getAll(0, 100).then(result => {
             setLessonModules(result.data)
         })
+        educationProgramService.getAll(0, 100).then((result: any) => {
+            setEducationPrograms(result.data)
+        })
+        console.log(" edu" + educationPrograms);
+
 
     }, []);
 
@@ -149,6 +160,7 @@ export default function LessonPanel() {
         endDate: "",
         duration: "",
         lessonPath: "",
+        educationProgramId: ""
     }
 
     const getLesson = () => {
@@ -158,7 +170,6 @@ export default function LessonPanel() {
     }
 
     const handleAddLesson = async (lesson: any) => {
-        console.log(lesson);
 
         const addLesson: AddLessonRequest = {
             languageId: lesson.languageId,
@@ -170,12 +181,21 @@ export default function LessonPanel() {
             startDate: lesson.startDate,
             endDate: lesson.endDate,
             duration: lesson.duration,
-            lessonPath: lesson.lessonPath
+            lessonPath: lesson.lessonPath,
         }
 
-        await lessonService.add(addLesson);
-        getLesson();
+        var result = await lessonService.add(addLesson);
+
+        const addEducationProgramLesson: AddEducationProgramLessonRequest = {
+            lessonId: result.data.id,
+            educationProgramId: lesson.educationProgramId
+        }
+
+        await educationProgramLessonService.add(addEducationProgramLesson)
+        getLesson()
         closeModal()
+
+
     }
 
     const handleUpdateLesson = async (lesson: any) => {
@@ -195,8 +215,17 @@ export default function LessonPanel() {
             lessonPath: lesson.lessonPath
 
         }
-        console.log(updateLesson);
-        await lessonService.update(updateLesson)
+
+        var result = await lessonService.update(updateLesson)
+
+        const updateEducationProgramLesson: UpdateEducationProgramLessonRequest = {
+            id: selectedLessonId,
+            lessonId: result.data.id,
+            educationProgramId: lesson.educationProgramId
+        }
+        await educationProgramLessonService.update(updateEducationProgramLesson)
+
+
         getLesson();
         closeModal()
     }
@@ -249,7 +278,7 @@ export default function LessonPanel() {
                                                     <span onClick={() => handleDeleteLesson(lesson.id)} className="trash-icon"></span>
                                                 </Tooltip>
                                                 <Tooltip placement="top" title="Düzenleme">
-                                                    <RiPencilFill onClick={() => handleUpdatedClick(lesson.id)} className='edit-icon' />
+                                                    <RiPencilFill onClick={() => handleUpdatedClick(lesson.id)} className='admin-edit-icon' />
                                                 </Tooltip>
                                             </td>
                                         </tr>
@@ -415,6 +444,25 @@ export default function LessonPanel() {
 
                                             </Col>
                                         </Row>
+
+                                        <Row>
+                                            <Col md={6}>
+                                                <span className="input-area-title">Eğitim Programı Adı</span>
+
+                                                <TobetoSelect
+                                                    name="educationProgramId"
+                                                    className="mb-4"
+                                                    component="select">
+                                                    <option value="EducationProgram">Seçiniz*</option>
+                                                    {educationPrograms?.items.map((educationProgram) => (
+                                                        <option value={String(educationProgram.id)}>
+                                                            {educationProgram.name}
+                                                        </option>
+                                                    ))}
+                                                </TobetoSelect>
+                                            </Col>
+                                        </Row>
+
                                         <div className='form-buttons'>
                                             <Button className="mb-4" type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >
                                                 Güncelle
@@ -569,6 +617,23 @@ export default function LessonPanel() {
                                                     type="date"
                                                     placeholderTextColor="#fff" />
 
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col md={6}>
+                                                <span className="input-area-title">Eğitim Programı Adı</span>
+
+                                                <TobetoSelect
+                                                    name="educationProgramId"
+                                                    className="mb-4"
+                                                    component="select">
+                                                    <option value="EducationProgram">Seçiniz*</option>
+                                                    {educationPrograms?.items.map((educationProgram) => (
+                                                        <option value={String(educationProgram.id)}>
+                                                            {educationProgram.name}
+                                                        </option>
+                                                    ))}
+                                                </TobetoSelect>
                                             </Col>
                                         </Row>
                                         <div className='form-buttons'>

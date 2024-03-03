@@ -11,7 +11,6 @@ import { Form, Formik } from 'formik'
 import { Button, Col, Row } from 'react-bootstrap';
 import TobetoSelect from '../../../utilities/customFormControls/TobetoSelect';
 import TobetoTextInput from '../../../utilities/customFormControls/TobetoTextInput';
-import Select, { ActionMeta, MultiValue } from 'react-select';
 import AdminPanelSideBarCard from '../../../components/AdminPanelSideBarCard/AdminPanelSideBarCard';
 import GetListLessonResponse from '../../../models/responses/lesson/getListLessonResponse';
 import lessonService from '../../../services/lessonService';
@@ -113,7 +112,6 @@ export default function SessionPanel() {
         startDate: selectedSession?.startDate,
         endDate: selectedSession?.endDate,
         recordPath: selectedSession?.recordPath,
-        occupationClassId: selectedSession?.occupationClassId
     }
 
     const addInitialValues = {
@@ -139,11 +137,11 @@ export default function SessionPanel() {
             startDate: session.startDate,
             endDate: session.endDate,
             recordPath: session.recordPath,
-            occupationClassId: session.occupationClassId
         }
 
         await sessionService.add(addSession);
         console.log("addsession" + addSession);
+
 
         getSession();
         closeModal()
@@ -158,7 +156,6 @@ export default function SessionPanel() {
             startDate: session.startDate,
             endDate: session.endDate,
             recordPath: session.recordPath,
-            occupationClassId: session.occupationClassId
         }
 
         await sessionService.update(updateSession);
@@ -216,7 +213,7 @@ export default function SessionPanel() {
                                                     <span onClick={() => handleDeleteSession(session.id)} className="trash-icon"></span>
                                                 </Tooltip>
                                                 <Tooltip placement="top" title="Düzenleme">
-                                                    <RiPencilFill onClick={() => handleUpdatedClick(session.id)} className='edit-icon' />
+                                                    <RiPencilFill onClick={() => handleUpdatedClick(session.id)} className='admin-edit-icon' />
                                                 </Tooltip>
                                             </td>
                                         </tr>
@@ -296,23 +293,7 @@ export default function SessionPanel() {
 
                                             </Col>
                                         </Row>
-                                        <Row >
-                                            <Col md={6}>
-                                                <span className="input-area-title">Oturum İsmi</span>
-                                                <TobetoSelect
-                                                    name="occupationClassId"
-                                                    className="mb-4"
-                                                    component="select">
-                                                    <option value="SocialMedia">Seçiniz*</option>
-                                                    {occupationClasses?.items.map((occupationClass) => (
-                                                        <option value={String(occupationClass.id)}>
-                                                            {occupationClass.name}
-                                                        </option>
-                                                    ))}
-                                                </TobetoSelect>
-                                            </Col>
 
-                                        </Row>
 
                                         <div className='form-buttons'>
                                             <Button className="mb-4" type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >
@@ -384,23 +365,7 @@ export default function SessionPanel() {
 
                                             </Col>
                                         </Row>
-                                        <Row >
-                                            <Col md={6}>
-                                                <span className="input-area-title">Oturum İsmi</span>
-                                                <TobetoSelect
-                                                    name="occupationClassId"
-                                                    className="mb-4"
-                                                    component="select">
-                                                    <option value="SocialMedia">Seçiniz*</option>
-                                                    {occupationClasses?.items.map((occupationClass) => (
-                                                        <option value={String(occupationClass.id)}>
-                                                            {occupationClass.name}
-                                                        </option>
-                                                    ))}
-                                                </TobetoSelect>
-                                            </Col>
 
-                                        </Row>
                                         <div className='form-buttons'>
                                             <Button className="mb-4" type="submit" style={updateClick ? { display: 'block' } : { display: 'none' }}   >
                                                 Güncelle

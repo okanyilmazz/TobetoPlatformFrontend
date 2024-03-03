@@ -29,6 +29,7 @@ import AddAddressRequest from '../../models/requests/address/addAddressRequest';
 import ProfileToaster from '../../components/ProfileToaster/ProfileToaster';
 import * as Yup from 'yup';
 import GetListDistrictResponse from '../../models/responses/district/getListDistrictResponse';
+import { INFO_IS_CHANGED, REQUIRED_MESSAGE } from '../../environment/messages';
 
 export default function PersonalInformationPage() {
 
@@ -123,11 +124,14 @@ export default function PersonalInformationPage() {
     };
 
     const validationSchema = Yup.object().shape({
-        firstName: Yup.string().required('Doldurulması zorunlu alan'),
-        lastName: Yup.string().required('Doldurulması zorunlu alan'),
-        phoneNumber: Yup.string().required('Doldurulması zorunlu alan'),
-        birthDate: Yup.string().required('Doldurulması zorunlu alan'),
-        nationalId: Yup.string().required('Doldurulması zorunlu alan'),
+        firstName: Yup.string().required(REQUIRED_MESSAGE),
+        lastName: Yup.string().required(REQUIRED_MESSAGE),
+        birthDate: Yup.string().required(REQUIRED_MESSAGE),
+        nationalId: Yup.string().required(REQUIRED_MESSAGE),
+        country: Yup.string().required(REQUIRED_MESSAGE),
+        city: Yup.string().required(REQUIRED_MESSAGE),
+        district: Yup.string().required(REQUIRED_MESSAGE),
+
     });
 
     const updatePersonalInformation = async (values: any) => {
@@ -151,10 +155,9 @@ export default function PersonalInformationPage() {
                 nationalId: values.nationalId,
                 phoneNumber: phoneNumberState,
                 profilePhotoPath: "",
-                occupationClassId: "",
 
             }
-            await accountService.update(updateAccount);
+            var updateResult = await accountService.update(updateAccount);
 
             const updateUser: UpdateUserRequest = {
                 id: user.id,
@@ -163,8 +166,10 @@ export default function PersonalInformationPage() {
                 lastName: values.lastName,
                 password: ""
             }
-            await userService.update(updateUser);
-            ProfileToaster({ name: "Bilgileriniz başarıyla güncellendi." });
+
+            // var updateResult = await userService.update(updateUser);
+
+            if (updateResult.data) ProfileToaster({ name: INFO_IS_CHANGED });
         }
         else {
             const addAddress: AddAddressRequest = {
@@ -258,7 +263,7 @@ export default function PersonalInformationPage() {
                                             className="mb-4"
                                             name="email"
                                             type="eposta"
-                                            disabled={true} />
+                                            disabled={false} />
                                     </Col>
                                     <span className='id-required-info'> <i>*Aboneliklerde fatura için doldurulması zorunlu alan</i> </span>
                                 </Row>

@@ -5,6 +5,7 @@ import SignedIn from '../SignedIn/SignedIn';
 import { useSelector } from 'react-redux';
 import SignedOut from '../SignedOut/SignedOut';
 import authService from '../../services/authService';
+import { ADMIN_ROLE } from '../../environment/environment';
 
 export default function Navi() {
 
@@ -134,7 +135,7 @@ export default function Navi() {
                             <MenuItem className={lastPathSegment === "platform-katalog" ? 'active-item' : ''} as={Link} to="/platform-katalog" name='Katalog' />
                             <MenuItem className={lastPathSegment === "takvim" ? 'active-item' : ''} as={Link} to="/takvim" name='Takvim' />
                             <MenuItem name='İstanbul Kodluyor' />
-                            <MenuItem className={pathArray.includes("admin-panel") ? 'active-item' : ''} as={Link} to="/admin-panel/kullanicilar" name='Admin Panel' />
+                            <MenuItem style={{ display: user?.role === ADMIN_ROLE ? "block" : "none" }} className={lastPathSegment === "admin-panel" ? 'active-item' : ''} as={Link} to="/admin-panel" name='Admin Panel' />
                         </div>
                         <SignedIn />
                     </Menu>

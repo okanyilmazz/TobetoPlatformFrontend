@@ -19,6 +19,7 @@ import DeleteWorkExperienceRequest from "../../models/requests/workExperience/de
 import "./MyExperiences.css"
 import TobetoTextArea from "../../utilities/customFormControls/TobetoTextArea";
 import Modals from "../../components/Modal/Modals";
+import { MIN_5_CHAR, REQUIRED_MESSAGE } from "../../environment/messages";
 
 
 export default function MyExperiences() {
@@ -46,17 +47,17 @@ export default function MyExperiences() {
 
     const validationSchema = Yup.object().shape({
         companyName: Yup.string()
-            .required('Doldurulması zorunlu alan*')
-            .min(5, 'En az 5 karakter girmelisiniz'),
+            .required(REQUIRED_MESSAGE)
+            .min(5, MIN_5_CHAR),
         department: Yup.string()
-            .required('Doldurulması zorunlu alan*')
-            .min(5, 'En az 5 karakter girmelisiniz'),
+            .required(REQUIRED_MESSAGE)
+            .min(5, MIN_5_CHAR),
         industry: Yup.string()
-            .required('Doldurulması zorunlu alan*')
-            .min(5, 'En az 5 karakter girmelisiniz'),
-        cityId: Yup.string().required('Doldurulması zorunlu alan*'),
-        startDate: Yup.date().required('Doldurulması zorunlu alan*'),
-        endDate: Yup.date().required('Doldurulması zorunlu alan*'),
+            .required(REQUIRED_MESSAGE)
+            .min(5, MIN_5_CHAR),
+        cityId: Yup.string().required(REQUIRED_MESSAGE),
+        startDate: Yup.date().required(REQUIRED_MESSAGE),
+        endDate: Yup.date().required(REQUIRED_MESSAGE),
     });
 
     const getWorkExperience = () => {

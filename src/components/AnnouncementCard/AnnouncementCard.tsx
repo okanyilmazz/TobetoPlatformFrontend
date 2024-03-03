@@ -4,15 +4,14 @@ import Modals from '../Modal/Modals';
 
 export default function AnnouncementCard(props: any) {
     const [modalShow, setModalShow] = useState(false);
-    const [read, setRead] = useState(false); // Her duyuru için okunma durumunu tutacak state
+    const [read, setRead] = useState(false);
 
     const handleRead = () => {
-        setRead(true); // Duyuru okundu olarak işaretlenir
-        // Burada, ilgili duyurunun kimliğini veritabanına kaydedebilir veya bir fonksiyon çağırabilirsiniz
+        setRead(true);
     };
 
     return (
-        <div className={`announcement-card-content row ${read ? 'read' : ''}`}>
+        <div className={`announcement-card-content  ${read ? 'read' : ''}`}>
             <div className='content col-md-4'>
                 <div className='announcement-header'>
                     <span>{props.announcementTypeName}</span>
@@ -23,7 +22,7 @@ export default function AnnouncementCard(props: any) {
                 </div>
                 <div className='announcement-footer'>
                     <span>{props.announcementDate}</span>
-                    <span onClick={() => { setModalShow(true); handleRead(); }}>Devamını Oku</span> {/* Devamını Oku'ya tıklandığında modalı açmak ve duyuruyu okundu olarak işaretlemek için */}
+                    <span onClick={() => { setModalShow(true); handleRead(); }}>Devamını Oku</span>
                 </div>
             </div>
             <Modals

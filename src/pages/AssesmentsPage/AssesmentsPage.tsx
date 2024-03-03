@@ -79,10 +79,10 @@ export default function AssesmentsPage() {
         setSelectedExamId(selectedExamId)
         setShowExamModal(true);
 
-        questionService.getByExamId(selectedExamId, 0, 1).then((result) => {
+        questionService.getByExamId(selectedExamId, 0, 1).then((result: any) => {
             setExamQuestions(result.data);
         })
-        questionService.getByExamId(selectedExamId, 0, 100).then((result) => {
+        questionService.getByExamId(selectedExamId, 0, 100).then((result: any) => {
             setAllExamQuestions(result.data);
         })
 

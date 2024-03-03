@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import LessonCard from '../../components/LessonCard/LessonCard'
-import { Collapse, Progress } from 'antd'
+import { Progress } from 'antd'
 import { FaCircle } from "react-icons/fa";
 import Button from 'react-bootstrap/Button';
 import './EducationProgramContent.css'
@@ -31,15 +31,18 @@ import educationProgramLessonService from '../../services/educationProgramLesson
 import UpdateAccountLessonRequest from '../../models/requests/accountLesson/updateAccountLessonRequest';
 import ReactPlayer from "react-player"
 import AddAccountLessonRequest from '../../models/requests/accountLesson/addAccountLessonRequest';
-import { formatDate } from '@fullcalendar/core';
-import { ADDED_FAVORITE, DELETED_FAVORITE } from '../../environment/environment';
-import AddAccountEducationProgramRequest from '../../models/requests/accountEducationProgram/addEducationProgramRequest';
-import accountEducationProgramService from '../../services/accountEducationProgramService';
+import { ADDED_FAVORITE, DELETED_FAVORITE } from '../../environment/messages';
 import SessionsPage from '../SessionsPage/SessionsPage';
 import sessionService from '../../services/sessionService';
 import GetListSessionResponse from '../../models/responses/session/getListSessionResponse';
 import homeworkService from '../../services/homeworkService';
 import GetListHomeworkResponse from '../../models/responses/homework/getListHomeworkResponse';
+import AddAccountBadgeRequest from '../../models/requests/accountBadge/addAccountBadgeRequest';
+import accountBadgeService from '../../services/accountBadgeService';
+import AddAccountEducationProgramRequest from '../../models/requests/accountEducationProgram/addEducationProgramRequest';
+import accountEducationProgramService from '../../services/accountEducationProgramService';
+import UpdateAccountEducationProgramRequest from '../../models/requests/accountEducationProgram/updateEducationProgramRequest';
+import GetListAccountEducationProgramResponse from '../../models/responses/accountEducationProgram/getAccountListEducationProgramResponse';
 
 export default function EducationProgramContent() {
 
@@ -61,6 +64,8 @@ export default function EducationProgramContent() {
     const [accountLessonList, setAccountLessonList] = useState<Paginate<GetListAccountLessonResponse>>();
 
     const [accountLesson, setAccountLesson] = useState<GetListAccountLessonResponse>();
+    const [accountEducationProgram, setAccountEducationProgram] = useState<GetListAccountEducationProgramResponse>();
+
     const [sessions, setSessions] = useState<Paginate<GetListSessionResponse>>();
     const [homeworks, setHomeworks] = useState<Paginate<GetListHomeworkResponse>>();
 
@@ -90,6 +95,7 @@ export default function EducationProgramContent() {
             })
         }
     }, [])
+
     useEffect(() => {
         if (selectedLessonId) {
             lessonService.getById(selectedLessonId).then((result: any) => {
@@ -97,7 +103,9 @@ export default function EducationProgramContent() {
             })
 
             accountService.getByLessonIdForLike(selectedLessonId, 0, 10).then(result => {
-                setLessonLikers(result.data);
+                if (result.data) {
+                    setLessonLikers(result.data);
+                }
             })
 
             lessonLikeService.getByLessonId(selectedLessonId).then(result => {
@@ -116,10 +124,7 @@ export default function EducationProgramContent() {
             });
 
             sessionService.getByLessonId(selectedLessonId).then((result: any) => {
-                console.log("sessions")
                 setSessions(result.data);
-
-                console.log(result.data)
             })
 
             homeworkService.getByLessonIdAsync(selectedLessonId).then((result: any) => {
@@ -149,12 +154,6 @@ export default function EducationProgramContent() {
         })
     }, [educationProgramLikeCount])
 
-    useEffect(() => {
-
-        accountService.getByLessonIdForLike(selectedLessonId, 0, 10).then(result => {
-            setLessonLikers(result.data);
-        })
-    }, [lessonLikeCount])
 
     useEffect(() => {
         accountLessonService.getByAccountId(user.id).then((result: any) => {
@@ -226,15 +225,15 @@ export default function EducationProgramContent() {
                     educationProgramId: educationProgramId
                 }
                 await educationProgramLikeService.add(addEducationLike);
-                setEducationProgramLikeCount(educationProgramLikeCount + 1);
-
+                educationProgramLikeService.getAll(0, 100).then((result: any) => {
+                    setEducationProgramLikeCount(result.data.count);
+                })
             } else {
                 const deleteEducationProgramLike: DeleteEducationProgramLikeRequest = {
                     accountId: user.id,
                     educationProgramId: educationProgramId
 
                 }
-                console.log(deleteEducationProgramLike)
                 await educationProgramLikeService.deleteByAccountIdAndEducationProgramId(deleteEducationProgramLike);
                 setEducationProgramLikeCount(educationProgramLikeCount - 1);
             }
@@ -248,7 +247,10 @@ export default function EducationProgramContent() {
                 lessonId: accountLesson!.lessonId
             }
             await lessonLikeService.add(addLessonLike);
-            setLessonLikeCount(lessonLikeCount + 1);
+
+            lessonLikeService.getAll(0, 100).then((result: any) => {
+                setLessonLikeCount(result.data.count);
+            })
         } else {
             const deleteLessonLike: DeleteLessonLikeRequest = {
                 accountId: user.id,
@@ -259,8 +261,6 @@ export default function EducationProgramContent() {
         }
     }
 
-
-
     const showDrawer = () => {
         setOpenDrawer(true);
     };
@@ -269,11 +269,9 @@ export default function EducationProgramContent() {
         setOpenDrawer(false);
     };
 
-
-
     const handleUpdateAccountLessonStatus = async () => {
         if (accountLesson) {
-            if (watchPercentage >= accountLesson.statusPercent) {
+            if (watchPercentage > accountLesson.statusPercent) {
                 const updateAccountLesson: UpdateAccountLessonRequest = {
                     id: accountLesson.id,
                     accountId: user.id,
@@ -287,19 +285,12 @@ export default function EducationProgramContent() {
                 accountLessonService.getByAccountId(user.id).then((result: any) => {
                     setAccountLessonList(result.data)
                 })
-                console.log(calculatedPoints)
             }
         }
     };
 
 
     const handleAddAccountLessonStatus = async (lessonId: any) => {
-        // const addAccountEducationProgram: AddAccountEducationProgramRequest = {
-        //     accountId: user.id,
-        //     educationProgramId: educationProgramId!,
-        //     statusPercent: 0
-        // }
-        // await accountEducationProgramService.add(addAccountEducationProgram);
         if (!accountLesson) {
             const addAccountLesson: AddAccountLessonRequest = {
                 accountId: user.id,
@@ -317,7 +308,41 @@ export default function EducationProgramContent() {
         }
     }
 
+    const handleAddAccountEducationProgramStatus = async (statusPercent: any) => {
+        if (educationProgram?.id) {
+            const addAccountEducationProgram: AddAccountEducationProgramRequest = {
+                accountId: user.id,
+                educationProgramId: educationProgram?.id,
+                statusPercent: statusPercent
+            };
+            await accountEducationProgramService.add(addAccountEducationProgram);
+        }
+    }
 
+    const handleUpdateAccountEducationProgramStatus = async (statusPercent: any) => {
+        if (accountEducationProgram?.id) {
+            const updateAccountEducationProgram: UpdateAccountEducationProgramRequest = {
+                id: accountEducationProgram.id,
+                accountId: user.id,
+                educationProgramId: educationProgram?.id!,
+                statusPercent: statusPercent
+            };
+            console.log(updateAccountEducationProgram)
+            await accountEducationProgramService.update(updateAccountEducationProgram);
+        }
+    }
+
+    const handleAddAccountBadge = async () => {
+        const badgeId = educationProgram?.badgeId;
+        var result = await accountBadgeService.getByAccountAndBadgeId(user.id, badgeId!)
+        if (!result.data) {
+            const addAccountBadgeRequest: AddAccountBadgeRequest = {
+                accountId: user.id,
+                badgeId: badgeId!
+            }
+            await accountBadgeService.add(addAccountBadgeRequest)
+        }
+    }
 
     const handleSelectLesson = async (selectedLessonId: any) => {
         setSelectedLessonId(selectedLessonId)
@@ -329,10 +354,14 @@ export default function EducationProgramContent() {
         setWatchPercentage(formattedPercentage);
     };
 
+
+
     /*ProgressBar */
     const totalLessonCount = educationProgramLessons?.count || 0;
     const completedLessonCount = accountLessonList?.items.filter(item => item.statusPercent > 99.2).length || 0;
     const completionPercentage = totalLessonCount > 0 ? (completedLessonCount / totalLessonCount) * 100 : 0;
+
+    if (completionPercentage > 99.2) { handleAddAccountBadge() }
 
     const totalStatusPercent = accountLessonList?.items.reduce((acc, item) => acc + item.statusPercent, 0) || 0;
     let calculatedPoints = (totalStatusPercent / (totalLessonCount * 100)) * 100;
@@ -340,11 +369,19 @@ export default function EducationProgramContent() {
 
     useEffect(() => {
 
-    }, [calculatedPoints]);
+        accountEducationProgramService.getByAccountIdAndEducationProgramId(user.id, educationProgram?.id!).then((result: any) => {
+            setAccountEducationProgram(result.data)
+            console.log(result.data)
+            if (result.data) handleUpdateAccountEducationProgramStatus(calculatedPoints);
+            else handleAddAccountEducationProgramStatus(calculatedPoints);
+        })
+
+        if (calculatedPoints > 99.2) handleAddAccountBadge()
+
+    }, [calculatedPoints])
 
 
     return (
-
         <div>
             <div className='container education-program-content mt-5'>
                 <div className='row'>
@@ -389,7 +426,6 @@ export default function EducationProgramContent() {
                                                                             {`${(accountLessonList?.items.filter(item => item.statusPercent > 99.2).length || 0)}/${educationProgramLessons?.count || 0}`})
                                                                         </div>
                                                                     </div>
-
                                                                     <div className="date-tooltip" style={{ display: lesson?.lessonSubTypeName.toUpperCase() === "SANAL SINIF" ? "block" : "none" }}>
                                                                         <div className="lesson1">
                                                                             Eğitimi nasıl tamamlayabilirim?
@@ -412,7 +448,6 @@ export default function EducationProgramContent() {
                                                                 </Tooltip>
                                                             }>
                                                             <>
-
                                                                 <div style={{ display: lesson?.lessonSubTypeName.toUpperCase() === "VIDEO" ? "block" : "none" }}>
                                                                     {calculatedPoints === 100 ? (
                                                                         <div className="unit-icon">
@@ -546,28 +581,25 @@ export default function EducationProgramContent() {
                                 </div>
                             </div>
                         </div >
-
                     </div>
                 </div>
                 <div className="row">
                     <div className='col-md-5 mt-5'>
                         <div className='test-page'>
                             {educationProgramLessons?.items && educationProgramLessons.count > 0 ? (
-                                <Accordion className='accordion-education-program-lesson' defaultActiveKey="0">
-                                    <Accordion.Item eventKey="0">
+                                <Accordion className='accordion-education-program-lesson' defaultActiveKey="1">
+                                    <Accordion.Item eventKey="1">
                                         <Accordion.Header>{educationProgram?.name}</Accordion.Header>
                                         {educationProgramLessons.items.map((educationProgramLesson) => {
                                             const lessonId = educationProgramLesson.lessonId;
                                             const matchingLesson = accountLessonList?.items.find(lesson => lesson.lessonId === lessonId);
                                             const statusPercent = matchingLesson?.statusPercent || 0;
-
                                             return (
-
                                                 <>
                                                     <Accordion.Body style={lesson?.lessonSubTypeName.toUpperCase() === "VIDEO" ? { display: 'block' } : { display: 'none' }} className={selectedLessonId === lessonId ? "active-accordion" : ""} onClick={() => handleSelectLesson(lessonId)} key={String(lessonId)}>
                                                         <div className='lesson-info'>
                                                             <span>{educationProgramLesson.lessonName}</span>
-                                                            <span className='unit-ongoing' style={statusPercent > 99.2 ? { display: 'none' } : { display: 'block' }}>
+                                                            <span className='unit-ongoing' style={statusPercent > 99.2 || statusPercent === 0 ? { display: 'none' } : { display: 'flex' }}>
                                                                 <Image src='/assets/Icons/unit-ongoing.svg' width={14} height={14}></Image>
                                                             </span>
                                                             <span className="unit-end" style={statusPercent > 99.2 ? { display: 'flex' } : { display: 'none' }}>
@@ -636,7 +668,7 @@ export default function EducationProgramContent() {
                                             </span>
                                         ) : (
                                             <>
-                                                <span style={accountLesson && (accountLesson?.statusPercent === 0 || accountLesson?.statusPercent > 99.5) ? { display: 'none' } : { display: 'flex' }}>
+                                                <span style={accountLesson && (accountLesson?.statusPercent === 0 || accountLesson?.statusPercent > 99.2) ? { display: 'none' } : { display: 'flex' }}>
                                                     <div className='unit-icon unit-ongoing'></div>
                                                     Devam Ediyor
                                                 </span>
@@ -662,13 +694,10 @@ export default function EducationProgramContent() {
                                 text={
                                     <div className='lesson-text d-flex'>
                                         <span>{lesson?.lessonSubTypeName || defaultLesson?.lessonSubTypeName}</span>
-
                                         {isDoneSession === undefined || isDoneSession === 0 ? (
-
                                             <span className='session-lesson' style={{ display: 'block' }}>
                                                 <FaCircle className='lesson-card-icon-first' /> Başlamadın
                                             </span>
-
                                         ) : (
                                             <>
                                                 <span style={isDoneSession === 0 || isDoneSession === sessions?.count ? { display: 'none' } : { display: 'flex' }}>
@@ -803,8 +832,6 @@ export default function EducationProgramContent() {
 
                                 </div >
                             </div >
-
-
                             <div className='education-drawer-content-bottom' style={{ display: lesson?.lessonSubTypeName.toLocaleUpperCase() === "VIDEO" || lesson?.lessonSubTypeName === "E-EGITIM" ? "grid" : "none" }} >
                                 <div className="education-drawer-info">
                                     <div className='education-drawer-categories-title title'>
@@ -852,9 +879,6 @@ export default function EducationProgramContent() {
                                         <span>{lesson?.name}</span>
                                     </div>
                                 </div>
-
-
-
                             </div>
                             <div className='e-education-drawer-content-bottom' style={{ display: lesson?.lessonSubTypeName.toUpperCase() === "E-EGITIM" ? "block" : "none" }}>
 
@@ -899,17 +923,12 @@ export default function EducationProgramContent() {
                             <div style={{ display: sessions && sessions.count > 0 && lesson?.lessonSubTypeName.toUpperCase() === "SANAL SINIF" ? "block" : "none" }}>
                                 {
                                     <SessionsPage sessions={sessions} homeworks={homeworks} lesson={lesson} onDataFromSessionPage={handleDataFromSessionPage}></SessionsPage>
-
                                 }
                             </div>
-
                         </>
                     }
                 />
             </div >
         </div >
-
-
-
     )
 }

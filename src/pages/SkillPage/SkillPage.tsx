@@ -13,6 +13,7 @@ import CreatableSelect from 'react-select/creatable';
 import AddAccountSkillRequest from '../../models/requests/accountSkill/addAccountSkillRequest';
 import authService from '../../services/authService';
 import SidebarCard from '../../components/SidebarCard/SidebarCard';
+import { ADDED_SKILL, DELETED_SKILL, DO_NOT_SELECTED_SKILL } from '../../environment/messages';
 
 
 export default function SkillPage() {
@@ -40,11 +41,11 @@ export default function SkillPage() {
     const handleAddAccountSkill = async () => {
         if (accountSkillRequests.length > 0) {
             await accountSkillService.addRange(accountSkillRequests);
-            ProfileToaster({ name: "Yetenek eklendi" })
+            ProfileToaster({ name: ADDED_SKILL })
             getAccountSkill();
         }
         else {
-            ProfileToaster({ name: "Herhangi bir yetenek seçmediniz" });
+            ProfileToaster({ name: DO_NOT_SELECTED_SKILL });
         }
     }
 
@@ -55,7 +56,7 @@ export default function SkillPage() {
             skillId: accountSkill.skillId
         };
         await accountSkillService.delete(deleteAccountSkill)
-        ProfileToaster({ name: "Yetenek kaldırıldı" });
+        ProfileToaster({ name: DELETED_SKILL });
 
         getAccountSkill();
     }

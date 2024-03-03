@@ -33,6 +33,9 @@ import { INFO_IS_CHANGED, REQUIRED_MESSAGE } from '../../environment/messages';
 
 export default function PersonalInformationPage() {
 
+    const location = useLocation();
+    const pathArray = location.pathname.split('/');
+    const lastPathSegment = pathArray[pathArray.length - 1];
     const user = authService.getUserInfo();
 
     const [countries, setCountries] = useState<Paginate<GetListCountryResponse>>();
@@ -123,9 +126,12 @@ export default function PersonalInformationPage() {
     const validationSchema = Yup.object().shape({
         firstName: Yup.string().required(REQUIRED_MESSAGE),
         lastName: Yup.string().required(REQUIRED_MESSAGE),
-        phoneNumber: Yup.string().required(REQUIRED_MESSAGE),
         birthDate: Yup.string().required(REQUIRED_MESSAGE),
         nationalId: Yup.string().required(REQUIRED_MESSAGE),
+        country: Yup.string().required(REQUIRED_MESSAGE),
+        city: Yup.string().required(REQUIRED_MESSAGE),
+        district: Yup.string().required(REQUIRED_MESSAGE),
+
     });
 
     const updatePersonalInformation = async (values: any) => {
@@ -149,9 +155,8 @@ export default function PersonalInformationPage() {
                 nationalId: values.nationalId,
                 phoneNumber: phoneNumberState,
                 profilePhotoPath: "",
-
             }
-            await accountService.update(updateAccount);
+            var updateResult = await accountService.update(updateAccount);
 
             const updateUser: UpdateUserRequest = {
                 id: user.id,
@@ -160,8 +165,10 @@ export default function PersonalInformationPage() {
                 lastName: values.lastName,
                 password: ""
             }
-            await userService.update(updateUser);
-            ProfileToaster({ name: INFO_IS_CHANGED });
+
+            // var updateResult = await userService.update(updateUser); 
+
+            if (updateResult.data) ProfileToaster({ name: INFO_IS_CHANGED });
         }
         else {
             const addAddress: AddAddressRequest = {
@@ -202,7 +209,6 @@ export default function PersonalInformationPage() {
                             initialValues={initialValues}
                             validationSchema={validationSchema}
                             onSubmit={(values) => {
-                                console.log("girdi")
                                 console.log(values)
                                 updatePersonalInformation(values);
                             }}>
@@ -256,7 +262,7 @@ export default function PersonalInformationPage() {
                                             className="mb-4"
                                             name="email"
                                             type="eposta"
-                                            disabled={true} />
+                                            disabled={false} />
                                     </Col>
                                     <span className='id-required-info'> <i>*Aboneliklerde fatura için doldurulması zorunlu alan</i> </span>
                                 </Row>

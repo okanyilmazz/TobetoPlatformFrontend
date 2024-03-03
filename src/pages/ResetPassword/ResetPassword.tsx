@@ -11,13 +11,12 @@ import userService from '../../services/userService'
 import { useDispatch } from 'react-redux'
 import { authActions } from '../../store/auth/authSlice'
 import ResetTokenUserRequest from '../../models/requests/user/resetTokenRequest'
+import { PASSWORD_IS_CHANGED } from '../../environment/messages'
 
 
 export default function ResetPassword() {
     const { userId, resetToken } = useParams();
     const navigate = useNavigate();
-    console.log(userId)
-    console.log(resetToken)
 
     useEffect(() => {
         if (userId && resetToken) {
@@ -54,7 +53,7 @@ export default function ResetPassword() {
         if (result.data) {
             dispatch(authActions.removeToken());
             navigate("/giris");
-            toast.success("Şifreniz başarıyla değiştirildi.")
+            toast.success(PASSWORD_IS_CHANGED)
         }
     }
     return (

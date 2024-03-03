@@ -355,6 +355,7 @@ export default function EducationProgramContent() {
     };
 
 
+
     /*ProgressBar */
     const totalLessonCount = educationProgramLessons?.count || 0;
     const completedLessonCount = accountLessonList?.items.filter(item => item.statusPercent > 99.2).length || 0;

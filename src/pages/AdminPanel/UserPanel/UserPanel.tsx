@@ -177,7 +177,7 @@ export default function UserPanel() {
                                                     <span className="trash-icon"></span>
                                                 </Tooltip>
                                                 <Tooltip placement="top" title="Düzenleme">
-                                                    <RiPencilFill onClick={() => handleUpdatedClick(user.id)} className='edit-icon' />
+                                                    <RiPencilFill onClick={() => handleUpdatedClick(user.id)} className='admin-edit-icon' />
                                                 </Tooltip>
                                             </td>
                                         </tr>

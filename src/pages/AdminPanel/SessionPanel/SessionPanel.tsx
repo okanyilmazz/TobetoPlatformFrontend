@@ -131,6 +131,7 @@ export default function SessionPanel() {
     }
 
     const handleAddSession = async (session: any) => {
+        console.log("session" + session);
 
         const addSession: AddSessionRequest = {
             lessonId: session.lessonId,
@@ -140,12 +141,15 @@ export default function SessionPanel() {
         }
 
         await sessionService.add(addSession);
+        console.log("addsession" + addSession);
+
 
         getSession();
         closeModal()
     }
 
     const handleUpdateSession = async (session: any) => {
+        console.log("session" + session);
 
         const updateSession: UpdateSessionRequest = {
             id: selectedSessionId,
@@ -210,7 +214,7 @@ export default function SessionPanel() {
                                                     <span onClick={() => handleDeleteSession(session.id)} className="trash-icon"></span>
                                                 </Tooltip>
                                                 <Tooltip placement="top" title="Düzenleme">
-                                                    <RiPencilFill onClick={() => handleUpdatedClick(session.id)} className='edit-icon' />
+                                                    <RiPencilFill onClick={() => handleUpdatedClick(session.id)} className='admin-edit-icon' />
                                                 </Tooltip>
                                             </td>
                                         </tr>

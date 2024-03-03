@@ -187,15 +187,15 @@ export default function PlatformPage() {
                 <section className='section-card container'>
                     <div className='create-profile'>
                         <span>Profilini oluştur</span>
-                        <Button>Başla</Button>
+                        <Button onClick={() => navigate("/profilim/profilimi-duzenle/kisisel-bilgilerim")}   >Başla</Button>
                     </div>
                     <div className='self-assessment'>
                         <span>Kendini değerlendir</span>
-                        <Button>Başla</Button>
+                        <Button onClick={() => navigate("/degerlendirmeler")}>Başla</Button>
                     </div>
                     <div className='start-learning'>
                         <span>Öğrenmeye başla</span>
-                        <Button>Başla</Button>
+                        <Button  >Başla</Button>
                     </div>
                 </section>
             </div>

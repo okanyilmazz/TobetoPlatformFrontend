@@ -156,7 +156,7 @@ export default function RolePanel() {
                                                 <span onClick={() => handleDeleteRole(operationClaim.id)} className="trash-icon"  ></span>
                                             </Tooltip>
                                             <Tooltip placement="top" title="Düzenleme">
-                                                <RiPencilFill onClick={() => handleUpdatedClick(operationClaim.id)} className='edit-icon' />
+                                                <RiPencilFill onClick={() => handleUpdatedClick(operationClaim.id)} className='admin-edit-icon' />
                                             </Tooltip>
 
                                         </td>

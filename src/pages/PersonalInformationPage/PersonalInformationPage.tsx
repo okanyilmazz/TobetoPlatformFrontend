@@ -29,7 +29,6 @@ import AddAddressRequest from '../../models/requests/address/addAddressRequest';
 import ProfileToaster from '../../components/ProfileToaster/ProfileToaster';
 import * as Yup from 'yup';
 import GetListDistrictResponse from '../../models/responses/district/getListDistrictResponse';
-import { INFO_IS_CHANGED, REQUIRED_MESSAGE } from '../../environment/messages';
 
 export default function PersonalInformationPage() {
 
@@ -155,6 +154,7 @@ export default function PersonalInformationPage() {
                 nationalId: values.nationalId,
                 phoneNumber: phoneNumberState,
                 profilePhotoPath: "",
+
             }
             var updateResult = await accountService.update(updateAccount);
 
@@ -166,7 +166,7 @@ export default function PersonalInformationPage() {
                 password: ""
             }
 
-            // var updateResult = await userService.update(updateUser); 
+            // var updateResult = await userService.update(updateUser);
 
             if (updateResult.data) ProfileToaster({ name: INFO_IS_CHANGED });
         }

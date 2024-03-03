@@ -26,11 +26,13 @@ import productionCompanyService from '../../../services/productionCompanyService
 import lessonModuleService from '../../../services/lessonModuleService';
 import GetLessonResponse from '../../../models/responses/lesson/getLessonResponse';
 import AdminPanelSideBarCard from '../../../components/AdminPanelSideBarCard/AdminPanelSideBarCard';
+
 import AddEducationProgramLessonRequest from '../../../models/requests/educationProgramLesson/addEducationProgramLessonRequest';
 import educationProgramLessonService from '../../../services/educationProgramLessonService';
 import { GetListEducationProgramResponse } from '../../../models/responses/educationProgram/getListEducationProgramResponse';
 import educationProgramService from '../../../services/educationProgramService';
 import UpdateEducationProgramLessonRequest from '../../../models/requests/educationProgramLesson/updateEducationProgramLessonRequest';
+
 
 
 
@@ -48,6 +50,7 @@ export default function LessonPanel() {
     const [lessonSubTypes, setLessonSubTypes] = useState<Paginate<GetListLessonSubTypeResponse>>();
     const [productionCompanies, setProductionCompanies] = useState<Paginate<GetListProductionCompanyResponse>>();
     const [selectedLesson, setSelectedLesson] = useState<GetLessonResponse>();
+
     const [educationPrograms, setEducationPrograms] = useState<Paginate<GetListEducationProgramResponse>>();
 
 
@@ -474,9 +477,9 @@ export default function LessonPanel() {
                                                 Kapat
                                             </Button>
                                         </div>
-                                    </Form>
-                                </Formik>
-                            </div>
+                                    </Form >
+                                </Formik >
+                            </div >
 
                             <div className="lesson-update-form formik-form" style={updateClick ? { display: 'block' } : { display: 'none' }}>
                                 <Formik
@@ -536,7 +539,7 @@ export default function LessonPanel() {
                                                     ))}
                                                 </TobetoSelect>
                                             </Col>
-                                        </Row>
+                                        </Row >
                                         <Row >
                                             <Col md={6}>
                                                 <span className="input-area-title"> Alt Tip</span>
@@ -647,9 +650,9 @@ export default function LessonPanel() {
                                                 Kapat
                                             </Button>
                                         </div>
-                                    </Form>
-                                </Formik>
-                            </div>
+                                    </Form >
+                                </Formik >
+                            </div >
                         </>
                     }
                 />

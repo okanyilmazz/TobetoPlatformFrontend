@@ -8,6 +8,8 @@ import authService from '../../services/authService';
 import { toast } from 'react-toastify';
 import './ForgotPassword.css'
 import * as Yup from 'yup';
+import ProfileToaster from '../../components/ProfileToaster/ProfileToaster';
+import { EMAIL_SENT, REQUIRED_MESSAGE } from '../../environment/messages';
 export default function ForgotPassword() {
 
     const [user, setUser] = useState<GetUserResponse>();
@@ -26,7 +28,7 @@ export default function ForgotPassword() {
                 if (result.data) {
                     const passwordResetCheck = await authService.passwordReset(user.email);
                     if (passwordResetCheck) {
-                        toast.success("Şifre sıfırlama maili gönderildi.");
+                        ProfileToaster({ name: EMAIL_SENT });
                     }
                 }
             }
@@ -40,7 +42,7 @@ export default function ForgotPassword() {
     };
 
     const validationSchema = Yup.object({
-        email: Yup.string().required('Email adresi boş geçilemez.')
+        email: Yup.string().required(REQUIRED_MESSAGE)
     })
 
     return (

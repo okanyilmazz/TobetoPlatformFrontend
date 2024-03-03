@@ -4,11 +4,10 @@ import Modals from '../Modal/Modals';
 
 export default function AnnouncementCard(props: any) {
     const [modalShow, setModalShow] = useState(false);
-    const [read, setRead] = useState(false); // Her duyuru için okunma durumunu tutacak state
+    const [read, setRead] = useState(false);
 
     const handleRead = () => {
-        setRead(true); // Duyuru okundu olarak işaretlenir
-        // Burada, ilgili duyurunun kimliğini veritabanına kaydedebilir veya bir fonksiyon çağırabilirsiniz
+        setRead(true);
     };
 
     return (

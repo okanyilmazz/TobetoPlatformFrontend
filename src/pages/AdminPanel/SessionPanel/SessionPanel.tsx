@@ -143,6 +143,7 @@ export default function SessionPanel() {
         await sessionService.add(addSession);
         console.log("addsession" + addSession);
 
+
         getSession();
         closeModal()
     }

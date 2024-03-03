@@ -21,6 +21,7 @@ import socialMediaService from '../../services/socialMediaService'
 import SidebarCard from '../../components/SidebarCard/SidebarCard'
 import ProfileToaster from '../../components/ProfileToaster/ProfileToaster'
 import DeleteCard from '../../components/DeleteCard/DeleteCard'
+import { AVAILABLE_SOCIAL_MEDIA, DELETED_SOCIAL_MEDIA, REQUIRED_MESSAGE, UPDATED_SOCIAL_MEDIA } from '../../environment/messages';
 
 export default function SocialMediaPage() {
     const location = useLocation();
@@ -51,8 +52,8 @@ export default function SocialMediaPage() {
     }
 
     const validationSchema = Yup.object().shape({
-        socialMediaId: Yup.string().required('Doldurulması zorunlu alan*'),
-        url: Yup.string().required('Doldurulması zorunlu alan*')
+        socialMediaId: Yup.string().required(REQUIRED_MESSAGE),
+        url: Yup.string().required(REQUIRED_MESSAGE)
     });
 
     const handleDeleteAccountSocialMedia = async (accountSocialMedia: any) => {
@@ -60,7 +61,7 @@ export default function SocialMediaPage() {
             id: accountSocialMedia.id
         }
         await accountSocialMediaService.delete(deleteAccountSocialMedia);
-        ProfileToaster({ name: "Sosyal medya adresiniz başarıyla kaldırıldı" })
+        ProfileToaster({ name: DELETED_SOCIAL_MEDIA })
         setShowDeleteCard(false);
         getAccountSocialMedia();
     }
@@ -74,13 +75,13 @@ export default function SocialMediaPage() {
         setSelectedAccountSocialMedia(accountSocialMedia);
     }
 
-    const isDuplicateSocialMedia = (newSocialMediaId:any, accountSocialMedias:any) => {
-        return accountSocialMedias.items.some((accountSocialMedia:any) => accountSocialMedia.socialMediaId === newSocialMediaId);
+    const isDuplicateSocialMedia = (newSocialMediaId: any, accountSocialMedias: any) => {
+        return accountSocialMedias.items.some((accountSocialMedia: any) => accountSocialMedia.socialMediaId === newSocialMediaId);
     };
 
-    const handleAddAccountSocialMedia = async (accountSocialMedia:any) => {
+    const handleAddAccountSocialMedia = async (accountSocialMedia: any) => {
         const { socialMediaId } = accountSocialMedia;
-    
+
         if (!isDuplicateSocialMedia(socialMediaId, accountSocialMedias)) {
             const addAccountSocialMedia: AddAccountSocialMediaRequest = {
                 accountId: user.id,
@@ -90,7 +91,7 @@ export default function SocialMediaPage() {
             await accountSocialMediaService.add(addAccountSocialMedia);
             getAccountSocialMedia();
         } else {
-            ProfileToaster({ name: "Bu sosyal medya zaten eklendi" })
+            ProfileToaster({ name: AVAILABLE_SOCIAL_MEDIA })
         }
     }
 
@@ -104,7 +105,7 @@ export default function SocialMediaPage() {
             }
             await accountSocialMediaService.update(updateAccountSocialMedia);
             getAccountSocialMedia();
-            ProfileToaster({ name: "Sosyal medya adresiniz başarıyla güncellendi" })
+            ProfileToaster({ name: UPDATED_SOCIAL_MEDIA })
             setShowAccountSocialMediaUpdateModal(false);
         }
     }

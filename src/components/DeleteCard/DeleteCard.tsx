@@ -4,8 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import './DeleteCard.css';
 
 function DeleteCard(props: any) {
-  console.log(props);
-  
+
   const { show, handleClose, handleDelete, title, body } = props;
 
   useEffect(() => {

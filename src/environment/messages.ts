@@ -4,6 +4,7 @@ export const DELETED_FAVORITE = "Favorilerden silme işlemin başarıyla gerçek
 
 /* */
 export const REQUIRED_MESSAGE = "Doldurulması zorunlu alan";
+export const MIN_5_CHAR = "En az 5 karakter girmelisiniz"
 
 /*Profile Settings*/
 export const ADDED_ACCOUNT_LANGUAGE = "Yabancı dil bilgisi eklendi.";
@@ -17,5 +18,17 @@ export const PASSWORD_IS_CHANGED = "Şifreniz başarıyla güncellendi.";
 export const INFO_IS_CHANGED = "Bilgileriniz başarıyla güncellendi.";
 export const NOT_PERMISSION = "Yetkiniz yok.";
 
+export const EMAIL_SENT = "Mail gönderildi.";
+export const NO_ACITIVTY = "Herhangi bir aktiviteniz yok.";
 
+export const ADDED_SKILL = "Yetenek eklendi.";
+export const DELETED_SKILL = "Yetenek silindi.";
+
+export const UPDATED_SOCIAL_MEDIA = "Sosyal medya hesabınız güncellendi.";
+export const DELETED_SOCIAL_MEDIA = "Sosyal medya hesabınız silindi.";
+export const AVAILABLE_SOCIAL_MEDIA = "Sosyal medya kullanılıyor.";
+
+
+
+export const DO_NOT_SELECTED_SKILL = " Herhangi bir yetenek seçmediniz.";
 

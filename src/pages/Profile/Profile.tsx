@@ -35,6 +35,7 @@ import GetListAccountSkillResponse from '../../models/responses/accountSkill/get
 import GetListAccountActivityMapResponse from '../../models/responses/accountActivityMap/getListAccountActivityMapResponse';
 import accountActivityMapService from '../../services/accountActivityMapService';
 import GetAccountActivityMapResponse from '../../models/responses/accountActivityMap/getAccountActivityMapResponse';
+import { NO_ACITIVTY } from '../../environment/messages';
 
 
 
@@ -88,7 +89,6 @@ export default function Profile() {
 
   const heatMapRows = () => {
     heatMapDatas?.items.map((daka: any) => {
-      console.log(convertDateFormat(daka.dateTime));
     })
 
     return (
@@ -105,7 +105,7 @@ export default function Profile() {
         endDate={new Date(new Date('2024/01/01').setDate(new Date('2024/01/01').getDate() + 369))}
         rectRender={(props: any, data: any,) => {
           if (!data || !data.count || data.count === 0)
-            return <Tooltip placement="top" content={`Herhangi bir aktiviteniz yok : ${0}`}>
+            return <Tooltip placement="top" content={NO_ACITIVTY}>
               <rect {...props}></rect>
             </Tooltip>
           else

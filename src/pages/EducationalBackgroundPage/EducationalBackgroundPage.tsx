@@ -23,6 +23,7 @@ import GetListUniversityResponse from '../../models/responses/university/getList
 import GetListUniversityDepartmentResponse from '../../models/responses/universityDepartment/getListUniversityDepartmentResponse';
 import GetListAccountUniversityResponse from '../../models/responses/accountUniversity/getListAccountUniversityResponse';
 import { GetListDegreeTypeResponse } from '../../models/responses/degreeType/getListDegreeTypeResponse';
+import { REQUIRED_MESSAGE } from '../../environment/messages';
 
 export default function EducationalBackgroundPage() {
     const userState = useSelector((state: any) => state.user);
@@ -43,9 +44,9 @@ export default function EducationalBackgroundPage() {
     const [endDate, setEndDate] = useState<any>();
 
     const validationSchema = Yup.object().shape({
-        educationLevel: Yup.string().required('Doldurulması zorunlu alan*'),
-        university: Yup.string().required('Doldurulması zorunlu alan*'),
-        universityDepartment: Yup.string().required('Doldurulması zorunlu alan*'),
+        educationLevel: Yup.string().required(REQUIRED_MESSAGE),
+        university: Yup.string().required(REQUIRED_MESSAGE),
+        universityDepartment: Yup.string().required(REQUIRED_MESSAGE),
     });
 
     const initialValues = {

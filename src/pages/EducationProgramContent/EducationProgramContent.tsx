@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import LessonCard from '../../components/LessonCard/LessonCard'
-import { Collapse, Progress } from 'antd'
+import { Progress } from 'antd'
 import { FaCircle } from "react-icons/fa";
 import Button from 'react-bootstrap/Button';
 import './EducationProgramContent.css'
@@ -31,10 +31,7 @@ import educationProgramLessonService from '../../services/educationProgramLesson
 import UpdateAccountLessonRequest from '../../models/requests/accountLesson/updateAccountLessonRequest';
 import ReactPlayer from "react-player"
 import AddAccountLessonRequest from '../../models/requests/accountLesson/addAccountLessonRequest';
-import { formatDate } from '@fullcalendar/core';
 import { ADDED_FAVORITE, DELETED_FAVORITE } from '../../environment/messages';
-import AddAccountEducationProgramRequest from '../../models/requests/accountEducationProgram/addEducationProgramRequest';
-import accountEducationProgramService from '../../services/accountEducationProgramService';
 import SessionsPage from '../SessionsPage/SessionsPage';
 import sessionService from '../../services/sessionService';
 import GetListSessionResponse from '../../models/responses/session/getListSessionResponse';
@@ -42,6 +39,10 @@ import homeworkService from '../../services/homeworkService';
 import GetListHomeworkResponse from '../../models/responses/homework/getListHomeworkResponse';
 import AddAccountBadgeRequest from '../../models/requests/accountBadge/addAccountBadgeRequest';
 import accountBadgeService from '../../services/accountBadgeService';
+import AddAccountEducationProgramRequest from '../../models/requests/accountEducationProgram/addEducationProgramRequest';
+import accountEducationProgramService from '../../services/accountEducationProgramService';
+import UpdateAccountEducationProgramRequest from '../../models/requests/accountEducationProgram/updateEducationProgramRequest';
+import GetListAccountEducationProgramResponse from '../../models/responses/accountEducationProgram/getAccountListEducationProgramResponse';
 
 export default function EducationProgramContent() {
 
@@ -63,6 +64,8 @@ export default function EducationProgramContent() {
     const [accountLessonList, setAccountLessonList] = useState<Paginate<GetListAccountLessonResponse>>();
 
     const [accountLesson, setAccountLesson] = useState<GetListAccountLessonResponse>();
+    const [accountEducationProgram, setAccountEducationProgram] = useState<GetListAccountEducationProgramResponse>();
+
     const [sessions, setSessions] = useState<Paginate<GetListSessionResponse>>();
     const [homeworks, setHomeworks] = useState<Paginate<GetListHomeworkResponse>>();
 
@@ -121,10 +124,7 @@ export default function EducationProgramContent() {
             });
 
             sessionService.getByLessonId(selectedLessonId).then((result: any) => {
-                console.log("sessions")
                 setSessions(result.data);
-
-                console.log(result.data)
             })
 
             homeworkService.getByLessonIdAsync(selectedLessonId).then((result: any) => {
@@ -154,12 +154,6 @@ export default function EducationProgramContent() {
         })
     }, [educationProgramLikeCount])
 
-    useEffect(() => {
-
-        accountService.getByLessonIdForLike(selectedLessonId, 0, 10).then(result => {
-            setLessonLikers(result.data);
-        })
-    }, [lessonLikeCount])
 
     useEffect(() => {
         accountLessonService.getByAccountId(user.id).then((result: any) => {
@@ -168,10 +162,7 @@ export default function EducationProgramContent() {
 
         if (educationProgramId) {
             educationProgramLikeService.getByEducationProgramId(educationProgramId).then((result: any) => {
-
-                console.log(result)
                 const likedEducationProgramFilter = result.data.items?.filter((c: any) => c.accountId === user.id)
-                console.log(likedEducationProgramFilter)
                 if (likedEducationProgramFilter) {
                     if (likedEducationProgramFilter.length > 0) {
                         setIsLikedEducationProgram(true);
@@ -235,7 +226,6 @@ export default function EducationProgramContent() {
                 }
                 await educationProgramLikeService.add(addEducationLike);
                 educationProgramLikeService.getAll(0, 100).then((result: any) => {
-                    console.log(result.data)
                     setEducationProgramLikeCount(result.data.count);
                 })
             } else {
@@ -244,7 +234,6 @@ export default function EducationProgramContent() {
                     educationProgramId: educationProgramId
 
                 }
-                console.log(deleteEducationProgramLike)
                 await educationProgramLikeService.deleteByAccountIdAndEducationProgramId(deleteEducationProgramLike);
                 setEducationProgramLikeCount(educationProgramLikeCount - 1);
             }
@@ -296,7 +285,6 @@ export default function EducationProgramContent() {
                 accountLessonService.getByAccountId(user.id).then((result: any) => {
                     setAccountLessonList(result.data)
                 })
-                console.log(calculatedPoints)
             }
         }
     };
@@ -320,7 +308,41 @@ export default function EducationProgramContent() {
         }
     }
 
+    const handleAddAccountEducationProgramStatus = async (statusPercent: any) => {
+        if (educationProgram?.id) {
+            const addAccountEducationProgram: AddAccountEducationProgramRequest = {
+                accountId: user.id,
+                educationProgramId: educationProgram?.id,
+                statusPercent: statusPercent
+            };
+            await accountEducationProgramService.add(addAccountEducationProgram);
+        }
+    }
 
+    const handleUpdateAccountEducationProgramStatus = async (statusPercent: any) => {
+        if (accountEducationProgram?.id) {
+            const updateAccountEducationProgram: UpdateAccountEducationProgramRequest = {
+                id: accountEducationProgram.id,
+                accountId: user.id,
+                educationProgramId: educationProgram?.id!,
+                statusPercent: statusPercent
+            };
+            console.log(updateAccountEducationProgram)
+            await accountEducationProgramService.update(updateAccountEducationProgram);
+        }
+    }
+
+    const handleAddAccountBadge = async () => {
+        const badgeId = educationProgram?.badgeId;
+        var result = await accountBadgeService.getByAccountAndBadgeId(user.id, badgeId!)
+        if (!result.data) {
+            const addAccountBadgeRequest: AddAccountBadgeRequest = {
+                accountId: user.id,
+                badgeId: badgeId!
+            }
+            await accountBadgeService.add(addAccountBadgeRequest)
+        }
+    }
 
     const handleSelectLesson = async (selectedLessonId: any) => {
         setSelectedLessonId(selectedLessonId)
@@ -332,19 +354,6 @@ export default function EducationProgramContent() {
         setWatchPercentage(formattedPercentage);
     };
 
-    const handleAddAccountBadge = async () => {
-        const badgeId = educationProgram?.badgeId;
-        var result = await accountBadgeService.getByAccountAndBadgeId(user.id, badgeId!)
-        console.log(result);
-
-        if (!result.data) {
-            const addAccountBadgeRequest: AddAccountBadgeRequest = {
-                accountId: user.id,
-                badgeId: badgeId!
-            }
-            // await accountBadgeService.add(addAccountBadgeRequest)
-        }
-    }
 
     /*ProgressBar */
     const totalLessonCount = educationProgramLessons?.count || 0;
@@ -356,6 +365,20 @@ export default function EducationProgramContent() {
     const totalStatusPercent = accountLessonList?.items.reduce((acc, item) => acc + item.statusPercent, 0) || 0;
     let calculatedPoints = (totalStatusPercent / (totalLessonCount * 100)) * 100;
     calculatedPoints = calculatedPoints > 99.2 ? 100 : parseFloat(calculatedPoints.toFixed(1));
+
+    useEffect(() => {
+
+        accountEducationProgramService.getByAccountIdAndEducationProgramId(user.id, educationProgram?.id!).then((result: any) => {
+            setAccountEducationProgram(result.data)
+            console.log(result.data)
+            if (result.data) handleUpdateAccountEducationProgramStatus(calculatedPoints);
+            else handleAddAccountEducationProgramStatus(calculatedPoints);
+        })
+
+        if (calculatedPoints > 99.2) handleAddAccountBadge()
+
+    }, [calculatedPoints])
+
 
     return (
         <div>

@@ -12,6 +12,9 @@ import authService from '../../services/authService';
 
 import projectService from '../../services/projectService';
 import { userActions } from '../../store/user/userSlice';
+import GetAccountEducationProgramResponse from '../../models/responses/accountEducationProgram/getAccountEducationProgramResponse';
+import accountEducationProgramService from '../../services/accountEducationProgramService';
+import { Paginate } from '../../models/paginate';
 
 const EducationsPage = () => {
     const userState = useSelector((state: any) => state.user);
@@ -21,6 +24,7 @@ const EducationsPage = () => {
 
 
     const [filteredEducationPrograms, setFilteredEducationPrograms] = useState<GetListEducationProgramResponse[]>([]);
+    const [accountEducationPrograms, setAccountEducationPrograms] = useState<Paginate<GetAccountEducationProgramResponse>>();
     const [projects, setProjects] = useState<GetListProjectResponse[]>([]);
     const [searchText, setSearchText] = useState('');
     const [sortOption, setSortOption] = useState('');
@@ -47,7 +51,7 @@ const EducationsPage = () => {
             return;
         }
 
-        projectService.getAll(0, 5).then((result) => {
+        projectService.getAll(0, 1).then((result) => {
             setProjects(result.data.items);
         });
 
@@ -59,8 +63,15 @@ const EducationsPage = () => {
             }));
             setEducationPrograms(programs);
             setFilteredEducationPrograms(programs);
+            console.log(programs);
         });
 
+        accountEducationProgramService.getByAccountId(user.id).then((result: any) => {
+            setAccountEducationPrograms(result.data);
+            console.log(result.data);
+            console.log(user.id);
+        }
+        )
     }, [user.id]);
 
     useEffect(() => {
@@ -173,26 +184,30 @@ const EducationsPage = () => {
                             </Tab>
                             <Tab eventKey="continueEducations" title="Devam Ettiklerim">
                                 <div className='educations-continue'>
-                                    {filteredEducationPrograms.map(program => (
-                                        <EducationCard
-                                            key={program.id}
-                                            title={program.name}
-                                            date={formatStartDate(new Date(program.startDate))}
-                                            id={program.id}
-                                        />
-                                    ))}
+                                    {filteredEducationPrograms
+                                        .filter(program => accountEducationPrograms?.items.some(accProgram => accProgram.educationProgramName === program.name && accProgram.statusPercent < 99.2))
+                                        .map(program => (
+                                            <EducationCard
+                                                key={program.id}
+                                                title={program.name}
+                                                date={formatStartDate(new Date(program.startDate))}
+                                                id={program.id}
+                                            />
+                                        ))}
                                 </div>
                             </Tab>
                             <Tab eventKey="finishedEducations" title="Tamamladıklarım">
                                 <div className='educations-finished'>
-                                    {filteredEducationPrograms.map(program => (
-                                        <EducationCard
-                                            key={program.id}
-                                            title={program.name}
-                                            date={formatStartDate(new Date(program.startDate))}
-                                            id={program.id}
-                                        />
-                                    ))}
+                                    {filteredEducationPrograms
+                                        .filter(program => accountEducationPrograms?.items.some(accProgram => accProgram.educationProgramName === program.name && accProgram.statusPercent > 99.2))
+                                        .map(program => (
+                                            <EducationCard
+                                                key={program.id}
+                                                title={program.name}
+                                                date={formatStartDate(new Date(program.startDate))}
+                                                id={program.id}
+                                            />
+                                        ))}
                                 </div>
                             </Tab>
                         </Tabs>
@@ -203,4 +218,4 @@ const EducationsPage = () => {
     );
 }
 
-export default EducationsPage; 
+export default EducationsPage;

@@ -57,7 +57,6 @@ const RouteDefinitions = (props: Props) => {
             <Route path="/platform" element={<ProtectedRoute><PlatformPage /></ProtectedRoute>} />
             <Route path="/basvuru" Component={ApplicationCard} />
             <Route path="/profilim" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-            <Route path="/profilim" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/blog" Component={Blog} />
             <Route path="/basinda-biz" Component={MediaNews} />
             <Route path="/giris" Component={LoginPage} />

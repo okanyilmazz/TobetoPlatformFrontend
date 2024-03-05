@@ -29,6 +29,7 @@ import AddAddressRequest from '../../models/requests/address/addAddressRequest';
 import ProfileToaster from '../../components/ProfileToaster/ProfileToaster';
 import * as Yup from 'yup';
 import GetListDistrictResponse from '../../models/responses/district/getListDistrictResponse';
+import { INFO_IS_CHANGED, REQUIRED_MESSAGE } from '../../environment/messages';
 
 export default function PersonalInformationPage() {
 

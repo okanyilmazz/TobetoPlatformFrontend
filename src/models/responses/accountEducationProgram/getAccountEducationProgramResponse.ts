@@ -2,7 +2,7 @@ import { Identifier } from "typescript";
 
 export default interface GetAccountEducationProgramResponse {
     id: Identifier;
-    accountId: Identifier;
-    educationProgramId: Identifier;
+    accountName: string;
+    educationProgramName: string;
     statusPercent: number;
 }

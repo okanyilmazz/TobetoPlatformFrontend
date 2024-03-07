@@ -166,7 +166,7 @@ export default function PersonalInformationPage() {
                 password: ""
             }
 
-            // var updateResult = await userService.update(updateUser); 
+            // var updateResult = await userService.update(updateUser);
 
             if (updateResult.data) ProfileToaster({ name: INFO_IS_CHANGED });
         }

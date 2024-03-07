@@ -208,7 +208,7 @@ export default function StudentPanel() {
                                                     <span className="trash-icon"></span>
                                                 </Tooltip>
                                                 <Tooltip placement="top" title="Öğrenci Sınıfı Güncelleme">
-                                                    <RiPencilFill onClick={() => handleUpdatedClick(account.id)} className='edit-icon' />
+                                                    <RiPencilFill onClick={() => handleUpdatedClick(account.id)} className='admin-edit-icon' />
                                                 </Tooltip>
                                             </td>
                                         </tr>

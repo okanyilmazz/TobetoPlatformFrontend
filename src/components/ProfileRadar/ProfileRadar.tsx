@@ -5,7 +5,6 @@ import GetListCompetenceResultResponse from '../../models/responses/competenceRe
 import GetListAccountResponse from '../../models/responses/account/getListAccountResponse';
 import { useDispatch, useSelector } from 'react-redux';
 import authService from '../../services/authService';
-import accountService from '../../services/accountService';
 import { userActions } from '../../store/user/userSlice';
 import competenceResultService from '../../services/competenceResultService';
 import GetListCompetenceCategoryResponse from '../../models/responses/competenceCategory/getListCompetenceCategoryResponse';

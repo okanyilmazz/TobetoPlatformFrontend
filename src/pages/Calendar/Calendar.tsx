@@ -30,6 +30,7 @@ const Calendar = () => {
   const lastPathSegment = pathArray[pathArray.length - 1];
 
   useEffect(() => {
+
     const fetchSessions = async () => {
       try {
         const result = await SessionService.getAll(0, 100);
@@ -43,15 +44,13 @@ const Calendar = () => {
 
         if (resultInstructor.data) {
           let allSessions = resultInstructor.data.items;
-          let allSession = result.data.items;
-
 
 
           // Filtreleme işlemleri
           let filteredSessions = [...allSessions];
           if (selectedInstructors.length > 0) {
             filteredSessions = filteredSessions.filter((session) =>
-              selectedInstructors.some((instructor: any) => instructor.label === session.accountName)
+              selectedInstructors.some((instructor: any) => instructor.label.includes(session.accountName))
             );
           }
           if (searchText.trim() !== '') {
@@ -95,14 +94,17 @@ const Calendar = () => {
     fetchSessions();
   }, [searchText, selectedInstructors, selectedFilters]);
 
-  const handleFilterChange = async (filter: any) => {
-    const updatedFilters = selectedFilters.includes(filter)
-      ? selectedFilters.filter((item) => item !== filter)
-      : [...selectedFilters, filter];
-
+  const handleFilterChange = async (filter: string) => {
+    let updatedFilters;
+    if (selectedFilters.includes(filter)) {
+      updatedFilters = selectedFilters.filter((item) => item !== filter);
+    } else {
+      updatedFilters = [...selectedFilters, filter];
+    }
     setSelectedFilters(updatedFilters);
   };
 
+  
   function handleDateSelect(selectInfo: DateSelectArg) {
     let title = prompt('Please enter a new title for your event');
     if (!title) return;
@@ -118,7 +120,7 @@ const Calendar = () => {
 
   return (
     <div className={authState.isAuthenticated && lastPathSegment?.includes("takvim-anasayfa") ? "calendar-page bg-front-dark" : "calendar-page  bg-front-white"}>
-      {/* Eğitmen Seçimi */}
+
       <div className="container filterCommon">
         <div className='row'>
           <h1 className='education' style={{ color: authState.isAuthenticated && lastPathSegment?.includes("takvim-anasayfa") ? "#fff" : "#000" }} >Eğitim ve Etkinlik Takvimi</h1>

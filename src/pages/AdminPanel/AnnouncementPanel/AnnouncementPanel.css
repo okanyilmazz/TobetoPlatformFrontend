@@ -130,16 +130,6 @@
     right: 11vw;
 }
 
-.announcement-panel-table-body .edit-icon {
-    margin-left: 8px;
-    margin-bottom: 8px;
-    border-radius: 4px;
-    background-color: #fff;
-    box-shadow: 0 7px 29px rgba(0, 0, 0, .13);
-    width: 24px !important;
-    height: 24px !important;
-}
-
 .announcement-panel {
     margin-top: 36px !important;
 }

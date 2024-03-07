@@ -11,7 +11,6 @@ import { Form, Formik } from 'formik'
 import { Button, Col, Row } from 'react-bootstrap';
 import TobetoSelect from '../../../utilities/customFormControls/TobetoSelect';
 import TobetoTextInput from '../../../utilities/customFormControls/TobetoTextInput';
-import Select, { ActionMeta, MultiValue } from 'react-select';
 import AdminPanelSideBarCard from '../../../components/AdminPanelSideBarCard/AdminPanelSideBarCard';
 import GetListLessonResponse from '../../../models/responses/lesson/getListLessonResponse';
 import lessonService from '../../../services/lessonService';
@@ -141,6 +140,7 @@ export default function SessionPanel() {
 
         await sessionService.add(addSession);
 
+
         getSession();
         closeModal()
     }
@@ -210,7 +210,7 @@ export default function SessionPanel() {
                                                     <span onClick={() => handleDeleteSession(session.id)} className="trash-icon"></span>
                                                 </Tooltip>
                                                 <Tooltip placement="top" title="Düzenleme">
-                                                    <RiPencilFill onClick={() => handleUpdatedClick(session.id)} className='edit-icon' />
+                                                    <RiPencilFill onClick={() => handleUpdatedClick(session.id)} className='admin-edit-icon' />
                                                 </Tooltip>
                                             </td>
                                         </tr>
